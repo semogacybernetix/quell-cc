@@ -1,0 +1,2 @@
+diese scheiß git push funktioniert nicht wegen dieser scheiß Sicherheitskacke. Das war klar dass genau das der Knackpunkt ist. Irgendeinen Scheiß lesen ist keine Kunst. Das kann jeder. Aber etwas schreiben, da fängt natürlich das Problem an.
+Dabei ist genau dass das wichtigste. Genau das ist das einzige und wichtigste was ich machen will. Meine Sourcen sichern und sie an anderer Stelle wieder runterladen, damit ich nicht immer mit dem Scheiß usb-Stick hantieren muss.
