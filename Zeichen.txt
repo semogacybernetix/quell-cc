@@ -1,0 +1,35 @@
+
+-----------------------------------------------------------------------------------------------
+utf-8 Codierung        Windows           Linux
+
+  ±        Plusminus   Alt 241           Alt-177 Linux (dezimaler UTF-8 Code)
+  x²       hoch 2                        Alt-178
+  x³       hoch 3
+  x⁴       hoch 4  
+  x⁻¹      hoch -1
+
+           pi
+  µ        my
+  φ        phi
+  ξ        sigma
+           unendlich
+
+  √        Wurzel
+  ∛        3. Wurzel
+  ¼        1/4
+  ½        1/2
+  ¾        3/4
+
+  ℝ        R reelle Zahlen        8477  
+  ℂ        C komplexe Zahlen
+  ℍ        H Quaternionen
+  ℕ        N natürliche Zahlen
+  ℤ        Z ganze Zahlen
+
+  x ∈ ℝ    x Element R   Alt-8712
+
+  ⊆        Teilmenge
+
+
+  ÄÖÜ äöü ß  Umlaute
+-----------------------------------------------------------------------------------------------

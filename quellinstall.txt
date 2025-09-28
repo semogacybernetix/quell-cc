@@ -1,0 +1,7 @@
+source ~/.bashrc.quell
+
+apt install make, g++, libx11-dev, libjpeg-dev
+
+mv ~/bin/linux/o
+mv ~/bin/linux/sbin
+

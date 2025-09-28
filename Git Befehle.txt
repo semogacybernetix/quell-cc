@@ -1,0 +1,63 @@
+Symflip
+
+github.com
+semoga@gmx.net
+Haus1530
+
+
+git clone
+
+Git konfigurieren
+/etc/gitconfig
+~/.gitconfig
+
+.git/config im Repository
+
+git config --list --show-origin               alle Konfiguration mit den dazugehörigen Orten auflisten
+
+git remote -v                                 alle konfigurierten Remote-Repositorys anzeigen
+
+git remote add symflip https://github.com/semogacybernetix/symflip                   remote repository zur Konfiguration hinzufügen
+
+git status                    Status abfragen
+
+git remote -v                 Verbindung herstellen
+git remote show
+git remote rename             Remote Repository in der Konfiguration umbenennen
+git remote remove symflip     Remote Repository aus der Konfiguration entfernen
+
+
+------------------------------------------------------------------------
+lokales repository anlegen
+------------------------------------------------------------------------
+
+# userdaten anlegen
+git config --global user.name blauser
+git config --global user.email semoga@gmx.net
+git init                                       # leeres .git anlegen
+git add *                                      #rekursiv ganzen Verzeichnisbaum hinzufügen
+
+git remote
+
+git remote add origin https://github.com/semogacybernetix/symflip.git
+
+------------------------------------------------------------------------
+Version vom lokalen Repository zum Remote-Repository hochladen
+------------------------------------------------------------------------
+
+git commit -a                 Änderungen fixieren
+git push -u origin master     Änderungen hochladen
+
+git commit -m "Version ..."
+
+------------------------------------------------------------------------
+Version vom Remote Repository zum lokalen Repository runterladen
+------------------------------------------------------------------------
+
+git fetch
+git pull
+
+------------------------------------------------------------------------
+allgemeine Befehle
+------------------------------------------------------------------------
+

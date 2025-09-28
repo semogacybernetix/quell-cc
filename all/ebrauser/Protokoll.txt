@@ -1,0 +1,49 @@
+2015.10.02
+
+One-Thread Versions läuft mit neuem Zuggenerator
+Multithreadversion mit neuem Zuggenerator
+Zufallsbijektion für Threads einführen
+rekursive Threadbearbeitung in lineare Threadbearbeitung umwandeln
+
+Gewinnziele präziser festlegen:
+Jede Seite hat ein bestimmtes Gewinnziel. Das Spiel geht solange, bis eine Partei ihr Gewinnziel erreicht hat. Diese hat dann das Spiel gewonnen.
+Die Gewinnziele brauchen nicht disjunkt sein. Da abwechselnd gezogen wird, können nicht beide Parteien das Gewinnziel gleichzeitig erreichen. Somit
+steht die Partei als Gewinner fest, die ihr Gewinnziel als erstes erreicht. Also sind die gewonnenen Stellungen einer Partei die Stellungen,
+in denen die gegnerische Partei ihr Gewinnziel nicht erreichen kann, während die eigene Partei ihr Gewinnziel erzwingen kann.
+
+
+Nach der Analyse gibt partitionieren die Stellungen in
+  1. Alle Stellungen in denen weiß das Gewinnziel erreichen kann ohne das Schwarz sein Gewinnziel erreichen kann
+  2. Alle Stellungen in denen schwarz das Gewinnziel erreichen kann
+  3. Alle Stellungen in denen keine Partei das Gewinnziel erreichen kann
+  4. Alle nicht erlaubten Stellungen (Figuren auf gleichem Feld, zu wenig Figuren auf dem Brett)
+
+Mannschaftskampf
+Gewinnziel: Eroberung einer bestimmten Figur
+Gewinnziel: Erboberung von bestimmten Figuren
+Gewinnziel: Erboberung einer Auswahl von Figuren (z.B. die oder die)
+Gewinnziel: Eroberung aller Figuren
+Gewinnziel: Eine Figur in eine bestimmte Position drängen (Ecke, Rand, bestimmtes Feld)
+
+Die Gewinnziele der Parteien im Spiel können verschieden sein und müssen sich nicht gegenseitig ausschließen. Das beidseitige Gewinnen bei sich nicht ausschließenden
+Gewinnzielen wird dadurch verhindert, dass die Partei gewinnt, die ihr Ziel als erstes erreicht. Gleichzeitiges Erreichen der Gewinnziele ist durch das abwechselnde
+Ziehen ausgeschlossen.
+
+Damit das Spiel einen Sinn macht, dürfen die Gewinnziele der Parteien in keiner Teilmengenbeziehung stehen. Sonst hätte die Partei mit dem includiertem Gewinnziel
+auch immer gewonnen, wenn die andere Partei ihr Gewinnziel erreicht hat.
+
+
+Beispiele:
+Gewinnziel A: Turm erobern
+Gewinnziel B: Turm und Springer loswerden
+
+1. Mattsetzen
+2. Pattsetzen
+
+
+Mannschaftskampf:
+2018.04.14 allgemeines Codelifting und auf Konsistenzbringung
+2018.04.29 Multithreading versucht zu implementieren, geht nicht, weil Threads nicht klassenkompatibel sind
+           Thread kann keine Klassenfunktion sein
+
+2020.03.03 Beginn mit neuer Programmierung. xegenerator und xebrauser zum Laufen bekommen, repariert wegen screen integer vektorklasse, Compilerfehler wegen gcc 7.4.0 -Wconversion, vektorklasse integer und real statt long int

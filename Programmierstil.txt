@@ -1,0 +1,69 @@
+Umgebungsvariablen
+
+export PLATFORM=linux
+export PATH=~/bin/$PLATFORM/sbin:$PATH
+
+-------------------------------------------- C# --------------------------------------------------------
+
+Unterschiede bei C#
+
+minus typedef                                                                          typedef signed long long integer                       geht doch: using integer = signed long long
+minus h-Dateien
+minus parameterlose Konstruktoren können in structs nicht verwendet werden             cvektor:cvektor ();
+minus Funktionen können nicht mit Konstanten als Übergabeparameter deklariert werden.  void bla (const float bla);
+minus Funktionen können Parameter nicht als Referenz übergeben                         void bla (bigdata& x);
+minus es gibt kein #include                                                                                                                   (wrong preprocessor directive)
+minus Operatorüberladung                                                               float operator + (float pv1, float pv2);               geht doch, anderer syntax
+minus Klassenfunktionen können nicht außerhalb der Klasse definiert werden             cvekor3::normiere () {...};
+minus Initialisiererliste                                                              float bla (float x) :x (3) {};
+minus Variablen können nicht initialisiert werden                                      x (5) statt x= 5
+minus Intitialisierung ohne new                                                        x= new cvektor3 (1,2,3) statt x= cvektor3 (1,2,3)
+minus structs, Methoden und Klassenvariablen von structs sind nicht public
+minus Vererbung                                                                        klasseabgeleitet : klasse                              geht doch, anderer Syntax?
+minus abstrakte Funktionen                                                             void bla ()= 0;                                        geht vielleicht doch, wie?
+
+plus  ???, da ich C# nicht kenne, weiß ich nicht, was C# hat, was C++ nicht hat
+
+-------------------------------------------- /C# --------------------------------------------------------
+
+------------------------------------------ Compiler -------------------------------------------
+
+typedef
+enum feld= {a1= 0, b1= 1
+h-dateie erklärugun en   zu type
+
+scheiß Linkerfehler:
+
+bisher beste bzw. fehlerloseste Reihenfolge:
+cc-Datei, cflags, o-Dateien, o-Name, libflags
+
+------------------------------------------ /Compiler -------------------------------------------
+
+------------------------------------------ Make -------------------------------------------------
+
+%    alle Dateien
+$<   Eingabedatei
+$@   voller Name des Ziels
+$^   die o-Dateien
+
+------------------------------------------- /Make -----------------------------------------------
+
+----------------------------------------- Schachprogramm -----------------------------------
+
+zugart
+
+figurart, zugart, figurfarbe enum
+zug per &
+zugart enum
+rochade effizienter, feldbedroht
+bedrohtefelderliste
+stl-Container list, vektor
+vektor (stellung)
+inrange -Funktion
+verwechlung pointer anderer Buchstabe
+initial.liste
+stellung - leeres Brett
+zug (farbe)
+
+letzte reihe
+----------------------------------------- /Schachprogramm -----------------------------------

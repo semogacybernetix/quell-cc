@@ -1,0 +1,262 @@
+2019.05.30  --Wconversion Compileroption in Makefile von jpeg, screen, xscreen
+            - cosl sinl M_PIl  ersetzen
+
+namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
+
+2019.08.19 xebrauser reparieren
+
+2019.08.20 calccrc
+
+2020.02.29 symmetriegruppen, Dodekaeder, io Klassen auslagern
+
+
+2020.03.15  Beststand
+            Threadprogrammierung steckengeblieben, weil die ganze Rayklasse nicht auf threadfestigkeit ausgelegt ist und komplett von unten neu geschrieben werden muss. Deshalb neue Klasse raythread angelegt.
+            die ray-Klasse wieder zurückportiert auf zeigerlastigen Stil mit grafikgestörter Threadprogrammierung (zum Testen, stürzt nicht ab). Damit wieder den bestfunktionierenden Zustand erreicht.
+            spiegelachsenvonebenenwinkel funktioniert in Version 2 aber nicht die unversionierte Version, obwohl sie die Doppel 90° Fälle alle ohne Fehler erfasst.
+            zu bearbeitenden Sachen:
+            
+            - neue threadoptimierte raythread Klasse
+            - Koordinatensystem (dünne Zylinder, Pfeilspitzen)
+            - transparente Koordinatenebenen
+            - SägezahnTexturierung sowie Texturierung, die die Richtung und die Unterscheidung der Achsen erkennen läßt, so dass man absolute Orientierung hat
+            - verschachtelte platonische Körper (dual, nicht dual)
+            - Visualisierung des Aufbaus der Gruppe aus 3 Spiegelungen (Halbkantenstück zu 2 Körpern (gespiegelt)) sowie aus 3 180° Drehungen (Halbkantenstück zu Körper)
+            - Implementierung Torus (Schnitt, Parametrisierung)
+            - Visualisierung von einer Achsendrehung z.B. Kugel egal wie sie verdreht ist (Drehachse (Vektor, Pfeil)), Winkel (Polarebenenstürck))
+            - Verbesserung bzw. Andersprogrammierung der Flugschleife, um z.B. sich drehende Gegenstände, fliegende Kamera etc. zu visualisieren
+            - Fundamentalbereiche sichtbar machen
+            - Netze der platonischen Körper und Dualnetze auf Kugel
+            - Schalenkörper, Zwiebelkörper visualisieren
+            - Kantendrehungen (Dualkörper) visualisieren
+            
+            
+2020.03.25  Fundamentalbereiche programmiert
+            Koordinatensystem
+            
+2020.04.08  Kugelspiel Ebenenspiegelung programmiert, Bewegungen implementiert
+            - Visualisierung Gruppe operiert auf Menge (Vektoren) um alle Gruppen (Th) visualisieren zu können
+            
+2020.04.14  Kanten- und Flächenkugel implementiert, Kugelspiel Besuchskugel implemeniert besuchte Punkte werden mit einer Kugel markiert
+            Winkelformel Kugelkoordinaten in vektor.cc
+            - Spielprogrammierung aus dem Raytracer ausgliedern
+            - Raytracer neu und multithreadig programmieren
+            
+2024.07.08  Threadfehler dass Endlosschleife bei 5 oder mehr Threads behoben
+
+2024.10.13  quaternionentest bei [6] 2 Drehungungen wird eine .obj Datei mit den Punktkoordinaten erzeugt, die in Blender unter wavefront .obj importiert werden kann
+
+2024.11.21  quaternionentest E F K und Linearkombination Ausgabe bei Punkt 6 2 Drehungen
+2024.11.22  Objekt Zahl erstellt um Printausgabe von real Zahlen richtig zu formatieren. printf unzureichend, immer Formatierungsfehler egal welcher Platzhalter benutzt wird
+
+2024.11.24  formatierte Printausgabe in Datei fertig
+            0.499999999 Problem bei Kantenvektor
+            Dreibein kann flach sein. Bei Ermittlung des 3. Vektors muss der Winkel zu BEIDEN anderen Vektoren minimal sein
+
+2024.11.26  Implementierung Punkt [66] Erstellung obj-Datei aus EFK-Vektor, Vorzeichenfehler printvektor3perf
+
+2024.12.01  Kreiskanten implementiert
+2024.12.02  Fehlerbehebung efk-Dreibein: Schleife ab 1 vergessen auf 0 zu setzen obwohl minvektor auf maximum
+
+2024.12.05  Kommentarzeichen vor Kante in Datei, Kreiskantenlinie in einem Zug, xegenerator Core2-Quad
+
+2024.12.13 Fr  efk-Erzeugung Fehler behoben durch Generierung vom Kantenvektor aus
+
+2024.12.14 Sa  generiere Polyeder angefangen
+2024.12.17 Di  8:00 Polyedergenerierung aufgespalten in polyeder und 1polyeder
+2024.12.18 Mi  generiere1polyeder geliftet, Oktaederstumpf E+F+K auf Spitze gestellt
+2024.12.20 Fr  generierepolyeder vervollständigt, archimedische und platonische Körper außer cubus simus und dodecaedron simum
+2024.12.21 Sa  cubus simus und dodecaedron simum richtige efk-Werte funktioniert
+2024.12.22 So  tetraedron simum, cubus simus und dodecadron simum links-, rechtsversionen implementiert, efk-Dreibein muss noch Orientierung aussuchen bekommen
+
+2024.12.28 Sa  Orientierung bei ermittlefefkdreibein eingeführt und drehkörper werden jetzt in beiden Orientierungen erzeugt.
+2024.12.31 Di  I Gruppe (Dodekaeder) aufrecht, dreh12 Optimierung, fek-Konsistenz
+
+2025.01.02 Do  Tribonacci-Konstante in vektor.h, ermittleefkvektor () neu, genaue Konstanten cubus simus, tetraedron simum
+2025.01.03 Fr  kubische Gleichung implementiert, dodecaedron simum exakte Werte, großes Rhombenikosidodekaeder exakte Werte fehlgeschlagen
+2025.01.03 Fr  quadmath implementiert, getestet, Testroutinen geschrieben bis 3:00 Uhr
+2025.01.04 Sa  quadmath angewendet auf fließkomma.cc, fibo.cc  bis 12:00 Uhr
+2025.01.05 So  exakte algebraische Werte Ikosaederstumpf, Rhombenikosidodekaeder, großes Rhombenikosidodekaeder, Tetraedron simum, verbleiben cubus simus und dodecaedron simum mit exakten numerischen Werten, bis 3 Uhr
+
+2025.01.19 So  generateobj mit Körpervektor statt efk-Vektor, Th 6 Körper, 6 Trapezkörperannäherungen, Trapez Trapezkörper bis 0:46
+2025.01.20 Mo  neue Makedatei für calccrc eingepflegt
+
+2025.01.24 Fr  Th Körper Würfel, Oktaeder, Kuboktaeder mit Einzelannäherungen implementiert
+2025.01.25 Sa  symflip winkelachseihinzu -> winkelachsespieghinzu korrigiert
+
+2025.01.30 Do  quaternionentest geliftet (Genauigkeitssachen raus, Formeln), fließkomma sauber implementiert
+
+2025.02.03 Mo  linearfaktoren reduzierte kubische Gleichung und allgemeine kubische Gleichung implementiert, Fehler in cbrtv, polar (cvektor2) behoben
+2025.02.04 Mo  Zuordnung u³,v³ -> u, v sauber implementiert. 3 Möglichkeiten 0 +1 -1 Verschiebung, bis 13:35
+2025.02.05 Mi  polar (), polartan2 () polartan () polarcos, testepolar, linearfaktoren auf 60.40 Stellen
+
+2025.02.08 Sa  xegenerator mit raspi5 und odroid M1, framebuffer Makefile
+2025.02.09 So  linearfaktoren Variablen angepasst
+2025.02.10 Mo  quell-cc von intel zu arm verschoben, quadmath Sachen aufgespalten, korrigiert
+2025.02.11 Di  bis 2:19
+
+2025.02.13 Do  6:20 polar verbessert (360°, 0°), cpubenchmark, screen bis 8:24
+2025.02.13 Do  22:00 printvektor2 verbessert, Ausgabe Kosmetik bis 0:09
+
+2025.02.14 Fr  kubische Gleichung mit quadratischer Gleichung, fließkomma, Genauigkeit bis 0:34
+
+2025.02.16 So  framebuffer fbquad bis 12:30
+
+2025.02.23 So  5:30 apfel, fbscreen, allscreen+fbscreen bis 6:50, 15:00 printausgabe linearfaktoren kosmetik, framebuffer apfel Kommentierungsfehler behoben bis 18:00, -0 entfernt vektorcon -180°, polar180, polar360, Potentation bis 2:32
+
+2025.03.04 Di  0:05 mit quartischer Gleichung angefangen bis 1:56
+2025.03.04 Di  6:30 quartische Gleichung nach Buch Algebra für Einsteiger bis 10:30, kubischreduziertvieta  Vietatransformation, -0 in kartesischer Darstellung bei printvektor2 entfernt bis 16 Uhr, Kosmetik printausgabe bis 21:09
+2025.03.05 Mi  8 Uhr, kubisch-3-Wurzel-Wikipedia-reell implementiert, Fehler bei kubischer Resolvente keine dreifache Lösung abgebrochen wegen Gehirnüberlastung 12:50  21:30 weitergemacht,
+2025.03.06 Do  kubischreduziertvieta in kubischcardano integriert, z1^z2, logv, expv verbessert bis 2:50
+2025.03.08 Sa  opengl Verzeichnis erstellt, opengl triangle Demoprogramm kompiliert und ausgeführt bis So 1:46
+2025.03.09 So  opengl-install.sh fehlerbereinigt, .bashrc.quell bis 10:15, polareingabe, quartisch 3 Lösungen bei Buchlösung bis 0:34
+2025.03.10 Mo  6:30, printausgaben entfernt, quartisch Vergleich Buch, 3reell, 8:06
+2025.03.11 Di  1 Uhr, quadratisch, kubischvieta, kubischcardano, quartischreduziertbuch, quartischreduziertreell3, Polynome faktorisieren geliftet, 4:57, 16 Uhr, quartischreduziert pdf, wiki2, Lösungseingabe erstellt, 18:49
+
+2025.03.13 Do  xegenerator Orange Pi 5 eingepflegt, 18:06
+2025.03.15 Sa  20:30, quartisch printausgabe, Fehler quartischreell3 gefunden und korrigiert, in lagrange umbenannt, Fehler in quartischpdf für q= 0 gefunden, 23:57
+2025.03.16 So  7:30 printausgabe kosmetik, 9:26, Fehlerscheiße Cardano, 15:35, Fehler Cardano korrigiert, Routine etwas verbessert, Mo 1:41
+
+2025.03.24 Mo  8:01 gleiche Resolventen wiki2, lagrange, Permutationen Lösungen gleichgeschaltet, Umstellung Koeffizienten auf Produkte, Realzahlen 1, 2 benutzt, 11:24,
+               12:10 Division durch 0 bei quartisch-pdf, quartisch-wiki2 behoben, 14:20
+
+2025.03.28 Fr  jetson nano Benchmark in xegenerator aufgenommen, apfel mit Bruchpotenzen probiert 13:36, raspi3 gebencht und in xegenerator aufgenommen, 1:08
+
+2025.03.30 So  printmatrix für Permutationsmatrizen geändert, ckomplexk, ckomplexp angefangen, Mo 2:55
+2025.03.31 Mo  9:30, massive vektor-Klasse Umstellung: ckugelk, ckomplexk, ckomplexp, cquaternion angefangen, Operatorvererbung geht nicht, rekursive Addition bei ckomplexk, Änderungen durchreferenziert bei
+               conio, quaternionentest, linearfaktoren, 15:14
+
+2025.04.03 Do  22:00, Rekursionsfehler bei operator + gefunden und behoben, vektor.h, vektor.cc geliftet, alle fehlerhaften Funktionen implementiert, quadratischp angefangen, 23:54
+2025.04.04 Fr  9:00, Reduktion kubisch, quartisch in Funktion ausgelagert, Anpassungen, Korrekturen, Kosmetik, printausgabe angepasst, 11:06, 22:00 quadratischp vollständig mit Polarkoordinaten geschrieben, Kosmetik, 23:31
+2025.04.05 Sa  8:00, kubischcardanores, kubischcardanouv implementiert, 10:32
+2025.04.06 So  4:00, kubischcardanores, kubischcardanouv verfeinert (ganzzahlige Resolvente), Genauigkeitsverbesserungen, 5:26, 7:00 polynomiale kubische Resolvente, polynomiale Resolvente Differenzenprodukt, 9:10
+               20 Uhr, quartischres verbessert, Faktoren von Resolventenformeln angepasst, 23:32, Fehlerkorrektur Formeln cardanores, 0:44
+2025.04.07 Mo  20:00 cardanores Anpassungen Produkte Zwischenlösungen, 22:22
+2025.04.08 Di  8:00 Anpassungen difprodxs bei kubisch, difprodxs bei quartisch, fließkomma Division, 12:20
+2025.04.09 Mi  21 Uhr, quadratischres erstellt, Quadrat Differenzenprodukt bei kubischcardanores eingebunden, entsprechende Parameteranpassungen, 2. Lösung bei kubischvietares implementiert, efg weg, 3:07
+2025.04.10 Do  10 Uhr, alte kubische Diskriminante, 11:33, 19 Uhr, Lösungsskalierung kubischres, Lösungsskalierung quartischres, 22:09
+2025.04.11 Fr  8 Uhr, hsyrgb Makefile korrigiert, 11:51
+2025.04.12 Sa  8 Uhr, 3fach-Skalierung von cardano, vtrans, Erhaltung vtrans1, Genauigkeitsanpassungen, 12:37
+2025.04.13 So  22 Uhr, Lifting, Funktionenumstellung, konsistente Variablennamen kubisch, 1:38
+2025.04.14 Mo  6:30, neue Kubikwurzel mit 3 Ausgabeparametern, kubischvtrans13 angepasst, 7:20, 10 Uhr, komplextest angepasst, vektor.h, vektor.cc Potenzberechnung verbessert, 12:47, Fehler Potenzformel, 19:17
+               Bijektivitätsbereiche angefangen zu ermitteln, 22:00
+
+2025.04.18 Fr  19:53, Variablenumbenennung, Horner Schema quartischreduziert, minimale Resolvente quartischbuch, 22:00
+
+2025.05.05 Mo  23 Uhr, mray Makefile Abhängigkeiten korrekt implementiert, xraythread, fbray zum Kompilierungsfehler beseitigt, 0:51
+
+2025.05.09 Fr  23 Uhr, Umbenennungen, Korrekturen quadratisch-, kubisch-zwischenwerte, 03:00:30 Uhr
+2025.05.10 Sa  8:30 Uhr, Umbenennungen, Korrekturen quartisch-zwischenwerte, 12:45 Uhr
+2025.05.11 So  6:30 Uhr, globales Aufräumen, FunktionsanordnungOrdnung linearfaktoren, alle Funktionen durchgegangen, Umbenennungen, Korrekturen, quartischzwischenwerte neue kubische Resolvente Differenzenprodukt,
+               alle Formeln daran angepasst, Formeln 3xWerte korrigiert, Formeln 1xWerte Cardano und vietatrans erstellt, Genauigkeitsprüfungen, 14:05 Uhr
+2025.05.12 Mo  8:30 Uhr, quartischreduziertdiffp erstellt, fehlerbehebung quartischreduziert Routinen, 10:46
+2025.05.16 Fr  2:00, quartischreduziertdiffp aus p2, q2, rr Fehler bei Eingabe, globale Variablenumbennung wegen r(rst) kubisch, r(pqr) quartisch reduziert Verwechslung, 4:41
+               9 Uhr, Vereinheitlichung kubische Resolvente, Gaufehler quartischreduziertpdf, quartischreduziertzwischenwerte Differenzenprodukt Faktoren vereinheitlicht 15:16
+2025.05.17 Sa  0 Uhr kubischzwischenwerte Faktoren +-2.18 und 1.73; 2:08
+2025.05.18 So  15:18 kubischzwischenwerte d_ql quadratische Resolvente aus den Lösungen der reduzierten kubischen Gleichung: 17:08
+2025.05.19 Mo  19 Uhr, quartischpdf mit standard-kubische Resolvente geschrieben, kubischeresolvente 1 und 3, quadratische Resolvente, Differenzenprodukt Anpassungen, keine Konsistenz erreicht, 23:56
+           Di  sporadisch weiterprogrammiert, Resolventen vereinfacht, Kleinigkeiten rumgestochert
+           Mi
+2023.05.22 Do  harter Grundlagenfehler aufgetreten, Ungenauigkeit ändert sich bei Assoziation, Skalarhintenmultiplikation geht, obwohl ich das nirgendwo implementiert habe, Handtuch geworfen, 14 Uhr
+
+2025.05.26 Mo  22 Uhr, Makefiles /single /class /conio neu gemacht, bessere Abhängigkeiten implementiert, wavegen verbessert, 0:14
+2025.05.27 Di  20:30 Makefiles single, vektor, vektorcon, verbessert, vektor Konstruktor ckomplexk von real entfernt, Multiplikation, Division von ckomplexk optimiert, Fehler in Linearfaktoren beseitigt, quartisch Routinen verbessert,
+2025.05.28 Mi   3:56, 21 Uhr, quartischpdf und quartischwiki2 verschmolzen weil nach Umformung gleich, quartischreduziertzwischenwerte umgestellt, Formeln vereinfacht
+2025.05.29 Do   1:24
+
+2025.06.01 So   21 Uhr, quartischzwischenwerte komplett neu geschrieben und damit quartischreduziertzwischenwerte ersetzt, 0:53
+2025.06.02 Mo   8 Uhr, quartischzwischenwerte verfeinert, Algorithmen geliftet, Genauigkeit verbessert, Division /0 und 0/0 behandelt, vektor.cc Division /0 abgefangen, 13:18
+2025.06.03 Di   21 Uhr, quartischzwischenwerte: Produkte und Differenzenprodukte hinzugefügt, 0:30
+
+2025.06.06 Fr   6:30, quartischzwischenwerte: Variablenbezeichnungen auf Konsistenz, Berechnungen konsistenter gemacht, 9:30
+
+2025.06.07 Sa  18:51, kubischzwischenwerte: Transfer von quartischzwischenwerte, quadratische Resolvente aus Lösungen der kubischen Gleichung, 1:33
+2025.06.08 So   7:30, zentrierte quadratische Resolvente, 10:37
+2025.06.09 Mo   9 Uhr, Konsistenz in kubischreduziertzwischenwerte wiederhergestellt, gleiche Variablenwerte für quadratisch, kubisch, quartisch auseroiert, 12 Uhr
+
+2025.06.15 So   4:30, neues Objekt Gleichung2 (quadratische Gleichung) geschaffen, 5:30
+2025.06.16 Mo   8:30, print Dateiausgabe, print Gleichung2, 10:30, 14:30 Objekt Gleichung3 (kubische Gleichung), Konsistenzprüfung Gleichung2, Gleichung3, 17:50, Anpassungen 0:40
+
+2025.06.18 Mi  21:33, kubischzwischenwerte Faktor 27, Verfeinerungungen, 1:15
+2025.06.19 Do   7:53, Konstistenz reduzierte quadratische Gleichung, Konsistenz reduzierter quadratischer Gleichung in kubischer Gleichung, 9:50
+2025.06.20 Fr  22:23, kubischreduziertzw und weitere nicht verwendete Funktionen entfernt, Formeln mit Faktor am Ende korrigiert, 22:58
+
+2025.07.03 Do  20 Uhr, xegenerator jetson orin und hp-laptop ryzen 5 in Benchmarks hinzugefügt
+
+2025.07.10 Do  13 Uhr, git account symflip hinzugefügt, sound Makefile erstellt, 13:44, 23 Uhr, Inkonsistenz tote Parameter alte kubische Resolvente 0 Uhr
+2025.07.11 Fr  10 Uhr, alte kubische Resolventen hinzugefügt, alte quartische Funktionen mit alten Resolventen, Kack Problem Differenzenproduktresolvente stimmt nicht mit Parameterresolvente überein, 12:40
+2025.07.11 Fr  23:30, Fehler gefunden: Differenzenproduktresolvente von quartischer statt reduzierter quartischer Gleichung genommen, quartischreduziertbuch, quartischreduziertlagrange (alte Version) wieder eingepflegt, 1:23
+2025.07.12 Sa  11 Uhr, alle kubischen Resolventen und alle quartischen Routinen komplett und auf Konsistenz gebracht, 13:12, 17:30, Variablenkosmetik kubische Gleichung, quartische Gleichung (Assoziativität, Faktoren dahinter), 19:35
+               21 Uhr, reduzierte quadratische Gleichung erstellt, quadratische und reduzierte quadratische Resolventen, 22:20
+2025.07.14 Mo  14 Uhr, kubische, quadratische Feinfaktoren, 17:32
+
+2025.07.21 Mo  17 Uhr, m,n -> a,b, lagrange3 faktoren vereinfacht, 17:53
+2025.07.22 Di  8:30, quadratischerweg1 mit reduzierter linearer Gleichung erstellt, 10:58
+2025.07.23 Mi  20:30, kubischerweg1 erstellt, 23:18
+2025.07.24 Do  22:03, kubischerweg1 verfeinert, quartischerweg1 erstellt noch fehlerhaft, 0:54
+
+2025.07.27 So   0:03, quartischweg1 (pdfw2) Fehlersuche, 1:42 Mo
+2025.07.28 Mo   7:30, quartischwegdiffp neu erstellt, quartischwegpdfw2 fehlerbehoben, 11:39
+
+2025.07.30 Mi  23:30, quartischwegz3 erstellt, 2:07
+2025.07.31 Do   9:00, quartischwegdiffp kurz erstellt, quartischz3 geliftet, 11:46
+2025.08.01 Fr   0:08, Kleinigkeiten, 1:47, 17:20, komplette Überarbeitung quartischer Funktionen, Schreibweise a*a*-4 versus -(a*a)*4, 22:59
+
+2025.08.03 So  17 Uhr, Makefile framebuffer neu organisiert, xray schwarzer Bildschirm weg, aus 2018 xray kopiert, 22:11
+2025.08.04 Mo  12 Uhr, Makefile libscreen, Makefile cc/single neu geschrieben, fließkomma verbessert, fpubenchmark Fehler behoben, 16:21
+
+2025.08.06 Mo  12 Uhr, 20:30 M_PI durch PI ersetzt, real mit double und andere Datenlängen Kompatibilität verbessert, 23:57
+
+2025.08.07 Do  22 Uhr, framebuffer 16 Bit Farbtiefe hinzugefügt (für raspi5), fbneu verbessert, cc/single Makefile verbessert, 1:51
+2025.08.08 Fr   9 Uhr, framebuffer16 Grünrundung beseitigt, apfel Paletten und Schleifen neu gemacht, 14:27, 22:30, paletten verbessert, allgemeine Spektrum Palette, 1:30
+
+2025.08.11 Mo  6:30, screen8 von screen, screens durchreferenziert, apfel, linearfaktoren realfunktionen gewrapped, 11:08
+
+2025.08.16 Fr  quadratische Weg, kubischer Weg, quartischer Weg Differenzenprodukt, z1 mit reduzierten Zwischenwerten Hitzewelle
+2025.08.16 Sa  5:30, Single Genauigkeit eingepflegt, vektorcon abstrahiert, Apfelmännchen single, 7:57
+2025.08.24 So  22 Uhr quartischweg mit Parameter statt Lösungen, quartischrück implementiert, 22:37
+
+2025.08.30 Sa  9:30 Scheiß Zahlenausgabe von Scratch weil %L und %l nicht als Variable im String übergebbar, double, long double Abstrahierung, 13:07, 16:30
+               Abstrahierung Float32, Float64, Float128 komplett geschafft, keine Compilerwarnungen mehr beim Umschalten von real, 19:27
+               apfel konvertiert, benchmark, 23:59
+
+2025.09.03 Mi  20 Uhr, komplette Überarbeitung des Sourcenbaums, screen Klasse überarbeitet, Fehler behoben, Raytracer und Ebrauser wieder zum Laufen gekriegt, xray Szene optimiert, 22:54
+
+2025.09.04 Do  20:20 alle Fließkommatypen von Float16 - Float128 in xray, apfel fehlerbereinigt, riesenlange Fehlerliste, ständige Konvertierungen, 22:30, 2:15 Fehlerbereinigung weitergemacht, 3:43
+
+2025.09.07 Sa  1:30 Warnungen wegen Fließkommatypen entfernt, lquadmath wegen arm64 entfernt, 3:59 orangepi5 4:40, orangepi5 5:45, pc-odroid fließkommatest 5:59
+2025.09.08 Mo  21 Uhr fbneu, jpegview, xray, 4:05
+
+2025.09.10 Mi  8:20 xray korrigiert, xray katzenturm geht, threadfestigkeit noch nicht gegeben, 9:20
+
+2025.09.11 Do  16 Uhr, xray und includes vollständig transparent auf float32,64,80 angepasst, endlich threadfehler mit Störpunkten behoben (transrich war global, dadurch Störpunkte) große Freude, 21:23
+2025.09.12 Fr  12 Uhr, Torusformel für raytracer erstellt, in xray einprogrammiert, quartische Gleichung in vektor.h, vektor.cc einprogrammiert, 14:12
+2025.09.13 Sa  8:15 Torusformel einprogrammiert, geht nicht, neu berechnet, wieder einprogrammiert, beulenförmige Missbildung, Variablenoptimierung, immer noch Beule, 1:24
+2025.09.14 So  6:37 Fehlersuche Torusformel, 2 Fehler gefunden (k -8rxox + ryoy, k^4 Term von x²y² vergessen), Formel fehlerfrei, geschafft :), 7:41, getestet, f32-80, Parametrisierung, mit jpg Bild texturiert, 9:10
+               20:30 Optimierung Torusformel, Verlangsamung bei bestimmten Produktersetzungen, 23:25
+2025.09.15 Mo  5 Uhr, alle quartischen Verfahren in vektor.cc implementiert, getestet, 7:38, 10 Uhr, alle brauchbaren Polynomfunktionen von linearfaktoren in vektor.cc implementiert, kurze Wege in vektor.h implementiert,
+               quartisch-integriert implementiert, quartisch-reell implementiert, getestet, sehr gute Näherung, 15:20
+2025.09.16 Di  13 Uhr, fliegethreat bewstep, drehstep angepasst, 14:43
+2025.09.17 Mi  9 Uhr, Torusformel optimiert, quartisch reell optimiert, 11:00, 16 Uhr, fliege Routinen überarbeitet, 18 Uhr, 20 Uhr, symflip angefangen Compilerfehler zu beseitigen wegen real floats, 20:15
+
+2025.09.19 Fr  14:30, Formel quartische Gleichung Endquadratformel optimiert, quartischdiffpintr optimiert, sqrtv optimiert (sqrtvk), real () korrigiert, 16:56
+
+2025.09.21 So  9:30, quartischlangrangeintr erstellt und optimiert, quartischdiffpintr optimiert, 14:00
+2025.09.22 Mo  18:30 auf raspi5 Compilerfehler beseitigt, xray, linearfaktoren, quaternionentest, 19:43
+
+2025.09.24 Mi  21:30, Makefile xray überflüssige Compilierungen entfernt, 22:52
+
+2025.09.26 Fr  20:30, symflip Compilerfehler, fliegespieltakt korrigiert, vektorcon Floattypen Anpassung, 22:30
+2025.09.27 Sa  7:00, symflip fliegetakt erzeugt, Framezeitberechnung erneuert, xray fliegetakt mit 200x100 20 fps, 10:33
+2025.09.28 So  16 Uhr quell-cc für github vorbereitet, 17:22
+
+
+-----------------------------------------------------------------------------------------------
+visualisierekantenmodell geht (als Vorbild für korrektes Initialisieren nehmen)
+Platform neu machen statt linux X86, AARCH
+framebuffer auf AARCH zum Laufen kriegen
+Makefile cc/class neu machen wegen Abhängigkeit von vektorcon von vektor
+Mandelbrot, Benchmark
+printausgabe realzahlen mit Trennung 10er Gruppen, Binär, Hexadezimal
+Eingabe und Gleichungen mit polarkomplexen Zahlen rechnen
+Horner Schema bei Polynomberechnung

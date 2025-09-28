@@ -1,0 +1,6 @@
+:pc      start
+:wert      502
+
+:start
+        add      [awert]   19
+        copy     [pc]       0

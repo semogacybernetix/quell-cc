@@ -1,0 +1,15 @@
+:pc     start
+:pointer    ?
+:value      ?
+
+:anzahl       200
+
+:start
+ copy   pointer       #block
+:loop
+        copy   value         #515
+        add    pointer       #1
+        sub    anzahl        #1
+        jmp    #loop         anzahl
+        copy   pc            #0
+:block
