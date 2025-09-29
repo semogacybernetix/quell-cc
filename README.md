@@ -1,11 +1,10 @@
-diese scheiß git push funktioniert nicht wegen dieser scheiß Sicherheitskacke. Das war klar dass genau das der Knackpunkt ist. Irgendeinen Scheiß lesen ist keine Kunst. Das kann jeder. Aber etwas schreiben, da fängt natürlich das Problem an.
-Dabei ist genau dass das wichtigste. Genau das ist das einzige und wichtigste was ich machen will. Meine Sourcen sichern und sie an anderer Stelle wieder runterladen, damit ich nicht immer mit dem Scheiß usb-Stick hantieren muss.
+2025.09.29  actually the raytracer. Fly in a torus, move and turn, increase and decrese moving speed and turning speed
 
-jetzt geht der push, weil ich mit viel Aufwand dieses magische Symbol erzeugt habe.
 
-und kaum hat es geklappt, tritt das nächste Problem auf. Natürlich habe ich diese komplizierten Anweisungen mit der Symbolgenerierung in einer Anleitungs-
-datei gespeichert und sofort hat er beim nächsen push gemeckert, dass da das magische Symbol drinsteht und ich das aus den commits entfernen musste.
+ cd all/mray make xray
 
-Dann irgendwann hingekriegt den commit mit dem magischen Symbol zu entfernen und außerdem die 4 nachfolgenden commits, wo ich das magische Symbol entfernt
-habe.
+
+second projekt symflip  visualize symmetrygroup of 3 reflektion in R3. its using the raytracer. you can fly and move the ball with 1,2,3 for reflection at plane 1,2 or 3. Try to visit all vertices.
+
+cd all/symflip  make symflip
 

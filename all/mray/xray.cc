@@ -176,7 +176,7 @@ int main ()
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450));
   cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 200,100));
 
-  flugsimu.setframedauer (1000/real (20));               // Dauer eines Frames in Millisekunden
+  flugsimu.setframedauer (1000/real (30));               // Framerate setzen
   flugsimu.threadanz= 4;
   flugsimu.bewstep= 2;
   flugsimu.drehstep= real (0.025);
