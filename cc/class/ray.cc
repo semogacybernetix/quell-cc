@@ -169,8 +169,10 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte &psp)
 
   quartischdiffpintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
   //quartischlagrangeintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
-  //quartischdiffpint (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
-  //quartischbuchuint (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  //quartischbuchuintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  //quartischbuchvintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  //quartischbuchfintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  //quartischpdfw2intr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
 
   if (ag (x1) < 1e-8)
     psp.add (x1.x);

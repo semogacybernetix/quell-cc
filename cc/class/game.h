@@ -11,7 +11,7 @@ struct cflugsimu
   void setframedauer (real pfr);
   void welttoscreenl ();
   void welttoscreenz ();
-  void welttoscreentakt ();
+  void welttoscreentakt (integer& renderanz);
   void welttoscreenthread (integer pthreadnr);
   void fliege ();
   void fliegek ();              // mit Körperdrehungen

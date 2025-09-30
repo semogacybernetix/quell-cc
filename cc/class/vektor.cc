@@ -2420,10 +2420,10 @@ void quartischlagrangeintr (real aq, real bq, real cq, real dq, ckomplexk& x1, c
     }
   }
 
-void quartischlagrangeintralt (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+void quartischbuchuintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
   real pq, qq, rq, ak, bk, ck, pk, qk;
-  ckomplexk xd, z1, z2, z3, yk1, yk2, yk3, ak3, xk1, xk2, xk3, u1, u2, u3, yq1, yq2, yq3, yq4, bed, aq4;
+  ckomplexk xd, z1, z2, z3, yk1, yk2, yk3, ak3, xk1, xk2, xk3, z, u, a1, a2, b1, b2, y1, y2, y3, y4, aq4;
 
   // Parameter reduzierte quartische Gleichung
   pq= bq - aq*aq*3/8;
@@ -2431,9 +2431,9 @@ void quartischlagrangeintralt (real aq, real bq, real cq, real dq, ckomplexk& x1
   rq= aq*((aq*bq - cq*4)*16 - aq*aq*aq*3)/256 + dq;
 
   // Parameter normale kubische Gleichung
-  ak= pq/2;
-  bk= pq*pq/16 - rq/4;
-  ck= qq*qq/-64;
+  ak= pq/-2;
+  bk= -rq;
+  ck= rq*pq/2 - qq*qq/8;
 
   // Parameter reduzierte kubische Gleichung
   pk= ak*ak/-3 + bk;
@@ -2456,116 +2456,200 @@ void quartischlagrangeintralt (real aq, real bq, real cq, real dq, ckomplexk& x1
   xk2= yk2 - ak3;
   xk3= yk3 - ak3;
 
-  // Lösung reduzierte quartische Gleichung
-  u1= sqrtv (xk1);
-  u2= sqrtv (xk2);
-  u3= sqrtv (xk3);
+  // Lösungen Parameter quadratische Gleichungen
+  z= xk1;
+  u= sqrtv (z*2 - pq);
 
-  yq1=  u1 + u2 + u3;
-  yq2=  u1 - u2 - u3;
-  yq3= -u1 + u2 - u3;
-  yq4= -u1 - u2 + u3;
+  a1=  u;
+  a2= -u;
+  b1= z - qq/u/2;
+  b2= z + qq/u/2;
 
-  // Bedingung: -8*u1*u2*u3 = qq
-  bed= u1*u2*u3*-8;
-  if (absv (bed + qq) < absv (bed - qq))
-    {
-    yq1= -yq1;
-    yq2= -yq2;
-    yq3= -yq3;
-    yq4= -yq4;
-    }
+  quadratisch1 (a1, b1, y1, y2);
+  quadratisch1 (a2, b2, y3, y4);
 
   // Lösungen normale quartische Gleichung
   aq4= aq/4;
-  x1= yq1 - aq4;
-  x2= yq2 - aq4;
-  x3= yq3 - aq4;
-  x4= yq4 - aq4;
+  x1= y1 - aq4;
+  x2= y2 - aq4;
+  x3= y3 - aq4;
+  x4= y4 - aq4;
   }
 
-void quartischbuchuint (ckomplexk aq, ckomplexk bq, ckomplexk cq, ckomplexk dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+void quartischbuchvintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
-  ckomplexk pq, qq, rq, pk, qk, xl, xd, yd;
-  ckomplexk z, u, a1, a2, b1, b2, y1, y2, y3, y4;
+  real pq, qq, rq, ak, bk, ck, pk, qk;
+  ckomplexk xd, z1, z2, z3, yk1, yk2, yk3, ak3, xk1, xk2, xk3, z, v, a1, a2, b1, b2, y1, y2, y3, y4, aq4;
 
   // Parameter reduzierte quartische Gleichung
   pq= bq - aq*aq*3/8;
   qq= aq*(aq*aq - bq*4)/8 + cq;
   rq= aq*((aq*bq - cq*4)*16 - aq*aq*aq*3)/256 + dq;
 
-  // Parameter reduzierte kubische Gleichung
-  pk= pq*pq/-3 - rq*4;
-  qk= pq*(pq*pq/real (4.5) + rq*4)/-3 + pq*rq*4 - qq*qq;
+  // Parameter normale kubische Gleichung
+  ak= pq/-2;
+  bk= -rq;
+  ck= rq*pq/2 - qq*qq/8;
 
-  // Lösung normale lineare Gleichung
-  xl= pk*pk*pk/27 + qk*qk/4;
+  // Parameter reduzierte kubische Gleichung
+  pk= ak*ak/-3 + bk;
+  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
 
   // Lösung normale quadratische Gleichung
-  xd= qk/-2 + sqrtv (xl);
+  xd= qk/-2 + sqrtv (ckomplexk (pk*pk*pk/27 + qk*qk/4));
 
   // Lösung reduzierte kubische Gleichung
-  yd= cbrtv (xd);
+  cbrtv (xd, z1, z2, z3);
 
-  // Lösung reduzierte quartische Gleichung
-  z= yd - pk/(yd*3) + pq/3;
-  u= sqrtv (z - pq);
+  // Rücktransformation
+  yk1= z1 - pk/(z1*3);
+  yk2= z2 - pk/(z2*3);
+  yk3= z3 - pk/(z3*3);
 
-  a1=  u;
-  a2= -u;
-  b1= (z - qq/u)/2;
-  b2= (z + qq/u)/2;
+  // Lösung normale kubische Gleichung
+  ak3= ak/3;
+  xk1= yk1 - ak3;
+  xk2= yk2 - ak3;
+  xk3= yk3 - ak3;
+
+  // Lösungen Parameter quadratische Gleichungen
+  z= xk1;
+  v= sqrtv (z*z - rq);
+
+  a1=  qq/v/-2;
+  a2=  qq/v/2;
+  b1= z + v;
+  b2= z - v;
 
   quadratisch1 (a1, b1, y1, y2);
   quadratisch1 (a2, b2, y3, y4);
 
   // Lösungen normale quartische Gleichung
-  x1= y1 - aq/4;
-  x2= y2 - aq/4;
-  x3= y3 - aq/4;
-  x4= y4 - aq/4;
+  aq4= aq/4;
+  x1= y1 - aq4;
+  x2= y2 - aq4;
+  x3= y3 - aq4;
+  x4= y4 - aq4;
   }
 
-void quartischdiffpint (ckomplexk aq, ckomplexk bq, ckomplexk cq, ckomplexk dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+void quartischbuchfintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
-  ckomplexk pq, qq, rq, pk, qk, xl, xd, yd;
-  ckomplexk z, u, a1, a2, b1, b2, y1, y2, y3, y4;
+  real pq, qq, rq, ak, bk, ck, pk, qk;
+  ckomplexk xd, z1, z2, z3, yk1, yk2, yk3, ak3, xk1, xk2, xk3, z, u, v, a1, a2, bed, b1, b2, y1, y2, y3, y4, aq4;
 
   // Parameter reduzierte quartische Gleichung
   pq= bq - aq*aq*3/8;
   qq= aq*(aq*aq - bq*4)/8 + cq;
   rq= aq*((aq*bq - cq*4)*16 - aq*aq*aq*3)/256 + dq;
 
-  // Parameter reduzierte kubische Gleichung
-  pk= pq*pq/-3 - rq*4;
-  qk= pq*(pq*pq/real (4.5) + rq*4)/-3 + pq*rq*4 - qq*qq;
+  // Parameter normale kubische Gleichung
+  ak= pq/-2;
+  bk= -rq;
+  ck= rq*pq/2 - qq*qq/8;
 
-  // Lösung normale lineare Gleichung
-  xl= pk*pk*pk/27 + qk*qk/4;
+  // Parameter reduzierte kubische Gleichung
+  pk= ak*ak/-3 + bk;
+  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
 
   // Lösung normale quadratische Gleichung
-  xd= qk/-2 + sqrtv (xl);
+  xd= qk/-2 + sqrtv (ckomplexk (pk*pk*pk/27 + qk*qk/4));
 
   // Lösung reduzierte kubische Gleichung
-  yd= cbrtv (xd);
+  cbrtv (xd, z1, z2, z3);
 
-  // Lösung reduzierte quartische Gleichung
-  z= yd - pk/(yd*3) + pq/3;
-  u= sqrtv (z - pq);
+  // Rücktransformation
+  yk1= z1 - pk/(z1*3);
+  yk2= z2 - pk/(z2*3);
+  yk3= z3 - pk/(z3*3);
+
+  // Lösung normale kubische Gleichung
+  ak3= ak/3;
+  xk1= yk1 - ak3;
+  xk2= yk2 - ak3;
+  xk3= yk3 - ak3;
+
+  // Lösungen Parameter quadratische Gleichungen
+  z= xk1;
+  u= sqrtv (z*2 - pq);
 
   a1=  u;
   a2= -u;
-  b1= (z - qq/u)/2;
-  b2= (z + qq/u)/2;
+
+  v= sqrtv (z*z - rq);
+
+  // Bedingung -2uv = q
+  bed= u*v*-2;
+  if (absv (bed + qq) < absv (bed - qq))
+    v= -v;
+
+  b1= z + v;
+  b2= z - v;
 
   quadratisch1 (a1, b1, y1, y2);
   quadratisch1 (a2, b2, y3, y4);
 
   // Lösungen normale quartische Gleichung
-  x1= y1 - aq/4;
-  x2= y2 - aq/4;
-  x3= y3 - aq/4;
-  x4= y4 - aq/4;
+  aq4= aq/4;
+  x1= y1 - aq4;
+  x2= y2 - aq4;
+  x3= y3 - aq4;
+  x4= y4 - aq4;
+  }
+
+void quartischpdfw2intr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+  {
+  real pq, qq, rq, ak, bk, ck, pk, qk;
+  ckomplexk xd, z1, z2, z3, yk1, yk2, yk3, ak3, xk1, xk2, xk3, z, u, a1, a2, b1, b2, y1, y2, y3, y4, aq4;
+
+  // Parameter reduzierte quartische Gleichung
+  pq= bq - aq*aq*3/8;
+  qq= aq*(aq*aq - bq*4)/8 + cq;
+  rq= aq*((aq*bq - cq*4)*16 - aq*aq*aq*3)/256 + dq;
+
+  // Parameter normale kubische Gleichung
+  ak= pq*2;
+  bk= pq*pq - rq*4;
+  ck= -(qq*qq);
+
+  // Parameter reduzierte kubische Gleichung
+  pk= ak*ak/-3 + bk;
+  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
+
+  // Lösung normale quadratische Gleichung
+  xd= qk/-2 + sqrtv (ckomplexk (pk*pk*pk/27 + qk*qk/4));
+
+  // Lösung reduzierte kubische Gleichung
+  cbrtv (xd, z1, z2, z3);
+
+  // Rücktransformation
+  yk1= z1 - pk/(z1*3);
+  yk2= z2 - pk/(z2*3);
+  yk3= z3 - pk/(z3*3);
+
+  // Lösung normale kubische Gleichung
+  ak3= ak/3;
+  xk1= yk1 - ak3;
+  xk2= yk2 - ak3;
+  xk3= yk3 - ak3;
+
+  // Lösungen Parameter quadratische Gleichungen
+  z= xk1;
+  u= sqrtv (z);
+
+  a1=  u;
+  a2= -u;
+  b1= (z + pq - qq/u)/2;
+  b2= (z + pq + qq/u)/2;
+
+  quadratisch1 (a1, b1, y1, y2);
+  quadratisch1 (a2, b2, y3, y4);
+
+  // Lösungen normale quartische Gleichung
+  aq4= aq/4;
+  x1= y1 - aq4;
+  x2= y2 - aq4;
+  x3= y3 - aq4;
+  x4= y4 - aq4;
   }
 
 /*
