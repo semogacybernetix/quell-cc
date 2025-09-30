@@ -147,9 +147,8 @@ void cflugsimu::welttoscreentakt ()           // zufallsreihenfolgiger Pixeldurc
   screen->flush ();
   while (real (times (&flugsimuzeit)) - framepos < frametk);
   framepos= framepos + frametk;                           // Zeitposition für den Beginn des nächsten Frames berechnen
-  printtext ("  Pixel: ");                                // Die Anzahl der Pixel, die während der Framedauer geschafft wurden zu berechnen
   printinteger (renderanz);
-  printtext ("\n");
+  printtext (" Pixel\n");                                // Die Anzahl der Pixel, die während der Framedauer geschafft wurden zu berechnen
   }
 
 void cflugsimu::welttoscreenthread (integer pthreadnr)
@@ -186,13 +185,13 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
 
   tms zeit;
   real ticksps= real (sysconf (_SC_CLK_TCK));
-  clock_t ticks= times (&zeit);
+  clock_t zeitpos= times (&zeit);
   printtext ("ticks/sek: ");
   printreal (ticksps);
   printtext ("\n");
 
   integer koerper= 0;
-  real framezeit;
+  integer framezeit;
   keyboard->putkey (19, 5, 1);
     do
     {
@@ -203,14 +202,13 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       threadrekursiv (0);
       screen->flush ();
       //welttoscreenz ();
-      framezeit= real ((times (&zeit) - ticks))/ticksps;
+      framezeit= (times (&zeit) - zeitpos)*10;
       //cout << "Zeit: " << framezeit << "  fps: " << 1/framezeit << endl;
 //      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
-      printtext ("Zeit: ");
-      printreal (framezeit);
-      printtext ("  fps: ");
-      printreal (1/framezeit);
-      printtext ("\n");
+      printinteger (framezeit);
+      printtext (" ms    ");
+      printinteger (1000/framezeit);
+      printtext (" fps\n");
       flugw= eulerwinkelfrommatrix (welt->augbasis);
       flugw= 180/PI*flugw;
       drehaw= winkelachsefrommatrix (welt->augbasis);
@@ -222,7 +220,7 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       //drehmatrixausgabe (welt->augbasis);
 
       fflush (stdout);
-      ticks= times (&zeit);
+      zeitpos= times (&zeit);
       }
       else
         usleep (50000);
@@ -571,10 +569,10 @@ void cflugsimu::fliegetakt ()
       screen->flush ();
       framedauer= (times (&zeit) - zeitpos)*integer (tickms);
 //      cout << "Zeit: " << framezeit << "  fps: " << 1/framezeit << endl;
-      printtext ("Zeit: ");
       printinteger (framedauer);
-      printtext ("  fps: ");
-      printreal (1/real (framedauer));
+      printtext (" ms    ");
+      printinteger (1000/framedauer);
+      printtext (" fps    ");
       //printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
       //zeitpos= real (times (&zeit));
       flugw= eulerwinkelfrommatrix (welt->augbasis);

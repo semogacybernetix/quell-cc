@@ -153,10 +153,10 @@ void palettetest (unsigned char* pfarbe, integer panz)
 void apfel ()
   {
   // Apfelmännchen Variablen anlegen
-//  cmemscreen8 apfelscr ("apfel.bmp", 1920, 1080);
-//  cbmpdatei apfelscr ("apfel.bmp", 1920, 1080);
-  //cfbscreen apfelscr ("apfel.bmp", 1920, 1080);
-  cxscreen apfelscr ("apfel.bmp", 1024, 512);
+  //cmemscreen8 apfelscr ("apfel.bmp", 1920, 1080);
+  //cbmpdatei apfelscr ("apfel.bmp", 1920, 1080);
+  cfbscreen apfelscr ("apfel.bmp", 1920, 1080);
+  //cxscreen apfelscr ("apfel.bmp", 1024, 512);
   integer xanz= apfelscr.xanz;
   integer yanz= apfelscr.yanz;
   ckomplexk bildmitte;

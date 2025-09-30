@@ -167,8 +167,10 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte &psp)
   D= 4*(rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - 2*(rxox + ryoy));
   E= rq1*(rq1 + 2*ovq) + q(oxq) + q(oyq) + q(ozq) + 2*(q(oxoy) + q(oyoz) + q(ozox)) - 4*(oxq + oyq);
 
-//  quartischdiffpintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
-  quartischlagrangeintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  quartischdiffpintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  //quartischlagrangeintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  //quartischdiffpint (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  //quartischbuchuint (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
 
   if (ag (x1) < 1e-8)
     psp.add (x1.x);

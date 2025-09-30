@@ -2357,7 +2357,7 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckom
   z= pq/3 - pk/yk + yk;
   u= sqrtv (z - pq)/2;
 
-  d= u*u - z/2;
+  d= (z + pq)/-4;
   e= qq/u/4;
   D1= sqrtv (d + e);
   D2= sqrtv (d - e);
@@ -2482,6 +2482,48 @@ void quartischlagrangeintralt (real aq, real bq, real cq, real dq, ckomplexk& x1
   x2= yq2 - aq4;
   x3= yq3 - aq4;
   x4= yq4 - aq4;
+  }
+
+void quartischbuchuint (ckomplexk aq, ckomplexk bq, ckomplexk cq, ckomplexk dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+  {
+  ckomplexk pq, qq, rq, pk, qk, xl, xd, yd;
+  ckomplexk z, u, a1, a2, b1, b2, y1, y2, y3, y4;
+
+  // Parameter reduzierte quartische Gleichung
+  pq= bq - aq*aq*3/8;
+  qq= aq*(aq*aq - bq*4)/8 + cq;
+  rq= aq*((aq*bq - cq*4)*16 - aq*aq*aq*3)/256 + dq;
+
+  // Parameter reduzierte kubische Gleichung
+  pk= pq*pq/-3 - rq*4;
+  qk= pq*(pq*pq/real (4.5) + rq*4)/-3 + pq*rq*4 - qq*qq;
+
+  // Lösung normale lineare Gleichung
+  xl= pk*pk*pk/27 + qk*qk/4;
+
+  // Lösung normale quadratische Gleichung
+  xd= qk/-2 + sqrtv (xl);
+
+  // Lösung reduzierte kubische Gleichung
+  yd= cbrtv (xd);
+
+  // Lösung reduzierte quartische Gleichung
+  z= yd - pk/(yd*3) + pq/3;
+  u= sqrtv (z - pq);
+
+  a1=  u;
+  a2= -u;
+  b1= (z - qq/u)/2;
+  b2= (z + qq/u)/2;
+
+  quadratisch1 (a1, b1, y1, y2);
+  quadratisch1 (a2, b2, y3, y4);
+
+  // Lösungen normale quartische Gleichung
+  x1= y1 - aq/4;
+  x2= y2 - aq/4;
+  x3= y3 - aq/4;
+  x4= y4 - aq/4;
   }
 
 void quartischdiffpint (ckomplexk aq, ckomplexk bq, ckomplexk cq, ckomplexk dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
