@@ -163,7 +163,7 @@ void addzylinder (cwelt& pwelt)
 
 void fliegethread ()
   {
-  cwelt* welt= new cwelt (900, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
   welt->himmelfarbe= cvektor3 (0,0,255);
 
   //addebene (*welt);
@@ -174,7 +174,7 @@ void fliegethread ()
   //addkatzenkugel (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450));
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1600, 800));
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450));
 
   flugsimu.setframedauer (1000/real (30));               // Framerate setzen
   flugsimu.threadanz= 8;
@@ -189,7 +189,7 @@ void fliegethread ()
 
 void fliegetakt ()
   {
-  cwelt* welt= new cwelt (100, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  cwelt* welt= new cwelt (225, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
   welt->himmelfarbe= cvektor3 (0,0,255);
 
   //addebene (*welt);
@@ -200,7 +200,7 @@ void fliegetakt ()
   //addkatzenkugel (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450));
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 400, 200));
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 400, 225));
 
   flugsimu.setframedauer (1000/real (20));               // Framerate setzen
   flugsimu.threadanz= 8;
@@ -215,7 +215,7 @@ void fliegetakt ()
 
 int main ()
   {
-  //fliegethread ();
-  fliegetakt ();
+  fliegethread ();
+  //fliegetakt ();
   return 0;
   }
