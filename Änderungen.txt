@@ -250,6 +250,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.09.27 Sa  7:00, symflip fliegetakt erzeugt, Framezeitberechnung erneuert, xray fliegetakt mit 200x100 20 fps, 10:33
 2025.09.28 So  16 Uhr quell-cc für github vorbereitet, 17:22
 
+2025.09.30 Di  11 Uhr quartischdiffpintr optimiert (nur eine Zeile), fliegethread, fliegetakt verbessert, 15:53
+
 
 -----------------------------------------------------------------------------------------------
 visualisierekantenmodell geht (als Vorbild für korrektes Initialisieren nehmen)

@@ -8,3 +8,7 @@ second projekt symflip  visualize symmetrygroup of 3 reflektion in R3. its using
 
 cd all/symflip  make symflip
 
+
+Apfelmännchen fractal on a framebuffer
+
+cd all/framebuffer/single  make apfel
