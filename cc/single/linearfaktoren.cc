@@ -19,7 +19,7 @@ void quadratischreduziertk (ckomplexk a, ckomplexk b, ckomplexk& p)
   p= b - a*a/4;
   }
 
-void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
+void quadratischnormal (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   {
   ckomplexk a2, p, y1, y2;
 
@@ -60,7 +60,7 @@ void quadratischparameter ()
   vektor2eingabek (b);
 
   quadratisch (a, b, x1, x2);
-  quadratisch1 (a, b, x3, x4);
+  quadratisch (a, b, x3, x4);
   quadratisch2 (a, b, x5, x6);
   quadratischp (polar360 (a), polar360 (b), x7, x8);
 
@@ -68,7 +68,7 @@ void quadratischparameter ()
   printvektor2komplex ("x1          ", x1, 1);
   printvektor2komplex ("x2          ", x2, 1);
   printtext ("\n");
-  printtext ("---------------------- quadratisch1 ------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("---------------------- quadratisch ------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x3, 1);
   printvektor2komplex ("x2          ", x4, 1);
   printtext ("\n");
@@ -190,8 +190,8 @@ void kubischparameter ()
   kubischreduziertk (a, b, c, p, q);
 
   kubischreduziertcardano3 (p, q, y1, y2, y3);
-  kubischreduziertvtransr3 (p, q, y4, y5, y6);
-  kubischreduziertvtransr1 (p, q, y7, y8, y9);
+  kubischreduziertu3 (p, q, y4, y5, y6);
+  kubischreduziertu1 (p, q, y7, y8, y9);
 
   printtext ("---------------------- kubisch cardano3 -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", (y1 - a)/3, 0);
@@ -240,23 +240,17 @@ void kubischloesungen ()
   printvektor2komplex ("x2          ", (y2 - a)/3, 0);
   printvektor2komplex ("x3          ", (y3 - a)/3, 0);
   printtext ("\n");
-  kubischreduziertvtransr3 (p, q, y4, y5, y6);
+  kubischreduziertu3 (p, q, y4, y5, y6);
   printtext ("---------------------- kubisch vtransr3 -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", (y4*3 - a)/3, 0);
   printvektor2komplex ("x2          ", (y5*3 - a)/3, 0);
   printvektor2komplex ("x3          ", (y6*3 - a)/3, 0);
   printtext ("\n");
-  kubischreduziertvtransr1 (p, q, y7, y8, y9);
+  kubischreduziertu1 (p, q, y7, y8, y9);
   printtext ("---------------------- kubisch vtransr1 -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", (y7*3 - a)/3, 0);
   printvektor2komplex ("x2          ", (y8*3 - a)/3, 0);
   printvektor2komplex ("x3          ", (y9*3 - a)/3, 0);
-  printtext ("\n");
-  kubischreduziertfaktor3 (p, q, y10, y11, y12);
-  printtext ("---------------------- kubisch faktor3 -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", (y10 - a)/3, 0);
-  printvektor2komplex ("x2          ", (y11 - a)/3, 0);
-  printvektor2komplex ("x3          ", (y12 - a)/3, 0);
   printtext ("\n");
   }
 
@@ -1037,8 +1031,8 @@ void quartischwegdiffp (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
   b1= (z - qq/u)/2;
   b2= (z + qq/u)/2;
 
-  quadratisch1 (a1, b1, y1q, y2q);
-  quadratisch1 (a2, b2, y3q, y4q);
+  quadratisch (a1, b1, y1q, y2q);
+  quadratisch (a2, b2, y3q, y4q);
 
   // Rücktransformation der zentrierten quartischen Lösungen in die Lösungen der normalen quartischen Gleichung
   aq4= aq/4;
@@ -1201,8 +1195,8 @@ void quartischwegpdfw2 (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
   b1= (z + pq - qq/u)/2;
   b2= (z + pq + qq/u)/2;
 
-  quadratisch1 (a1, b1, y1q, y2q);
-  quadratisch1 (a2, b2, y3q, y4q);
+  quadratisch (a1, b1, y1q, y2q);
+  quadratisch (a2, b2, y3q, y4q);
 
   // Rücktransformation der zentrierten quartischen Lösungen in die Lösungen der normalen quartischen Gleichung
   aq4= aq/4;
@@ -1337,8 +1331,8 @@ void quartischwegdiffpkurz (ckomplexk aq, ckomplexk bq, ckomplexk cq, ckomplexk 
   b1= (z - qq/u)/2;
   b2= (z + qq/u)/2;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
 
   // Rücktransformation der zentrierten quartischen Lösungen in die Lösungen der normalen quartischen Gleichung
   x1= y1 - aq/4;
@@ -1431,8 +1425,8 @@ void quartischwegz1kurz (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk& x4
   b1= (z + pq/3 - qq/u)/2;
   b2= (z + pq/3 + qq/u)/2;
 
-  quadratisch1 (a1, b1, y1q, y2q);
-  quadratisch1 (a2, b2, y3q, y4q);
+  quadratisch (a1, b1, y1q, y2q);
+  quadratisch (a2, b2, y3q, y4q);
 
   // Rücktransformation der zentrierten quartischen Lösungen in die Lösungen der normalen quartischen Gleichung
   aq4= aq/4;
@@ -1539,8 +1533,8 @@ void quartischwegz3kurz (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk&
   b1= ((z + pq)/3 - qq/u)/2;
   b2= ((z + pq)/3 + qq/u)/2;
 
-  quadratisch1 (a1, b1, y1q, y2q);
-  quadratisch1 (a2, b2, y3q, y4q);
+  quadratisch (a1, b1, y1q, y2q);
+  quadratisch (a2, b2, y3q, y4q);
 
   // Rücktransformation der zentrierten quartischen Lösungen in die Lösungen der normalen quartischen Gleichung
   aq4= aq/4;

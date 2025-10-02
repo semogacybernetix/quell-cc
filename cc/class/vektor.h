@@ -324,15 +324,12 @@ ckomplexk potenz    (const ckomplexk pv1, const ckomplexk pv2);
 
 // -------------------- Lösungsformeln für Polynome ----------------------------------------------------------------
 
-void quadratisch1 (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2);
-void quadratischeresolvente1 (ckomplexk p, ckomplexk q, ckomplexk& z1, ckomplexk& z2);
-void quadratischeresolvente3 (ckomplexk p, ckomplexk q, ckomplexk& z1, ckomplexk& z2);
+void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2);
 void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertcardano (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertcardano3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
-void kubischreduziertvtransr1 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
-void kubischreduziertvtransr3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
-void kubischreduziertfaktor3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
+void kubischreduziertu1 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
+void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, ckomplexk& q);
 void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);
 void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);

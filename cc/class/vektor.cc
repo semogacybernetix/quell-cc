@@ -1880,11 +1880,11 @@ cvektor4 quaternionfromeulerwinkel (const cvektor3 pflugw)
   return -ret;
   }
 
-// ------------------------------------------------------- Polynomberechnung -----------------------------------------------------------
+//-------------------------------------------------------- Polynomberechnung --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// ------------------------------------------------------- quadratisch ------------------------------------------------------------------
+// ------------------------------------------------------- quadratisch ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void quadratisch1 (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
+void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   {
   ckomplexk a2, D;
 
@@ -1895,29 +1895,7 @@ void quadratisch1 (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   x2= a2 - D;
   }
 
-// ------------------------------------------------------- quadratische Resolventen -----------------------------------------------------
-
-void quadratischeresolvente1 (ckomplexk p, ckomplexk q, ckomplexk& z1, ckomplexk& z2)
-  {
-  ckomplexk ad, bd;
-
-  ad= q;
-  bd= p*p*p/-27;
-
-  quadratisch1 (ad, bd, z1, z2);
-  }
-
-void quadratischeresolvente3 (ckomplexk p, ckomplexk q, ckomplexk& z1, ckomplexk& z2)
-  {
-  ckomplexk ad, bd;
-
-  ad= q*27;
-  bd= p*p*p*-27;
-
-  quadratisch1 (ad, bd, z1, z2);
-  }
-
-// ------------------------------------------------------- kubisch ---------------------------------------------------------------------
+// ------------------------------------------------------- kubisch ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
   {
@@ -1958,46 +1936,30 @@ void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomp
 
 void kubischreduziertcardano (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
   {
-  ckomplexk  bed, z1, z2;
+  ckomplexk u1, u2;
 
-  quadratischeresolvente1 (p, q, z1, z2);
-
-  bed= -p;
-  uvaddition (z1, z2, bed, y1, y2, y3);
+  quadratisch (q, p*p*p/-27, u1, u2);
+  uvaddition (u1, u2, -p, y1, y2, y3);
   }
 
 void kubischreduziertcardano3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
   {
-  ckomplexk  bed, z1, z2;
+  ckomplexk u1, u2;
 
-  quadratischeresolvente3 (p, q, z1, z2);
-
-  bed= p*-3;
-  uvaddition (z1, z2, bed, y1, y2, y3);
+  quadratisch (q*27, p*p*p*-27, u1, u2);
+  uvaddition (u1, u2, p*-3, y1, y2, y3);
   }
 
-void kubischreduziertfaktor3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
-  {
-  ckomplexk  ad, bd, bed, z1, z2;
-
-  ad= q*27;
-
-  bed= p*-3;
-  bd= bed*bed*bed;
-
-  quadratisch1 (ad, bd, z1, z2);
-  uvaddition (z1, z2, bed, y1, y2, y3);
-  }
-
-void kubischreduziertvtransr1 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+void kubischreduziertu1 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
   {
   ckomplexk  u1, u2, u, z1, z2, z3;
 
-  quadratischeresolvente1 (p, q, u1, u2);
+  quadratisch (q, p*p*p/-27, u1, u2);
 
-  u= u1;
-  if (absv (u2) > absv (u))                   // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
-    u= u2;
+  if (absv (u1) > absv (u2))                 // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+    u= u1;
+    else
+    u=u2;
 
   cbrtv (u, z1, z2, z3);
 
@@ -2006,15 +1968,16 @@ void kubischreduziertvtransr1 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplex
   y3= z3 - p/(z3*3);
   }
 
-void kubischreduziertvtransr3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
   {
-  ckomplexk  D, u1, u2, u, z1, z2, z3;
+  ckomplexk  u1, u2, u, z1, z2, z3;
 
-  quadratischeresolvente3 (p, q, u1, u2);
+  quadratisch (q*27, p*p*p*-27, u1, u2);
 
-  u= u1;
-  if (absv (u2) > absv (u))                 // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
-    u= u2;
+  if (absv (u1) > absv (u2))                 // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+    u= u1;
+    else
+    u=u2;
 
   cbrtv (u, z1, z2, z3);
 
@@ -2034,14 +1997,14 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   ckomplexk p, q, y1, y2, y3;
 
   kubischreduziertk (a, b, c, p, q);
-  kubischreduziertfaktor3 (p, q, y1, y2, y3);
+  kubischreduziertcardano3 (p, q, y1, y2, y3);
 
   x1= (y1 - a)/3;
   x2= (y2 - a)/3;
   x3= (y3 - a)/3;
   }
 
-//--------------------------------------------------- kubische Resolventen ----------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------- kubische Resolventen ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
   {
@@ -2123,8 +2086,8 @@ void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk&
   b1= (z - q/u)/2;
   b2= (z + q/u)/2;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
   }
 
 void quartischreduziertbuchu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2141,8 +2104,8 @@ void quartischreduziertbuchu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   b1= z - q/u/2;
   b2= z + q/u/2;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
   }
 
 void quartischreduziertbuchv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2159,8 +2122,8 @@ void quartischreduziertbuchv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   b1= z + v;
   b2= z - v;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
   }
 
 void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2185,8 +2148,8 @@ void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   b1= z + v;
   b2= z - v;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
   }
 
 void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2203,8 +2166,8 @@ void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   b1= (z + p - q/u)/2;
   b2= (z + p + q/u)/2;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
   }
 
 void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2256,8 +2219,8 @@ void quartischreduziertbuch3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   b1= (z + p)/6 + v;
   b2= (z + p)/6 - v;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
   }
 
 void quartischreduziertpdfw23 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2274,8 +2237,8 @@ void quartischreduziertpdfw23 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk&
   b1= (z + p)/6 - q/u/2;
   b2= (z + p)/6 + q/u/2;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
   }
 
 void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2465,8 +2428,8 @@ void quartischbuchuintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckom
   b1= z - qq/u/2;
   b2= z + qq/u/2;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
 
   // Lösungen normale quartische Gleichung
   aq4= aq/4;
@@ -2521,8 +2484,8 @@ void quartischbuchvintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckom
   b1= z + v;
   b2= z - v;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
 
   // Lösungen normale quartische Gleichung
   aq4= aq/4;
@@ -2585,8 +2548,8 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckom
   b1= z + v;
   b2= z - v;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
 
   // Lösungen normale quartische Gleichung
   aq4= aq/4;
@@ -2641,8 +2604,8 @@ void quartischpdfw2intr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckom
   b1= (z + pq - qq/u)/2;
   b2= (z + pq + qq/u)/2;
 
-  quadratisch1 (a1, b1, y1, y2);
-  quadratisch1 (a2, b2, y3, y4);
+  quadratisch (a1, b1, y1, y2);
+  quadratisch (a2, b2, y3, y4);
 
   // Lösungen normale quartische Gleichung
   aq4= aq/4;

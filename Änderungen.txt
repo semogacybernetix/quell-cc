@@ -252,9 +252,10 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2025.09.30 Di  11 Uhr quartischdiffpintr optimiert (nur eine Zeile), fliegethread, fliegetakt verbessert, 15:53, 20 Uhr, alle quartischen Routinen als integrierte Version eingebunden für spätere Optimierung, 22:00
 
-2025.10.02 Do  12 Uhr, alle (diffp, lagrange, buchu, buchv, buchf, pdfw2) quartische Routinen überprüft, überflüssige Routinen gelöscht, 13:02
+2025.10.02 Do  12 Uhr, alle (diffp, lagrange, buchu, buchv, buchf, pdfw2) quartische Routinen überprüft, überflüssige Routinen gelöscht, 14:19
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+kubischreell testen, erstellen
 Division bei quartischlagrangeintr entfernen und bei quartischbuchf nicht auftreten lassen, Division kommt von kubischer Resolvente berechnen mit vtrans
 Die Routinen optimieren
 neues Threadverfahren entwickeln
