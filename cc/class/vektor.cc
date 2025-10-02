@@ -2041,7 +2041,7 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   x3= (y3 - a)/3;
   }
 
-//--------------------------------------------------- kubische Resolventen ----------------------------------------------------------------------
+//--------------------------------------------------- kubische Resolventen ----------------------------------------------------------------------------------------------------------------------------------
 
 void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
   {
@@ -2107,7 +2107,7 @@ void kubischeresolvente3z (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1,
   kubischreduziertcardano3 (pk, qk, z1, z2, z3);
   }
 
-// --------------------------------------------  quartischreduziert --------------------------------------------------------------------------------
+// --------------------------------------------  quartischreduziert --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
   {
@@ -2334,7 +2334,7 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
   x4= y4 - a4;
   }
 
-//-------------------- quartisch integriert -------------------------------------------------------------------
+//-------------------- quartisch integriert ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void quartischdiffpintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
@@ -2602,7 +2602,7 @@ void quartischpdfw2intr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckom
   ckomplexk xd, z1, z2, z3, yk1, yk2, yk3, ak3, xk1, xk2, xk3, z, u, a1, a2, b1, b2, y1, y2, y3, y4, aq4;
 
   // Parameter reduzierte quartische Gleichung
-  pq= bq - aq*aq*3/8;
+  pq= aq*aq*3/-8 + bq;
   qq= aq*(aq*aq - bq*4)/8 + cq;
   rq= aq*((aq*bq - cq*4)*16 - aq*aq*aq*3)/256 + dq;
 
@@ -2652,79 +2652,3 @@ void quartischpdfw2intr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckom
   x4= y4 - aq4;
   }
 
-/*
-// langer Weg
-void quartischwegpdfw2 (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& x4s)
-  {
-  ckomplexk aq, bq, cq, dq, pq, qq, rq, ak, bk, ck, pk, qk, ad, bd, pd, x1l, y1d, y2d, ad2, x1d, x2d, xd, z1k, z2k, z3k, y1k, y2k, y3k, ak3, x1k, x2k, x3k, xk;
-  ckomplexk z, u, a1, a2, b1, b2, y1q, y2q, y3q, y4q, aq4, x1q, x2q, x3q, x4q;
-  ckomplexk dpyq, dpyk, dpyd, x1ks, x2ks, x3ks, bla, x1ds, x2ds;
-
-  // zentrierte quartische Parameter aus den quartischen Parametern: aq, bq, cq, dq -> pq, qq, rq
-  pq= aq*aq*3/-8 + bq;
-  qq= aq*(aq*aq - bq*4)/8 + cq;
-  rq= aq*((aq*bq - cq*4)*16 - aq*aq*aq*3)/256 + dq;
-
-  // Parameter der kubischen Resolvente pdfw2 aus den zentrierten quartischen Parametern: qpp, qqp, qrp -> akp, bkp, ckp
-  ak= pq*2;
-  bk= pq*pq - rq*4;
-  ck= qq*qq*-1;
-
-  // Parameter der reduzierten kubischen Gleichung aus den Parametern der kubischen Gleichung
-  pk= ak*ak/-3 + bk;
-  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
-
-  // Parameter der quadratischen Resolvente
-  ad= qk;
-  bd= pk*pk*pk/-27;
-
-  // Parameter der reduzierten quadratischen Gleichung aus den Parametern der normalen quadratischen Gleichung
-  pd= bd - ad*ad/4;
-
-  // Lösung der normalen linearen Gleichung aus den Parametern der reduzierten quadratischen Gleichung
-  x1l= -pd;
-
-  // Rückübergabe der linearen Lösungen an die quadratischen Lösungen
-  y1d=  sqrtv (x1l);
-  y2d= -sqrtv (x1l);
-
-  // Rücktransformation der Lösungen der reduzierten quadratischen Gleichung in die Lösungen der normalen quadratischen Gleichung
-  ad2= ad/2;
-  x1d= y1d - ad2;
-  x2d= y2d - ad2;
-
-  // Rückübergabe der quadratischen Lösungen an die kubischen Lösungen
-  xd= x1d;
-  cbrtv (xd, z1k, z2k, z3k);
-  y1k= z1k - pk/(z1k*3);
-  y2k= z2k - pk/(z2k*3);
-  y3k= z3k - pk/(z3k*3);
-
-  // Rücktransformation der Lösungen der reduzierten kubischen Gleichung in die Lösungen der normalen kubischen Gleichung
-  ak3= ak/3;
-  x1k= y1k - ak3;
-  x2k= y2k - ak3;
-  x3k= y3k - ak3;
-
-  // Rückübergabe der kubischen Lösungen an die quartischen Lösungen (pdfw2)
-  xk= x1k;
-
-  z= xk;
-  u= sqrtv (z);
-
-  a1=  u;
-  a2= -u;
-  b1= (z + pq - qq/u)/2;
-  b2= (z + pq + qq/u)/2;
-
-  quadratisch1 (a1, b1, y1q, y2q);
-  quadratisch1 (a2, b2, y3q, y4q);
-
-  // Rücktransformation der zentrierten quartischen Lösungen in die Lösungen der normalen quartischen Gleichung
-  aq4= aq/4;
-  x1q= y1q - aq4;
-  x2q= y2q - aq4;
-  x3q= y3q - aq4;
-  x4q= y4q - aq4;
-  }
-*/

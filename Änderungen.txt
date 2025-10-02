@@ -252,17 +252,15 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2025.09.30 Di  11 Uhr quartischdiffpintr optimiert (nur eine Zeile), fliegethread, fliegetakt verbessert, 15:53, 20 Uhr, alle quartischen Routinen als integrierte Version eingebunden für spätere Optimierung, 22:00
 
+2025.10.02 Do  12 Uhr, alle (diffp, lagrange, buchu, buchv, buchf, pdfw2) quartische Routinen überprüft, überflüssige Routinen gelöscht, 13:02
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
------------------------------------------------------------------------------------------------
 Division bei quartischlagrangeintr entfernen und bei quartischbuchf nicht auftreten lassen, Division kommt von kubischer Resolvente berechnen mit vtrans
 Die Routinen optimieren
 neues Threadverfahren entwickeln
+apfel thread
 
-visualisierekantenmodell geht (als Vorbild für korrektes Initialisieren nehmen)
 Platform neu machen statt linux X86, AARCH
-framebuffer auf AARCH zum Laufen kriegen
-Makefile cc/class neu machen wegen Abhängigkeit von vektorcon von vektor
-Mandelbrot, Benchmark
+Benchmarks für screen Geschwindigkeit, float Geschwindigkeit
 printausgabe realzahlen mit Trennung 10er Gruppen, Binär, Hexadezimal
 Eingabe und Gleichungen mit polarkomplexen Zahlen rechnen
-Horner Schema bei Polynomberechnung

@@ -215,7 +215,7 @@ void fliegetakt ()
 
 int main ()
   {
-  //fliegethread ();
-  fliegetakt ();
+  fliegethread ();
+  //fliegetakt ();
   return 0;
   }
