@@ -126,7 +126,7 @@ void cstorus::init (const cvektor3 &pov)
   ov= pov;
   }
 
-void cstorus::berechne (const cvektor3 &rv, cschnittpunkte &psp)
+void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   {
   real rq1, rvq, rov, ovq;
   real rxq, ryq, rzq, oxq, oyq, ozq;
@@ -168,13 +168,14 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte &psp)
   E= rq1*(rq1 + 2*ovq) + q(oxq) + q(oyq) + q(ozq) + 2*(q(oxoy) + q(oyoz) + q(ozox)) - 4*(oxq + oyq);
 
   //quartischdiffpintrc (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
-  //quartischdiffpintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  quartischdiffpintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangeintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
   //quartischbuchuintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
   //quartischbuchvintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
-  quartischbuchfintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  //quartischbuchfintr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
   //quartischpdfw2intr (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
 
+  /*
   if (ag (x1) < 1e-8)
     psp.add (x1.x);
   if (ag (x2) < 1e-8)
@@ -183,6 +184,7 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte &psp)
     psp.add (x3.x);
   if (ag (x4) < 1e-8)
     psp.add (x4.x);
+  */
   }
 
 // ---------------------------- zweischaliges Hyperboloid, Kegel, einschaliges Hyperboloid -----------------------------------------------

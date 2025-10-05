@@ -255,7 +255,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.02 Do  12 Uhr, alle (diffp, lagrange, buchu, buchv, buchf, pdfw2) quartische Routinen überprüft, überflüssige Routinen gelöscht, 14:19
 
 2025.10.04 Sa  17 Uhr, kubischreduziertreell erstellt, quartische intRoutinen auf kubischreell umgestellt, 22:04
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025.10.05 So  18:00, quartischdiffpintr reell voll durchoptimiert, 21:32
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 neues Threadverfahren entwickeln

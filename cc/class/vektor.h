@@ -322,6 +322,20 @@ ckomplexk cosv      (const ckomplexk pv);
 ckomplexk sinv      (const ckomplexk pv);
 ckomplexk potenz    (const ckomplexk pv1, const ckomplexk pv2);
 
+// ------- Schnittpunktklasse ------------------------------------------------------------------------------------------------
+
+struct cschnittpunkte
+  {
+  integer        anz;
+  integer        koerpernr[1000];
+  integer        sichtbar[1000];
+  real           abstand[1000];
+  cvektor2       mannigpos[1000];
+
+  cschnittpunkte ();
+  void add (const real &pf);
+  };
+
 // -------------------- Lösungsformeln für Polynome ----------------------------------------------------------------
 
 void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2);
@@ -351,7 +365,7 @@ void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomple
 void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& p, ckomplexk& q, ckomplexk& r);
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
-void quartischdiffpintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
+void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangeintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischbuchuintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischbuchvintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);

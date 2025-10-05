@@ -3,20 +3,6 @@
 
 #include "../screen/vscr.h"  // für die screen-Textur aus einem Screen (z.B. jpeg-Datei) texturieren zu können
 
-// ------- Schnittpunktklasse ------------------------------------------------------------------------------------------------
-
-struct cschnittpunkte
-  {
-  integer        anz;
-  integer        koerpernr[1000];
-  integer        sichtbar[1000];
-  real           abstand[1000];
-  cvektor2       mannigpos[1000];
-
-  cschnittpunkte ();
-  void add (const real &pf);
-  };
-
 //-------------- Schnittobjekte ------------------------------------------------------
 
 struct clschnitt  // abstrakte Schnittklasse von der die konkreten Schnittklassen abgeleitet sind
