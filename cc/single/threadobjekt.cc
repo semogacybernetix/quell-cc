@@ -50,7 +50,7 @@ signed long cmultiarbeit::maxparallel ()
   {
   return hardware_concurrency ();
   }
-    
+
 //----------------------------------------------------------------------------------------
 int main ()
   {

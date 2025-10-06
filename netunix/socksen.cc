@@ -19,7 +19,7 @@ void sendeudp (char* pipaddr, char* pmessage, char* plaenge)
   toaddr.sin_family= AF_INET;
   if (!inet_aton (pipaddr, &toaddr.sin_addr))
     printf ("fehlerhafte IP-Adresse\n");
-  toaddr.sin_port= htons (6666);  
+  toaddr.sin_port= htons (6666);
   signed long packetnr= 1;
   while (1)
     {

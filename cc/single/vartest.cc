@@ -16,8 +16,8 @@ void gibvariable (signed long& p)
 
 void gibzeiger (signed long *p)
   {
-  printf ("%ld\n", *p); 
-  printf ("%ld\n", p[0]); 
+  printf ("%ld\n", *p);
+  printf ("%ld\n", p[0]);
   printf ("\n");
   }
 
