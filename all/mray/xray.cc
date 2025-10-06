@@ -202,7 +202,7 @@ void fliegetakt ()
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450));
   cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 400, 225));
 
-  flugsimu.setframedauer (1000/real (20));               // Framerate setzen
+  flugsimu.setframedauer (24);               // Framerate setzen
   flugsimu.threadanz= 8;
   flugsimu.bewstep= 2;
   flugsimu.drehstep= real (0.025);

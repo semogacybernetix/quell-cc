@@ -59,6 +59,7 @@ apfel:
 	make -C ../../cc/screen/ $(opfad)vscr.o
 	make -C ../../cc/screen/ $(opfad)memscr.o
 	make -C ../../cc/screen/ $(opfad)bmpscr.o
+	make -C ../../xwindow/screen/ $(opfad)xscr.o
 	make -C ../screen/ $(opfad)fbscr.o
 	make $(ppfad)$@
 

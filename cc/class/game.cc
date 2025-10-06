@@ -64,7 +64,7 @@ cflugsimu::cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen)
   pixelpos= 0;
   flugsimuthread= this;
   threadanz= 1;
-  setframedauer (100);      // Framedauer auf 100 ms setzen
+  //setframedauer (100);      // Framedauer auf 100 ms setzen der setzt das nach der Initiallisierung !!!!!!!!!!!!!!!!!!!!!!!!!
   framepos= real (times (&flugsimuzeit));
 
   // pixelarray erzeugen
@@ -89,7 +89,12 @@ void cflugsimu::setframedauer (real pfr)          // (Dauer eines Frames in Mill
   {
   tickms= 1000/real (sysconf (_SC_CLK_TCK));
   framems= pfr;
-  frametk= framems/tickms;
+  frametks= framems/tickms;
+  framedauer= 100/pfr;
+  printreal (pfr);
+  printtext ("\n");
+  printreal (framedauer);
+  printtext ("\n");
   }
 
 void cflugsimu::welttoscreenl ()               // linearer Pixeldurchgang
@@ -121,32 +126,6 @@ void cflugsimu::welttoscreenz ()              // zufallsreihenfolgiger Pixeldurc
     integer b= integer (fb.z);
     screen->putpixel (xpp, ypp, r, g, b);
     }
-  }
-
-void cflugsimu::welttoscreentakt (integer& renderanz)           // zufallsreihenfolgiger Pixeldurchgang
-  {
-  integer xpp, ypp;
-  cvektor3 fb;
-  renderanz= 0;
-
-  for (integer n= 0; n < pixelanz; n++)
-    {
-    if (real (times (&flugsimuzeit)) - framepos > frametk)
-      break;
-    xpp= pixels[pixelpos].x;
-    ypp= pixels[pixelpos].y;
-    fb= welt->getpunkt (cvektor2 (real (xpp) + xoff, real (ypp) + yoff));
-    integer r= integer (fb.x);
-    integer g= integer (fb.y);
-    integer b= integer (fb.z);
-    screen->putpixel (xpp, ypp, r, g, b);
-    pixelpos= (pixelpos + 1) % pixelanz;
-    renderanz++;
-    }
-
-  screen->flush ();
-  while (real (times (&flugsimuzeit)) - framepos < frametk);
-  framepos= framepos + frametk;                           // Zeitposition für den Beginn des nächsten Frames berechnen
   }
 
 void cflugsimu::welttoscreenthread (integer pthreadnr)
@@ -205,7 +184,11 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
 //      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
       printinteger (framezeit);
       printtext (" ms    ");
-      printinteger (1000/framezeit);
+      if (framezeit > 0)
+        printinteger (1000/framezeit);
+        else
+        printtext ("   -");
+
       printtext (" fps\n");
       flugw= eulerwinkelfrommatrix (welt->augbasis);
       flugw= 180/PI*flugw;
@@ -545,6 +528,27 @@ void cflugsimu::fliegek ()              // mit Körperdrehungen
   while (!keyboard->getkey (0, 0));
   }
 
+void cflugsimu::welttoscreentakt (integer exitzeit, integer& renderanz)           // zufallsreihenfolgiger Pixeldurchgang
+  {
+  integer xpp, ypp;
+  cvektor3 fb;
+  renderanz= 0;
+
+  for (integer n= 0; n < pixelanz; n++)
+    {
+    if (times (&flugsimuzeit) >= exitzeit)
+      break;
+    xpp= pixels[pixelpos].x;
+    ypp= pixels[pixelpos].y;
+    fb= welt->getpunkt (cvektor2 (real (xpp) + xoff, real (ypp) + yoff));
+    screen->putpixel (xpp, ypp, integer (fb.x), integer (fb.y), integer (fb.z));
+    pixelpos= (pixelpos + 1) % pixelanz;
+    renderanz++;
+    }
+  screen->flush ();
+  while (times (&flugsimuzeit) < exitzeit);  // warten, wenn der Frame vorzeitig fertig ist
+  }
+
 void cflugsimu::fliegetakt ()
   {
   cvektor3 flugw (0, 0, 0);
@@ -552,10 +556,11 @@ void cflugsimu::fliegetakt ()
   cbasis3 achsbasis;
 
   tms zeit;
-  clock_t zeitpos= times (&zeit);
-  integer framedauer, renderanz;
-  integer frameanz= 0;
-  integer pixelsum= 0;
+  integer startzeit= times (&zeit);
+  integer frameanz, pixelsum, renderanz, frameexit;
+
+  frameanz= 0;
+  pixelsum= 0;
 
   integer koerper= 0;
   keyboard->putkey (19, 5, 1);
@@ -563,25 +568,27 @@ void cflugsimu::fliegetakt ()
     {
     if (1)
       {
-      //welt->aktualisiere ();
-      welttoscreentakt (renderanz);
-      screen->flush ();
-      pixelsum= pixelsum + renderanz;
+      //welt->aktualisiere ();  // von fliegespiel ()
       frameanz++;
-      framedauer= (times (&zeit) - zeitpos)*integer (tickms);
-//      cout << "Zeit: " << framezeit << "  fps: " << 1/framezeit << endl;
-      printinteger (framedauer);
-      printtext (" ms    ");
-      printinteger (1000/framedauer);
-      printtext (" fps    ");
+      frameexit= startzeit + integer (framedauer*real (frameanz));
+      welttoscreentakt (frameexit, renderanz);
+      pixelsum= pixelsum + renderanz;
+
+      printtext ("pxanz: ");
       printinteger (renderanz);
-      printtext (" Pixel    ");                                // Die Anzahl der Pixel, die während der Framedauer geschafft wurden zu berechnen
-      printreal (real (pixelsum)/real (frameanz));
-      printtext (" Pixel    ");                                  // durchschnittliche Anzahl der Pixel pro Frame
-      printinteger (frameanz);
-      printtext ("\n");                                  // durchschnittliche Anzahl der Pixel pro Frame
+      //printinteger (1000/framedauer);
+      //printtext ("fps: ");
+      //printinteger (times (&zeit) - startzeit);
+      //printinteger (frameanz);
+      //printreal (framedauer);
+      //printtext (" Pixel    ");                                // Die Anzahl der Pixel, die während der Framedauer geschafft wurden zu berechnen
+      //printreal (real (pixelsum)/real (frameanz));             // durchschnittliche Anzahl der Pixel pro Frame
+      //printtext (" Pixel    ");
+      //printinteger (frameanz);
       //printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
       //zeitpos= real (times (&zeit));
+      printtext ("\n");
+
       flugw= eulerwinkelfrommatrix (welt->augbasis);
       flugw= 180/PI*flugw;
       drehaw= winkelachsefrommatrix (welt->augbasis);
@@ -593,12 +600,11 @@ void cflugsimu::fliegetakt ()
       //drehmatrixausgabe (welt->augbasis);
 
       fflush (stdout);
-      zeitpos= times (&zeit);
       }
       else
         usleep (0);
 
-    keyboard->flush ();
+      keyboard->flush ();
     if (koerper == 0)
       {
       // Bewegungen
@@ -854,7 +860,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
     if (1)
       {
       welt->aktualisiere ();
-      welttoscreentakt (renderanz);
+      welttoscreentakt (0, renderanz); // Fehler
       screen->flush ();
       framezeit= real (times (&zeit) - ticks)/ticksps;
 //      cout << "Zeit: " << framezeit << "  fps: " << 1/framezeit << endl;

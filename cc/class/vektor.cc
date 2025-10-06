@@ -12,9 +12,21 @@ winkelachse von 180° Drehungen: welche der beiden Achsen soll zurückgegeben we
 */
 
 #include "vektor.h"
-#include "../../conio/vektorcon.h"
+//#include "../../conio/vektorcon.h"     // zum Debuggen
 
 real vquant= real (1e-8);
+
+//------------------------------------------- Schnittpunkte Klasse ---------------------------------------------------------
+cschnittpunkte::cschnittpunkte ()
+  {
+  anz= 0;
+  }
+
+void cschnittpunkte::add (const real &pf)
+  {
+  abstand[anz]= pf;
+  anz++;
+  }
 
 //------------------------------------------- cvektor2 ---------------------------------------------------------
 cvektor2::cvektor2 () {}
