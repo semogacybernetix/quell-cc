@@ -367,9 +367,9 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangeintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
-void quartischbuchuintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
-void quartischbuchvintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
-void quartischbuchfintr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
+void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischpdfw2intr (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
 // --------------------- ckomplexk Operatoren ---------------------------------------------------------

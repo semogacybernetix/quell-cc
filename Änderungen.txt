@@ -257,6 +257,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.04 Sa  17 Uhr, kubischreduziertreell erstellt, quartische intRoutinen auf kubischreell umgestellt, 22:04
 2025.10.05 So  18:00, cschnittpunkte von ray.h nach vektor.h verlagert wegen reeller quartischer Lösungsroutinen, quartischdiffpintr reell voll durchoptimiert, 21:40
 2025.10.06 Mo  9:22, fliegetakt fehlerbereinigt, 13:16
+2025.10.07 Di  10:11, von quartischdiffpintr abgeleitet quartischbuchuintr, quartischbuchvintr, quartischbuchfintr mit psp erstellt und durchoptimiert, 14:20
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
