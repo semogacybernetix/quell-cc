@@ -178,8 +178,8 @@ void fliegethread ()
 
   flugsimu.setframedauer (1000/real (30));               // Framerate setzen
   flugsimu.threadanz= 8;
-  flugsimu.bewstep= 2;
-  flugsimu.drehstep= real (0.025);
+  flugsimu.bewstep= real (1);
+  flugsimu.drehstep= real (0.0125);
 
   //flugsimu.fliege ();
   //flugsimu.fliegek ();
