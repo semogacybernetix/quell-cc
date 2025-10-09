@@ -122,7 +122,6 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   real rxox, ryoy, rzoz, rxry, ryrz, rzrx, oxoy, oyoz, ozox;
   real sroxy, sroyz, srozx, proxy, proyz, prozx;
   real A, B, C, D, E;
-  ckomplexk x1, x2, x3, x4;
 
   rq1= 1 - r*r;
   rvq= rv%rv;
@@ -157,8 +156,8 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   E= rq1*(rq1 + 2*ovq) + q(oxq) + q(oyq) + q(ozq) + 2*(q(oxoy) + q(oyoz) + q(ozox)) - 4*(oxq + oyq);
 
   //quartischdiffpintr (B/A, C/A, D/A, E/A, psp);
-  quartischlagrangeintru (B/A, C/A, D/A, E/A, psp);
-  //quartischlagrangeintrc (B/A, C/A, D/A, E/A, psp);
+  //quartischlagrangeintru (B/A, C/A, D/A, E/A, psp);
+  quartischlagrangeintrc (B/A, C/A, D/A, E/A, psp);
   //quartischbuchuintr (B/A, C/A, D/A, E/A, psp);
   //quartischbuchvintr (B/A, C/A, D/A, E/A, psp);
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);

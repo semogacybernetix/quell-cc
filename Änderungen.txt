@@ -260,7 +260,10 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.07 Di  10:11, von quartischdiffpintr abgeleitet quartischbuchuintr, quartischbuchvintr, quartischbuchfintr mit psp erstellt und durchoptimiert, 14:20, 17:38, quartischlagrangeintr auf reell optimiert,
                stundenlang verbessert, sehr fehleranfällig, fast nicht geschafft die Formeln zu mutieren, dann quartischlagrangeintr in quartischlagrangeintru und quartischlagrangeintrc aufgespalten, stundenlang quartischlagrangeintru
                optimiert, quartischlagrangeintrc (kubische Resolvente nach cardano) nicht geschafft, 2:39
+
+2025.10.09 Do  19:38, torus x1-x4 entfernt, quartischlagrangeintrc erstellt, quartischlagrangeintru und quartischlagrangeintrc optimiert, 21:00
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 kubischreell kann mit auch mit transu Berechnung gemacht werden (Wurzeleinsparung)
 neues Threadverfahren entwickeln

@@ -2428,7 +2428,7 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
 void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, l, aq4, ak3, qq8, yr1, yr2, yr3, bedr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, l, aq4, ak3, qq8, yr1, yrx, yry, yr2, yr3, bedr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
   ckomplexk yk2, yk3, u1, u2, u3, yq1, yq2, yq3, yq4, bed, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
@@ -2451,8 +2451,10 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
     {
     //großer Aussschnitt eine reelle, 2 komplexe Lösungen
     yr1= cbrtr (qk + sqrtr (xl));
-    yk2= ckomplexk (yr1/-2, yr1*sqrtr (real (3))/2);
-    yk3= ckomplexk (yr1/-2, yr1*sqrtr (real (3))/-2);
+    yrx= yr1/-2;
+    yry= yr1*sqrtr (real (0.75));
+    yk2= ckomplexk (yrx, yry);
+    yk3= ckomplexk (yrx, -yry);
 
     ur1= sqrtr (ak3 + yr1 - pk/yr1);
     u2= sqrtv (ak3 + yk2 - pk/yk2);
@@ -2540,126 +2542,123 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
     }
   }
 
-/*
 void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, l, aq4, ak3, qq8, yr1, yr2, yr3;
-  ckomplexk yk1, yk2, yk3, u1, u2, u3, yq1, yq2, yq3, yq4, bed, x1, x2, x3, x4;
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, uk1, uk2, l, aq4, ak3, qq8, yr1, yr2, yr3, bedr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
+  ckomplexk yk2, yk3, u1, u2, u3, yq1, yq2, yq3, yq4, bed, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
   rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+  qq8= qq/8;
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq/-144;
   pk= pqq + rq/-12;
   qk= pq*(pqq/-12 + rq/-48) + qq*qq/128;
 
-
   // Lösungen reduzierte kubische Gleichung
+  aq4= aq/-4;
+  ak3= pq/-6;
   xl= qk*qk + pk*pk*pk;
   if (xl > 0)
     {
-    cbrtv (qk + sqrtv (ckomplexk (xl)), yk1, yk2, yk3);
-//    vxl= sqrtr (xl);
-//    yr1= cbrtr (qk + vxl) + cbrtr (qk - vxl);
-//    yk2= ckomplexk (
+    //großer Aussschnitt eine reelle, 2 komplexe Lösungen
+    vxl= sqrtr (xl);
+    uk1= cbrtr (qk + vxl);
+    uk2= cbrtr (qk - vxl);
+
+    yr1= uk1 + uk2;
+    yk2= uk1*e31 + uk2*e32;
+    yk3= uk1*e32 + uk2*e31;
+
+    ur1= sqrtr (ak3 + yr1);
+    u2= sqrtv (ak3 + yk2);
+    u3= sqrtv (ak3 + yk3);
+
+    // Lösungen reduzierte quartische Gleichung
+    yq1=  ur1 + u2 + u3;
+    yq2=  ur1 - u2 - u3;
+    yq3=  u2 - ur1 - u3;
+    yq4=  u3 - ur1 - u2;
+
+    // Lösungen normale quartische Gleichung
+    // Bedingung: 8*u1*u2*u3 = -qq
+    bed= ur1*u2*u3;
+    if (absv (bed + qq8) < absv (bed - qq8))
+      {
+      x1= aq4 + yq1;
+      x2= aq4 + yq2;
+      x3= aq4 + yq3;
+      x4= aq4 + yq4;
+      }
+      else
+      {
+      x1= aq4 - yq1;
+      x2= aq4 - yq2;
+      x3= aq4 - yq3;
+      x4= aq4 - yq4;
+      }
+
+    // reell-positive Lösungen an den Schnittpunktspeicher übergeben
+    if (ag (x1) < 1e-8)
+      psp.add (x1.x);
+    if (ag (x2) < 1e-8)
+      psp.add (x2.x);
+    if (ag (x3) < 1e-8)
+      psp.add (x3.x);
+    if (ag (x4) < 1e-8)
+      psp.add (x4.x);
     }
     else
     {
-
-    // funktioniert
-    cbrtv (qk + sqrtv (ckomplexk (xl)), yk1, yk2, yk3);
-    u1= sqrtv (ak3 + yk1 - pk/yk1);
-    u2= sqrtv (ak3 + yk2 - pk/yk2);
-    u3= sqrtv (ak3 + yk3 - pk/yk3);
-
-
+    // kleiner Aussschnitt 3 reelle Lösungen
     l= sqrtr (pk*-4);
     yr1= l*cosr (acosr (qk/(pk*l)*-2)/3);
     yr2= l*cosr (acosr (qk/(pk*l)*-2)/3 + PI23);
     yr3= l*cosr (acosr (qk/(pk*l)*-2)/3 - PI23);
 
-    yk1= ckomplexk (yr1, 0);
-    yk2= ckomplexk (yr2, 0);
-    yk3= ckomplexk (yr3, 0);
+    ur1= sqrtr (ak3 + yr1);
+    ur2= sqrtr (ak3 + yr2);
+    ur3= sqrtr (ak3 + yr3);
+
+    // Lösungen reduzierte quartische Gleichung
+    yqr1=  ur1 + ur2 + ur3;
+    yqr2=  ur1 - ur2 - ur3;
+    yqr3=  ur2 - ur1 - ur3;
+    yqr4=  ur3 - ur1 - ur2;
+
+    // Lösungen normale quartische Gleichung
+    // Bedingung: 8*u1*u2*u3 = -qq
+    bedr= ur1*ur2*ur3;
+    if (fabsr (bedr + qq8) < fabsr (bedr - qq8))
+      {
+      xr1= aq4 + yqr1;
+      xr2= aq4 + yqr2;
+      xr3= aq4 + yqr3;
+      xr4= aq4 + yqr4;
+      }
+      else
+      {
+      xr1= aq4 - yqr1;
+      xr2= aq4 - yqr2;
+      xr3= aq4 - yqr3;
+      xr4= aq4 - yqr4;
+      }
+
+    // positive Lösungen an den Schnittpunktspeicher übergeben
+    if (xr1 > 0)
+      psp.add (xr1);
+    if (xr2 > 0)
+      psp.add (xr2);
+    if (xr3 > 0)
+      psp.add (xr3);
+    if (xr4 > 0)
+      psp.add (xr4);
     }
-
-
-
-  xl= qk*qk + pk*pk*pk;
-  if (xl < 0)
-    {
-    // kleiner Aussschnitt 3 reelle Lösungen
-    return;
-    cbrtv (qk + sqrtv (ckomplexk (xl)), yk1, yk2, yk3);
-    }
-    else
-    {
-    // großer Aussschnitt eine reelle, 2 komplexe Lösungen
-    vxl= sqrtr (xl);
-    yr1= cbrtr (qk + vxl) + cbrtr (qk - vxl);
-    //yr1= cbrtr (qk + sqrtr (xl));
-    yk1= ckomplexk (yr1, 0);
-    yk2= ckomplexk (yr1/-2, yr1*sqrtr (real (3))/2);
-    yk3= ckomplexk (yr1/-2, yr1*sqrtr (real (3))/-2);
-    }
-
-
-  // Lösungen reduzierte quartische Gleichung
-  ak3= pq/-6;
-
-//  u1= sqrtv (ak3 + yk1 - pk/yk1);
-//  u2= sqrtv (ak3 + yk2 - pk/yk2);
-//  u3= sqrtv (ak3 + yk3 - pk/yk3);
-
-//  y1= z1 - p/(z1*3);
-//  y2= z2 - p/(z2*3);
-//  y3= z3 - p/(z3*3);
-
-  u1= sqrtv (ak3 + yk1 - pk/yk1/3);
-  u2= sqrtv (ak3 + yk2 - pk/yk2/3);
-  u3= sqrtv (ak3 + yk3 - pk/yk3/3);
-
-  yq1=  u1 + u2 + u3;
-  yq2=  u1 - u2 - u3;
-  yq3=  u2 - u1 - u3;
-  yq4=  u3 - u1 - u2;
-
-  // Lösungen normale quartische Gleichung
-  aq4= aq/-4;
-
-  // Bedingung: 8*u1*u2*u3 = -qq
-  qq8= qq/8;
-  bed= u1*u2*u3;
-  if (absv (bed + qq8) < absv (bed - qq8))
-    {
-    x1= aq4 + yq1;
-    x2= aq4 + yq2;
-    x3= aq4 + yq3;
-    x4= aq4 + yq4;
-    }
-    else
-    {
-    x1= aq4 - yq1;
-    x2= aq4 - yq2;
-    x3= aq4 - yq3;
-    x4= aq4 - yq4;
-    }
-
-  // Wenn das Argument der polarkomplexen Lösungen gering genug ist, dann können sie als reell-positive Lösungen an den Schnittpunktspeicher übergeben werden
-  if (ag (x1) < 1e-8)
-    psp.add (x1.x);
-  if (ag (x2) < 1e-8)
-    psp.add (x2.x);
-  if (ag (x3) < 1e-8)
-    psp.add (x3.x);
-  if (ag (x4) < 1e-8)
-    psp.add (x4.x);
   }
-*/
 
 void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
