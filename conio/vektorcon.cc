@@ -210,31 +210,12 @@ void printinteger (integer pn)
   fclose (datei);
   }
 
-void printreal (_Float32 pr)
-  {
-  float pl;
-  pl= float (pr);
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9f", pl);
-  fprintf (datei, "%12.9f", pl);
-  fclose (datei);
-  }
-
+/*                                                gcc auf raspi5 redefinition float, _Float32 usw.
 void printreal (float pr)
   {
   FILE* datei= fopen ("screenoutput.txt", "ab");
   printf ("%12.9f", pr);
   fprintf (datei, "%12.9f", pr);
-  fclose (datei);
-  }
-
-void printreal (_Float64 pr)
-  {
-  double pl;
-  pl= double (pr);
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9lf", pl);
-  fprintf (datei, "%12.9lf", pl);
   fclose (datei);
   }
 
@@ -253,6 +234,27 @@ void printreal (long double pr)
   fprintf (datei, "%12.9Lf", pr);
   fclose (datei);
   }
+*/
+
+void printreal (_Float32 pr)
+  {
+  float pl;
+  pl= float (pr);
+  FILE* datei= fopen ("screenoutput.txt", "ab");
+  printf ("%12.9f", pl);
+  fprintf (datei, "%12.9f", pl);
+  fclose (datei);
+  }
+
+void printreal (_Float64 pr)
+  {
+  double pl;
+  pl= double (pr);
+  FILE* datei= fopen ("screenoutput.txt", "ab");
+  printf ("%12.9lf", pl);
+  fprintf (datei, "%12.9lf", pl);
+  fclose (datei);
+  }
 
 void printreal (_Float128 pr)
   {
@@ -264,14 +266,6 @@ void printreal (_Float128 pr)
   fclose (datei);
   }
 
-void printrealkomplex (long double pr)
-  {
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%56.40Lf", pr);
-  fprintf (datei, "%56.40Lf", pr);
-  fclose (datei);
-  }
-
 void printrealkomplex (double pr)
   {
   FILE* datei= fopen ("screenoutput.txt", "ab");
@@ -280,19 +274,30 @@ void printrealkomplex (double pr)
   fclose (datei);
   }
 
-void printrealobj (const char* pdateiname, long double pr)
+void printrealkomplex (long double pr)
   {
-  FILE* datei= fopen (pdateiname, "ab");
-  //printf ("%0.10Lg", pr);
-  fprintf (datei, "%0.10Lg", pr);
+  FILE* datei= fopen ("screenoutput.txt", "ab");
+  printf ("%56.40Lf", pr);
+  fprintf (datei, "%56.40Lf", pr);
   fclose (datei);
   }
 
+/*  redifinition (raspi5)
 void printrealobj (const char* pdateiname, double pr)
   {
   FILE* datei= fopen (pdateiname, "ab");
   //printf ("%0.10lg", pr);
   fprintf (datei, "%0.10lg", pr);
+  fclose (datei);
+  }
+*/
+
+void printrealobj (const char* pdateiname, _Float32 pr)
+  {
+  FILE* datei= fopen (pdateiname, "ab");
+  double pl= pr;
+  //printf ("%0.10g", pl);
+  fprintf (datei, "%0.10g", pl);
   fclose (datei);
   }
 
@@ -305,12 +310,11 @@ void printrealobj (const char* pdateiname, _Float64 pr)
   fclose (datei);
   }
 
-void printrealobj (const char* pdateiname, _Float32 pr)
+void printrealobj (const char* pdateiname, _Float128 pr)
   {
   FILE* datei= fopen (pdateiname, "ab");
-  double pl= pr;
-  //printf ("%0.10g", pl);
-  fprintf (datei, "%0.10g", pl);
+  //printf ("%0.10Lg", pr);
+  fprintf (datei, "%0.10Lg", pr);
   fclose (datei);
   }
 
@@ -580,29 +584,12 @@ void printvektor4drehobj (const char* pdateiname, cvektor4 pv)
 
 //------------------------------------------------------------------------ Eingabe ---------------------------------------------------------------------------------------------------
 
-void realeingabe (_Float32& pr)
-  {
-  integer scanret;
-  float pf;
-  scanret= scanf ("%f", &pf);
-  scanret+= 0;
-  pr= _Float32 (pf);
-  }
-
+/*   redefinition (raspi5)
 void realeingabe (float& pr)
   {
   integer scanret;
   scanret= scanf ("%f", &pr);
   scanret+= 0;
-  }
-
-void realeingabe (_Float64& pr)
-  {
-  integer scanret;
-  double pf;
-  scanret= scanf ("%lf", &pf);
-  scanret+= 0;
-  pr= _Float64 (pf);
   }
 
 void realeingabe (double& pr)
@@ -617,6 +604,25 @@ void realeingabe (long double& pr)
   integer scanret;
   scanret= scanf ("%Lf", &pr);
   scanret+= 0;
+  }
+*/
+
+void realeingabe (_Float32& pr)
+  {
+  integer scanret;
+  float pf;
+  scanret= scanf ("%f", &pf);
+  scanret+= 0;
+  pr= _Float32 (pf);
+  }
+
+void realeingabe (_Float64& pr)
+  {
+  integer scanret;
+  double pf;
+  scanret= scanf ("%lf", &pf);
+  scanret+= 0;
+  pr= _Float64 (pf);
   }
 
 void realeingabe (_Float128& pr)
