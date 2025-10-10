@@ -157,11 +157,11 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
   //quartischdiffpintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangeintru (B/A, C/A, D/A, E/A, psp);
-  quartischlagrangeintrc (B/A, C/A, D/A, E/A, psp);
+  //quartischlagrangeintrc (B/A, C/A, D/A, E/A, psp);
   //quartischbuchuintr (B/A, C/A, D/A, E/A, psp);
   //quartischbuchvintr (B/A, C/A, D/A, E/A, psp);
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
-  //quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);
+  quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);
   }
 
 // ---------------------------- zweischaliges Hyperboloid, Kegel, einschaliges Hyperboloid -----------------------------------------------
@@ -360,7 +360,7 @@ cvektor2 cparatorus::berechne (const cvektor3 &pv)
   real wi= winkelb (rtor*mitte, pv - mitte);
   if (pv.z < 0)
     wi= -wi;
-  return cvektor2 (atan2r (pv.y, pv.x), wi);
+  return cvektor2 (atan2r (pv.y, pv.x), wi*rtor);
   }
 
 // ************************************************************************** Begrenzungsobjekte *******************************************************************************************************************************************

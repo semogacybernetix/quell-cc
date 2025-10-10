@@ -8,7 +8,7 @@
 struct cflugsimu
   {
   cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen);
-  void setframedauer (real pfr);
+  void setframerate (real pfrate);
   void welttoscreenl ();
   void welttoscreenz ();
   void welttoscreentakt (integer exitzeit, integer& renderanz);
@@ -27,7 +27,7 @@ struct cflugsimu
   real         framems;            // Anzeigedauer eines Frames in Millisekunden
   real         frametks;           // Zeitdauer eines Frames in Ticks
   real         framepos;           // Zeitpunkt
-  real         framedauer;           // Zeitpunkt
+  real         framedauer;         // Zeitpunkt
 
   integer      pixelanz;           // Anzahl der Pixel des screens
   integer      pixelpos;           // momentane Pixelposition beim Rendern

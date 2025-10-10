@@ -2390,8 +2390,8 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
     else
     {
-    l= sqrtr (pk*-4);
-    yk= l*cosr (acosr (qk/(pk*l)*-2)/3);
+    l= -sqrtr (-pk);
+    yk= l*cosr (acosr (qk/(pk*l))/3)*-2;
     }
 
   // Lösungen der beiden quadratische Gleichungen (ak=-pq für Rückreduzierung)
@@ -2497,10 +2497,10 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
     else
     {
     // kleiner Aussschnitt 3 reelle Lösungen
-    l= sqrtr (pk*-4);
-    yr1= l*cosr (acosr (qk/(pk*l)*-2)/3);
-    yr2= l*cosr (acosr (qk/(pk*l)*-2)/3 + PI23);
-    yr3= l*cosr (acosr (qk/(pk*l)*-2)/3 - PI23);
+    l= -sqrtr (-pk);
+    yr1= l*cosr (acosr (qk/(pk*l))/3)*-2;
+    yr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
+    yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
 
     ur1= sqrtr (ak3 + yr1);
     ur2= sqrtr (ak3 + yr2);
@@ -2571,8 +2571,8 @@ void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte&
     uk2= cbrtr (qk - vxl);
 
     yr1= uk1 + uk2;
-    yk2= uk1*e31 + uk2*e32;
-    yk3= uk1*e32 + uk2*e31;
+    yk2= e31*uk1 + e32*uk2;
+    yk3= ckomplexk (yk2.x, -yk2.y);
 
     ur1= sqrtr (ak3 + yr1);
     u2= sqrtv (ak3 + yk2);
@@ -2615,10 +2615,10 @@ void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte&
     else
     {
     // kleiner Aussschnitt 3 reelle Lösungen
-    l= sqrtr (pk*-4);
-    yr1= l*cosr (acosr (qk/(pk*l)*-2)/3);
-    yr2= l*cosr (acosr (qk/(pk*l)*-2)/3 + PI23);
-    yr3= l*cosr (acosr (qk/(pk*l)*-2)/3 - PI23);
+    l= -sqrtr (-pk);
+    yr1= l*cosr (acosr (qk/(pk*l))/3)*-2;
+    yr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
+    yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
 
     ur1= sqrtr (ak3 + yr1);
     ur2= sqrtr (ak3 + yr2);
@@ -2684,8 +2684,8 @@ void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
     else
     {
-    l= sqrtr (pk*-4);
-    yk= l*cosr (acosr (qk/(pk*l)*-2)/3);
+    l= -sqrtr (-pk);
+    yk= l*cosr (acosr (qk/(pk*l))/3)*-2;
     }
 
   // Lösungen der beiden quadratische Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -2744,8 +2744,8 @@ void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
     else
     {
-    l= sqrtr (pk*-4);
-    yk= l*cosr (acosr (qk/(pk*l)*-2)/3);
+    l= -sqrtr (-pk);
+    yk= l*cosr (acosr (qk/(pk*l))/3)*-2;
     }
 
   // Lösungen der beiden quadratische Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -2807,8 +2807,8 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
     else
     {
-    l= sqrtr (pk*-4);
-    yk= l*cosr (acosr (qk/(pk*l)*-2)/3);
+    l= -sqrtr (-pk);
+    yk= l*cosr (acosr (qk/(pk*l))/3)*-2;
     }
 
   // Lösungen der beiden quadratische Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -2882,8 +2882,8 @@ void quartischpdfw2intr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
     else
     {
-    l= sqrtr (pk*-4);
-    yk= l*cosr (acosr (qk/(pk*l)*-2)/3);
+    l= -sqrtr (-pk);
+    yk= l*cosr (acosr (qk/(pk*l))/3)*-2;
     }
 
   // Lösungen Parameter quadratische Gleichungen

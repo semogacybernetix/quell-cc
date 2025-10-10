@@ -85,16 +85,17 @@ cflugsimu::cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen)
     }
   }
 
-void cflugsimu::setframedauer (real pfr)          // (Dauer eines Frames in Millisekunden) setzen
+void cflugsimu::setframerate (real pfrate)          // (Dauer eines Frames in Millisekunden) setzen
   {
   tickms= 1000/real (sysconf (_SC_CLK_TCK));
-  framems= pfr;
+  framems= pfrate;
   frametks= framems/tickms;
-  framedauer= 100/pfr;
-  printreal (pfr);
-  printtext ("\n");
+  framedauer= 100/pfrate;
+  printtext ("framerate:  ");
+  printreal (pfrate);
+  printtext (" fps  frameduration:  ");
   printreal (framedauer);
-  printtext ("\n");
+  printtext (" ticks\n\n");
   }
 
 void cflugsimu::welttoscreenl ()               // linearer Pixeldurchgang
@@ -557,13 +558,14 @@ void cflugsimu::fliegetakt ()
 
   tms zeit;
   integer startzeit= times (&zeit);
-  integer frameanz, pixelsum, renderanz, frameexit;
+  integer frameanz, pixelsum, renderanz, frameexit, frameexitr, frameexitr2, framedauerr;
 
   frameanz= 0;
   pixelsum= 0;
 
   integer koerper= 0;
   keyboard->putkey (19, 5, 1);
+  frameexitr= times (&flugsimuzeit);
     do
     {
     if (1)
@@ -572,21 +574,20 @@ void cflugsimu::fliegetakt ()
       frameanz++;
       frameexit= startzeit + integer (framedauer*real (frameanz));
       welttoscreentakt (frameexit, renderanz);
+      frameexitr2= times (&flugsimuzeit);
+      framedauerr= frameexitr2 - frameexitr;
+      frameexitr= frameexitr2;
       pixelsum= pixelsum + renderanz;
 
-      printtext ("pxanz: ");
-      printinteger (renderanz);
-      //printinteger (1000/framedauer);
-      //printtext ("fps: ");
-      //printinteger (times (&zeit) - startzeit);
-      //printinteger (frameanz);
-      //printreal (framedauer);
-      //printtext (" Pixel    ");                                // Die Anzahl der Pixel, die während der Framedauer geschafft wurden zu berechnen
-      //printreal (real (pixelsum)/real (frameanz));             // durchschnittliche Anzahl der Pixel pro Frame
-      //printtext (" Pixel    ");
-      //printinteger (frameanz);
-      //printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
-      //zeitpos= real (times (&zeit));
+      // Ausgabe der Framedaten
+      printtext ("Frame: ");
+      printinteger (frameanz);
+      printtext ("  pxanz: ");
+      printinteger (renderanz);                                // Die Anzahl der Pixel, die während des aktuellen Frames geschafft wurden zu berechnen
+      printtext ("  pxo:  ");
+      printreal (real (pixelsum)/real (frameanz));                    // durchschnittliche Anzahl der Pixel pro Frame über alle gerenderten Frames
+      printtext ("  framedauer:  ");
+      printinteger (framedauerr);
       printtext ("\n");
 
       flugw= eulerwinkelfrommatrix (welt->augbasis);
