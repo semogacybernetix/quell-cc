@@ -310,11 +310,11 @@ void printrealobj (const char* pdateiname, _Float64 pr)
   fclose (datei);
   }
 
-void printrealobj (const char* pdateiname, _Float128 pr)
+void printrealobj (const char* pdateiname, long double pr)
   {
   FILE* datei= fopen (pdateiname, "ab");
   //printf ("%0.10Lg", pr);
-  fprintf (datei, "%0.10Lg", pr);
+  fprintf (datei, "%0.10Lg", pr);  // nimmt kein _Float128
   fclose (datei);
   }
 
