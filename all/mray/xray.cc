@@ -59,33 +59,6 @@ void addkatzenkugel (cwelt& pwelt)
   pwelt.verschiebeauge (cvektor3 (0, 5, -200));
   }
 
-void addtorus (cwelt& pwelt)
-  {
-  // Körperstandpunkte
-  cvektor3 kst1 (0,0,0);
-
-  // Körperlagen
-  cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
-  //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,400), cvektor3 (0,25,0));          // flacher Ellipsentorus
-
-  // Texturen
-  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/30);
-  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/15);
-  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
-
-  // Körper
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.5)), new cparatorus (real (0.5)), new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus (real (0.25)), new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus (real (0.125)), new cbegrkeine, textur1, kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus (real (0.25)), new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/katze.jpg"), real (3/PI)), kst1, kl1);
-
-  // Körper addieren
-  pwelt.addkoerper (koerper1);
-
-  // Augposition setzen
-  pwelt.setzeposition (cvektor3 (0, 100, -300));
-  }
-
 void addkoord (cwelt& pwelt)
   {
   // Körperstandpunkte
@@ -159,6 +132,33 @@ void addzylinder (cwelt& pwelt)
   pwelt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, ell1, textur2, kst1, kl1));
 
   pwelt.verschiebeauge (cvektor3 (0, 500, -1000));
+  }
+
+void addtorus (cwelt& pwelt)
+  {
+  // Körperstandpunkte
+  cvektor3 kst1 (0,0,0);
+
+  // Körperlagen
+  cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
+  //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,400), cvektor3 (0,25,0));          // flacher Ellipsentorus
+
+  // Texturen
+  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/30);
+  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/15);
+  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
+
+  // Körper
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.5)), new cparatorus (real (0.5)), new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus (real (0.25)), new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus (real (0.25)), new cbegrkeine, textur1, kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus (real (0.25)), new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/katze.jpg"), real (3/PI)), kst1, kl1);
+
+  // Körper addieren
+  pwelt.addkoerper (koerper1);
+
+  // Augposition setzen
+  pwelt.setzeposition (cvektor3 (0, 100, -300));
   }
 
 void fliegethread ()

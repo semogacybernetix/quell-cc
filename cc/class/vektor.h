@@ -366,12 +366,11 @@ void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ck
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischpdfw2intr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 
 // --------------------- ckomplexk Operatoren ---------------------------------------------------------
 
