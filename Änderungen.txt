@@ -264,6 +264,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.09 Do  19:38, torus x1-x4 entfernt, quartischlagrangeintrc erstellt, quartischlagrangeintru und quartischlagrangeintrc optimiert, 21:00
 2025.10.10 Fr  9:08, Optimierungen aller quartischintegrierten Routinen (konjugiert komplex, 3 reelle Lösungen Faktor 4 entfernt, 10:00, Frameausgabe durchkorrigiert, Geschwindigkeit quartischroutinen getestet, Parametriesierung
                Torus verbessert, Katzentorus als Default eingestellt, 12:07, 16 Uhr, weitere Optimierungen (yk, pk, qk) eingefallen, quartischpdfw2 entfernt weil nach Optimierungen gleich zu quartischdiffpintr, 23:19
+2025.10.11 Sa  10 Uhr, Parametrisierung Torus optimiert, cjpegscreen zoomfaktor für x und y eingeführt, 12 Uhr
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
