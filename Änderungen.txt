@@ -15,7 +15,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
             die ray-Klasse wieder zurückportiert auf zeigerlastigen Stil mit grafikgestörter Threadprogrammierung (zum Testen, stürzt nicht ab). Damit wieder den bestfunktionierenden Zustand erreicht.
             spiegelachsenvonebenenwinkel funktioniert in Version 2 aber nicht die unversionierte Version, obwohl sie die Doppel 90° Fälle alle ohne Fehler erfasst.
             zu bearbeitenden Sachen:
-            
+
             - neue threadoptimierte raythread Klasse
             - Koordinatensystem (dünne Zylinder, Pfeilspitzen)
             - transparente Koordinatenebenen
@@ -29,19 +29,19 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
             - Netze der platonischen Körper und Dualnetze auf Kugel
             - Schalenkörper, Zwiebelkörper visualisieren
             - Kantendrehungen (Dualkörper) visualisieren
-            
-            
+
+
 2020.03.25  Fundamentalbereiche programmiert
             Koordinatensystem
-            
+
 2020.04.08  Kugelspiel Ebenenspiegelung programmiert, Bewegungen implementiert
             - Visualisierung Gruppe operiert auf Menge (Vektoren) um alle Gruppen (Th) visualisieren zu können
-            
+
 2020.04.14  Kanten- und Flächenkugel implementiert, Kugelspiel Besuchskugel implemeniert besuchte Punkte werden mit einer Kugel markiert
             Winkelformel Kugelkoordinaten in vektor.cc
             - Spielprogrammierung aus dem Raytracer ausgliedern
             - Raytracer neu und multithreadig programmieren
-            
+
 2024.07.08  Threadfehler dass Endlosschleife bei 5 oder mehr Threads behoben
 
 2024.10.13  quaternionentest bei [6] 2 Drehungungen wird eine .obj Datei mit den Punktkoordinaten erzeugt, die in Blender unter wavefront .obj importiert werden kann
@@ -264,14 +264,14 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.09 Do  19:38, torus x1-x4 entfernt, quartischlagrangeintrc erstellt, quartischlagrangeintru und quartischlagrangeintrc optimiert, 21:00
 2025.10.10 Fr  9:08, Optimierungen aller quartischintegrierten Routinen (konjugiert komplex, 3 reelle Lösungen Faktor 4 entfernt, 10:00, Frameausgabe durchkorrigiert, Geschwindigkeit quartischroutinen getestet, Parametriesierung
                Torus verbessert, Katzentorus als Default eingestellt, 12:07, 16 Uhr, weitere Optimierungen (yk, pk, qk) eingefallen, quartischpdfw2 entfernt weil nach Optimierungen gleich zu quartischdiffpintr, 23:19
-2025.10.11 Sa  10 Uhr, Parametrisierung Torus optimiert, cjpegscreen zoomfaktor für x und y eingeführt, 12 Uhr
+2025.10.11 Sa  10 Uhr, Parametrisierung Torus optimiert, cjpegscreen zoomfaktor für x und y eingeführt, 12 Uhr, 20:30, ag () -> arg (), Bewegungs- und Drehzoom auf die kleinen Finger gelegt, 21:00
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 neues Threadverfahren entwickeln
 apfel thread
 
-Platform neu machen statt linux X86, AARCH
+Platform neu machen statt linux X86, AARCH, AMD64, ARM64, RISC-V
 Benchmarks für screen Geschwindigkeit, float Geschwindigkeit
 printausgabe realzahlen mit Trennung 10er Gruppen, Binär, Hexadezimal
 Eingabe und Gleichungen mit polarkomplexen Zahlen rechnen

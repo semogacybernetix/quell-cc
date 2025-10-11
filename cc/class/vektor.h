@@ -428,7 +428,7 @@ ckomplexp operator ^ (const ckomplexp &pv1, const ckomplexp &pv2);              
 
 // -------------------- gemischtkomplexe Funktionen (Mischung: kartesischkomplex, polarkomplex) ----------------------------------------------------------------
 
-real ag (const ckomplexk pv);
+real arg (const ckomplexk pv);
 
 // Umwandlungsfunktionen
 ckomplexk kartes    (const ckomplexp pv);

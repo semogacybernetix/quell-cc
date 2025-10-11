@@ -219,12 +219,12 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       if (keyboard->getkey (4, 3)) welt->verschiebeauge (cvektor3 (0, -bewstep, 0));
 
       // Bewegungszoomfaktor ändern
-      if (keyboard->getkey (5, 2)) bewstep*= real (1.4142);
-      if (keyboard->getkey (5, 3)) bewstep/= real (1.4142);
+      if (keyboard->getkey (1, 2)) bewstep*= real (1.4142);
+      if (keyboard->getkey (1, 3)) bewstep/= real (1.4142);
 
       // Drehzoomquotient ändern
-      if (keyboard->getkey (7, 2)) drehstep*= real (1.4142);
-      if (keyboard->getkey (7, 3)) drehstep/= real (1.4142);
+      if (keyboard->getkey (11, 2)) drehstep*= real (1.4142);
+      if (keyboard->getkey (11, 3)) drehstep/= real (1.4142);
 
       // Drehungen
       if (keyboard->getkey (8, 2))
@@ -331,12 +331,12 @@ void cflugsimu::fliege ()                              // ohne Körper drehen zu
       if (keyboard->getkey (4, 3)) welt->verschiebeauge (cvektor3 (0, -bewstep, 0));
 
       // Bewegungszoomfaktor ändern
-      if (keyboard->getkey (5, 2)) bewstep*= real (1.4142);
-      if (keyboard->getkey (5, 3)) bewstep/= real (1.4142);
+      if (keyboard->getkey (1, 2)) bewstep*= real (1.4142);
+      if (keyboard->getkey (1, 3)) bewstep/= real (1.4142);
 
       // Drehzoomquotient ändern
-      if (keyboard->getkey (7, 2)) drehstep*= real (1.4142);
-      if (keyboard->getkey (7, 3)) drehstep/= real (1.4142);
+      if (keyboard->getkey (11, 2)) drehstep*= real (1.4142);
+      if (keyboard->getkey (11, 3)) drehstep/= real (1.4142);
 
       // Drehungen
       if (keyboard->getkey (8, 2))
@@ -490,30 +490,30 @@ void cflugsimu::fliegek ()              // mit Körperdrehungen
       }
 
       // Bewegungszoomfaktor ändern
-      if (keyboard->getkey (5, 2)) bewstep*= real (1.4142);
-      if (keyboard->getkey (5, 3)) bewstep/= real (1.4142);
+      if (keyboard->getkey (1, 2)) bewstep*= real (1.4142);
+      if (keyboard->getkey (1, 3)) bewstep/= real (1.4142);
 
       // Drehzoomquotient ändern
-      if (keyboard->getkey (7, 2)) drehstep*= real (1.4142);
-      if (keyboard->getkey (7, 3)) drehstep/= real (1.4142);
+      if (keyboard->getkey (11, 2)) drehstep*= real (1.4142);
+      if (keyboard->getkey (11, 3)) drehstep/= real (1.4142);
 
 
-    if (keyboard->getkey (5, 2))
+    if (keyboard->getkey (1, 2))
       {
       bewstep*= real (1.4142);
       usleep (250000);
       }
-    if (keyboard->getkey (5, 3))
+    if (keyboard->getkey (1, 3))
       {
       bewstep/= real (1.4142);
       usleep (250000);
       }
-    if (keyboard->getkey (7, 3))
+    if (keyboard->getkey (11, 3))
       {
       if (drehstep > 2) drehstep/= real (1.4142);
       usleep (250000);
       }
-    if (keyboard->getkey (7, 2))
+    if (keyboard->getkey (11, 2))
       {
       if (drehstep < 256)
         drehstep*= real (1.4142);
@@ -617,12 +617,12 @@ void cflugsimu::fliegetakt ()
       if (keyboard->getkey (4, 3)) welt->verschiebeauge (cvektor3 (0, -bewstep, 0));
 
       // Bewegungszoomfaktor ändern
-      if (keyboard->getkey (5, 2)) bewstep*= real (1.4142);
-      if (keyboard->getkey (5, 3)) bewstep/= real (1.4142);
+      if (keyboard->getkey (1, 2)) bewstep*= real (1.4142);
+      if (keyboard->getkey (1, 3)) bewstep/= real (1.4142);
 
       // Drehzoomquotient ändern
-      if (keyboard->getkey (7, 2)) drehstep*= real (1.4142);
-      if (keyboard->getkey (7, 3)) drehstep/= real (1.4142);
+      if (keyboard->getkey (11, 2)) drehstep*= real (1.4142);
+      if (keyboard->getkey (11, 3)) drehstep/= real (1.4142);
 
       // Drehungen
       if (keyboard->getkey (8, 2))
@@ -899,12 +899,12 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
       if (keyboard->getkey (4, 3)) welt->verschiebeauge (cvektor3 (0, -bewstep, 0));
 
       // Bewegungszoomfaktor ändern
-      if (keyboard->getkey (5, 2)) bewstep*= real (1.4142);
-      if (keyboard->getkey (5, 3)) bewstep/= real (1.4142);
+      if (keyboard->getkey (1, 2)) bewstep*= real (1.4142);
+      if (keyboard->getkey (1, 3)) bewstep/= real (1.4142);
 
       // Drehzoomquotient ändern
-      if (keyboard->getkey (7, 2)) drehstep*= real (1.4142);
-      if (keyboard->getkey (7, 3)) drehstep/= real (1.4142);
+      if (keyboard->getkey (11, 2)) drehstep*= real (1.4142);
+      if (keyboard->getkey (11, 3)) drehstep/= real (1.4142);
 
       // Drehungen
       if (keyboard->getkey (8, 2))

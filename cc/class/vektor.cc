@@ -978,7 +978,7 @@ ckomplexp operator ^ (const ckomplexp &pv1, const ckomplexp &pv2)
 
 //--------------------- gemischtkomplexe Funktionen (Mischung: kartesischkomplex, polarkomplex) --------------------------------------------
 
-real ag (const ckomplexk pv)
+real arg (const ckomplexk pv)
   {
   return fabsr (atan2r (pv.y, pv.x));
   }
@@ -2687,13 +2687,13 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
       }
 
     // reell-positive Lösungen an den Schnittpunktspeicher übergeben
-    if (ag (x1) < 1e-8)
+    if (arg (x1) < 1e-8)
       psp.add (x1.x);
-    if (ag (x2) < 1e-8)
+    if (arg (x2) < 1e-8)
       psp.add (x2.x);
-    if (ag (x3) < 1e-8)
+    if (arg (x3) < 1e-8)
       psp.add (x3.x);
-    if (ag (x4) < 1e-8)
+    if (arg (x4) < 1e-8)
       psp.add (x4.x);
     }
     else
@@ -2805,13 +2805,13 @@ void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte&
       }
 
     // reell-positive Lösungen an den Schnittpunktspeicher übergeben
-    if (ag (x1) < 1e-8)
+    if (arg (x1) < 1e-8)
       psp.add (x1.x);
-    if (ag (x2) < 1e-8)
+    if (arg (x2) < 1e-8)
       psp.add (x2.x);
-    if (ag (x3) < 1e-8)
+    if (arg (x3) < 1e-8)
       psp.add (x3.x);
-    if (ag (x4) < 1e-8)
+    if (arg (x4) < 1e-8)
       psp.add (x4.x);
     }
     else
