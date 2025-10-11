@@ -152,11 +152,7 @@ struct cpararpara : clpara
 
 struct cparatorus : clpara
   {
-  cparatorus (const real pr);
   cvektor2 berechne (const cvektor3 &pv);
-
-  private:
-  real rtor;
   };
 
 // ----------------------------------------------------------------------- Begrenzungsobjekte -------------------------------------------------------------------------------------------------------------------------------------------
@@ -228,12 +224,12 @@ struct cschachfeld : public clmannig
 
 struct cscreenmannig : public clmannig     // Zum Texturieren mit Bildern
   {
-  cscreenmannig (clscreen8* pscreen, real pzoom);
+  cscreenmannig (clscreen8* pscreen, const real pkx, const real pky);
   cvektor3 getpunkt (const cvektor2 &pv);
 
   private:
   clscreen8* screen;
-  real zoom, xmax, ymax;
+  real kx, ky, xmax, ymax;
   };
 
 // ------------------------------------------------------------------------------- Geometrische Gebilde -----------------------------------------------------------------------------------------------------------------------------------

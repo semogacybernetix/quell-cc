@@ -54,7 +54,7 @@ void addkatzenkugel (cwelt& pwelt)
   cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
 
   // Körper addieren
-  pwelt.addkoerper (new ckoerper (new cskugel, new cparawkugel, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/katze.jpg"), real (0.8)), kst1, kl1));
+  pwelt.addkoerper (new ckoerper (new cskugel, new cparawkugel, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/katze.jpg"), real (0.8), real (0.8)), kst1, kl1));
 
   pwelt.verschiebeauge (cvektor3 (0, 5, -200));
   }
@@ -144,15 +144,15 @@ void addtorus (cwelt& pwelt)
   //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,400), cvektor3 (0,25,0));          // flacher Ellipsentorus
 
   // Texturen
-  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/30);
+  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 1, 1);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/15);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
 
   // Körper
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.5)), new cparatorus (real (0.5)), new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus (real (0.25)), new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus (real (0.25)), new cbegrkeine, textur1, kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus (real (0.25)), new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/katze.jpg"), real (3/PI)), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.5)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/katze.jpg"), real (8/PI), real (2/PI)), kst1, kl1);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
@@ -179,7 +179,7 @@ void fliegethread ()
   cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1600, 900));
 
   flugsimu.setframerate (real (20.0));
-  flugsimu.threadanz= 8;
+  flugsimu.threadanz= 12;
   flugsimu.bewstep= real (1);
   flugsimu.drehstep= real (0.0125);
 
@@ -207,7 +207,7 @@ void fliegetakt ()
   cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450));
 
   flugsimu.setframerate (real (20));               // Framerate setzen
-  flugsimu.threadanz= 8;
+  flugsimu.threadanz= 12;
   flugsimu.bewstep= 2;
   flugsimu.drehstep= real (0.025);
 

@@ -348,18 +348,14 @@ cvektor2 cpararpara::berechne (const cvektor3 &pv)
 
 //----------- Torus normal ----------------------------
 
-cparatorus::cparatorus (const real pr)
-  : rtor (pr)
-  {
-  }
-
 cvektor2 cparatorus::berechne (const cvektor3 &pv)
   {
-  cvektor3 mitte (normiere (cvektor3 (pv.x, pv.y, 0)));
-  real wi= winkelb (rtor*mitte, pv - mitte);
-  if (pv.z < 0)
-    wi= -wi;
-  return cvektor2 (atan2r (pv.y, pv.x), wi*rtor);
+  cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));
+  real wi= winkelb (mitte, pv - mitte);
+  if (pv.z >= 0)
+    return cvektor2 (atan2r (pv.y, pv.x), wi);
+    else
+    return cvektor2 (atan2r (pv.y, pv.x), -wi);
   }
 
 // ************************************************************************** Begrenzungsobjekte *******************************************************************************************************************************************
@@ -481,7 +477,7 @@ cmonochrom::cmonochrom (const cvektor3 &pfarbe)
 cvektor3 cmonochrom::getpunkt (const cvektor2 &pv)
   {
   return farbe;
-  if (pv.x != pv.x) {} // pv benutzen, weil sonst der Compiler meckert
+  if (pv.x != pv.x) {};  // pv benutzen, weil sonst der Compiler meckert
   }
 
 //------------------------- Schachfeld ---------------------------------
@@ -490,28 +486,29 @@ cschachfeld::cschachfeld (const cvektor3 &pfb1, const cvektor3 &pfb2, const real
   {
   fb1= pfb1;
   fb2= pfb2;
-  kx= 1/pkx;
-  ky= 1/pky;
+  kx= pkx;
+  ky= pky;
   }
 
 cvektor3 cschachfeld::getpunkt (const cvektor2 &pv)
   {
   if (integer (fabsr (floorr (pv.x*kx) + floorr (pv.y*ky))) & 1)
     return fb2;
-  return fb1;
+    else
+    return fb1;
   }
 
 //------------------------- Texturierung aus einem Screen (bmpdatei, jpegdatei) ---------------------------------
 
-cscreenmannig::cscreenmannig (clscreen8* pscreen, real pzoom)
-  : screen (pscreen), zoom (pzoom), xmax (real (screen->xanz) - 1), ymax (real (screen->yanz) - 1)
+cscreenmannig::cscreenmannig (clscreen8* pscreen, const real pkx, const real pky)
+  : screen (pscreen), kx (pkx), ky (pky), xmax (real (screen->xanz) - 1), ymax (real (screen->yanz) - 1)
   {
   }
 
 cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
   {
-  integer x= integer (fmodr (fabsr (pv.x/zoom*xmax), xmax));
-  integer y= integer (fmodr (fabsr (pv.y/zoom*xmax), ymax));
+  integer x= integer (fmodr (fabsr (pv.x*kx*ymax), xmax));
+  integer y= integer (fmodr (fabsr (pv.y*ky*ymax), ymax));
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);
   return cvektor3 (real (r), real (g), real (b));
