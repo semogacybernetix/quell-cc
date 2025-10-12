@@ -12,7 +12,7 @@ winkelachse von 180° Drehungen: welche der beiden Achsen soll zurückgegeben we
 */
 
 #include "vektor.h"
-//#include "../../conio/vektorcon.h"     // zum Debuggen
+#include "../../conio/vektorcon.h"     // zum Debuggen
 
 real vquant= real (1e-8);
 
@@ -2004,7 +2004,7 @@ void kubischreduziertreell (real p, real q, real& y)
   real xl, q2, vxl, l;
 
   xl= q*q/4 + p*p*p/27;
-  if (xl > 0)
+  if (xl >= 0)
     {
     q2= q/-2;
     vxl= sqrtr (xl);
@@ -2385,7 +2385,7 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
-  if (xl > 0)
+  if (xl >= 0)
     {
     vxl= sqrtr (xl);
     yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/-2;
@@ -2402,7 +2402,32 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   u= sqrtr (uq);
 
   z= pq6 - yk;
-  qqu= qq/u/4;
+  if (u == 0)
+    {
+    printtext ("  yk/-2: ");
+    printreal (yk/-2);
+    printtext ("\n  pq6: ");
+    printreal (pq6);
+    printtext ("\n  uq: ");
+    printreal (uq);
+    printtext ("\n  u: ");
+    printreal (u);
+    printtext ("\n  aq: ");
+    printreal (aq);
+    printtext ("\n  bq: ");
+    printreal (bq);
+    printtext ("\n  cq: ");
+    printreal (cq);
+    printtext ("\n  dq: ");
+    printreal (dq);
+    printtext ("\n  qq: ");
+    printreal (qq);
+    printtext ("\n");
+    //exit (0);
+    qqu= real (0.25);
+    }
+    else
+    qqu= qq/u/4;
 
   b1= z - qqu;
   b2= z + qqu;
@@ -2448,7 +2473,7 @@ void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
-  if (xl > 0)
+  if (xl >= 0)
     {
     vxl= sqrtr (xl);
     yk= cbrtr (qk + vxl) + cbrtr (qk - vxl);
@@ -2510,7 +2535,7 @@ void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
-  if (xl > 0)
+  if (xl >= 0)
     {
     vxl= sqrtr (xl);
     yk= cbrtr (qk + vxl) + cbrtr (qk - vxl);
@@ -2572,7 +2597,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
-  if (xl > 0)
+  if (xl >= 0)
     {
     vxl= sqrtr (xl);
     yk= cbrtr (qk + vxl) + cbrtr (qk - vxl);

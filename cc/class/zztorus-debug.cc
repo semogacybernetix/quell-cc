@@ -34,7 +34,7 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte &psp)
 
   quartisch (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
 
-  if (ag (x1) < 1e-8)
+  if (arg (x1) < 1e-8)
     {
     psp.add (x1.x);
     cvektor3 p1= x1.x*rv + ov;
@@ -42,7 +42,7 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte &psp)
     real t1= q(q(p1.x) + q(p1.y) + q(p1.z) + rq1) - 4*(q(p1.x) + q(p1.y));
     printf ("t1: %20.10lf\n", t1);
     }
-  if (ag (x2) < 1e-8)
+  if (arg (x2) < 1e-8)
     {
     psp.add (x2.x);
     cvektor3 p2= x2.x*rv + ov;
@@ -50,14 +50,14 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte &psp)
     printf ("t2: %20.10lf\n", t2);
     }
 
-  if (ag (x3) < 1e-8)
+  if (arg (x3) < 1e-8)
     {
     psp.add (x3.x);
     cvektor3 p3= x3.x*rv + ov;
     real t3= q(q(p3.x) + q(p3.y) + q(p3.z) + rq1) - 4*(q(p3.x) + q(p3.y));
     printf ("t3: %20.10lf\n", t3);
     }
-  if (ag (x4) < 1e-8)
+  if (arg (x4) < 1e-8)
     {
     psp.add (x4.x);
     cvektor3 p4= x4.x*rv + ov;
