@@ -12,6 +12,7 @@ Apfelmännchen fractal on a framebuffer
             test the fractals with the apropriate floating point type for real (_Float32, _Float64, __float80, _Float128) in cc/class/vektor.h
 
 Keys for the raytracer (6-axis control, 3 axis moving, 3 axis turning) use 10-finger-typing system
+
             q        increase moving speed
             a        decrease moving speed
 
