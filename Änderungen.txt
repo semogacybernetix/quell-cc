@@ -265,13 +265,12 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.10 Fr  9:08, Optimierungen aller quartischintegrierten Routinen (konjugiert komplex, 3 reelle Lösungen Faktor 4 entfernt, 10:00, Frameausgabe durchkorrigiert, Geschwindigkeit quartischroutinen getestet, Parametriesierung
                Torus verbessert, Katzentorus als Default eingestellt, 12:07, 16 Uhr, weitere Optimierungen (yk, pk, qk) eingefallen, quartischpdfw2 entfernt weil nach Optimierungen gleich zu quartischdiffpintr, 23:19
 2025.10.11 Sa  10 Uhr, Parametrisierung Torus optimiert, cjpegscreen zoomfaktor für x und y eingeführt, 12 Uhr, 20:30, ag () -> arg (), Bewegungs- und Drehzoom auf die kleinen Finger gelegt, 21:00
-2025.10.12 So  10:02, 
+2025.10.12 So  10:02, ungespiegelte Texturierung für den Torus erstellt, Texturen runtergeladen und mit paintshop bearbeitet, quadratische Texturen erstellt, Torus-Szenenen erstellt, 12:56
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 neues Threadverfahren entwickeln
 apfel thread
-
 Platform neu machen statt linux X86, AARCH, AMD64, ARM64, RISC-V
 Benchmarks für screen Geschwindigkeit, float Geschwindigkeit
 printausgabe realzahlen mit Trennung 10er Gruppen, Binär, Hexadezimal
