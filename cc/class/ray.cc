@@ -299,23 +299,42 @@ cvektor2 cparawzylinder::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), pv.z);
   }
 
-//----------- Kugel winkeltreu ------------------------
-
-cvektor2 cparawkugel::berechne (const cvektor3 &pv)
-  {
-  return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
-  }
-
 //----------- Kugel normal ----------------------------
-
-cvektor2 cpararkugel::berechne (const cvektor3 &pv)
-  {
-  return cvektor2 (pv.x/(1 + pv.z), pv.y/(1 + pv.z));
-  }
 
 cvektor2 cparakugel::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), asinr (pv.z));
+  }
+
+//----------- Kugel winkeltreu ------------------------
+
+cvektor2 cparakugelw::berechne (const cvektor3 &pv)
+  {
+  if (pv.y >= 0)
+    return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
+    else
+    return cvektor2 (PI2 + atan2r (pv.y, pv.x), atanhr (pv.z));
+  }
+
+cvektor2 cparakugelwu::berechne (const cvektor3 &pv)
+  {
+  if (pv.y >= 0)
+    return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
+    else
+    return cvektor2 (PI2 + atan2r (pv.y, pv.x), atanhr (pv.z));
+  }
+
+cvektor2 cparakugelr::berechne (const cvektor3 &pv)
+  {
+  return cvektor2 (pv.x/(1 + pv.z), pv.y/(1 + pv.z));
+  }
+
+cvektor2 cparakugelu::berechne (const cvektor3 &pv)
+  {
+  if (pv.y >= 0)
+    return cvektor2 (atan2r (pv.y, pv.x), PIh + asinr (pv.z));
+    else
+    return cvektor2 (PI2 + atan2r (pv.y, pv.x), PIh + asinr (pv.z));
   }
 
 //----------- Hyperboloid normal -----------------------

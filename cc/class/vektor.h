@@ -138,6 +138,8 @@ struct coktonion : public cvektor8
 
 // reelle Konstanten
 const real PI (real (M_PIl));                                                         // die Konstante pi vom Typ real
+const real PIh (real (M_PIl/2));                                                      // pi/2
+const real PI2 (real (M_PIl*2));                                                      // 2pi
 const real PI23 (real (M_PIl*2/3));                                                   // die Konstante 2/3*pi vom Typ real
 const real gk (real (0.5 + sqrtl (1.25)));                                            // goldene Schnitt g= (1 + √5)/2 = 2*cos 36°                        = 1.61803398...         x² - x - 1 = 0
 const real tk (real ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3));   // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1,2= ∛(19 ± 3√33)   = 1.83928675...    x³ - x² - x - 1 = 0
