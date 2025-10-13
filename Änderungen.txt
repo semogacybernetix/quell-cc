@@ -267,9 +267,11 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.11 Sa  10 Uhr, Parametrisierung Torus optimiert, cjpegscreen zoomfaktor für x und y eingeführt, 12 Uhr, 20:30, ag () -> arg (), Bewegungs- und Drehzoom auf die kleinen Finger gelegt, 21:00
 2025.10.12 So  10:02, ungespiegelte Texturierung für den Torus erstellt, Texturen runtergeladen und mit paintshop bearbeitet, quadratische Texturen erstellt, Torus-Szenenen erstellt, 12:56, 22 Uhr, xl >= 0 bei kubischreell umgestellt,
                quartischdiffpintr auf Division/0 getestet, 23:39
+2025.10.13 Mo  5 Uhr, Texturen runtergeladen, in xray verwendet, 7:30, 12 Uhr, xray18 und weitere entfernt, aufgeräumt, 12:49
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+quartischintegrierte Routinen auf Wasserdichtheit (floating exeptions) testen
 neues Threadverfahren entwickeln
 apfel thread
 Platform neu machen statt linux X86, AARCH, AMD64, ARM64, RISC-V

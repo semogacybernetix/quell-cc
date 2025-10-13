@@ -42,14 +42,17 @@ void cszylinder::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
   real a= prv.x*prv.x + prv.y*prv.y;
   real b= -prv.x*ov.x - prv.y*ov.y;
+
   real d= b*b - a*c;
   if (d < 0)
     return;
+
   real e= sqrtr (d);
   real s1= (b + e)/a;
+  real s2= (b - e)/a;
+
   if (s1 > 0)
     psp.add (s1);
-  real s2= (b - e)/a;
   if (s2 > 0)
     psp.add (s2);
   }
@@ -190,14 +193,17 @@ void cshyper::berechne (const cvektor3 &prv, cschnittpunkte &psp)
       psp.add (s3);
     return;
     }
+
   real d= b*b - a*c;
   if (d < 0)
     return;
+
   real e= sqrtr (d);
   real s1= (b + e)/a;
+  real s2= (b - e)/a;
+
   if (s1 > 0)
     psp.add (s1);
-  real s2= (b - e)/a;
   if (s2 > 0)
     psp.add (s2);
   }
@@ -219,14 +225,17 @@ void csrpara::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
   real a= prv.x*prv.x + prv.y*prv.y;
   real b= -prv.x*ov.x - prv.y*ov.y + prv.z/2;
+
   real d= b*b - a*c;
   if (d < 0)
     return;
+
   real e= sqrtr (d);
   real s1= (b + e)/a;
+  real s2= (b - e)/a;
+
   if (s1 > 0)
     psp.add (s1);
-  real s2= (b - e)/a;
   if (s2 > 0)
     psp.add (s2);
   }
@@ -257,14 +266,17 @@ void cshpara::berechne (const cvektor3 &prv, cschnittpunkte &psp)
       psp.add (s3);
     return;
     }
+
   real d= b*b - a*c;
   if (d < 0)
     return;
+
   real e= sqrtr (d);
   real s1= (b + e)/a;
+  real s2= (b - e)/a;
+
   if (s1 > 0)
     psp.add (s1);
-  real s2= (b - e)/a;
   if (s2 > 0)
     psp.add (s2);
   }

@@ -3,6 +3,32 @@
 #include "../../xwindow/screen/xscr.h"
 #include "../../xwindow/keyboard/xkbd.h"
 
+void dray ()
+  {
+  cwelt welt (2520, cvektor3 (0, 100, -1500), cbasis3 (cvektor3 (1,0,0), cvektor3 (0,1,0), cvektor3 (0,0,1)));
+  welt.addkoerper (new ckoerper (new csebene, new cparawebene, new cbegrellipse (20, 10), new cschachfeld (cvektor3 (1,0,0), cvektor3 (0,1,0), 1, 1), cvektor3 (0,0,0), cbasis3 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0))));
+  welt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine (), new cschachfeld (cvektor3 (1,0,1), cvektor3 (1,1,0), 1, 1), cvektor3 (0,1300,0), cbasis3 (cvektor3 (320,0,0), cvektor3 (0,0,-320), cvektor3 (0,320,0))));
+//  welt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine (), new cscreenmannig (new cjpegdatei ("../../xwindow/xdia/bilder/katze.jpg"), 10, 10), cvektor3 (0,1300,0), cbasis3 (cvektor3 (320,0,0), cvektor3 (0,0,-320), cvektor3 (0,320,0))));
+  welt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, new cbegrkeine, new cschachfeld (cvektor3 (1,1,1), cvektor3 (0,1,1), 1, 1), cvektor3 (0,0,0), cbasis3 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0))));
+  cxscreen screen ("ray", 1600, 900);
+  cxkeyboard keyboard;
+  cflugsimu flugsimu (&welt, &keyboard, &screen);
+  flugsimu.fliege ();
+  }
+
+void xray18 ()
+  {
+  cwelt welt (2520, cvektor3 (0, 100, -1500), cbasis3 (cvektor3 (1,0,0), cvektor3 (0,1,0), cvektor3 (0,0,1)));
+  welt.addkoerper (new ckoerper (new csebene, new cparawebene, new cbegrellipse (20, 10), new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 100, 100), cvektor3 (0,0,0), cbasis3 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0))));
+  welt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine (), new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,255,0), 100, 100), cvektor3 (0,1300,0), cbasis3 (cvektor3 (320,0,0), cvektor3 (0,0,-320), cvektor3 (0,320,0))));
+//  welt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine (), new cscreenmannig (new cjpegdatei ("../../xwindow/xdia/bilder/katze.jpg"), 10, 10), cvektor3 (0,1300,0), cbasis3 (cvektor3 (320,0,0), cvektor3 (0,0,-320), cvektor3 (0,320,0))));
+  welt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, new cbegrkeine, new cschachfeld (cvektor3 (255,255,255), cvektor3 (0,255,255), 100, 100), cvektor3 (0,0,0), cbasis3 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0))));
+  cxscreen screen ("ray", 1600, 900);
+  cxkeyboard keyboard;
+  cflugsimu flugsimu (&welt, &keyboard, &screen);
+  flugsimu.fliege ();
+  }
+
 void addebene (cwelt& pwelt)
   {
   // Körperstandpunkte
@@ -145,8 +171,6 @@ void addtorus (cwelt& pwelt)
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
 
   // Körper
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.5)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/sechseck1024.jpg"), real (8/PI), real (1/PI)), kst1, kl1);
@@ -170,7 +194,8 @@ void fliegethread ()
   {
   //cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
   cwelt* welt= new cwelt (900, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
-  welt->himmelfarbe= cvektor3 (0,0,255);
+  //welt->himmelfarbe= cvektor3 (0,0,255);
+  welt->himmelfarbe= cvektor3 (30,75,90);
 
   //addebene (*welt);
   //addkoord (*welt);
@@ -184,7 +209,7 @@ void fliegethread ()
   cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1600, 900));
 
   flugsimu.setframerate (real (20.0));
-  flugsimu.threadanz= 4;
+  flugsimu.threadanz= 12;
   flugsimu.bewstep= real (1);
   flugsimu.drehstep= real (0.0125);
 
@@ -198,7 +223,7 @@ void fliegetakt ()
   {
   //cwelt* welt= new cwelt (225, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
   cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
-  welt->himmelfarbe= cvektor3 (0,0,255);
+  welt->himmelfarbe= cvektor3 (30,75,90);
 
   //addebene (*welt);
   //addkoord (*welt);
@@ -212,7 +237,7 @@ void fliegetakt ()
   cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450));
 
   flugsimu.setframerate (real (20));               // Framerate setzen
-  flugsimu.threadanz= 4;
+  flugsimu.threadanz= 12;
   flugsimu.bewstep= 2;
   flugsimu.drehstep= real (0.025);
 
@@ -224,7 +249,9 @@ void fliegetakt ()
 
 int main ()
   {
+  //xray18 ();
   fliegethread ();
   //fliegetakt ();
   return 0;
   }
+
