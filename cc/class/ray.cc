@@ -158,12 +158,26 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= 4*(rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - 2*(rxox + ryoy));
   E= rq1*(rq1 + 2*ovq) + q(oxq) + q(oyq) + q(ozq) + 2*(q(oxoy) + q(oyoz) + q(ozox)) - 4*(oxq + oyq);
 
-  quartischdiffpintr (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpintr (B/A, C/A, D/A, E/A, psp);
   //quartischbuchuintr (B/A, C/A, D/A, E/A, psp);
   //quartischbuchvintr (B/A, C/A, D/A, E/A, psp);
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangeintru (B/A, C/A, D/A, E/A, psp);
-  //quartischlagrangeintrc (B/A, C/A, D/A, E/A, psp);
+  quartischlagrangeintrc (B/A, C/A, D/A, E/A, psp);
+
+/*
+  ckomplexk x1, x2, x3, x4;
+  quartisch (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+
+  if (arg (x1) < quantr)
+    psp.add (x1.x);
+  if (arg (x2) < quantr)
+    psp.add (x2.x);
+  if (arg (x3) < quantr)
+    psp.add (x3.x);
+  if (arg (x4) < quantr)
+    psp.add (x4.x);
+//*/
   }
 
 // ---------------------------- zweischaliges Hyperboloid, Kegel, einschaliges Hyperboloid -----------------------------------------------
@@ -408,7 +422,7 @@ cvektor2 cparatorus::berechne (const cvektor3 &pv)
 integer cbegrkeine::sichtbar (const cvektor2 &pv)
   {
   return 1;
-  while (pv.x != pv.x);        // Variable benutzen, damit Compiler nicht meckert unused variable
+  while (!(pv == pv));        // Variable benutzen, damit Compiler nicht meckert unused variable
   }
 
 // -------------------- Rechteck ------------------------------------
@@ -675,6 +689,7 @@ cwelt::cwelt (const real &pabstand, const cvektor3 &paugpos, const cbasis3 &paug
   : abstand (pabstand), augpos (paugpos), augbasis (paugbasis)
   {
   augdrehaw= cvektor4 (0, 0, 0, 0);
+  himmelfarbe= cvektor3 (0, 0, 255);
   }
 
 cwelt::cwelt (const real &pabstand, const char* pname)
@@ -687,6 +702,7 @@ cwelt::cwelt (const real &pabstand, const char* pname)
   anz= fread (&augpos, sizeof (augpos), 1, datei);
   anz= fread (&augbasis, sizeof (augbasis), 1, datei);
   anz= fread (&anz, sizeof (anz), 1, datei);
+  himmelfarbe= cvektor3 (0, 0, 255);
   }
 
 cvektor3 cwelt::getpunkt (const cvektor2 &pv)
@@ -724,7 +740,7 @@ cvektor3 cwelt::getpunkt (const cvektor2 &pv)
       if (kmin == -1)
         kmin= nlauf;
         else
-        if (schnittpunkte.abstand[nlauf] < schnittpunkte.abstand[kmin])
+        if (schnittpunkte.abstand[nlauf] < schnittpunkte.abstand[kmin])  // Schnittpunkt markieren wenn er näher ist
           kmin= nlauf;
       }
 

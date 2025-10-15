@@ -267,7 +267,11 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.11 Sa  10 Uhr, Parametrisierung Torus optimiert, cjpegscreen zoomfaktor für x und y eingeführt, 12 Uhr, 20:30, ag () -> arg (), Bewegungs- und Drehzoom auf die kleinen Finger gelegt, 21:00
 2025.10.12 So  10:02, ungespiegelte Texturierung für den Torus erstellt, Texturen runtergeladen und mit paintshop bearbeitet, quadratische Texturen erstellt, Torus-Szenenen erstellt, 12:56, 22 Uhr, xl >= 0 bei kubischreell umgestellt,
                quartischdiffpintr auf Division/0 getestet, 23:39
-2025.10.13 Mo  5 Uhr, Texturen runtergeladen, in xray verwendet, 7:30, 12 Uhr, xray18 und weitere entfernt, aufgeräumt, 12:49
+2025.10.13 Mo  5 Uhr, Texturen runtergeladen, in xray verwendet, 7:30, 12 Uhr, xray18 und weitere entfernt, aufgeräumt, 12:49, 22 Uhr, linearfaktoren wieder in Ordnung gebracht zum Testen der quartischen Gleichung, 1 2 3 4 Lösungen
+               werden nicht von lagrangeintrc erkannt, floating exceptions bei quartischlagrangeintrc versucht abzufangen, in brass gekommen,
+               weil mit ständigen Umschaltungen zwischen real und komplex durcheinandergekommen, gekeucht, in Stress und Unordnung abgebrochen, 4:22
+2025.10.14 Mi  6:28, floating exceptions weitergemacht, quantr definiert, quartischlagrangeintrc und u floating exceptions gut abgefangen, andere quartisch Routinen stehen noch aus, 1 2 3 4 Fehler beruht auf Ungenauigkeit des
+               komplexen Wertes der nicht als reeller Wert übernommen wird, weil wegen der Ungenauigkeit der imaginäre Anteil zu hoch ist, 1234 Fehler besteht immer noch, 12:31
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

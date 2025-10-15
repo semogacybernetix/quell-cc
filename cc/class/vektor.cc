@@ -2341,8 +2341,8 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
   //quartischreduziertbuchv (p, q, r, y1, y2, y3, y4);
   //quartischreduziertbuchf (p, q, r, y1, y2, y3, y4);
   //quartischreduziertpdfw2 (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertlagrange (p, q, r, y1, y2, y3, y4);
-  quartischreduziertbuch3 (p, q, r, y1, y2, y3, y4);
+  quartischreduziertlagrange (p, q, r, y1, y2, y3, y4);
+  //quartischreduziertbuch3 (p, q, r, y1, y2, y3, y4);
   //quartischreduziertpdfw23 (p, q, r, y1, y2, y3, y4);
   //quartischreduziertlagrange3 (p, q, r, y1, y2, y3, y4);
 
@@ -2372,10 +2372,10 @@ void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, cko
   pk= pqq/-9 + rq4;
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
-  // Lösung reduzierte kubische Gleichung
+  // Lösung der reduzierten kubischen Gleichung
   yk= cbrtv (qk + sqrtv (ckomplexk (pk*pk*pk + qk*qk)));
 
-  // Lösungen quadratische Gleichungen
+  // Lösungen der beiden quadratischen Gleichungen
   z= pq/3 - pk/yk + yk;
   u= sqrtv (z - pq)/2;
 
@@ -2384,7 +2384,7 @@ void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, cko
   D1= sqrtv (d + e);
   D2= sqrtv (d - e);
 
-  // Lösungen normale quartische Gleichung
+  // Lösungen der normalen quartischen Gleichung
   aq4= aq/-4;
   x1= aq4 - u - D1;
   x2= aq4 - u + D1;
@@ -2421,24 +2421,14 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     yk= l*cosr (acosr (qk/(pk*l))/3);
     }
 
-  // Lösungen der beiden quadratische Gleichungen (ak=-pq für Rückreduzierung)
+  // Lösungen der beiden quadratischen Gleichungen (ak=-pq für Rückreduzierung)
   pq6= pq/6;
   uq= yk/-2 - pq6;
   u= sqrtr (uq);
 
   z= pq6 - yk;
-
-/*
-  if (u == 0)
-    {
-    debugoutputquartisch ();
-    qqu= real (0.25);
-    }
-    else
-    qqu= qq/u/4;
-*/
-
   qqu= qq/u/4;
+
   b1= z - qqu;
   b2= z + qqu;
 
@@ -2447,8 +2437,8 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (uq >= b1)
     {
     VD= sqrtr (uq - b1);
-    x1= aq4 - u + VD;
-    x2= aq4 - u - VD;
+    x1= aq4 - u - VD;
+    x2= aq4 - u + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2457,8 +2447,8 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (uq >= b2)
     {
     VD= sqrtr (uq - b2);
-    x1= aq4 + u + VD;
-    x2= aq4 + u - VD;
+    x1= aq4 + u - VD;
+    x2= aq4 + u + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2494,7 +2484,7 @@ void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     yk= l*cosr (acosr (qk/(pk*l))/3)*-2;
     }
 
-  // Lösungen der beiden quadratische Gleichungen (ak=-pq/2 für Rückreduzierung)
+  // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   uq= yk/2 - pq/6;
   u= sqrtr (uq);
 
@@ -2509,8 +2499,8 @@ void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (uq >= b1)
     {
     VD= sqrtr (uq - b1);
-    x1= aq4 - u + VD;
-    x2= aq4 - u - VD;
+    x1= aq4 - u - VD;
+    x2= aq4 - u + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2519,8 +2509,8 @@ void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (uq >= b2)
     {
     VD= sqrtr (uq - b2);
-    x1= aq4 + u + VD;
-    x2= aq4 + u - VD;
+    x1= aq4 + u - VD;
+    x2= aq4 + u + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2556,7 +2546,7 @@ void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     yk= l*cosr (acosr (qk/(pk*l))/3)*-2;
     }
 
-  // Lösungen der beiden quadratische Gleichungen (ak=-pq/2 für Rückreduzierung)
+  // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   z= yk + pq/6;
   v= sqrtr (z*z - rq);
 
@@ -2571,8 +2561,8 @@ void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (vq >= b1)
     {
     VD= sqrtr (vq - b1);
-    x1= aq4 + qqv + VD;
-    x2= aq4 + qqv - VD;
+    x1= aq4 + qqv - VD;
+    x2= aq4 + qqv + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2581,8 +2571,8 @@ void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (vq >= b2)
     {
     VD= sqrtr (vq - b2);
-    x1= aq4 - qqv + VD;
-    x2= aq4 - qqv - VD;
+    x1= aq4 - qqv - VD;
+    x2= aq4 - qqv + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2618,7 +2608,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     yk= l*cosr (acosr (qk/(pk*l))/3)*-2;
     }
 
-  // Lösungen der beiden quadratische Gleichungen (ak=-pq/2 für Rückreduzierung)
+  // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   pq6= pq/6;
   uq= yk/2 - pq6;
   u= sqrtr (uq);
@@ -2644,8 +2634,8 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (uq >= b1)
     {
     VD= sqrtr (uq - b1);
-    x1= aq4 - u + VD;
-    x2= aq4 - u - VD;
+    x1= aq4 - u - VD;
+    x2= aq4 - u + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2654,8 +2644,8 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (uq >= b2)
     {
     VD= sqrtr (uq - b2);
-    x1= aq4 + u + VD;
-    x2= aq4 + u - VD;
+    x1= aq4 + u - VD;
+    x2= aq4 + u + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2687,15 +2677,40 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
   if (xl > 0)
     {
     //großer Aussschnitt eine reelle, 2 komplexe Lösungen
-    yr1= cbrtr (qk + sqrtr (xl));
+    yr1= cbrtr (qk + sqrtr (xl));         // xl immer größer als 0
     yrx= yr1/-2;
     yry= yr1*sqrtr (real (0.75));
     yk2= ckomplexk (yrx, yry);
     yk3= ckomplexk (yrx, -yry);
 
-    ur1= sqrtr (ak3 + yr1 - pk/yr1);
-    u2= sqrtv (ak3 + yk2 - pk/yk2);
-    u3= sqrtv (ak3 + yk3 - pk/yk3);
+    if ((yr1 == 0) || (ak3 + yr1 - pk/yr1 <= 0))             // starke Ungenauigkeit ab 3. Stelle nach dem Komma
+      {
+      //return;
+      real vxl= sqrtr (xl);  // xl immer > 0                 // Berechnung der Lösungen nach Cardano
+      real uk1= cbrtr (qk - vxl);
+      real uk2= cbrtr (qk + vxl);
+
+      //yr1= uk1 + uk2;
+      yk2= e31*uk1 + e32*uk2;
+      yk3= ckomplexk (yk2.x, -yk2.y);
+
+      real akyr= ak3 + yr1;
+      if (akyr < 0)
+        {
+        ur1= 0;       // Negativwerte durch Ungenauigkeit der Differenz die bei Genauigkeit 0 wäre
+        //return;
+        }
+        else
+        ur1= sqrtr (akyr);
+      u2= sqrtv (ak3 + yk2);
+      u3= sqrtv (ak3 + yk3);
+      }
+      else
+      {
+      ur1= sqrtr (ak3 + yr1 - pk/yr1);
+      u2= sqrtv (ak3 + yk2 - pk/yk2);
+      u3= sqrtv (ak3 + yk3 - pk/yk3);
+      }
 
     // Lösungen reduzierte quartische Gleichung
     yq1=  ur1 + u2 + u3;
@@ -2734,11 +2749,28 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
     else
     {
     // kleiner Aussschnitt 3 reelle Lösungen
-    l= -sqrtr (-pk);
-    yr1= l*cosr (acosr (qk/(pk*l))/3)*-2;
-    yr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
-    yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
+    l= -sqrtr (-pk);   // -pk nie unter 0 wegen xl
+    if (qk/(pk*l) < -1)                                     // 1.000000119  immer nur dieser Wert (Bereichsüberschreitung durch Ungenauigkeit)
+      {
+      yr1= -l;
+      yr2= l*2;
+      yr3= -l;
+      }
+    else if (qk/(pk*l) > 1)
+      {
+      yr1= l*-2;
+      yr2= l;
+      yr3= l;
+      }
+    else
+      {
+      yr1= l*cosr (acosr (qk/(pk*l))/3)*-2;
+      yr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
+      yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
+      }
 
+    if ((ak3 + yr1 < 0) || (ak3 + yr2 < 0) || (ak3 + yr3 < 0))    // ist einer der Werte 0 kommen nur komplexe Lösungen raus
+      return;
     ur1= sqrtr (ak3 + yr1);
     ur2= sqrtr (ak3 + yr2);
     ur3= sqrtr (ak3 + yr3);
@@ -2781,7 +2813,7 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
 
 void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, uk1, uk2, l, aq4, ak3, qq8, yr1, yr2, yr3, bedr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, uk1, uk2, l, aq4, ak3, qq8, yr1, yr2, yr3, bedr, akyr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
   ckomplexk yk2, yk3, u1, u2, u3, yq1, yq2, yq3, yq4, bed, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
@@ -2800,18 +2832,26 @@ void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte&
   ak3= pq/-6;
   qq8= qq/8;
   xl= qk*qk + pk*pk*pk;
+
   if (xl > 0)
     {
     //großer Aussschnitt eine reelle, 2 komplexe Lösungen
-    vxl= sqrtr (xl);
-    uk1= cbrtr (qk + vxl);
-    uk2= cbrtr (qk - vxl);
+    vxl= sqrtr (xl);  // xl immer > 0
+    uk1= cbrtr (qk - vxl);
+    uk2= cbrtr (qk + vxl);
 
     yr1= uk1 + uk2;
     yk2= e31*uk1 + e32*uk2;
     yk3= ckomplexk (yk2.x, -yk2.y);
 
-    ur1= sqrtr (ak3 + yr1);
+    akyr= ak3 + yr1;
+    if (akyr < 0)
+      {
+      ur1= 0;       // Negativwerte durch Ungenauigkeit der Differenz die bei Genauigkeit 0 wäre
+      //return;
+      }
+      else
+      ur1= sqrtr (akyr);
     u2= sqrtv (ak3 + yk2);
     u3= sqrtv (ak3 + yk3);
 
@@ -2840,23 +2880,40 @@ void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte&
       }
 
     // reell-positive Lösungen an den Schnittpunktspeicher übergeben
-    if (arg (x1) < 1e-8)
+    if (arg (x1) < quantr)
       psp.add (x1.x);
-    if (arg (x2) < 1e-8)
+    if (arg (x2) < quantr)
       psp.add (x2.x);
-    if (arg (x3) < 1e-8)
+    if (arg (x3) < quantr)
       psp.add (x3.x);
-    if (arg (x4) < 1e-8)
+    if (arg (x4) < quantr)
       psp.add (x4.x);
     }
     else
     {
     // kleiner Aussschnitt 3 reelle Lösungen
-    l= -sqrtr (-pk);
-    yr1= l*cosr (acosr (qk/(pk*l))/3)*-2;
-    yr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
-    yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
+    l= -sqrtr (-pk);   // -pk nie unter 0 wegen xl
+    if (qk/(pk*l) < -1)                                     // 1.000000119  immer nur dieser Wert (Bereichsüberschreitung durch Ungenauigkeit)
+      {
+      yr1= -l;
+      yr2= l*2;
+      yr3= -l;
+      }
+    else if (qk/(pk*l) > 1)
+      {
+      yr1= l*-2;
+      yr2= l;
+      yr3= l;
+      }
+    else
+      {
+      yr1= l*cosr (acosr (qk/(pk*l))/3)*-2;
+      yr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
+      yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
+      }
 
+    if ((ak3 + yr1 < 0) || (ak3 + yr2 < 0) || (ak3 + yr3 < 0))    // ist einer der Werte 0 kommen nur komplexe Lösungen raus
+      return;
     ur1= sqrtr (ak3 + yr1);
     ur2= sqrtr (ak3 + yr2);
     ur3= sqrtr (ak3 + yr3);
