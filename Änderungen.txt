@@ -271,7 +271,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
                werden nicht von lagrangeintrc erkannt, floating exceptions bei quartischlagrangeintrc versucht abzufangen, in brass gekommen,
                weil mit ständigen Umschaltungen zwischen real und komplex durcheinandergekommen, gekeucht, in Stress und Unordnung abgebrochen, 4:22
 2025.10.14 Mi  6:28, floating exceptions weitergemacht, quantr definiert, quartischlagrangeintrc und u floating exceptions gut abgefangen, andere quartisch Routinen stehen noch aus, 1 2 3 4 Fehler beruht auf Ungenauigkeit des
-               komplexen Wertes der nicht als reeller Wert übernommen wird, weil wegen der Ungenauigkeit der imaginäre Anteil zu hoch ist, 1234 Fehler besteht immer noch, 12:31
+               komplexen Wertes der nicht als reeller Wert übernommen wird, weil wegen der Ungenauigkeit der imaginäre Anteil zu hoch ist, 1234 Fehler besteht immer noch, 12:31, 14 Uhr, quartischdiffpintr u-Formel für kubische
+               Resolventenlösung eingebaut, 14:14
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

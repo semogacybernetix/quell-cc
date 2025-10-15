@@ -2412,8 +2412,10 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   xl= qk*qk + pk*pk*pk;
   if (xl >= 0)
     {
-    vxl= sqrtr (xl);
-    yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/-2;
+    //vxl= sqrtr (xl);
+    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/-2;
+    yk= cbrtr (qk + sqrtr (xl));
+    yk= (yk - pk/yk)/-2;
     }
     else
     {
