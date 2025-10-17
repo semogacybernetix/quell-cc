@@ -180,13 +180,13 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       threadrekursiv (0);
       screen->flush ();
       //welttoscreenz ();
-      framezeit= (times (&zeit) - zeitpos)*10;
+      framezeit= (times (&zeit) - zeitpos);
       //cout << "Zeit: " << framezeit << "  fps: " << 1/framezeit << endl;
 //      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
       printinteger (framezeit);
-      printtext (" ms    ");
+      printtext (" tks    ");
       if (framezeit > 0)
-        printinteger (1000/framezeit);
+        printinteger (100/framezeit);
         else
         printtext ("   -");
 
