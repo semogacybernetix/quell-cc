@@ -1703,9 +1703,9 @@ void quartischloesungen ()
 
   quartischzurück (x1, x2, x3, x4, a, b, c, d);
 
-  quartischdiffpintr (a.x, b.x, c.x, d.x, psp);
+  quartischdiffpuintr (a.x, b.x, c.x, d.x, psp);
 
-  printtext ("-------------------------------- quartischdiffpintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischdiffpuintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);
   printvektor2komplex ("x1          ", psp.abstand[0], 0);
   printvektor2komplex ("x2          ", psp.abstand[1], 0);
@@ -1714,9 +1714,9 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
-  quartischbuchuintr (a.x, b.x, c.x, d.x, psp);
+  quartischdiffpvintr (a.x, b.x, c.x, d.x, psp);
 
-  printtext ("-------------------------------- quartischbuchuintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischdiffpvintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);
   printvektor2komplex ("x1          ", psp.abstand[0], 0);
   printvektor2komplex ("x2          ", psp.abstand[1], 0);
@@ -1725,9 +1725,9 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
-  quartischbuchvintr (a.x, b.x, c.x, d.x, psp);
+  quartischdiffpfintr (a.x, b.x, c.x, d.x, psp);
 
-  printtext ("-------------------------------- quartischbuchvintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischdiffpfintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);
   printvektor2komplex ("x1          ", psp.abstand[0], 0);
   printvektor2komplex ("x2          ", psp.abstand[1], 0);
@@ -1747,9 +1747,9 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
-  quartischlagrangeintru (a.x, b.x, c.x, d.x, psp);
+  quartischlagrangeuintr (a.x, b.x, c.x, d.x, psp);
 
-  printtext ("-------------------------------- quartischlagrangeintru Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischlagrangeuintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);
   printvektor2komplex ("x1          ", psp.abstand[0], 0);
   printvektor2komplex ("x2          ", psp.abstand[1], 0);
@@ -1758,9 +1758,9 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
-  quartischlagrangeintrc (a.x, b.x, c.x, d.x, psp);
+  quartischlagrangecintr (a.x, b.x, c.x, d.x, psp);
 
-  printtext ("-------------------------------- quartischlagrangeintrc Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischlagrangecintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);
   printvektor2komplex ("x1          ", psp.abstand[0], 0);
   printvektor2komplex ("x2          ", psp.abstand[1], 0);

@@ -275,7 +275,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
                Resolventenlösung eingebaut, 14:14
 2025.10.17 Fr  5:00, kubischreell u-Version Fallunterscheidung implementiert, abgedichtet gegen float-exceptions, kubischreell casus irreducibiles abgedichtet, quartischdiffpintr komplett floating-exceptions durchgegangen, abgedichtet,
                kubischreell in andere quartischintr Routinen übernommen, alle quartischintr Routinen getestet, 11:13, 17:33, quartischbuchuintr, buchvintr, buchfintr abgedichtet, lagrangec kubischreell übernommen,
-               quartischintr Routinen neu geordnet, 21:35
+               quartischintr Routinen neu geordnet, 21:35, 22:42, linearfaktoren.cc gefixt wegen neuer quartischintr Routinen, 23:08
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
