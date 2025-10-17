@@ -166,12 +166,12 @@ void addtorus (cwelt& pwelt)
   //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,400), cvektor3 (0,25,0));          // flacher Ellipsentorus
 
   // Texturen
-  cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 80/PI, 10/PI);
+  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 80/PI, 10/PI);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/15);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
 
   // Körper
-  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/sechseck1024.jpg"), real (8/PI), real (1/PI)), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/wabe512.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
@@ -181,9 +181,9 @@ void addtorus (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Palmen.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steine.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinmauer.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
 
-  //welt->himmelfarbe= cvektor3 (30,75,90);
+  pwelt.himmelfarbe= cvektor3 (30,75,90);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
@@ -194,8 +194,8 @@ void addtorus (cwelt& pwelt)
 
 void fliegethread ()
   {
-  cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
-  //cwelt* welt= new cwelt (900, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  //cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  cwelt* welt= new cwelt (900, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
 
   //addebene (*welt);
   //addkoord (*welt);
@@ -205,8 +205,8 @@ void fliegethread ()
   addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450));
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450));
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1600, 900));
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450));
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1600, 900));
 
   flugsimu.setframerate (real (20.0));
   flugsimu.threadanz= 12;

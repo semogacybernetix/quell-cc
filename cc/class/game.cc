@@ -188,7 +188,7 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       if (framezeit > 0)
         printinteger (100/framezeit);
         else
-        printtext ("   -");
+        printtext ("---");
 
       printtext (" fps\n");
       flugw= eulerwinkelfrommatrix (welt->augbasis);

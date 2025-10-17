@@ -2392,7 +2392,7 @@ void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, cko
   x4= aq4 + u + D2;
   }
 
-void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
   real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, vxl, l, yk, pq6, uq, u, z, v, b1, b2, aq4, VD, x1, x2;
 
@@ -2413,25 +2413,25 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (xl > 0)
     {
     vxl= sqrtr (xl);
-    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/-2;             // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
+    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
     if (qk > 0)
       yk= cbrtr (qk + vxl);
       else
-      yk= cbrtr (qk - vxl);                                     // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
-    yk= (yk - pk/yk)/-2;                                        // yk= 0 ausgeschlossen, da Auslöschung verhindert
+      yk= cbrtr (qk - vxl);                                       // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
+    yk= (yk - pk/yk)/2;                                           // yk= 0 ausgeschlossen, da Auslöschung verhindert
     }
     else if (xl < 0)
     {
-    l= -sqrtr (-pk);
-    yk= l*cosr (acosr (qk/(pk*l))/3);                           // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
+    l= sqrtr (-pk);
+    yk= l*cosr (acosr (qk/(pk*-l))/3);                            // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
     }
     else
-    yk= -sqrtr (-pk);                                           // viele xl= 0
+    yk= sqrtr (-pk);                                              // viele xl= 0
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq für Rückreduzierung)
   pq6= pq/6;
-  z= pq6 - yk;
-  uq= yk/-2 - pq6;
+  z= yk + pq6;
+  uq= yk/2 - pq6;
 
   if (uq <= 0)
     {
@@ -2441,27 +2441,9 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     else
     u= sqrtr (uq);
 
-/*
-  v= sqrtr (z*z - rq);
-    // Bedingung -2uv = qq
-    real bed= u*v*-2;
-    if (fabsr (bed + qq) < fabsr (bed - qq))
-      {
-      b1= z - v;
-      b2= z + v;
-      }
-      else
-      {
-      b1= z + v;
-      b2= z - v;
-      }
-//*/
-
-//*
-    v= qq/u/4;
-    b1= z - v;
-    b2= z + v;
-//*/
+  v= qq/u/4;
+  b1= z - v;
+  b2= z + v;
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
@@ -2487,9 +2469,9 @@ void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
   }
 
-void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, l, yk, z, u, uq, qqu, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, rq4, pqq, pk, qk, xl, vxl, l, yk, z, zzrq, v, uq, u, b1, b2, aq4, VD, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2499,125 +2481,62 @@ void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
-  pk= pqq/-36 + rq/-3;
-  qk= pq*(pqq/216 + rq/-6) + qq*qq/16;
+  rq4= rq*4/-3;
+  pk= pqq/-9 + rq4;
+  qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
   if (xl > 0)
     {
     vxl= sqrtr (xl);
-    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl));                  // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
+    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
     if (qk > 0)
       yk= cbrtr (qk + vxl);
       else
       yk= cbrtr (qk - vxl);                                       // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
-    yk= (yk - pk/yk);                                             // yk= 0 ausgeschlossen, da Auslöschung verhindert
+    yk= (yk - pk/yk)/2;                                           // yk= 0 ausgeschlossen, da Auslöschung verhindert
     }
     else if (xl < 0)
     {
-    l= -sqrtr (-pk);
-    yk= l*cosr (acosr (qk/(pk*l))/3)*-2;                          // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
+    l= sqrtr (-pk);
+    yk= l*cosr (acosr (qk/(pk*-l))/3);                            // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
     }
     else
-    yk= -sqrtr (-pk);                                             // viele xl= 0
-
-  // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
-  uq= yk/2 - pq/6;
-  u= sqrtr (uq);
-
-  z= yk + pq/6;
-  qqu= qq/u/4;
-
-  b1= z - qqu;
-  b2= z + qqu;
-
-  // Lösungen normale quartische Gleichung
-  aq4= aq/-4;
-  if (uq >= b1)
-    {
-    VD= sqrtr (uq - b1);
-    x1= aq4 - u - VD;
-    x2= aq4 - u + VD;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
-    }
-  if (uq >= b2)
-    {
-    VD= sqrtr (uq - b2);
-    x1= aq4 + u - VD;
-    x2= aq4 + u + VD;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
-    }
-  }
-
-void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
-  {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, l, yk, z, v, vq, qqv, b1, b2, aq4, VD, x1, x2;
-
-  // Parameter reduzierte quartische Gleichung
-  aqq= aq*aq/8;
-  pq= aqq*-3 + bq;
-  qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
-
-  // Parameter reduzierte kubische Gleichung
-  pqq= pq*pq;
-  pk= pqq/-36 + rq/-3;
-  qk= pq*(pqq/216 + rq/-6) + qq*qq/16;
-
-  // reelle Lösung der kubischen Resolvente
-  xl= qk*qk + pk*pk*pk;
-  if (xl > 0)
-    {
-    vxl= sqrtr (xl);
-    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl));                  // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
-    if (qk > 0)
-      yk= cbrtr (qk + vxl);
-      else
-      yk= cbrtr (qk - vxl);                                       // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
-    yk= (yk - pk/yk);                                             // yk= 0 ausgeschlossen, da Auslöschung verhindert
-    }
-    else if (xl < 0)
-    {
-    l= -sqrtr (-pk);
-    yk= l*cosr (acosr (qk/(pk*l))/3)*-2;                          // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
-    }
-    else
-    yk= -sqrtr (-pk);                                             // viele xl= 0
+    yk= sqrtr (-pk);                                              // viele xl= 0
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   z= yk + pq/6;
-  v= sqrtr (z*z - rq);
 
-  qqv= qq/v/4;
-  vq= qqv*qqv;
+  zzrq= z*z - rq;
+  if (zzrq <= 0)                                                  // zzrq < 0 wegen Ungenauigkeit
+    v= 0;
+    else
+    v= sqrtr (zzrq);
+
+  u= qq/v/4;
+  uq= u*u;
 
   b1= z + v;
   b2= z - v;
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
-  if (vq >= b1)
+  if (uq >= b1)
     {
-    VD= sqrtr (vq - b1);
-    x1= aq4 + qqv - VD;
-    x2= aq4 + qqv + VD;
+    VD= sqrtr (uq - b1);
+    x1= aq4 + u - VD;
+    x2= aq4 + u + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
       psp.add (x2);
     }
-  if (vq >= b2)
+  if (uq >= b2)
     {
-    VD= sqrtr (vq - b2);
-    x1= aq4 - qqv - VD;
-    x2= aq4 - qqv + VD;
+    VD= sqrtr (uq - b2);
+    x1= aq4 - u - VD;
+    x2= aq4 - u + VD;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2625,9 +2544,9 @@ void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
   }
 
-void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, l, yk, pq6, uq, u, z, v, bed, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, rq4, pqq, pk, qk, xl, vxl, l, yk, pq6, uq, u, z, zzrq, v, bed, b1, b2, aq4, VD, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2637,36 +2556,49 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
-  pk= pqq/-36 + rq/-3;
-  qk= pq*(pqq/216 + rq/-6) + qq*qq/16;
+  rq4= rq*4/-3;
+  pk= pqq/-9 + rq4;
+  qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
   if (xl > 0)
     {
     vxl= sqrtr (xl);
-    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl));                  // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
+    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
     if (qk > 0)
       yk= cbrtr (qk + vxl);
       else
       yk= cbrtr (qk - vxl);                                       // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
-    yk= (yk - pk/yk);                                             // yk= 0 ausgeschlossen, da Auslöschung verhindert
+    yk= (yk - pk/yk)/2;                                           // yk= 0 ausgeschlossen, da Auslöschung verhindert
     }
     else if (xl < 0)
     {
-    l= -sqrtr (-pk);
-    yk= l*cosr (acosr (qk/(pk*l))/3)*-2;                          // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
+    l= sqrtr (-pk);
+    yk= l*cosr (acosr (qk/(pk*-l))/3);                            // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
     }
     else
-    yk= -sqrtr (-pk);                                             // viele xl= 0
+    yk= sqrtr (-pk);                                              // viele xl= 0
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   pq6= pq/6;
-  uq= yk/2 - pq6;
-  u= sqrtr (uq);
-
   z= yk + pq6;
-  v= sqrtr (z*z - rq);
+  uq= yk/2 - pq6;
+
+  if (uq <= 0)                                                    // uq < 0 wegen Ungenauigkeit
+    {
+    uq= 0;
+    u= 0;
+    }
+    else
+    u= sqrtr (uq);
+
+  zzrq= z*z - rq;
+  //if (0)                                                        // sauberes Bild, feine blaue Punkte statt verzerrte Toruspunkte wenn die Wurzel nicht abgefangen wird
+  if (zzrq <= 0)                                                  // zzrq < 0 wegen Ungenauigkeit
+    v= 0;
+    else
+    v= sqrtr (zzrq);
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
@@ -2705,7 +2637,98 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
   }
 
-void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+  {
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, l, yk, pq6, uq, u, z, zzrq, v, bed, b1, b2, aq4, VD, x1, x2;
+
+  // Parameter reduzierte quartische Gleichung
+  aqq= aq*aq/8;
+  pq= aqq*-3 + bq;
+  qq= aq*(aqq + bq/-2) + cq;
+  rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+
+  // Parameter reduzierte kubische Gleichung
+  pqq= pq*pq;
+  pk= pqq/-36 + rq/-3;
+  qk= pq*(pqq/216 + rq/-6) + qq*qq/16;
+
+  // reelle Lösung der kubischen Resolvente
+  xl= qk*qk + pk*pk*pk;
+  if (xl > 0)
+    {
+    vxl= sqrtr (xl);
+    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl));                  // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
+    if (qk > 0)
+      yk= cbrtr (qk + vxl);
+      else
+      yk= cbrtr (qk - vxl);                                       // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
+    yk= (yk - pk/yk);                                             // yk= 0 ausgeschlossen, da Auslöschung verhindert
+    }
+    else if (xl < 0)
+    {
+    l= sqrtr (-pk);
+    yk= l*cosr (acosr (qk/(pk*-l))/3)*2;                          // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
+    }
+    else
+    yk= sqrtr (-pk);                                              // viele xl= 0
+
+  // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
+  pq6= pq/6;
+  z= yk + pq6;
+  uq= yk/2 - pq6;
+
+  if (uq <= 0)                                                    // uq < 0 wegen Ungenauigkeit
+    {
+    uq= 0;
+    u= 0;
+    }
+    else
+    u= sqrtr (uq);
+
+  zzrq= z*z - rq;
+  if (zzrq <= 0)                                                  // zzrq < 0 wegen Ungenauigkeit
+    v= 0;
+    else
+    v= sqrtr (zzrq);
+
+  // Bedingung -2uv = qq
+  bed= u*v*-2;
+  if (fabsr (bed + qq) < fabsr (bed - qq))
+    {
+    b1= z - v;
+    b2= z + v;
+    }
+    else
+    {
+    b1= z + v;
+    b2= z - v;
+    }
+
+  // Lösungen normale quartische Gleichung
+  aq4= aq/-4;
+  if (uq >= b1)
+    {
+    VD= sqrtr (uq - b1);
+    x1= aq4 - u - VD;
+    x2= aq4 - u + VD;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (uq >= b2)
+    {
+    VD= sqrtr (uq - b2);
+    x1= aq4 + u - VD;
+    x2= aq4 + u + VD;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  }
+
+void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
   real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, l, aq4, ak3, qq8, yr1, yrx, yry, yr2, yr3, bedr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
   ckomplexk yk2, yk3, u1, u2, u3, yq1, yq2, yq3, yq4, bed, x1, x2, x3, x4;
@@ -2730,11 +2753,10 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
     {
     //großer Aussschnitt eine reelle, 2 komplexe Lösungen
     vxl= sqrtr (xl);
-    if (qk > 0)
+    if (qk > 0)                                                   // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
       yr1= cbrtr (qk + vxl);
       else
-      yr1= cbrtr (qk - vxl);                                     // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
-    yr1= cbrtr (qk + sqrtr (xl));         // xl immer größer als 0
+      yr1= cbrtr (qk - vxl);
     yrx= yr1/-2;
     yry= yr1*sqrtr (real (0.75));
     yk2= ckomplexk (yrx, yry);
@@ -2769,20 +2791,20 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
       }
 
     // reell-positive Lösungen an den Schnittpunktspeicher übergeben
-    if (arg (x1) < 1e-8)
+    if (arg (x1) < quantr)
       psp.add (x1.x);
-    if (arg (x2) < 1e-8)
+    if (arg (x2) < quantr)
       psp.add (x2.x);
-    if (arg (x3) < 1e-8)
+    if (arg (x3) < quantr)
       psp.add (x3.x);
-    if (arg (x4) < 1e-8)
+    if (arg (x4) < quantr)
       psp.add (x4.x);
     }
     else
     {
     // kleiner Aussschnitt 3 reelle Lösungen
     l= -sqrtr (-pk);   // -pk nie unter 0 wegen xl
-    if (qk/(pk*l) < -1)                                     // 1.000000119  immer nur dieser Wert (Bereichsüberschreitung durch Ungenauigkeit)
+    if (qk/(pk*l) < -1)                                           // 1.000000119  immer nur dieser Wert (Bereichsüberschreitung durch Ungenauigkeit)
       {
       yr1= -l;
       yr2= l*2;
@@ -2801,7 +2823,7 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
       yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
       }
 
-    if ((ak3 + yr1 < 0) || (ak3 + yr2 < 0) || (ak3 + yr3 < 0))    // ist einer der Werte 0 kommen nur komplexe Lösungen raus
+    if ((ak3 + yr1 < 0) || (ak3 + yr2 < 0) || (ak3 + yr3 < 0))    // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
     ur1= sqrtr (ak3 + yr1);
     ur2= sqrtr (ak3 + yr2);
@@ -2843,7 +2865,7 @@ void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte&
     }
   }
 
-void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
   real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, uk1, uk2, l, aq4, ak3, qq8, yr1, yr2, yr3, bedr, akyr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
   ckomplexk yk2, yk3, u1, u2, u3, yq1, yq2, yq3, yq4, bed, x1, x2, x3, x4;
@@ -2879,7 +2901,7 @@ void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte&
     akyr= ak3 + yr1;
     if (akyr < 0)
       {
-      ur1= 0;       // Negativwerte durch Ungenauigkeit der Differenz die bei Genauigkeit 0 wäre
+      ur1= 0;                                                     // Negativwerte durch Ungenauigkeit der Differenz die bei Genauigkeit 0 wäre
       //return;
       }
       else
@@ -2925,7 +2947,7 @@ void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte&
     {
     // kleiner Aussschnitt 3 reelle Lösungen
     l= -sqrtr (-pk);   // -pk nie unter 0 wegen xl
-    if (qk/(pk*l) < -1)                                     // 1.000000119  immer nur dieser Wert (Bereichsüberschreitung durch Ungenauigkeit)
+    if (qk/(pk*l) < -1)                                           // 1.000000119  immer nur dieser Wert (Bereichsüberschreitung durch Ungenauigkeit)
       {
       yr1= -l;
       yr2= l*2;
@@ -2944,7 +2966,7 @@ void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte&
       yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
       }
 
-    if ((ak3 + yr1 < 0) || (ak3 + yr2 < 0) || (ak3 + yr3 < 0))    // ist einer der Werte 0 kommen nur komplexe Lösungen raus
+    if ((ak3 + yr1 < 0) || (ak3 + yr2 < 0) || (ak3 + yr3 < 0))    // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
     ur1= sqrtr (ak3 + yr1);
     ur2= sqrtr (ak3 + yr2);

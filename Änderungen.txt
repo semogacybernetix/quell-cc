@@ -274,11 +274,12 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
                komplexen Wertes der nicht als reeller Wert übernommen wird, weil wegen der Ungenauigkeit der imaginäre Anteil zu hoch ist, 1234 Fehler besteht immer noch, 12:31, 14 Uhr, quartischdiffpintr u-Formel für kubische
                Resolventenlösung eingebaut, 14:14
 2025.10.17 Fr  5:00, kubischreell u-Version Fallunterscheidung implementiert, abgedichtet gegen float-exceptions, kubischreell casus irreducibiles abgedichtet, quartischdiffpintr komplett floating-exceptions durchgegangen, abgedichtet,
-               kubischreell in andere quartischintr Routinen übernommen, alle quartischintr Routinen getestet, 11:13
+               kubischreell in andere quartischintr Routinen übernommen, alle quartischintr Routinen getestet, 11:13, 17:33, quartischbuchuintr, buchvintr, buchfintr abgedichtet, lagrangec kubischreell übernommen,
+               quartischintr Routinen neu geordnet, 21:35
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-quartischintegrierte Routinen auf Wasserdichtheit (floating exeptions) testen, diffpintr geschafft, Rest fehlt noch
+quartischlagrange -u,-c intr abdichten
 neues Threadverfahren entwickeln
 apfel thread
 Platform neu machen statt linux X86, AARCH, AMD64, ARM64, RISC-V

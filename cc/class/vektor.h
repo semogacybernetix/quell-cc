@@ -12,11 +12,11 @@ typedef signed long long integer;
 //typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen                                                                 5.00              3.96
 
 // ------------------------- 32 Bit -------------------------------------------------------------------------------------------------------------
-typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                                 7.14
+//typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                                 7.14
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
+typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
 //typedef double real;          // hw           //     1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
@@ -368,12 +368,12 @@ void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomple
 void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& p, ckomplexk& q, ckomplexk& r);
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
-void quartischdiffpintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischbuchuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischbuchvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischlagrangeintru (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischlagrangeintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 
 // --------------------- ckomplexk Operatoren ---------------------------------------------------------
 
