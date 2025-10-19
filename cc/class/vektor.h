@@ -12,11 +12,11 @@ typedef signed long long integer;
 //typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen                                                                 5.00              3.96
 
 // ------------------------- 32 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                                 7.14
+typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                                 7.14
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
-typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
+//typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
 //typedef double real;          // hw           //     1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
@@ -180,115 +180,113 @@ const cbasis3 einsb3 (1);
 //--------------------------------------------------------------------------------------- Funktionen und Operatoren -----------------------------------------------------------------------------------
 //--------------------- integer Funktionen ------------------------------------------------------------------------------
 
-void     vertausche (integer& a, integer& b);
+void     swap (integer& a, integer& b);
 integer  max        (integer a, integer b);
 void     savemax    (integer& pmax, integer pr);
 
 //--------------------- real Funktionen ------------------------------------------------------------------------------
 
-void vertausche (real& a, real& b);
-
-real q (const real x);
-
+_Float32 fmodr (const _Float32& a, const _Float32& b);
+_Float64 fmodr (const _Float64& a, const _Float64& b);
+long double fmodr (const long double& a, const long double& b);
 //_Float128 fmodr (const _Float128& a, const _Float128& b);
 //_Float16 fmodr (const _Float16& a, const _Float16& b);
-long double fmodr (const long double& a, const long double& b);
-double fmodr (const double& a, const double& b);
-float fmodr (const float& a, const float& b);
 
+_Float32 floorr (const _Float32& a);
+_Float64 floorr (const _Float64& a);
+long double floorr (const long double& a);
 //_Float128 floorr (const _Float128& a);
 //_Float16 floorr (const _Float16& a);
-long double floorr (const long double& a);
-double floorr (const double& a);
-float floorr (const float& a);
 
+_Float32 fabsr (const _Float32& a);
+_Float64 fabsr (const _Float64& a);
+long double fabsr (const long double& a);
 //_Float128 fabsr (const _Float128& a);
 //_Float16 fabsr (const _Float16& a);
-long double fabsr (const long double& a);
-double fabsr (const double& a);
-float fabsr (const float& a);
 
-//_Float128 expr (const _Float128& a);
-//_Float16 expr (const _Float16& a);
-long double expr (const long double& a);
-double expr (const double& a);
-float expr (const float& a);
-
-//_Float128 logr (const _Float128& a);
-//_Float16 logr (const _Float16& a);
-long double logr (const long double& a);
-double logr (const double& a);
-float logr (const float& a);
-
-//_Float128 powr (const _Float128& a, const _Float128& b);
-//_Float16 powr (const _Float16& a, const _Float16& b);
-long double powr (const long double& a, const long double& b);
-double powr (const double& a, const double& b);
-float powr (const float& a, const float& b);
-
-//_Float128 sinr (const _Float128& a);
-//_Float16 sinr (const _Float16& a);
-long double sinr (const long double& a);
-double sinr (const double& a);
-float sinr (const float& a);
-
-//_Float128 cosr (const _Float128& a);
-//_Float16 cosr (const _Float16& a);
-long double cosr (const long double& a);
-double cosr (const double& a);
-float cosr (const float& a);
-
-//_Float128 asinr (const _Float128& a);
-//_Float16 asinr (const _Float16& a);
-long double asinr (const long double& a);
-double asinr (const double& a);
-float asinr (const float& a);
-
-//_Float128 acosr (const _Float128& a);
-//_Float16 acosr (const _Float16& a);
-long double acosr (const long double& a);
-double acosr (const double& a);
-float acosr (const float& a);
-
-//_Float128 atanr (const _Float128& a);
-long double atanr (const long double& a);
-double atanr (const double& a);
-float atanr (const float& a);
-
-//_Float128 atan2r (const _Float128& a, const _Float128& b);
-//_Float16 atan2r (const _Float16& a, const _Float16& b);
-long double atan2r (const long double& a, const long double& b);
-double atan2r (const double& a, const double& b);
-float atan2r (const float& a, const float& b);
-
-//_Float128 asinhr (const _Float128& a);
-//_Float16 asinhr (const _Float16& a);
-long double asinhr (const long double& a);
-double asinhr (const double& a);
-float asinhr (const float& a);
-
-//_Float128 acoshr (const _Float128& a);
-//_Float16 acoshr (const _Float16& a);
-long double acoshr (const long double& a);
-double acoshr (const double& a);
-float acoshr (const float& a);
-
-//_Float128 atanhr (const _Float128& a);
-//_Float16 atanhr (const _Float16& a);
-long double atanhr (const long double& a);
-double atanhr (const double& a);
-float atanhr (const float& a);
-
+_Float32 sqrtr (const _Float32& a);
+_Float64 sqrtr (const _Float64& a);
+long double sqrtr (const long double& a);
 //_Float128 sqrtr (const _Float128& a);
 //_Float16 sqrtr (const _Float16& a);
-long double sqrtr (const long double& a);
-double sqrtr (const double& a);
-float sqrtr (const float& a);
 
-//_Float128 cbrtr (const _Float128& a);
+_Float32 cbrtr (const _Float32& a);
+_Float64 cbrtr (const _Float64& a);
 long double cbrtr (const long double& a);
-double cbrtr (const double& a);
-float cbrtr (const float& a);
+//_Float128 cbrtr (const _Float128& a);
+//_Float16 cbrtr (const _Float16& a);
+
+_Float32 expr (const _Float32& a);
+_Float64 expr (const _Float64& a);
+long double expr (const long double& a);
+//_Float128 expr (const _Float128& a);
+//_Float16 expr (const _Float16& a);
+
+_Float32 logr (const _Float32& a);
+_Float64 logr (const _Float64& a);
+long double logr (const long double& a);
+//_Float128 logr (const _Float128& a);
+//_Float16 logr (const _Float16& a);
+
+_Float32 powr (const _Float32& a, const _Float32& b);
+_Float64 powr (const _Float64& a, const _Float64& b);
+long double powr (const long double& a, const long double& b);
+//_Float128 powr (const _Float128& a, const _Float128& b);
+//_Float16 powr (const _Float16& a, const _Float16& b);
+
+_Float32 sinr (const _Float32& a);
+_Float64 sinr (const _Float64& a);
+long double sinr (const long double& a);
+//_Float128 sinr (const _Float128& a);
+//_Float16 sinr (const _Float16& a);
+
+_Float32 cosr (const _Float32& a);
+_Float64 cosr (const _Float64& a);
+long double cosr (const long double& a);
+//_Float128 cosr (const _Float128& a);
+//_Float16 cosr (const _Float16& a);
+
+_Float32 asinr (const _Float32& a);
+_Float64 asinr (const _Float64& a);
+long double asinr (const long double& a);
+//_Float128 asinr (const _Float128& a);
+//_Float16 asinr (const _Float16& a);
+
+_Float32 acosr (const _Float32& a);
+_Float64 acosr (const _Float64& a);
+long double acosr (const long double& a);
+//_Float128 acosr (const _Float128& a);
+//_Float16 acosr (const _Float16& a);
+
+_Float32 atanr (const _Float32& a);
+_Float64 atanr (const _Float64& a);
+long double atanr (const long double& a);
+//_Float128 atanr (const _Float128& a);
+//_Float16 atanr (const _Float16& a);
+
+_Float32 atan2r (const _Float32& a, const _Float32& b);
+_Float64 atan2r (const _Float64& a, const _Float64& b);
+long double atan2r (const long double& a, const long double& b);
+//_Float128 atan2r (const _Float128& a, const _Float128& b);
+//_Float16 atan2r (const _Float16& a, const _Float16& b);
+
+_Float32 asinhr (const _Float32& a);
+_Float64 asinhr (const _Float64& a);
+long double asinhr (const long double& a);
+//_Float128 asinhr (const _Float128& a);
+//_Float16 asinhr (const _Float16& a);
+
+_Float32 acoshr (const _Float32& a);
+_Float64 acoshr (const _Float64& a);
+long double acoshr (const long double& a);
+//_Float128 acoshr (const _Float128& a);
+//_Float16 acoshr (const _Float16& a);
+
+_Float32 atanhr (const _Float32& a);
+_Float64 atanhr (const _Float64& a);
+long double atanhr (const long double& a);
+//_Float128 atanhr (const _Float128& a);
+//_Float16 atanhr (const _Float16& a);
 
 //--------------------- cvektor2 Vektor Funktionen ------------------------------------------------------------------------------
 
@@ -367,7 +365,7 @@ void quartischreduziertpdfw23 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk&
 void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& p, ckomplexk& q, ckomplexk& r);
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
-void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
+void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
@@ -473,7 +471,7 @@ cbasis2 operator | (const cbasis2 &pb1, const cbasis2 &pb2);
 
 //---------- cvektor3 Funktionen ------------------------------------------------------------------------------------------
 
-void vertausche (cvektor3& a, cvektor3& b);
+void swap (cvektor3& a, cvektor3& b);
 
 real     norm       (const cvektor3 &pv);
 real     abs        (const cvektor3 &pv);

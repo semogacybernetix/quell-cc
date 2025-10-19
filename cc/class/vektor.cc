@@ -167,7 +167,7 @@ cvektor8::cvektor8 (const real &pr, const real &pi, const real &pj, const real &
 
 //--------------------- integer Funktionen ------------------------------------------------------------------------------
 
-void vertausche (integer& a, integer& b)
+void swap (integer& a, integer& b)
   {
   integer c;
   c= a;
@@ -187,191 +187,19 @@ void savemax (integer& pmax, integer pr)
   pmax= max (pmax, pr);
   }
 
-//--------------------- real Funktionen -----------------------------------------------------------------------------------------
-
-/*
+//--------------------- real Funktionen -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------ fmodr ------------------------------------------------------------------------
 _Float16 fmodr (const _Float16& a, const _Float16& b)
   {
   return _Float16 (fmodf (a, b));
   }
 
-_Float128 fmodr (const _Float128& a, const _Float128& b)
-  {
-  return fmodq (a, b);
-  }
-
-_Float128 floorr (const _Float128& a)
-  {
-  return floorq (a);
-  }
-
-_Float16 floorr (const _Float16& a)
-  {
-  return _Float16 (floorq (a));
-  }
-
-_Float128 fabsr (const _Float128& a)
-  {
-  return fabsq (a);
-  }
-
-_Float16 fabsr (const _Float16& a)
-  {
-  return _Float16 (fabsf (a));
-  }
-
-_Float128 expr (const _Float128& a)
-  {
-  return expq (a);
-  }
-
-_Float16 expr (const _Float16& a)
-  {
-  return _Float16 (expf (a));
-  }
-
-_Float128 logr (const _Float128& a)
-  {
-  return logq (a);
-  }
-
-_Float16 logr (const _Float16& a)
-  {
-  return _Float16 (logf (a));
-  }
-
-_Float128 powr (const _Float128& a, const _Float128& b)
-  {
-  return powq (a, b);
-  }
-
-_Float16 powr (const _Float16& a, const _Float16& b)
-  {
-  return _Float16 (powf (a, b));
-  }
-
-_Float128 sinr (const _Float128& a)
-  {
-  return sinq (a);
-  }
-
-_Float16 sinr (const _Float16& a)
-  {
-  return _Float16 (sinf (a));
-  }
-
-_Float128 cosr (const _Float128& a)
-  {
-  return cosq (a);
-  }
-
-_Float16 cosr (const _Float16& a)
-  {
-  return _Float16 (cosf (a));
-  }
-
-_Float128 asinr (const _Float128& a)
-  {
-  return asinq (a);
-  }
-
-_Float16 asinr (const _Float16& a)
-  {
-  return _Float16 (asinf (a));
-  }
-
-_Float128 acosr (const _Float128& a)
-  {
-  return acosq (a);
-  }
-
-_Float16 acosr (const _Float16& a)
-  {
-  return _Float16 (acosf (a));
-  }
-
-_Float128 atanr (const _Float128& a)
-  {
-  return atanq (a);
-  }
-
-_Float16 atanr (const _Float16& a)
-  {
-  return _Float16 (atanf (a));
-  }
-
-_Float128 atan2r (const _Float128& a, const _Float128& b)
-  {
-  return atan2q (a, b);
-  }
-
-_Float16 atan2r (const _Float16& a, const _Float16& b)
-  {
-  return _Float16 (atan2f (a, b));
-  }
-
-_Float128 asinhr (const _Float128& a)
-  {
-  return asinhq (a);
-  }
-
-_Float16 asinhr (const _Float16& a)
-  {
-  return _Float16 (asinhf (a));
-  }
-
-_Float128 acoshr (const _Float128& a)
-  {
-  return acoshq (a);
-  }
-
-_Float16 acoshr (const _Float16& a)
-  {
-  return _Float16 (acoshf (a));
-  }
-
-_Float128 atanhr (const _Float128& a)
-  {
-  return atanhq (a);
-  }
-
-_Float16 atanhr (const _Float16& a)
-  {
-  return _Float16 (atanhf (a));
-  }
-
-_Float128 sqrtr (const _Float128& a)
-  {
-  return sqrtq (a);
-  }
-
-_Float16 sqrtr (const _Float16& a)
-  {
-  return _Float16 (sqrtf (a));
-  }
-
-_Float128 cbrtr (const _Float128& a)
-  {
-  return cbrtq (a);
-  }
-
-_Float16 cbrtr (const _Float16& a)
-  {
-  return _Float16 (cbrtf (a));
-  }
-*/
-
-real q (const real x)
-  {
-  return x*x;
-  }
-
-float fmodr (const float& a, const float& b)
+_Float32 fmodr (const _Float32& a, const _Float32& b)
   {
   return fmodf (a, b);
   }
 
-double fmodr (const double& a, const double& b)
+_Float64 fmodr (const _Float64& a, const _Float64& b)
   {
   return fmod (a, b);
   }
@@ -381,12 +209,18 @@ long double fmodr (const long double& a, const long double& b)
   return fmodl (a, b);
   }
 
-float floorr (const float& a)
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 floorr (const _Float16& a)
+  {
+  return _Float16 (floorf (a));
+  }
+
+_Float32 floorr (const _Float32& a)
   {
   return floorf (a);
   }
 
-double floorr (const double& a)
+_Float64 floorr (const _Float64& a)
   {
   return floor (a);
   }
@@ -396,12 +230,18 @@ long double floorr (const long double& a)
   return floorl (a);
   }
 
-float fabsr (const float& a)
+//------------------------------------------------------------------------------------ fabs --------------------------------------------------------------------------
+_Float16 fabsr (const _Float16& a)
+  {
+  return _Float16 (fabsf (a));
+  }
+
+_Float32 fabsr (const _Float32& a)
   {
   return fabsf (a);
   }
 
-double fabsr (const double& a)
+_Float64 fabsr (const _Float64& a)
   {
   return fabs (a);
   }
@@ -411,192 +251,18 @@ long double fabsr (const long double& a)
   return fabsl (a);
   }
 
-float expr (const float& a)
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 sqrtr (const _Float16& a)
   {
-  return expf (a);
+  return _Float16 (sqrtf (a));
   }
 
-double expr (const double& a)
-  {
-  return exp (a);
-  }
-
-long double expr (const long double& a)
-  {
-  return expl (a);
-  }
-
-float logr (const float& a)
-  {
-  return logf (a);
-  }
-
-double logr (const double& a)
-  {
-  return log (a);
-  }
-
-long double logr (const long double& a)
-  {
-  return logl (a);
-  }
-
-float powr (const float& a, const float& b)
-  {
-  return powf (a, b);
-  }
-
-double powr (const double& a, const double& b)
-  {
-  return pow (a, b);
-  }
-
-long double powr (const long double& a, const long double& b)
-  {
-  return powl (a, b);
-  }
-
-float sinr (const float& a)
-  {
-  return sinf (a);
-  }
-
-double sinr (const double& a)
-  {
-  return sin (a);
-  }
-
-long double sinr (const long double& a)
-  {
-  return sinl (a);
-  }
-
-float cosr (const float& a)
-  {
-  return cosf (a);
-  }
-
-double cosr (const double& a)
-  {
-  return cos (a);
-  }
-
-long double cosr (const long double& a)
-  {
-  return cosl (a);
-  }
-
-float asinr (const float& a)
-  {
-  return asinf (a);
-  }
-
-double asinr (const double& a)
-  {
-  return asin (a);
-  }
-
-long double asinr (const long double& a)
-  {
-  return asinl (a);
-  }
-
-float acosr (const float& a)
-  {
-  return acosf (a);
-  }
-
-double acosr (const double& a)
-  {
-  return acos (a);
-  }
-
-long double acosr (const long double& a)
-  {
-  return acosl (a);
-  }
-
-float atanr (const float& a)
-  {
-  return atanf (a);
-  }
-
-double atanr (const double& a)
-  {
-  return atan (a);
-  }
-
-long double atanr (const long double& a)
-  {
-  return atanl (a);
-  }
-
-float atan2r (const float& a, const float& b)
-  {
-  return atan2f (a, b);
-  }
-
-double atan2r (const double& a, const double& b)
-  {
-  return atan2 (a, b);
-  }
-
-long double atan2r (const long double& a, const long double& b)
-  {
-  return atan2l (a, b);
-  }
-
-float asinhr (const float& a)
-  {
-  return asinhf (a);
-  }
-
-double asinhr (const double& a)
-  {
-  return asinh (a);
-  }
-
-long double asinhr (const long double& a)
-  {
-  return asinhl (a);
-  }
-
-float acoshr (const float& a)
-  {
-  return acoshf (a);
-  }
-
-double acoshr (const double& a)
-  {
-  return acosh (a);
-  }
-
-long double acoshr (const long double& a)
-  {
-  return acoshl (a);
-  }
-
-float atanhr (const float& a)
-  {
-  return atanhf (a);
-  }
-
-double atanhr (const double& a)
-  {
-  return atanh (a);
-  }
-
-long double atanhr (const long double& a)
-  {
-  return atanhl (a);
-  }
-
-float sqrtr (const float& a)
+_Float32 sqrtr (const _Float32& a)
   {
   return sqrtf (a);
   }
 
-double sqrtr (const double& a)
+_Float64 sqrtr (const _Float64& a)
   {
   return sqrt (a);
   }
@@ -606,12 +272,18 @@ long double sqrtr (const long double& a)
   return sqrtl (a);
   }
 
-float cbrtr (const float& a)
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 cbrtr (const _Float16& a)
+  {
+  return _Float16 (cbrtf (a));
+  }
+
+_Float32 cbrtr (const _Float32& a)
   {
   return cbrtf (a);
   }
 
-double cbrtr (const double& a)
+_Float64 cbrtr (const _Float64& a)
   {
   return cbrt (a);
   }
@@ -621,7 +293,259 @@ long double cbrtr (const long double& a)
   return cbrtl (a);
   }
 
-//--------------------- cvektor2 Vektor Funktionen ------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 expr (const _Float16& a)
+  {
+  return _Float16 (expf (a));
+  }
+
+_Float32 expr (const _Float32& a)
+  {
+  return expf (a);
+  }
+
+_Float64 expr (const _Float64& a)
+  {
+  return exp (a);
+  }
+
+long double expr (const long double& a)
+  {
+  return expl (a);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 logr (const _Float16& a)
+  {
+  return _Float16 (logf (a));
+  }
+
+_Float32 logr (const _Float32& a)
+  {
+  return logf (a);
+  }
+
+_Float64 logr (const _Float64& a)
+  {
+  return log (a);
+  }
+
+long double logr (const long double& a)
+  {
+  return logl (a);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 powr (const _Float16& a, const _Float16& b)
+  {
+  return _Float16 (powf (a, b));
+  }
+
+_Float32 powr (const _Float32& a, const _Float32& b)
+  {
+  return powf (a, b);
+  }
+
+_Float64 powr (const _Float64& a, const _Float64& b)
+  {
+  return pow (a, b);
+  }
+
+long double powr (const long double& a, const long double& b)
+  {
+  return powl (a, b);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 sinr (const _Float16& a)
+  {
+  return _Float16 (sinf (a));
+  }
+
+_Float32 sinr (const _Float32& a)
+  {
+  return sinf (a);
+  }
+
+_Float64 sinr (const _Float64& a)
+  {
+  return sin (a);
+  }
+
+long double sinr (const long double& a)
+  {
+  return sinl (a);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 cosr (const _Float16& a)
+  {
+  return _Float16 (cosf (a));
+  }
+
+_Float32 cosr (const _Float32& a)
+  {
+  return cosf (a);
+  }
+
+_Float64 cosr (const _Float64& a)
+  {
+  return cos (a);
+  }
+
+long double cosr (const long double& a)
+  {
+  return cosl (a);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 asinr (const _Float16& a)
+  {
+  return _Float16 (asinf (a));
+  }
+
+_Float32 asinr (const _Float32& a)
+  {
+  return asinf (a);
+  }
+
+_Float64 asinr (const _Float64& a)
+  {
+  return asin (a);
+  }
+
+long double asinr (const long double& a)
+  {
+  return asinl (a);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 acosr (const _Float16& a)
+  {
+  return _Float16 (acosf (a));
+  }
+
+_Float32 acosr (const _Float32& a)
+  {
+  return acosf (a);
+  }
+
+_Float64 acosr (const _Float64& a)
+  {
+  return acos (a);
+  }
+
+long double acosr (const long double& a)
+  {
+  return acosl (a);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 atanr (const _Float16& a)
+  {
+  return _Float16 (atanf (a));
+  }
+
+_Float32 atanr (const _Float32& a)
+  {
+  return atanf (a);
+  }
+
+_Float64 atanr (const _Float64& a)
+  {
+  return atan (a);
+  }
+
+long double atanr (const long double& a)
+  {
+  return atanl (a);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 atan2r (const _Float16& a, const _Float16& b)
+  {
+  return _Float16 (atan2f (a, b));
+  }
+
+_Float32 atan2r (const _Float32& a, const _Float32& b)
+  {
+  return atan2f (a, b);
+  }
+
+_Float64 atan2r (const _Float64& a, const _Float64& b)
+  {
+  return atan2 (a, b);
+  }
+
+long double atan2r (const long double& a, const long double& b)
+  {
+  return atan2l (a, b);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 asinhr (const _Float16& a)
+  {
+  return _Float16 (asinhf (a));
+  }
+
+_Float32 asinhr (const _Float32& a)
+  {
+  return asinhf (a);
+  }
+
+_Float64 asinhr (const _Float64& a)
+  {
+  return asinh (a);
+  }
+
+long double asinhr (const long double& a)
+  {
+  return asinhl (a);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 acoshr (const _Float16& a)
+  {
+  return _Float16 (acoshf (a));
+  }
+
+_Float32 acoshr (const _Float32& a)
+  {
+  return acoshf (a);
+  }
+
+_Float64 acoshr (const _Float64& a)
+  {
+  return acosh (a);
+  }
+
+long double acoshr (const long double& a)
+  {
+  return acoshl (a);
+  }
+
+//------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
+_Float16 atanhr (const _Float16& a)
+  {
+  return _Float16 (atanhf (a));
+  }
+
+_Float32 atanhr (const _Float32& a)
+  {
+  return atanhf (a);
+  }
+
+_Float64 atanhr (const _Float64& a)
+  {
+  return atanh (a);
+  }
+
+long double atanhr (const long double& a)
+  {
+  return atanhl (a);
+  }
+
+//--------------------- cvektor2 Vektor Funktionen ------------------------------------------------------------------------------------------------------------------------------------------------
 
 real norm (const cvektor2 pv)
   {
@@ -1201,7 +1125,7 @@ cbasis2 operator & (const cbasis2 &pb1, const cbasis2 &pb2)
 
 //---------- cvektor3 Funktionen ------------------------------------------------------------------------------------------
 
-void vertausche (cvektor3& a, cvektor3& b)
+void swap (cvektor3& a, cvektor3& b)
   {
   cvektor3 c;
   c= a;
@@ -2355,7 +2279,7 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 
 //-------------------- quartisch integriert ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
   real aqq, pq, qq, rq, rq4, pqq, pk, qk, aq4;
   ckomplexk yk, z, u, d, e, D1, D2;
@@ -2394,7 +2318,7 @@ void quartischdiffpintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, cko
 
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, vxl, l, yk, pq6, uq, u, z, v, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, l, yk, pq6, uq, u, z, v, b1, b2, aq4, VD, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2410,37 +2334,31 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
-  if (xl > 0)
+  if (xl > 0)                                                     // 2 oder 0 Schnittpunkte mit dem Torus
     {
-    vxl= sqrtr (xl);
+    //real vxl= sqrtr (xl);
     //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
-    if (qk > 0)
-      yk= cbrtr (qk + vxl);
+    if (qk >= 0)
+      yk= cbrtr (qk + sqrtr (xl));
       else
-      yk= cbrtr (qk - vxl);                                       // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
+      yk= cbrtr (qk - sqrtr (xl));                                // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
     yk= (yk - pk/yk)/2;                                           // yk= 0 ausgeschlossen, da Auslöschung verhindert
     }
-    else if (xl < 0)
+    else if (xl < 0)                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (-pk);
     yk= l*cosr (acosr (qk/(pk*-l))/3);                            // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
     }
     else
-    yk= sqrtr (-pk);                                              // viele xl= 0
+    yk= cbrtr (qk);                                               // 2 Schnittpunkte und ein Berührpunkt mit dem Torus, cbrtr (qk) = sqrtr (-pk), viele xl= 0 bei Float32
+    //yk= sqrtr (-pk);
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq für Rückreduzierung)
   pq6= pq/6;
   z= yk + pq6;
   uq= yk/2 - pq6;
 
-  if (uq <= 0)
-    {
-    uq= 0;
-    u= 0;
-    }
-    else
-    u= sqrtr (uq);
-
+  u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
   v= qq/u/4;
   b1= z - v;
   b2= z + v;
@@ -2471,7 +2389,7 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, rq4, pqq, pk, qk, xl, vxl, l, yk, z, zzrq, v, uq, u, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, rq4, pqq, pk, qk, xl, l, yk, z, v, uq, u, b1, b2, aq4, VD, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2487,33 +2405,29 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
-  if (xl > 0)
+  if (xl > 0)                                                     // 2 oder 0 Schnittpunkte mit dem Torus
     {
-    vxl= sqrtr (xl);
+    //real vxl= sqrtr (xl);
     //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
-    if (qk > 0)
-      yk= cbrtr (qk + vxl);
+    if (qk >= 0)
+      yk= cbrtr (qk + sqrtr (xl));
       else
-      yk= cbrtr (qk - vxl);                                       // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
+      yk= cbrtr (qk - sqrtr (xl));                                // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
     yk= (yk - pk/yk)/2;                                           // yk= 0 ausgeschlossen, da Auslöschung verhindert
     }
-    else if (xl < 0)
+    else if (xl < 0)                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (-pk);
     yk= l*cosr (acosr (qk/(pk*-l))/3);                            // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
     }
     else
-    yk= sqrtr (-pk);                                              // viele xl= 0
+    yk= cbrtr (qk);                                               // 2 Schnittpunkte und ein Berührpunkt mit dem Torus, cbrtr (qk) = sqrtr (-pk), viele xl= 0 bei Float32
+    //yk= sqrtr (-pk);
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   z= yk + pq/6;
 
-  zzrq= z*z - rq;
-  if (zzrq <= 0)                                                  // zzrq < 0 wegen Ungenauigkeit
-    v= 0;
-    else
-    v= sqrtr (zzrq);
-
+  v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
   u= qq/v/4;
   uq= u*u;
 
@@ -2546,7 +2460,7 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, rq4, pqq, pk, qk, xl, vxl, l, yk, pq6, uq, u, z, zzrq, v, bed, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, rq4, pqq, pk, qk, xl, l, yk, pq6, uq, u, z, v, bed, b1, b2, aq4, VD, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2562,43 +2476,32 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
-  if (xl > 0)
+  if (xl > 0)                                                     // 2 oder 0 Schnittpunkte mit dem Torus
     {
-    vxl= sqrtr (xl);
+    //real vxl= sqrtr (xl);
     //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
-    if (qk > 0)
-      yk= cbrtr (qk + vxl);
+    if (qk >= 0)
+      yk= cbrtr (qk + sqrtr (xl));
       else
-      yk= cbrtr (qk - vxl);                                       // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
+      yk= cbrtr (qk - sqrtr (xl));                                // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
     yk= (yk - pk/yk)/2;                                           // yk= 0 ausgeschlossen, da Auslöschung verhindert
     }
-    else if (xl < 0)
+    else if (xl < 0)                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (-pk);
     yk= l*cosr (acosr (qk/(pk*-l))/3);                            // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
     }
     else
-    yk= sqrtr (-pk);                                              // viele xl= 0
+    yk= cbrtr (qk);                                               // 2 Schnittpunkte und ein Berührpunkt mit dem Torus, cbrtr (qk) = sqrtr (-pk), viele xl= 0 bei Float32
+    //yk= sqrtr (-pk);
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   pq6= pq/6;
   z= yk + pq6;
   uq= yk/2 - pq6;
 
-  if (uq <= 0)                                                    // uq < 0 wegen Ungenauigkeit
-    {
-    uq= 0;
-    u= 0;
-    }
-    else
-    u= sqrtr (uq);
-
-  zzrq= z*z - rq;
-  //if (0)                                                        // sauberes Bild, feine blaue Punkte statt verzerrte Toruspunkte wenn die Wurzel nicht abgefangen wird
-  if (zzrq <= 0)                                                  // zzrq < 0 wegen Ungenauigkeit
-    v= 0;
-    else
-    v= sqrtr (zzrq);
+  u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
+  v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
@@ -2639,7 +2542,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, l, yk, pq6, uq, u, z, zzrq, v, bed, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, l, yk, pq6, uq, u, z, v, bed, b1, b2, aq4, VD, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2654,42 +2557,32 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
   // reelle Lösung der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
-  if (xl > 0)
+  if (xl > 0)                                                     // 2 oder 0 Schnittpunkte mit dem Torus
     {
-    vxl= sqrtr (xl);
+    //real vxl= sqrtr (xl);
     //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl));                  // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
-    if (qk > 0)
-      yk= cbrtr (qk + vxl);
+    if (qk >= 0)
+      yk= cbrtr (qk + sqrtr (xl));
       else
-      yk= cbrtr (qk - vxl);                                       // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
+      yk= cbrtr (qk - sqrtr (xl));                                // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
     yk= (yk - pk/yk);                                             // yk= 0 ausgeschlossen, da Auslöschung verhindert
     }
-    else if (xl < 0)
+    else if (xl < 0)                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (-pk);
     yk= l*cosr (acosr (qk/(pk*-l))/3)*2;                          // pk*l= 0 garnicht, qk/(pk*l) > 1 sehr selten,  qk/(pk*l) < -1   garnicht
     }
     else
-    yk= sqrtr (-pk);                                              // viele xl= 0
+    yk= cbrtr (qk);                                               // 2 Schnittpunkte und ein Berührpunkt mit dem Torus, cbrtr (qk) = sqrtr (-pk), viele xl= 0 bei Float32
+    //yk= sqrtr (-pk);
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   pq6= pq/6;
   z= yk + pq6;
   uq= yk/2 - pq6;
 
-  if (uq <= 0)                                                    // uq < 0 wegen Ungenauigkeit
-    {
-    uq= 0;
-    u= 0;
-    }
-    else
-    u= sqrtr (uq);
-
-  zzrq= z*z - rq;
-  if (zzrq <= 0)                                                  // zzrq < 0 wegen Ungenauigkeit
-    v= 0;
-    else
-    v= sqrtr (zzrq);
+  u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
+  v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
@@ -2730,7 +2623,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
 void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, l, aq4, ak3, qq8, yr1, yrx, yry, yr2, yr3, bedr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, l, aq4, ak3, qq8, yr1, yrx, yry, yr2, yr3, bedr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
   ckomplexk yk2, yk3, u1, u2, u3, yq1, yq2, yq3, yq4, bed, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
@@ -2748,15 +2641,16 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   aq4= aq/-4;
   ak3= pq/-6;
   qq8= qq/8;
+
+  // Lösungen der kubischen Resolvente
   xl= qk*qk + pk*pk*pk;
   if (xl > 0)
     {
     //großer Aussschnitt eine reelle, 2 komplexe Lösungen
-    vxl= sqrtr (xl);
-    if (qk > 0)                                                   // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
-      yr1= cbrtr (qk + vxl);
+    if (qk >= 0)                                                   // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
+      yr1= cbrtr (qk + sqrtr (xl));
       else
-      yr1= cbrtr (qk - vxl);
+      yr1= cbrtr (qk - sqrtr (xl));
     yrx= yr1/-2;
     yry= yr1*sqrtr (real (0.75));
     yk2= ckomplexk (yrx, yry);
@@ -2802,8 +2696,8 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     }
     else
     {
-    // kleiner Aussschnitt 3 reelle Lösungen
-    l= -sqrtr (-pk);   // -pk nie unter 0 wegen xl
+    // kleiner Aussschnitt 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
+    l= -sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
     if (qk/(pk*l) < -1)                                           // 1.000000119  immer nur dieser Wert (Bereichsüberschreitung durch Ungenauigkeit)
       {
       yr1= -l;
@@ -2867,7 +2761,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
 
 void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, uk1, uk2, l, aq4, ak3, qq8, yr1, yr2, yr3, bedr, akyr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, vxl, uk1, uk2, l, aq4, ak3, qq8, yr1, yr2, yr3, bedr, ur1, ur2, ur3, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
   ckomplexk yk2, yk3, u1, u2, u3, yq1, yq2, yq3, yq4, bed, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
@@ -2885,12 +2779,13 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   aq4= aq/-4;
   ak3= pq/-6;
   qq8= qq/8;
-  xl= qk*qk + pk*pk*pk;
 
+  // Lösungen der kubischen Resolvente
+  xl= qk*qk + pk*pk*pk;
   if (xl > 0)
     {
     //großer Aussschnitt eine reelle, 2 komplexe Lösungen
-    vxl= sqrtr (xl);  // xl immer > 0
+    vxl= sqrtr (xl);                                              // xl immer > 0
     uk1= cbrtr (qk - vxl);
     uk2= cbrtr (qk + vxl);
 
@@ -2898,14 +2793,7 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     yk2= e31*uk1 + e32*uk2;
     yk3= ckomplexk (yk2.x, -yk2.y);
 
-    akyr= ak3 + yr1;
-    if (akyr < 0)
-      {
-      ur1= 0;                                                     // Negativwerte durch Ungenauigkeit der Differenz die bei Genauigkeit 0 wäre
-      //return;
-      }
-      else
-      ur1= sqrtr (akyr);
+    ur1= sqrtr (ak3 + yr1);
     u2= sqrtv (ak3 + yk2);
     u3= sqrtv (ak3 + yk3);
 
@@ -2946,7 +2834,7 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     else
     {
     // kleiner Aussschnitt 3 reelle Lösungen
-    l= -sqrtr (-pk);   // -pk nie unter 0 wegen xl
+    l= -sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
     if (qk/(pk*l) < -1)                                           // 1.000000119  immer nur dieser Wert (Bereichsüberschreitung durch Ungenauigkeit)
       {
       yr1= -l;

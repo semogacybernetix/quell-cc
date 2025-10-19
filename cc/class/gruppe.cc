@@ -887,15 +887,15 @@ void ccluster::vervollstaendige ()
   for (integer lauf= 0; lauf < partliste->anz; lauf++)
     if (partliste->ord[lauf] == 2)
       {
-      vertausche (partliste->v[0], partliste->v[lauf]);
-      vertausche (partliste->ord[0], partliste->ord[lauf]);
+      swap (partliste->v[0], partliste->v[lauf]);
+      swap (partliste->ord[0], partliste->ord[lauf]);
       break;
       }
   for (integer lauf= 1; lauf < partliste->anz; lauf++)
     if (partliste->ord[lauf] == kern->maxord)
       {
-      vertausche (partliste->v[1], partliste->v[lauf]);
-      vertausche (partliste->ord[1], partliste->ord[lauf]);
+      swap (partliste->v[1], partliste->v[lauf]);
+      swap (partliste->ord[1], partliste->ord[lauf]);
       break;
       }
   kliste->elementhinzu (partliste->v[0], partliste->ord[0]);

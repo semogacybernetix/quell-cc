@@ -152,22 +152,23 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   proyz= rv.y*ov.z*rv.z*ov.y;
   prozx= rv.z*ov.x*rv.x*ov.z;
 
-  A= q(rxq) + q(ryq) + q(rzq) + 2*(q(rxry) + q(ryrz) + q(rzrx));
+  A= rxq*rxq + ryq*ryq + rzq*rzq + 2*(rxry*rxry + ryrz*ryrz + rzrx*rzrx);
   B= 4*(rxq*rxox + ryq*ryoy + rzq*rzoz + rxry*sroxy + ryrz*sroyz + rzrx*srozx);
-  C= 2*(rq1*rvq + q(sroxy) + q(sroyz) + q(srozx) + 2*(proxy + proyz + prozx - rxq - ryq) + 3*(rxq*oxq + ryq*oyq + rzq*ozq));
+  C= 2*(rq1*rvq + sroxy*sroxy + sroyz*sroyz + srozx*srozx + 2*(proxy + proyz + prozx - rxq - ryq) + 3*(rxq*oxq + ryq*oyq + rzq*ozq));
   D= 4*(rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - 2*(rxox + ryoy));
-  E= rq1*(rq1 + 2*ovq) + q(oxq) + q(oyq) + q(ozq) + 2*(q(oxoy) + q(oyoz) + q(ozox)) - 4*(oxq + oyq);
+  E= rq1*(rq1 + 2*ovq) + oxq*oxq + oyq*oyq + ozq*ozq + 2*(oxoy*oxoy + oyoz*oyoz + ozox*ozox) - 4*(oxq + oyq);
 
-  //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
+  quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
-  quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);
 
 /*
   ckomplexk x1, x2, x3, x4;
-  quartisch (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  //quartisch (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  quartischdiffpuintrc (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
 
   if (arg (x1) < quantr)
     psp.add (x1.x);

@@ -276,10 +276,13 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.17 Fr  5:00, kubischreell u-Version Fallunterscheidung implementiert, abgedichtet gegen float-exceptions, kubischreell casus irreducibiles abgedichtet, quartischdiffpintr komplett floating-exceptions durchgegangen, abgedichtet,
                kubischreell in andere quartischintr Routinen übernommen, alle quartischintr Routinen getestet, 11:13, 17:33, quartischbuchuintr, buchvintr, buchfintr abgedichtet, lagrangec kubischreell übernommen,
                quartischintr Routinen neu geordnet, 21:35, 22:42, linearfaktoren.cc gefixt wegen neuer quartischintr Routinen, 23:08
+2025.10.19 So  7:46, float <-> _Float32 Fehler gefixt, Float-Typen auf Konsistenz gebracht, quartischintr Routinen, kubischreeller Teil in quartischroutinen durchgegangen, fixiert, Fehlerabfangungen durchgesehen und entfernt,
+               falls sie nur Fehlerpixel bringen, 11:33
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-quartischlagrange -u,-c intr abdichten
+alle quartischintr Routinen durchtesten
+quaternionentest fixen
 neues Threadverfahren entwickeln
 apfel thread
 Platform neu machen statt linux X86, AARCH, AMD64, ARM64, RISC-V
