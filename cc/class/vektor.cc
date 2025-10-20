@@ -2097,8 +2097,8 @@ void quartischreduziertbuchv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   z= z2;
   v= sqrtv (z*z - r);
 
-  a1=  q/v/-2;
-  a2=  q/v/2;
+  a1= q/v/-2;
+  a2= q/v/2;
   b1= z + v;
   b2= z - v;
 
@@ -2114,10 +2114,6 @@ void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
 
   z= z1;
   u= sqrtv (z*2 - p);
-
-  a1=  u;
-  a2= -u;
-
   v= sqrtv (z*z - r);
 
   // Bedingung -2uv = q
@@ -2125,6 +2121,8 @@ void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   if (absv (bed + q) < absv (bed - q))
     v= -v;
 
+  a1=  u;
+  a2= -u;
   b1= z + v;
   b2= z - v;
 
@@ -2176,7 +2174,7 @@ void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
     }
   }
 
-void quartischreduziertbuch3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
+void quartischreduziertbuchf3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
   {
   ckomplexk z1, z2, z3, z, u, v, bed, a1, a2, b1, b2;
 
@@ -2184,10 +2182,6 @@ void quartischreduziertbuch3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
 
   z= z1;
   u= sqrtv ((z - p*2)/3);
-
-  a1=  u;
-  a2= -u;
-
   v= z + p;
   v= sqrtv (v*v - r*36)/6;
 
@@ -2196,6 +2190,8 @@ void quartischreduziertbuch3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   if (absv (bed + q) < absv (bed - q))
     v= -v;
 
+  a1=  u;
+  a2= -u;
   b1= (z + p)/6 + v;
   b2= (z + p)/6 - v;
 
@@ -2265,10 +2261,10 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
   //quartischreduziertbuchv (p, q, r, y1, y2, y3, y4);
   //quartischreduziertbuchf (p, q, r, y1, y2, y3, y4);
   //quartischreduziertpdfw2 (p, q, r, y1, y2, y3, y4);
-  quartischreduziertlagrange (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertbuch3 (p, q, r, y1, y2, y3, y4);
+  //quartischreduziertlagrange (p, q, r, y1, y2, y3, y4);
+  //quartischreduziertbuchf3 (p, q, r, y1, y2, y3, y4);
   //quartischreduziertpdfw23 (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertlagrange3 (p, q, r, y1, y2, y3, y4);
+  quartischreduziertlagrange3 (p, q, r, y1, y2, y3, y4);
 
   a4= a/4;
   x1= y1 - a4;
@@ -2281,8 +2277,8 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 
 void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
-  real aqq, pq, qq, rq, rq4, pqq, pk, qk, aq4;
-  ckomplexk yk, z, u, d, e, D1, D2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, aq4;
+  ckomplexk yk, z, u, v, d, D1, D2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2302,11 +2298,11 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
   // Lösungen der beiden quadratischen Gleichungen
   z= pq/3 - pk/yk + yk;
   u= sqrtv (z - pq)/2;
+  v= qq/u/4;
 
   d= (z + pq)/-4;
-  e= qq/u/4;
-  D1= sqrtv (d + e);
-  D2= sqrtv (d - e);
+  D1= sqrtv (d + v);
+  D2= sqrtv (d - v);
 
   // Lösungen der normalen quartischen Gleichung
   aq4= aq/-4;
@@ -2318,7 +2314,7 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
 
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, l, yk, pq6, uq, u, z, v, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, yk, l, pq6, z, uq, u, v, b1, b2, aq4, D, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2356,20 +2352,21 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq für Rückreduzierung)
   pq6= pq/6;
   z= yk + pq6;
-  uq= yk/2 - pq6;
 
+  uq= yk/2 - pq6;
   u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
   v= qq/u/4;
-  b1= z - v;
-  b2= z + v;
+
+  b1= z + v;
+  b2= z - v;
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
   if (uq >= b1)
     {
-    VD= sqrtr (uq - b1);
-    x1= aq4 - u - VD;
-    x2= aq4 - u + VD;
+    D= sqrtr (uq - b1);
+    x1= aq4 + u - D;
+    x2= aq4 + u + D;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2377,9 +2374,9 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     }
   if (uq >= b2)
     {
-    VD= sqrtr (uq - b2);
-    x1= aq4 + u - VD;
-    x2= aq4 + u + VD;
+    D= sqrtr (uq - b2);
+    x1= aq4 - u - D;
+    x2= aq4 - u + D;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2389,7 +2386,7 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, rq4, pqq, pk, qk, xl, l, yk, z, v, uq, u, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, yk, l, z, v, u, uq, b1, b2, aq4, D, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2438,9 +2435,9 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   aq4= aq/-4;
   if (uq >= b1)
     {
-    VD= sqrtr (uq - b1);
-    x1= aq4 + u - VD;
-    x2= aq4 + u + VD;
+    D= sqrtr (uq - b1);
+    x1= aq4 + u - D;
+    x2= aq4 + u + D;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2448,9 +2445,9 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     }
   if (uq >= b2)
     {
-    VD= sqrtr (uq - b2);
-    x1= aq4 - u - VD;
-    x2= aq4 - u + VD;
+    D= sqrtr (uq - b2);
+    x1= aq4 - u - D;
+    x2= aq4 - u + D;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2460,7 +2457,7 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, rq4, pqq, pk, qk, xl, l, yk, pq6, uq, u, z, v, bed, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2498,8 +2495,8 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   pq6= pq/6;
   z= yk + pq6;
-  uq= yk/2 - pq6;
 
+  uq= yk/2 - pq6;
   u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
   v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
 
@@ -2507,22 +2504,22 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   bed= u*v*-2;
   if (fabsr (bed + qq) < fabsr (bed - qq))
     {
-    b1= z - v;
-    b2= z + v;
+    b1= z + v;
+    b2= z - v;
     }
     else
     {
-    b1= z + v;
-    b2= z - v;
+    b1= z - v;
+    b2= z + v;
     }
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
   if (uq >= b1)
     {
-    VD= sqrtr (uq - b1);
-    x1= aq4 - u - VD;
-    x2= aq4 - u + VD;
+    D= sqrtr (uq - b1);
+    x1= aq4 + u - D;
+    x2= aq4 + u + D;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2530,9 +2527,9 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     }
   if (uq >= b2)
     {
-    VD= sqrtr (uq - b2);
-    x1= aq4 + u - VD;
-    x2= aq4 + u + VD;
+    D= sqrtr (uq - b2);
+    x1= aq4 - u - D;
+    x2= aq4 - u + D;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2542,7 +2539,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, l, yk, pq6, uq, u, z, v, bed, b1, b2, aq4, VD, x1, x2;
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2579,8 +2576,8 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   pq6= pq/6;
   z= yk + pq6;
-  uq= yk/2 - pq6;
 
+  uq= yk/2 - pq6;
   u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
   v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
 
@@ -2588,22 +2585,22 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   bed= u*v*-2;
   if (fabsr (bed + qq) < fabsr (bed - qq))
     {
-    b1= z - v;
-    b2= z + v;
+    b1= z + v;
+    b2= z - v;
     }
     else
     {
-    b1= z + v;
-    b2= z - v;
+    b1= z - v;
+    b2= z + v;
     }
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
   if (uq >= b1)
     {
-    VD= sqrtr (uq - b1);
-    x1= aq4 - u - VD;
-    x2= aq4 - u + VD;
+    D= sqrtr (uq - b1);
+    x1= aq4 + u - D;
+    x2= aq4 + u + D;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2611,9 +2608,9 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
   if (uq >= b2)
     {
-    VD= sqrtr (uq - b2);
-    x1= aq4 + u - VD;
-    x2= aq4 + u + VD;
+    D= sqrtr (uq - b2);
+    x1= aq4 - u - D;
+    x2= aq4 - u + D;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)

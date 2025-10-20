@@ -142,8 +142,8 @@ void addkugel (cwelt& pwelt)
   cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 18/PI, 18/PI);
 
   // Körper
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, textur1, kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), 2/PI, 2/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), 12/PI, 12/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (0.5)/PI, real (0.5)/PI), kst1, kl1);
