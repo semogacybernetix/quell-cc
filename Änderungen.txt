@@ -23,7 +23,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
             - verschachtelte platonische Körper (dual, nicht dual)
             - Visualisierung des Aufbaus der Gruppe aus 3 Spiegelungen (Halbkantenstück zu 2 Körpern (gespiegelt)) sowie aus 3 180° Drehungen (Halbkantenstück zu Körper)
             - Implementierung Torus (Schnitt, Parametrisierung)
-            - Visualisierung von einer Achsendrehung z.B. Kugel egal wie sie verdreht ist (Drehachse (Vektor, Pfeil)), Winkel (Polarebenenstürck))
+            - Visualisierung von einer Achsendrehung z.B. Kugel egal wie sie verdreht ist (Drehachse (Vektor, Pfeil)), Winkel (Polarebenenstück))
             - Verbesserung bzw. Andersprogrammierung der Flugschleife, um z.B. sich drehende Gegenstände, fliegende Kamera etc. zu visualisieren
             - Fundamentalbereiche sichtbar machen
             - Netze der platonischen Körper und Dualnetze auf Kugel
@@ -71,7 +71,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2024.12.28 Sa  Orientierung bei ermittlefefkdreibein eingeführt und drehkörper werden jetzt in beiden Orientierungen erzeugt.
 2024.12.31 Di  I Gruppe (Dodekaeder) aufrecht, dreh12 Optimierung, fek-Konsistenz
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 2025.01.02 Do  Tribonacci-Konstante in vektor.h, ermittleefkvektor () neu, genaue Konstanten cubus simus, tetraedron simum
 2025.01.03 Fr  kubische Gleichung implementiert, dodecaedron simum exakte Werte, großes Rhombenikosidodekaeder exakte Werte fehlgeschlagen
 2025.01.03 Fr  quadmath implementiert, getestet, Testroutinen geschrieben bis 3:00 Uhr
