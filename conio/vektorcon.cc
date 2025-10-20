@@ -210,36 +210,18 @@ void printinteger (integer pn)
   fclose (datei);
   }
 
-/*                                                gcc auf raspi5 redefinition float, _Float32 usw.
-void printreal (float pr)
+void printreal (_Float16 pr)
   {
+  float pl= float (pr);
   FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9f", pr);
-  fprintf (datei, "%12.9f", pr);
+  printf ("%12.9f", pl);
+  fprintf (datei, "%12.9f", pl);
   fclose (datei);
   }
-
-void printreal (double pr)
-  {
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9lf", pr);
-  fprintf (datei, "%12.9lf", pr);
-  fclose (datei);
-  }
-
-void printreal (long double pr)
-  {
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9Lf", pr);
-  fprintf (datei, "%12.9Lf", pr);
-  fclose (datei);
-  }
-*/
 
 void printreal (_Float32 pr)
   {
-  float pl;
-  pl= float (pr);
+  float pl= float (pr);
   FILE* datei= fopen ("screenoutput.txt", "ab");
   printf ("%12.9f", pl);
   fprintf (datei, "%12.9f", pl);
@@ -248,21 +230,18 @@ void printreal (_Float32 pr)
 
 void printreal (_Float64 pr)
   {
-  double pl;
-  pl= double (pr);
+  double pl= double (pr);
   FILE* datei= fopen ("screenoutput.txt", "ab");
   printf ("%12.9lf", pl);
   fprintf (datei, "%12.9lf", pl);
   fclose (datei);
   }
 
-void printreal (_Float128 pr)
+void printreal (long double pr)
   {
-  long double pl;
-  pl= (long double) (pr);
   FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9Lf", pl);
-  fprintf (datei, "%12.9Lf", pl);
+  printf ("%12.9Lf", pr);
+  fprintf (datei, "%12.9Lf", pr);
   fclose (datei);
   }
 
@@ -282,15 +261,14 @@ void printrealkomplex (long double pr)
   fclose (datei);
   }
 
-/*  redifinition (raspi5)
-void printrealobj (const char* pdateiname, double pr)
+void printrealobj (const char* pdateiname, _Float16 pr)
   {
   FILE* datei= fopen (pdateiname, "ab");
-  //printf ("%0.10lg", pr);
-  fprintf (datei, "%0.10lg", pr);
+  double pl= pr;
+  //printf ("%0.10g", pl);
+  fprintf (datei, "%0.10g", pl);
   fclose (datei);
   }
-*/
 
 void printrealobj (const char* pdateiname, _Float32 pr)
   {
@@ -584,28 +562,14 @@ void printvektor4drehobj (const char* pdateiname, cvektor4 pv)
 
 //------------------------------------------------------------------------ Eingabe ---------------------------------------------------------------------------------------------------
 
-/*   redefinition (raspi5)
-void realeingabe (float& pr)
+void realeingabe (_Float16& pr)
   {
   integer scanret;
-  scanret= scanf ("%f", &pr);
+  float pf;
+  scanret= scanf ("%f", &pf);
   scanret+= 0;
+  pr= _Float16 (pf);
   }
-
-void realeingabe (double& pr)
-  {
-  integer scanret;
-  scanret= scanf ("%lf", &pr);
-  scanret+= 0;
-  }
-
-void realeingabe (long double& pr)
-  {
-  integer scanret;
-  scanret= scanf ("%Lf", &pr);
-  scanret+= 0;
-  }
-*/
 
 void realeingabe (_Float32& pr)
   {
@@ -625,13 +589,11 @@ void realeingabe (_Float64& pr)
   pr= _Float64 (pf);
   }
 
-void realeingabe (_Float128& pr)
+void realeingabe (long double& pr)
   {
   integer scanret;
-  long double pf;
-  scanret= scanf ("%Lf", &pf);
+  scanret= scanf ("%Lf", &pr);
   scanret+= 0;
-  pr= _Float128 (pf);
   }
 
 void vektor3eingabe (cvektor3& pv)
