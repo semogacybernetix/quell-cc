@@ -23,12 +23,10 @@ void printtextobj (const char* pdateiname, const char* ptext);
 
 void printinteger (integer pn);
 
-void printreal (_Float16 pr);
 void printreal (_Float32 pr);
 void printreal (_Float64 pr);
 void printreal (long double pr);
 
-void printrealobj (const char* pdateiname, _Float16 pr);
 void printrealobj (const char* pdateiname, _Float32 pr);
 void printrealobj (const char* pdateiname, _Float64 pr);
 void printrealobj (const char* pdateiname, long double pr);
@@ -54,7 +52,6 @@ void printvektor4quat (cvektor4 pv, integer pord, integer pzykel);
 void printvektor4dreh (cvektor4 pv, integer pord, integer pzykel, integer ppaar);
 void printvektor4drehobj (const char* pdateiname, cvektor4 pv);
 
-void realeingabe (_Float16& pv);
 void realeingabe (_Float32& pv);
 void realeingabe (_Float64& pv);
 void realeingabe (long double& pv);

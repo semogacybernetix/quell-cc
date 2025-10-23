@@ -164,11 +164,6 @@ void savemax (integer& pmax, integer pr)
 
 //--------------------- real Funktionen -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------ fmodr ------------------------------------------------------------------------
-_Float16 fmodr (const _Float16& a, const _Float16& b)
-  {
-  return _Float16 (fmodf (a, b));
-  }
-
 _Float32 fmodr (const _Float32& a, const _Float32& b)
   {
   return fmodf (a, b);
@@ -185,11 +180,6 @@ long double fmodr (const long double& a, const long double& b)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 floorr (const _Float16& a)
-  {
-  return _Float16 (floorf (a));
-  }
-
 _Float32 floorr (const _Float32& a)
   {
   return floorf (a);
@@ -206,11 +196,6 @@ long double floorr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ fabs --------------------------------------------------------------------------
-_Float16 fabsr (const _Float16& a)
-  {
-  return _Float16 (fabsf (a));
-  }
-
 _Float32 fabsr (const _Float32& a)
   {
   return fabsf (a);
@@ -227,11 +212,6 @@ long double fabsr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 sqrtr (const _Float16& a)
-  {
-  return _Float16 (sqrtf (a));
-  }
-
 _Float32 sqrtr (const _Float32& a)
   {
   return sqrtf (a);
@@ -248,11 +228,6 @@ long double sqrtr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 cbrtr (const _Float16& a)
-  {
-  return _Float16 (cbrtf (a));
-  }
-
 _Float32 cbrtr (const _Float32& a)
   {
   return cbrtf (a);
@@ -269,11 +244,6 @@ long double cbrtr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 expr (const _Float16& a)
-  {
-  return _Float16 (expf (a));
-  }
-
 _Float32 expr (const _Float32& a)
   {
   return expf (a);
@@ -290,11 +260,6 @@ long double expr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 logr (const _Float16& a)
-  {
-  return _Float16 (logf (a));
-  }
-
 _Float32 logr (const _Float32& a)
   {
   return logf (a);
@@ -311,11 +276,6 @@ long double logr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 powr (const _Float16& a, const _Float16& b)
-  {
-  return _Float16 (powf (a, b));
-  }
-
 _Float32 powr (const _Float32& a, const _Float32& b)
   {
   return powf (a, b);
@@ -332,11 +292,6 @@ long double powr (const long double& a, const long double& b)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 sinr (const _Float16& a)
-  {
-  return _Float16 (sinf (a));
-  }
-
 _Float32 sinr (const _Float32& a)
   {
   return sinf (a);
@@ -353,11 +308,6 @@ long double sinr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 cosr (const _Float16& a)
-  {
-  return _Float16 (cosf (a));
-  }
-
 _Float32 cosr (const _Float32& a)
   {
   return cosf (a);
@@ -374,11 +324,6 @@ long double cosr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 asinr (const _Float16& a)
-  {
-  return _Float16 (asinf (a));
-  }
-
 _Float32 asinr (const _Float32& a)
   {
   return asinf (a);
@@ -395,11 +340,6 @@ long double asinr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 acosr (const _Float16& a)
-  {
-  return _Float16 (acosf (a));
-  }
-
 _Float32 acosr (const _Float32& a)
   {
   return acosf (a);
@@ -416,11 +356,6 @@ long double acosr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 atanr (const _Float16& a)
-  {
-  return _Float16 (atanf (a));
-  }
-
 _Float32 atanr (const _Float32& a)
   {
   return atanf (a);
@@ -437,11 +372,6 @@ long double atanr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 atan2r (const _Float16& a, const _Float16& b)
-  {
-  return _Float16 (atan2f (a, b));
-  }
-
 _Float32 atan2r (const _Float32& a, const _Float32& b)
   {
   return atan2f (a, b);
@@ -458,11 +388,6 @@ long double atan2r (const long double& a, const long double& b)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 asinhr (const _Float16& a)
-  {
-  return _Float16 (asinhf (a));
-  }
-
 _Float32 asinhr (const _Float32& a)
   {
   return asinhf (a);
@@ -479,11 +404,6 @@ long double asinhr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 acoshr (const _Float16& a)
-  {
-  return _Float16 (acoshf (a));
-  }
-
 _Float32 acoshr (const _Float32& a)
   {
   return acoshf (a);
@@ -500,11 +420,6 @@ long double acoshr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ floor ------------------------------------------------------------------------
-_Float16 atanhr (const _Float16& a)
-  {
-  return _Float16 (atanhf (a));
-  }
-
 _Float32 atanhr (const _Float32& a)
   {
   return atanhf (a);

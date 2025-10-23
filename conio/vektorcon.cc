@@ -210,15 +210,6 @@ void printinteger (integer pn)
   fclose (datei);
   }
 
-void printreal (_Float16 pr)
-  {
-  float pl= float (pr);
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9f", pl);
-  fprintf (datei, "%12.9f", pl);
-  fclose (datei);
-  }
-
 void printreal (_Float32 pr)
   {
   float pl= float (pr);
@@ -258,15 +249,6 @@ void printrealkomplex (long double pr)
   FILE* datei= fopen ("screenoutput.txt", "ab");
   printf ("%56.40Lf", pr);
   fprintf (datei, "%56.40Lf", pr);
-  fclose (datei);
-  }
-
-void printrealobj (const char* pdateiname, _Float16 pr)
-  {
-  FILE* datei= fopen (pdateiname, "ab");
-  double pl= pr;
-  //printf ("%0.10g", pl);
-  fprintf (datei, "%0.10g", pl);
   fclose (datei);
   }
 
@@ -561,15 +543,6 @@ void printvektor4drehobj (const char* pdateiname, cvektor4 pv)
   }
 
 //------------------------------------------------------------------------ Eingabe ---------------------------------------------------------------------------------------------------
-
-void realeingabe (_Float16& pr)
-  {
-  integer scanret;
-  float pf;
-  scanret= scanf ("%f", &pf);
-  scanret+= 0;
-  pr= _Float16 (pf);
-  }
 
 void realeingabe (_Float32& pr)
   {
