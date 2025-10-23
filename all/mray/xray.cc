@@ -35,10 +35,11 @@ void addebene (cwelt& pwelt)
   cvektor3 kst1 (0,0,0);
 
   // Körperlagen
-  cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
+  cbasis3 kl1 (cvektor3 (10,0,0), cvektor3 (0,0,10), cvektor3 (0,10,0));
 
   // Texturen
-  cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 1, 1);
+  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 1, 1);
+  cschachfeld* textur1= new cschachfeld (cvektor3 (255,127,0), cvektor3 (0,255,255), 1, 1);
 
   // Körper
   ckoerper* koerper1= new ckoerper (new csebene, new cparawebene, new cbegrkeine, textur1, kst1, kl1);
@@ -110,21 +111,23 @@ void addzylinder (cwelt& pwelt)
   cvektor3 kst2 (0,1300,0);
 
   // Körperlagen
-  cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
-  cbasis3 kl2 (cvektor3 (320,0,0), cvektor3 (0,0,320), cvektor3 (0,320,0));
+  //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
+  cbasis3 kl1 (cvektor3 (20,0,0), cvektor3 (0,0,20), cvektor3 (0,20,0));
+  //cbasis3 kl2 (cvektor3 (320,0,0), cvektor3 (0,0,320), cvektor3 (0,320,0));
 
   // Begrenzungen
-  cbegrrechteck* ell1= new cbegrrechteck (-100, 100, -10, 10);
+  //cbegrrechteck* ell1= new cbegrrechteck (-100, 100, -10, 10);
 
   // Texturen
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (255,255,0), 12/PI, 12/PI);
-  cschachfeld* textur2= new cschachfeld (cvektor3 (255,255,255), cvektor3 (0,255,255), 12/PI, 12/PI);
+  cschachfeld* textur2= new cschachfeld (cvektor3 (255,255,255), cvektor3 (0,0,0), 12/PI, 12/PI);
   //cschachfeld* textur3= new cschachfeld (cvektor3 (255,0,255), cvektor3 (0,255,0), 12/PI, 12/PI);
 
   // Körper addieren
   //pwelt.addkoerper (new ckoerper (new csebene, new cparawebene, ell1, textur1, kst1, kl1));
   //pwelt.addkoerper (new ckoerper (new cskugel, new cparawkugel, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/katze.jpg"), 10), kst2, kl2));
-  pwelt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, ell1, textur2, kst1, kl1));
+  //pwelt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, ell1, textur2, kst1, kl1));
+  pwelt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, new (cbegrkeine), textur2, kst1, kl1));
 
   pwelt.verschiebeauge (cvektor3 (0, 500, -1000));
   }
@@ -136,14 +139,15 @@ void addkugel (cwelt& pwelt)
   cvektor3 kst1 (0,0,0);
 
   // Körperlagen
-  cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
+  cbasis3 kl1 (cvektor3 (50,0,0), cvektor3 (0,0,50), cvektor3 (0,50,0));
 
   // Texturen
-  cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 18/PI, 18/PI);
+  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 18/PI, 18/PI);
+  cschachfeld* textur2= new cschachfeld (cvektor3 (255,255,0), cvektor3 (255,0,255), 18/PI, 18/PI);
 
   // Körper
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, textur1, kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur2, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), 2/PI, 2/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), 12/PI, 12/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (0.5)/PI, real (0.5)/PI), kst1, kl1);

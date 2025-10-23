@@ -1831,10 +1831,10 @@ void sqrttest ()
   q2= w2*w2;
 
   printtext ("-------------------------------- Parameter der quartischen Gleichung ---------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("ein           ", ein, 1);
+  printvektor2komplex ("Wert          ", ein, 1);
   printtext ("\n");
-  printvektor2komplex ("w1            ", w1, 1);
-  printvektor2komplex ("w2            ", w2, 1);
+  printvektor2komplex ("sqrtv         ", w1, 1);
+  printvektor2komplex ("sqrtvk        ", w2, 1);
   printtext ("\n");
   printvektor2komplex ("q1            ", q1, 1);
   printvektor2komplex ("q2            ", q2, 1);

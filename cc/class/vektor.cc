@@ -14,31 +14,6 @@ winkelachse von 180° Drehungen: welche der beiden Achsen soll zurückgegeben we
 #include "vektor.h"
 #include "../../conio/vektorcon.h"     // zum Debuggen
 
-/*
-debugoutputquartisch ()
-    {
-    printtext ("  yk/-2: ");
-    printreal (yk/-2);
-    printtext ("\n  pq6: ");
-    printreal (pq6);
-    printtext ("\n  uq: ");
-    printreal (uq);
-    printtext ("\n  u: ");
-    printreal (u);
-    printtext ("\n  aq: ");
-    printreal (aq);
-    printtext ("\n  bq: ");
-    printreal (bq);
-    printtext ("\n  cq: ");
-    printreal (cq);
-    printtext ("\n  dq: ");
-    printreal (dq);
-    printtext ("\n  qq: ");
-    printreal (qq);
-    printtext ("\n");
-    }
-*/
-
 real vquant= real (1e-8);
 
 //------------------------------------------- Schnittpunkte Klasse ---------------------------------------------------------
@@ -624,20 +599,20 @@ ckomplexk kw (const ckomplexk pv)
 
 ckomplexk sqrtvk (const ckomplexk pv)
   {
-  ckomplexp vpol= polar180 (pv);
-  vpol.b= sqrtr (vpol.b);
-  vpol.w= vpol.w/2;
-  return kartes (vpol);
-  }
-
-ckomplexk sqrtv (const ckomplexk pv)
-  {
   real bet= sqrtr (pv.x*pv.x + pv.y*pv.y);
   real re= sqrtr ((bet + pv.x)/2);
   real im= sqrtr ((bet - pv.x)/2);
   if (pv.y < 0)
     im= -im;
   return ckomplexk (re, im);
+  }
+
+ckomplexk sqrtv (const ckomplexk pv)
+  {
+  ckomplexp vpol= polar180 (pv);
+  vpol.b= sqrtr (vpol.b);
+  vpol.w= vpol.w/2;
+  return kartes (vpol);
   }
 
 ckomplexk cbrtv (const ckomplexk pv)
@@ -941,8 +916,8 @@ ckomplexp polar225 (const ckomplexk pv)      // Winkelrückgabe [0, 2pi[
   {
   ckomplexp ret= polar180 (pv);
 
-  if (ret.w < -135)
-    ret.w= ret.w + 2*PI;
+  if (ret.w < -PI34)
+    ret.w= ret.w + PI*2;
   return ret;
   }
 
@@ -951,7 +926,7 @@ ckomplexp polar360 (const ckomplexk pv)      // Winkelrückgabe [0, 2pi[
   ckomplexp ret= polar180 (pv);
 
   if (ret.w < 0)
-    ret.w= ret.w + 2*PI;
+    ret.w= ret.w + PI*2;
   return ret;
   }
 
@@ -2611,7 +2586,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
 void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, l, yr1, yr2, yr3, ur1, ur2, ur3, bed, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, l, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter reduzierte quartische Gleichung
@@ -2636,12 +2611,12 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     {
     // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
     if (qk >= 0)                                                  // qk ist immer ungleich 0 somit keine Auslöschung bei vxl= 0
-      yr1= cbrtr (qk + sqrtr (xl));
+      ykr1= cbrtr (qk + sqrtr (xl));
       else
-      yr1= cbrtr (qk - sqrtr (xl));
-    yk2= ckomplexk (yr1/-2, yr1*sqrtr (real (0.75)));
+      ykr1= cbrtr (qk - sqrtr (xl));
+    yk2= ckomplexk (ykr1/-2, ykr1*sqrtr (real (0.75)));
 
-    ur1= sqrtr (ak3 + yr1 - pk/yr1);
+    ur1= sqrtr (ak3 + ykr1 - pk/ykr1);
     u2= sqrtv (ak3 + yk2 - pk/yk2);
 
     // Lösungen reduzierte quartische Gleichung
@@ -2672,38 +2647,38 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     {
     // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
     l= -sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
-    yr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                         // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
-    yr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
-    yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
+    ykr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                         // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
+    ykr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
+    ykr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
 
-    if ((ak3 + yr1 < 0) || (ak3 + yr2 < 0) || (ak3 + yr3 < 0))    // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
+    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0))    // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
-    ur1= sqrtr (ak3 + yr1);
-    ur2= sqrtr (ak3 + yr2);
-    ur3= sqrtr (ak3 + yr3);
+    ur1= sqrtr (ak3 + ykr1);
+    ur2= sqrtr (ak3 + ykr2);
+    ur3= sqrtr (ak3 + ykr3);
 
     // Lösungen reduzierte quartische Gleichung
-    yqr1=  ur1 + ur2 + ur3;
-    yqr2=  ur1 - ur2 - ur3;
-    yqr3=  ur2 - ur1 - ur3;
-    yqr4=  ur3 - ur1 - ur2;
+    yr1=  ur1 + ur2 + ur3;
+    yr2=  ur1 - ur2 - ur3;
+    yr3=  ur2 - ur1 - ur3;
+    yr4=  ur3 - ur1 - ur2;
 
     // Lösungen normale quartische Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*ur2*ur3;
     if (fabsr (bed + qq8) < fabsr (bed - qq8))
       {
-      xr1= aq4 + yqr1;
-      xr2= aq4 + yqr2;
-      xr3= aq4 + yqr3;
-      xr4= aq4 + yqr4;
+      xr1= aq4 + yr1;
+      xr2= aq4 + yr2;
+      xr3= aq4 + yr3;
+      xr4= aq4 + yr4;
       }
       else
       {
-      xr1= aq4 - yqr1;
-      xr2= aq4 - yqr2;
-      xr3= aq4 - yqr3;
-      xr4= aq4 - yqr4;
+      xr1= aq4 - yr1;
+      xr2= aq4 - yr2;
+      xr3= aq4 - yr3;
+      xr4= aq4 - yr4;
       }
 
     // positive Lösungen an den Schnittpunktspeicher übergeben
@@ -2720,7 +2695,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
 
 void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, vxl, uk1, uk2, l, yr1, yr2, yr3, ur1, ur2, ur3, bed, yqr1, yqr2, yqr3, yqr4, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, vxl, uk1, uk2, l, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter reduzierte quartische Gleichung
@@ -2747,11 +2722,10 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     vxl= sqrtr (xl);                                              // xl immer > 0
     uk1= cbrtr (qk - vxl);
     uk2= cbrtr (qk + vxl);
-
-    yr1= uk1 + uk2;
+    ykr1= uk1 + uk2;
     yk2= e31*uk1 + e32*uk2;
 
-    ur1= sqrtr (ak3 + yr1);
+    ur1= sqrtr (ak3 + ykr1);
     u2= sqrtv (ak3 + yk2);
 
     // Lösungen reduzierte quartische Gleichung
@@ -2782,38 +2756,38 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     {
     // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
     l= -sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
-    yr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                         // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
-    yr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
-    yr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
+    ykr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                         // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
+    ykr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
+    ykr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
 
-    if ((ak3 + yr1 < 0) || (ak3 + yr2 < 0) || (ak3 + yr3 < 0))    // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
+    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0))    // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
-    ur1= sqrtr (ak3 + yr1);
-    ur2= sqrtr (ak3 + yr2);
-    ur3= sqrtr (ak3 + yr3);
+    ur1= sqrtr (ak3 + ykr1);
+    ur2= sqrtr (ak3 + ykr2);
+    ur3= sqrtr (ak3 + ykr3);
 
     // Lösungen reduzierte quartische Gleichung
-    yqr1=  ur1 + ur2 + ur3;
-    yqr2=  ur1 - ur2 - ur3;
-    yqr3=  ur2 - ur1 - ur3;
-    yqr4=  ur3 - ur1 - ur2;
+    yr1=  ur1 + ur2 + ur3;
+    yr2=  ur1 - ur2 - ur3;
+    yr3=  ur2 - ur1 - ur3;
+    yr4=  ur3 - ur1 - ur2;
 
     // Lösungen normale quartische Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*ur2*ur3;
     if (fabsr (bed + qq8) < fabsr (bed - qq8))
       {
-      xr1= aq4 + yqr1;
-      xr2= aq4 + yqr2;
-      xr3= aq4 + yqr3;
-      xr4= aq4 + yqr4;
+      xr1= aq4 + yr1;
+      xr2= aq4 + yr2;
+      xr3= aq4 + yr3;
+      xr4= aq4 + yr4;
       }
       else
       {
-      xr1= aq4 - yqr1;
-      xr2= aq4 - yqr2;
-      xr3= aq4 - yqr3;
-      xr4= aq4 - yqr4;
+      xr1= aq4 - yr1;
+      xr2= aq4 - yr2;
+      xr3= aq4 - yr3;
+      xr4= aq4 - yr4;
       }
 
     // positive Lösungen an den Schnittpunktspeicher übergeben

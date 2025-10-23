@@ -142,6 +142,7 @@ const real PI (real (M_PIl));                                                   
 const real PIh (real (M_PIl/2));                                                      // pi/2
 const real PI2 (real (M_PIl*2));                                                      // 2pi
 const real PI23 (real (M_PIl*2/3));                                                   // die Konstante 2/3*pi vom Typ real
+const real PI34 (real (M_PIl*3/4));                                                   // die Konstante 3/4*pi vom Typ real
 const real gk (real (0.5 + sqrtl (1.25)));                                            // goldene Schnitt g= (1 + √5)/2 = 2*cos 36°                        = 1.61803398...         x² - x - 1 = 0
 const real tk (real ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3));   // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1,2= ∛(19 ± 3√33)   = 1.83928675...    x³ - x² - x - 1 = 0
 
@@ -402,8 +403,9 @@ ckomplexp polartan180  (const ckomplexk pv);
 
 // unäre Funktionen
 ckomplexp kw        (const ckomplexp pv);  // komplexer Kehrwert
-ckomplexp sqrtv     (const ckomplexp pv);  // Quadratwurzel √
-ckomplexp cbrtv     (const ckomplexp pv);  // Kubikwurzel   ∛
+ckomplexp sqrtvk    (const ckomplexp pv);  // Quadratwurzel √ ohne Polarkoordinaten berechnet Sprung bei +-180°  ungenauer als sqrtv
+ckomplexp sqrtv     (const ckomplexp pv);  // Quadratwurzel √ Sprung bei +-180°
+ckomplexp cbrtv     (const ckomplexp pv);  // Kubikwurzel   ∛ Sprung bei +-180°
 ckomplexp expv      (const ckomplexp pv);
 ckomplexp logv      (const ckomplexp pv);
 ckomplexp coshv     (const ckomplexp pv);
