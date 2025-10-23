@@ -281,6 +281,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.20 Mo  2:30, quartischintr uvff Kosmetik, 4:19, 7:30, conio Floattypen aufgeräumt, 8:43
 2025.10.21 Di  4:19, kubischeresolvente1z entfernt, lagrangeintr Routinen optimiert (xl > 0 maximal reellwertige Berechnung implementiert), alle quartischintr Routinen abgeglichen, ganzen Polynomteil in vektor.cc abgegeglichen, 7:07
 2025.10.22 Mi  0:41, sqrtv, sqrtk korrigiert, yr -> ykr Ungenauigkeit kubische Lösung, quartischlagrangeintr Routinen abgeglichen, polar Routinen korrigiert, 2:19 (Do)
+2025.10.23 Do  16:20 _Float16 entfernt weil nicht auf raspi5 raspian vorhanden, 16:35
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Bereichstest für +-xl, yk, quadratische Gleichung12, x12  oder +-xl, yk, lag1+++, lag234 mit Helligkeit, Sättigung, Farbton
