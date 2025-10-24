@@ -300,28 +300,28 @@ void cshpara::berechne (const cvektor3 &prv, cschnittpunkte &psp)
 
 //----------- Ebene winkeltreu -------------------------
 
-cvektor2 cparawebene::berechne (const cvektor3 &pv)
+cvektor2 cparaebenew::berechne (const cvektor3 &pv)
   {
   return cvektor2 (pv.x, pv.y);
   }
 
 //----------- Ebene polar ------------------------------
 
-cvektor2 cparapolebene::berechne (const cvektor3 &pv)
+cvektor2 cparaebenepol::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), sqrtr (pv.x*pv.x + pv.y*pv.y));
   }
 
 //----------- Ebene polar winkeltreu -------------------
 
-cvektor2 cparapolwebene::berechne (const cvektor3 &pv)
+cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
 //----------- Zylinder winkeltreu-------------------------------
 
-cvektor2 cparawzylinder::berechne (const cvektor3 &pv)
+cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), pv.z);
   }
@@ -343,14 +343,6 @@ cvektor2 cparakugelw::berechne (const cvektor3 &pv)
     return cvektor2 (PI2 + atan2r (pv.y, pv.x), atanhr (pv.z));
   }
 
-cvektor2 cparakugelwu::berechne (const cvektor3 &pv)
-  {
-  if (pv.y >= 0)
-    return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
-    else
-    return cvektor2 (PI2 + atan2r (pv.y, pv.x), atanhr (pv.z));
-  }
-
 cvektor2 cparakugelr::berechne (const cvektor3 &pv)
   {
   return cvektor2 (pv.x/(1 + pv.z), pv.y/(1 + pv.z));
@@ -364,23 +356,31 @@ cvektor2 cparakugelu::berechne (const cvektor3 &pv)
     return cvektor2 (PI2 + atan2r (pv.y, pv.x), PIh + asinr (pv.z));
   }
 
+cvektor2 cparakugelwu::berechne (const cvektor3 &pv)
+  {
+  if (pv.y >= 0)
+    return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
+    else
+    return cvektor2 (PI2 + atan2r (pv.y, pv.x), atanhr (pv.z));
+  }
+
 //----------- Hyperboloid normal -----------------------
 
-cvektor2 cparaehyper::berechne (const cvektor3 &pv)
+cvektor2 cparahypere::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), asinhr (pv.z));
   }
 
 //----------- Hyperboloid nicht normal -----------------------
 
-cvektor2 cparazhyper::berechne (const cvektor3 &pv)
+cvektor2 cparahyperz::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), acoshr (fabsr (pv.z)));
   }
 
 //------------------ Kegel ------------------------------------
 
-cvektor2 cparawkegel::berechne (const cvektor3 &pv)
+cvektor2 cparakegelw::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), logr (fabsr (pv.z)));
   }

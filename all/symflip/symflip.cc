@@ -42,9 +42,9 @@ void addebenen90 (cwelt& pwelt)
   cschachfeld* textur3= new cschachfeld (cvektor3 (0,0,1), cvektor3 (.5,.5,1), 1, 1);
 
   // Körper addieren
-  pwelt.addkoerper (new ckoerper (new csebene, new cparawebene, ell1, textur1, kst1, kl1));
-  pwelt.addkoerper (new ckoerper (new csebene, new cparawebene, ell1, textur2, kst1, kl2));
-  pwelt.addkoerper (new ckoerper (new csebene, new cparawebene, ell1, textur3, kst1, kl3));
+  pwelt.addkoerper (new ckoerper (new csebene, new cparaebenew, ell1, textur1, kst1, kl1));
+  pwelt.addkoerper (new ckoerper (new csebene, new cparaebenew, ell1, textur2, kst1, kl2));
+  pwelt.addkoerper (new ckoerper (new csebene, new cparaebenew, ell1, textur3, kst1, kl3));
   }
 
 void addkoordinatensystem (cwelt& pwelt)
@@ -66,9 +66,9 @@ void addkoordinatensystem (cwelt& pwelt)
   cschachfeld* textur3= new cschachfeld (cvektor3 (0,0,1), cvektor3 (.5,.5,1), 2/PI, 1);
 
   // Körper addieren
-  pwelt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, begrkoord, textur1, kst1, kl1));
-  pwelt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, begrkoord, textur2, kst1, kl2));
-  pwelt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, begrkoord, textur3, kst1, kl3));
+  pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrkoord, textur1, kst1, kl1));
+  pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrkoord, textur2, kst1, kl2));
+  pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrkoord, textur3, kst1, kl3));
   }
 
 // Vektor mit geringstem Winkel wird zurückgegeben
@@ -130,10 +130,10 @@ void visualisiereebenen (const cbasis3 pspiegelbasis)
   addkoordinatensystem (welt);
 
   // Spiegelebenen hinzufügen
-  welt.addkoerper (new ckoerper (new csebene, new cparawebene, begrkreis, textursp1, nullv3, kzoom*sp1));
-  welt.addkoerper (new ckoerper (new csebene, new cparawebene, begrkreis, textursp2, nullv3, kzoom*sp2));
-  welt.addkoerper (new ckoerper (new csebene, new cparawebene, begrkreis, textursp3, nullv3, kzoom*sp3));
-  
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp1, nullv3, kzoom*sp1));
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp2, nullv3, kzoom*sp2));
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp3, nullv3, kzoom*sp3));
+
   // Sichtpunkt einrichten
   cbasis3 augbasis;
   augbasis.z= -zentrivektor;
@@ -146,7 +146,7 @@ void visualisiereebenen (const cbasis3 pspiegelbasis)
   //cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600));
   cflugsimu flugsimu (&welt, new cxkeyboard, new cximagescreen ("Drehgruppe", 600, 600));
   flugsimu.threadanz= 4;
-  flugsimu.setframedauer (100);
+  flugsimu.setframerate (10);
   //flugsimu.fliege ();
   flugsimu.fliegethread ();
   }
@@ -227,15 +227,15 @@ void visualisiereexakt (cbasis3liste& pbliste, const cbasis3 pspiegelbasis)
 
   // Kantenzylinder hinzufügen
   for (integer lauf= 0; lauf < cluster.kliste->anz; lauf++)
-    welt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, begrrecht, textur2, kzoom*abs (kurzkante)*cluster.kliste->v[lauf], klagenarray[lauf]));
+    welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrrecht, textur2, kzoom*abs (kurzkante)*cluster.kliste->v[lauf], klagenarray[lauf]));
 
   //cbegrrechteck* begrkreis= new cbegrrechteck (-4, 4, -10, 0);       // Polarebene abstandstreu
-  cbegrkreis* begrkreis= new cbegrkreis (-4, 4, 0, 1);               // Schachbrettebene
+  //cbegrkreis* begrkreis= new cbegrkreis (-4, 4, 0, 1);               // Schachbrettebene
 
   // Flugsimulator starten
   cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600));
   flugsimu.threadanz= 16;
-  flugsimu.setframedauer (100);
+  flugsimu.setframerate (10);
   flugsimu.fliege ();
   }
 
@@ -335,13 +335,13 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   // Texturen anlegen
   cschachfeld* textur1= new cschachfeld (cvektor3 (255,255,255), cvektor3 (76,76,76), PI/15, PI/15);
   cschachfeld* textur2= new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,255,0), PI/15, PI/15);
-  cschachfeld* textur3= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/15, PI/15);
+  //cschachfeld* textur3= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/15, PI/15);
 
   // Körper addieren
   real kzoom= 100;
 
   // Bewegungskugel hinzufügen
-  ckoerper* bewkugel= new ckoerper (new cskugel, new cparawkugel, new cbegrkeine, textur1, nullv3, 0.1*kzoom*einsb3);
+  ckoerper* bewkugel= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, nullv3, 0.1*kzoom*einsb3);
   bewkugel->koerperpos= kzoom*cluster.eliste->v[0];            // Bewegungskugel liegt auf einer Ecke
   //bewkugel->koerperpos= kzoom*abs (kurzkante)*cluster.kliste->v[0];      // Bewegungskugel liegt auf einer Kante
   //bewkugel->koerperpos= kzoom/sqrtl (3)*cluster.fliste->v[0];            // Bewegungskugel liegt auf einer Fläche
@@ -353,7 +353,7 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
 
   // Kantenzylinder hinzufügen
   for (integer lauf= 0; lauf < cluster.kliste->anz; lauf++)
-    welt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, begrrecht, textur2, kzoom*abs (kurzkante)*cluster.kliste->v[lauf], klagenarray[lauf]));
+    welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrrecht, textur2, kzoom*abs (kurzkante)*cluster.kliste->v[lauf], klagenarray[lauf]));
 
   // Spiegelungen paarweise multiplizieren
   cbasis3 drehachsen= drehachsenvonspiegelungen (pspiegelbasis);
@@ -386,9 +386,9 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   cschachfeld* textursp3= new cschachfeld (cvektor3 (0,127,255), cvektor3 (127,0,255), PI/30, PI/30);
 
   // Spiegelebenen hinzufügen
-  welt.addkoerper (new ckoerper (new csebene, new cparawebene, begrkreis, textursp1, nullv3, kzoom*sp1));
-  welt.addkoerper (new ckoerper (new csebene, new cparawebene, begrkreis, textursp2, nullv3, kzoom*sp2));
-  welt.addkoerper (new ckoerper (new csebene, new cparawebene, begrkreis, textursp3, nullv3, kzoom*sp3));
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp1, nullv3, kzoom*sp1));
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp2, nullv3, kzoom*sp2));
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp3, nullv3, kzoom*sp3));
 
   // Sichtpunkt auf kleinstes Spiegeldreieck
   cbasis3 senkbasis (~pspiegelbasis);
@@ -414,12 +414,12 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   //cflugsimu flugsimu (&welt, new cxkeyboard, new cximagescreen ("Drehgruppe", 600, 600));
   //cflugsimu flugsimu (&welt, new cxkeyboard, new cbmpdatei ("Drehgruppe.bmp", 1920, 1080));
 
-  flugsimu.setframedauer (100);
+  flugsimu.setframerate (10);
   flugsimu.threadanz= 4;
-  flugsimu.bewstep=10;
+  flugsimu.bewstep=50;
   flugsimu.drehstep= real (0.01);
-  flugsimu.fliegespieltakt (pspiegelbasis, bewkugel);
-  //flugsimu.fliegespiel (pspiegelbasis, bewkugel);
+  //flugsimu.fliegespieltakt (pspiegelbasis, bewkugel);
+  flugsimu.fliegespiel (pspiegelbasis, bewkugel);
   }
 
 // ----------------------------------------------------- Fundamentalbereiche visualisieren ---------------------------------
@@ -467,7 +467,7 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, const cbasis3 pspie
   cvektor3 kante;
   cvektor3 kurzkante;
   cvektor3 kvecke, kvecke2;
-  real kantenlaenge;
+  //real kantenlaenge;
   real kantendicke= 3;
   for (integer klauf= 0; klauf < kantenliste.anz; klauf++)
     {
@@ -481,7 +481,7 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, const cbasis3 pspie
     klage= normiere (klage);
     klagenarray[klauf]= kantendicke*klage;                      // Dicke der Kanten einstellen
     }
-  kantenlaenge= 0.5*abs (kvecke - kvecke2);
+  //kantenlaenge= 0.5*abs (kvecke - kvecke2);
   kurzkante= 0.5*(kvecke + kvecke2);                            // Kantenvektor zeigt auf Kantenmittelpunkt statt dahinter
 
   // Lagenarray der Flächen erzeugen
@@ -510,14 +510,14 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, const cbasis3 pspie
   cbasis3 klmitte (cvektor3 (100,0,0), cvektor3 (0,100,0), cvektor3 (0,0,100));
 
   // Begrenzungen anlegen
-  real zbegrenzung= 100*kantenlaenge/kantendicke;
-  cbegrrechteck* begrrecht= new cbegrrechteck (-4, 4, -zbegrenzung, zbegrenzung);        // Länge der Kanten einstellen
+  //real zbegrenzung= 100*kantenlaenge/kantendicke;
+  //cbegrrechteck* begrrecht= new cbegrrechteck (-4, 4, -zbegrenzung, zbegrenzung);        // Länge der Kanten einstellen
 
   // Texturen anlegen
   cmonochrom* textur1= new cmonochrom (cvektor3 (.5, .5, .5));
   cschachfeld* textur2= new cschachfeld (cvektor3 (1,0,1), cvektor3 (1,1,0), PI/60, PI/15);
   cschachfeld* textur4= new cschachfeld (cvektor3 (0,1,0), cvektor3 (0,1,1), PI/60, PI/15);
-  cmonochrom* textur3= new cmonochrom (cvektor3 (.5, 1, 0));
+  //cmonochrom* textur3= new cmonochrom (cvektor3 (.5, 1, 0));
 
   // Körper addieren
   real kzoom= 100;
@@ -527,18 +527,18 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, const cbasis3 pspie
   cbegrrechteck* begrzyl= new cbegrrechteck (-4, 4, -.05, .05);
   for (integer lauf= 0; lauf < cluster.spiegkoord->anz; lauf+= 1)
     {
-    welt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, begrzyl, textur2, nullv3, 1.201*kzoom*cluster.spiegkoord->b[lauf]));
-    welt.addkoerper (new ckoerper (new csebene,    new cparapolebene,  begreb,  textur4, nullv3, 1.201*kzoom*cluster.spiegkoord->b[lauf]));
+    welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrzyl, textur2, nullv3, 1.201*kzoom*cluster.spiegkoord->b[lauf]));
+    welt.addkoerper (new ckoerper (new csebene,    new cparaebenepol,  begreb,  textur4, nullv3, 1.201*kzoom*cluster.spiegkoord->b[lauf]));
     }
   printb3liste (*cluster.spiegkoord);
 
   // Mittenkugel hinzufügen
-  welt.addkoerper (new ckoerper (new cskugel, new cparawkugel, new cbegrkeine, textur1, nullv3, 1.2*kzoom*einsb3));
+  welt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, nullv3, 1.2*kzoom*einsb3));
 
   // Flugsimulator starten
   cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600));
   flugsimu.threadanz= 4;
-  flugsimu.setframedauer (100);
+  flugsimu.setframerate (10);
   flugsimu.fliegethread ();
   }
 

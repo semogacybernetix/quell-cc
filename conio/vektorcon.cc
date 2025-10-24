@@ -185,6 +185,40 @@ void zahl1010::printobj (const char* pdateiname, integer vst, integer pst)
   fclose (datei);
   }
 
+//------------------------------------------------------------------------ real Eingabe ---------------------------------------------------------------------------------------------------
+
+void realeingabe (_Float32& pr)
+  {
+  integer scanret;
+  float pf;
+  scanret= scanf ("%f", &pf);
+  scanret+= 0;
+  pr= _Float32 (pf);
+  }
+
+void realeingabe (_Float64& pr)
+  {
+  integer scanret;
+  double pf;
+  scanret= scanf ("%lf", &pf);
+  scanret+= 0;
+  pr= _Float64 (pf);
+  }
+
+void realeingabe (double& pr)
+  {
+  integer scanret;
+  scanret= scanf ("%lf", &pr);
+  scanret+= 0;
+  }
+
+void realeingabe (long double& pr)
+  {
+  integer scanret;
+  scanret= scanf ("%Lf", &pr);
+  scanret+= 0;
+  }
+
 //------------------------------------------------------------------------ real Ausgabe ---------------------------------------------------------------------------------------------------
 
 void printtext (const char* ptext)
@@ -393,6 +427,20 @@ void printvektor2komplexp (const char* pstring, ckomplexp pv)
 //  printf ("%56.40Lf %56.40Lf       %s%56.40Lf %45.40Lf°\n", vkar.x, vkar.y, pstring, pv.b, pv.w*180/PI);
   }
 
+// -------------------------------------------------------------------------------------------- cvkektor3 Eingabe --------------------------------------------------------------------------------------------
+
+void vektor3eingabe (cvektor3& pv)
+  {
+  printtext ("\n");
+  printtext ("x:  ");
+  realeingabe (pv.x);
+  printtext ("y:  ");
+  realeingabe (pv.y);
+  printtext ("z:  ");
+  realeingabe (pv.z);
+  printtext ("\n");
+  }
+
 // -------------------------------------------------------------------------------------------- cvkektor3 Ausgabe --------------------------------------------------------------------------------------------
 
 void printvektor3obj (const char* pdateiname, cvektor3 pv)
@@ -503,6 +551,42 @@ void printbasis3dreh (cbasis3 pb, integer pord, integer pzykel, integer ppaar)
   fclose (datei);
   }
 
+// -------------------------------------------------------------------------------------------- cvektor4 Eingabe --------------------------------------------------------------------------------------------
+
+void quaternioneneingabe (cvektor4& pv)
+  {
+  printtext ("\n");
+  printtext ("r:  ");
+  realeingabe (pv.r);
+  printtext ("i:  ");
+  realeingabe (pv.i);
+  printtext ("j:  ");
+  realeingabe (pv.j);
+  printtext ("ij  ");
+  realeingabe (pv.ij);
+  printtext ("\n");
+  }
+
+cvektor4 winkelachseeingabe ()
+  {
+  cvektor3 achse (0, 0, 0);
+  real wi;
+
+  printtext ("\n");
+  printtext ("Drehachse x:       ");
+  realeingabe (achse.x);
+  printtext ("Drehachse y:       ");
+  realeingabe (achse.y);
+  printtext ("Drehachse z:       ");
+  realeingabe (achse.z);
+  achse= normiere (achse);
+  printtext ("Drehwinkel [°]:    ");
+  realeingabe (wi);
+  printtext ("\n");
+  wi= wi/180*PI;
+  return cvektor4 (wi, achse);
+  }
+
 // -------------------------------------------------------------------------------------------- cvektor4 Ausgabe --------------------------------------------------------------------------------------------
 
 void printvektor4quat (cvektor4 pv, integer pord, integer pzykel)
@@ -542,75 +626,3 @@ void printvektor4drehobj (const char* pdateiname, cvektor4 pv)
   fclose (datei);
   }
 
-//------------------------------------------------------------------------ Eingabe ---------------------------------------------------------------------------------------------------
-
-void realeingabe (_Float32& pr)
-  {
-  integer scanret;
-  float pf;
-  scanret= scanf ("%f", &pf);
-  scanret+= 0;
-  pr= _Float32 (pf);
-  }
-
-void realeingabe (_Float64& pr)
-  {
-  integer scanret;
-  double pf;
-  scanret= scanf ("%lf", &pf);
-  scanret+= 0;
-  pr= _Float64 (pf);
-  }
-
-void realeingabe (long double& pr)
-  {
-  integer scanret;
-  scanret= scanf ("%Lf", &pr);
-  scanret+= 0;
-  }
-
-void vektor3eingabe (cvektor3& pv)
-  {
-  printtext ("\n");
-  printtext ("x:  ");
-  realeingabe (pv.x);
-  printtext ("y:  ");
-  realeingabe (pv.y);
-  printtext ("z:  ");
-  realeingabe (pv.z);
-  printtext ("\n");
-  }
-
-void quaternioneneingabe (cvektor4& pv)
-  {
-  printtext ("\n");
-  printtext ("r:  ");
-  realeingabe (pv.r);
-  printtext ("i:  ");
-  realeingabe (pv.i);
-  printtext ("j:  ");
-  realeingabe (pv.j);
-  printtext ("ij  ");
-  realeingabe (pv.ij);
-  printtext ("\n");
-  }
-
-cvektor4 winkelachseeingabe ()
-  {
-  cvektor3 achse (0, 0, 0);
-  real wi;
-
-  printtext ("\n");
-  printtext ("Drehachse x:       ");
-  realeingabe (achse.x);
-  printtext ("Drehachse y:       ");
-  realeingabe (achse.y);
-  printtext ("Drehachse z:       ");
-  realeingabe (achse.z);
-  achse= normiere (achse);
-  printtext ("Drehwinkel [°]:    ");
-  realeingabe (wi);
-  printtext ("\n");
-  wi= wi/180*PI;
-  return cvektor4 (wi, achse);
-  }

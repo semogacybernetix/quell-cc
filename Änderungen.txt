@@ -282,11 +282,13 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.21 Di  4:19, kubischeresolvente1z entfernt, lagrangeintr Routinen optimiert (xl > 0 maximal reellwertige Berechnung implementiert), alle quartischintr Routinen abgeglichen, ganzen Polynomteil in vektor.cc abgegeglichen, 7:07
 2025.10.22 Mi  0:41, sqrtv, sqrtk korrigiert, yr -> ykr Ungenauigkeit kubische Lösung, quartischlagrangeintr Routinen abgeglichen, polar Routinen korrigiert, 2:19 (Do)
 2025.10.23 Do  16:20 _Float16 entfernt weil nicht auf raspi5 raspian vorhanden, 16:35
+2025.10.24 Fr  6:47, quaterniontest für float80 gefixt, ray.cc Parametrisierungen Namen auf Konsistenz gebracht, symflip Kompilierungsfehler beseitigt, 9:34
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+symflip Drehungen kaputt, reparieren
+quaternionentest auf andere floats als float80 flexiblisieren
 Bereichstest für +-xl, yk, quadratische Gleichung12, x12  oder +-xl, yk, lag1+++, lag234 mit Helligkeit, Sättigung, Farbton
-quaternionentest fixen
 neues Threadverfahren entwickeln
 apfel thread
 Platform neu machen statt linux X86, AARCH, AMD64, ARM64, RISC-V

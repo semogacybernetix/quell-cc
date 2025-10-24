@@ -95,22 +95,22 @@ struct clpara                                                // abstraktes Param
   virtual cvektor2 berechne (const cvektor3 &pv)= 0;
   };
 
-struct cparawebene : clpara
+struct cparaebenew : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparapolebene : clpara
+struct cparaebenepol : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparapolwebene : clpara
+struct cparaebenepolw : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparawzylinder : clpara
+struct cparazylinderw : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
@@ -125,11 +125,6 @@ struct cparakugelw : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugelwu : clpara
-  {
-  cvektor2 berechne (const cvektor3 &pv);
-  };
-
 struct cparakugelr : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
@@ -140,17 +135,22 @@ struct cparakugelu : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparaehyper : clpara
+struct cparakugelwu : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparazhyper : clpara
+struct cparahypere : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparawkegel : clpara
+struct cparahyperz : clpara
+  {
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+struct cparakegelw : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };

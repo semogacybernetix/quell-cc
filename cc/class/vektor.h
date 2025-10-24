@@ -7,21 +7,22 @@
 // ------------------------------------------------------------------------  Datentypen -----------------------------------------------------
 
 typedef signed long long integer;
-//                                                                                                                                           xray N97  raspi5  Apfel N97  Apfel raspi5                 orangepi5
+
+//                                                                                                                                           xray N97  raspi5  Apfel N97  Apfel raspi5                     orangepi5
 // ------------------------- 16 Bit -------------------------------------------------------------------------------------------------------------
 //typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen      gibts nicht auf raspi5                                     5.00              3.96
 
 // ------------------------- 32 Bit -------------------------------------------------------------------------------------------------------------
-typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                                 7.14
+//typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
+typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
 //typedef __float80 real;       // hw             //   64 Bit: 19.26 Stellen 18/20 Stellen (verlässlich/unterscheidbar)                      6.90              0.53
-//typedef long double real;     // hw                                                                                                        6.90      4.34    0.53         10.84                                  5.55
+//typedef long double real;     // hw                                                                                                        6.90      4.34    0.53         10.84                               5.55
 
 // ------------------------ 128 Bit -------------------------------------------------------------------------------------------------------------
 //typedef _Float128 real;       // sw             //  113 Bit: 34.01 Stellen 33/35 Stellen (verlässlich/unterscheidbar)                      3.84      4.34    9.39         10.84

@@ -9,38 +9,39 @@
 -180° Drehung:    Ebenenspiegelung entlang der Drehachse (Drehachse ist Normale der Spiegelungsebene, Spiegelungsebene geht durch den Ursprung), Quaternion: 180° Drehung
 -360° Drehung:    Punktspiegelung am Ursprung, Quaternion: -1
 
+ 0.6666666666666666666666666666666666-345678  128
+ 1.6180339887498948482045868343656381-596970  128
+ 0.6180339887498948482045868343656381-596970  128
+ 0.8090169943749474241022934171828190-798485  128
+ 0.3090169943749474241022934171828190-317003  128
+ 3.141592653589793238462643383279502-7974791  128
+ 1.8392867552141611325518525646532865-010030  128
+
+ 1.61803398874989484820-72100296669248109538  80
+ 1.839286755214161132-6051162667027938368847  80
+
+ 2.618033988749894848204586834365638117720309179     (V5+3)/2
+ 1.618033988749894848204586834365638117720309179     (V5+1)/2  2cos 36°
+ 0.618033988749894848204586834365638117720309179     (V5-1)/2  2sin 18°
+
+ 0.3090169943749474241022934171828                   (V5-1)/4   cos 72°  sin 18°
+ 0.5                                                      2/4   cos 60°  sin 30°
+ 0.8090169943749474241022934171828                   (V5+1)/4   cos 36°  sin 54°
+
+Übersetzung fehlerfrei nur mit float80 oder long double als real weil printausgabe nur auf float80 und long double eingerichtet ist
 */
 
 #include "../../conio/vektorcon.h"
 #include "../../conio/gruppecon.h"
 
-#include <iostream>          // cout, FILE, printf, scanf
+#include <iostream>           // cout, FILE, printf, scanf
 
-using namespace std;         // damit man cout schreiben kann statt std::cout schreiben zu müssen
+using namespace std;          // damit man cout schreiben kann statt std::cout schreiben zu müssen
 
-integer lmax (1000);  // Anzahl von Elementen bei denen qliste, bliste und vliste voll ist.
-integer scanret;      // Rückgabewert von scanf
+integer lmax (1000);          // Anzahl von Elementen bei denen qliste, bliste und vliste voll ist.
+integer scanret;              // Rückgabewert von scanf
 
 //---------------------------------- Hilfsfunktionen ------------------------------------------------------------
-
-// 0.6666666666666666666666666666666666-345678  128
-// 1.6180339887498948482045868343656381-596970  128
-// 0.6180339887498948482045868343656381-596970  128
-// 0.8090169943749474241022934171828190-798485  128
-// 0.3090169943749474241022934171828190-317003  128
-// 3.141592653589793238462643383279502-7974791  128
-// 1.8392867552141611325518525646532865-010030  128
-
-// 1.61803398874989484820-72100296669248109538  80
-// 1.839286755214161132-6051162667027938368847  80
-
-// 2.618033988749894848204586834365638117720309179     (V5+3)/2
-// 1.618033988749894848204586834365638117720309179     (V5+1)/2  2cos 36°
-// 0.618033988749894848204586834365638117720309179     (V5-1)/2  2sin 18°
-
-// 0.3090169943749474241022934171828                   (V5-1)/4   cos 72°  sin 18°
-// 0.5                                                      2/4   cos 60°  sin 30°
-// 0.8090169943749474241022934171828                   (V5+1)/4   cos 36°  sin 54°
 
 real kubischegleichung (real pa, real pb, real pc)
   {
@@ -63,7 +64,7 @@ void zeigekonstanten ()
   printf ("%30.26Le\n", gschnitt);
   long double gschnitt2= sqrtl(0.3125) - 0.55;
   printf ("%30.26Le\n", gschnitt2);
-  long double gschnitt3= cosl(M_PIl*36/180);
+  long double gschnitt3= cosl(PI*36/180);
   printf ("%30.26Le\n\n", gschnitt3);
   printf ("\n");
   }
@@ -88,7 +89,7 @@ void zeigedrehungen (cvektor3 pv, cvektor3 pdv, long double pwi)
   {
   FILE* datei= fopen ("quaternionenoutput.txt", "ab");
   pdv= normiere (pdv);
-  pwi= pwi*M_PIl/180;
+  pwi= pwi*PI/180;
   pwi= pwi/2;
   cvektor4 gedv (0, pv);
   cvektor4 qdreh (cosl (pwi), sinl (pwi)*pdv);
@@ -111,9 +112,9 @@ void zeigewinkel (const cbasis3& pdreibein)
   pwi.x= winkelb (pdreibein.x, pdreibein.y);
   pwi.y= winkelb (pdreibein.x, pdreibein.z);
   pwi.z= winkelb (pdreibein.y, pdreibein.z);
-  pwi.x*= 180/M_PIl;
-  pwi.y*= 180/M_PIl;
-  pwi.z*= 180/M_PIl;
+  pwi.x*= 180/PI;
+  pwi.y*= 180/PI;
+  pwi.z*= 180/PI;
   
   printtext ("Winkel zwischen den Achsen:\n");
   printvektor3ord (pwi, 0);
@@ -157,9 +158,9 @@ void zeigedreibein (const cbasis3& pdreibein)
   iwi.x= winkelb (pdreibein.x^pdreibein.y, -pdreibein.y^pdreibein.z);
   iwi.y= winkelb (pdreibein.y^pdreibein.z, -pdreibein.z^pdreibein.x);
   iwi.z= winkelb (pdreibein.z^pdreibein.x, -pdreibein.x^pdreibein.y);
-  iwi.x*= 180/M_PIl;
-  iwi.y*= 180/M_PIl;
-  iwi.z*= 180/M_PIl;
+  iwi.x*= 180/PI;
+  iwi.y*= 180/PI;
+  iwi.z*= 180/PI;
   real iws= iwi.x + iwi.y + iwi.z;
   printf ("Innenwinkel des Dreibeins:\n %16.10LF %16.10LF %16.10LF    Innenwinkelsumme: %16.10LF\n", iwi.x, iwi.y, iwi.z, iws);
   printf ("\n");
@@ -173,9 +174,9 @@ void zeigedreibein (const cbasis3& pdreibein)
   zwi.x= winkelb (zv, pdreibein.x);
   zwi.y= winkelb (zv, pdreibein.y);
   zwi.z= winkelb (zv, pdreibein.z);
-  zwi.x*= 180/M_PIl;
-  zwi.y*= 180/M_PIl;
-  zwi.z*= 180/M_PIl;
+  zwi.x*= 180/PI;
+  zwi.y*= 180/PI;
+  zwi.z*= 180/PI;
   printf ("Zentriwinkel zwischen Zentrivektor und den Spiegelachsen:\n %16.10LF %16.10LF %16.10LF\n", zwi.x, zwi.y, zwi.z);
   printf ("\n");
 
@@ -193,9 +194,9 @@ void zeigedreibein (const cbasis3& pdreibein)
   cvektor3 achse1= orientiere (normiere (cvektor3 (wiachs1.i, wiachs1.j, wiachs1.ij)));
   cvektor3 achse2= orientiere (normiere (cvektor3 (wiachs2.i, wiachs2.j, wiachs2.ij)));
   cvektor3 achse3 (orientiere (normiere (cvektor3 (wiachs3.i, wiachs3.j, wiachs3.ij))));
-  real wid1 (180/M_PIl*winkelg (achse1, achse2));
-  real wid2 (180/M_PIl*winkelg (achse1, achse3));
-  real wid3 (180/M_PIl*winkelg (achse2, achse3));
+  real wid1 (180/PI*winkelg (achse1, achse2));
+  real wid2 (180/PI*winkelg (achse1, achse3));
+  real wid3 (180/PI*winkelg (achse2, achse3));
   printf ("Winkel zwischen den Drehachsen (xy,xz,yz): %9.3Lf°%9.3Lf°%9.3Lf°\n", wid1, wid2, wid3);
   }
 
@@ -216,9 +217,9 @@ void zeigedreibein2(const cbasis3& pdreibein)
   iwi.x= winkelb (pdreibein.x^pdreibein.y, -pdreibein.y^pdreibein.z);
   iwi.y= winkelb (pdreibein.y^pdreibein.z, -pdreibein.z^pdreibein.x);
   iwi.z= winkelb (pdreibein.z^pdreibein.x, -pdreibein.x^pdreibein.y);
-  iwi.x*= 180/M_PIl;
-  iwi.y*= 180/M_PIl;
-  iwi.z*= 180/M_PIl;
+  iwi.x*= 180/PI;
+  iwi.y*= 180/PI;
+  iwi.z*= 180/PI;
   real iws= iwi.x + iwi.y + iwi.z;
   printf ("Innenwinkel des Dreibeins:\n %16.10LF %16.10LF %16.10LF    Innenwinkelsumme: %16.10LF\n", iwi.x, iwi.y, iwi.z, iws);
   printf ("\n");
@@ -237,9 +238,9 @@ void zeigedreibein2(const cbasis3& pdreibein)
   cvektor3 achse1= orientiere (normiere (cvektor3 (wiachs1.i, wiachs1.j, wiachs1.ij)));
   cvektor3 achse2= orientiere (normiere (cvektor3 (wiachs2.i, wiachs2.j, wiachs2.ij)));
   cvektor3 achse3 (orientiere (normiere (cvektor3 (wiachs3.i, wiachs3.j, wiachs3.ij))));
-  real wid1 (180/M_PIl*winkelg (achse1, achse2));
-  real wid2 (180/M_PIl*winkelg (achse1, achse3));
-  real wid3 (180/M_PIl*winkelg (achse2, achse3));
+  real wid1 (180/PI*winkelg (achse1, achse2));
+  real wid2 (180/PI*winkelg (achse1, achse3));
+  real wid3 (180/PI*winkelg (achse2, achse3));
   printf ("Winkel zwischen den Drehachsen (xy,xz,yz): %9.3Lf°%9.3Lf°%9.3Lf°\n", wid1, wid2, wid3);
   printf ("-------------------------------------------------------------------------------------------------------------------------\n");
   }
@@ -406,8 +407,8 @@ void dreh2 ()
   printzahlobj (objdatei, el2.r, 1);
   printtextobj (objdatei, "°\n");
   printtextobj (objdatei, "\n");
-  el1.r= el1.r/180*M_PIl;
-  el2.r= el2.r/180*M_PIl;
+  el1.r= el1.r/180*PI;
+  el2.r= el2.r/180*PI;
 
   if (el1.r < 0)
     {
@@ -485,19 +486,19 @@ void dreh2 ()
 // ------  objprint -----------------------------------
 
   printtextobj (objdatei, "# Gruppenordnung: ");
-  printrealobj (objdatei, bliste.anz);
+  printrealobj (objdatei, real (bliste.anz));
   printtextobj (objdatei, "\n");
   printtextobj (objdatei, "# Drehungen: ");
-  printrealobj (objdatei, cluster.kern->anz);
+  printrealobj (objdatei, real (cluster.kern->anz));
   printtextobj (objdatei, "\n");
 
   if (bliste.anz != cluster.kern->anz)
     {
     printtextobj (objdatei, "# kleinster Drehinversionswinkel: ");
-    printzahlobj (objdatei, cluster.gruppe->miniwinkel/M_PIl*180,2);
+    printzahlobj (objdatei, cluster.gruppe->miniwinkel/PI*180,2);
     printtextobj (objdatei, "°\n");
     printtextobj (objdatei, "# Spiegelebenen: ");
-    printrealobj (objdatei, cluster.spieg->anz);
+    printrealobj (objdatei, real (cluster.spieg->anz));
     printtextobj (objdatei, "\n");
     }
 
@@ -573,7 +574,7 @@ void dreh2 ()
   vliste.elementhinzu (nvein, 1);
   vliste.schliesseab (bliste);
   printtextobj (objdatei, "# Punkte: ");
-  printrealobj (objdatei, vliste.anz);
+  printrealobj (objdatei, real (vliste.anz));
   printtextobj (objdatei, "\n");
   printtextobj (objdatei, "\n");
   printv3liste (vliste);
@@ -644,8 +645,8 @@ void dreh2efk ()
   printzahlobj (objdatei, el2.r, 1);
   printtextobj (objdatei, "°\n");
   printtextobj (objdatei, "\n");
-  el1.r= el1.r/180*M_PIl;
-  el2.r= el2.r/180*M_PIl;
+  el1.r= el1.r/180*PI;
+  el2.r= el2.r/180*PI;
 
   if (el1.r < 0)
     {
@@ -723,19 +724,19 @@ void dreh2efk ()
 // ----------------- obj print -------------------------------
 
   printtextobj (objdatei, "# Gruppenordnung: ");
-  printrealobj (objdatei, bliste.anz);
+  printrealobj (objdatei, real (bliste.anz));
   printtextobj (objdatei, "\n");
   printtextobj (objdatei, "# Drehungen: ");
-  printrealobj (objdatei, cluster.kern->anz);
+  printrealobj (objdatei, real (cluster.kern->anz));
   printtextobj (objdatei, "\n");
 
   if (bliste.anz != cluster.kern->anz)
     {
     printtextobj (objdatei, "# kleinster Drehinversionswinkel: ");
-    printzahlobj (objdatei, cluster.gruppe->miniwinkel/M_PIl*180,2);
+    printzahlobj (objdatei, cluster.gruppe->miniwinkel/PI*180,2);
     printtextobj (objdatei, "°\n");
     printtextobj (objdatei, "# Spiegelebenen: ");
-    printrealobj (objdatei, cluster.spieg->anz);
+    printrealobj (objdatei, real (cluster.spieg->anz));
     printtextobj (objdatei, "\n");
     }
 
@@ -802,7 +803,7 @@ void dreh2efk ()
   vliste.elementhinzu (nvein, 1);
   vliste.schliesseab (bliste);
   printtextobj (objdatei, "# Punkte: ");
-  printrealobj (objdatei, vliste.anz);
+  printrealobj (objdatei, real (vliste.anz));
   printtextobj (objdatei, "\n");
   printtextobj (objdatei, "\n");
   printv3liste (vliste);
@@ -860,8 +861,8 @@ void ermittleefkvektor (cvektor3& pefkvektor, cvektor4 pdreh1, cvektor4 pdreh2, 
   el1= pdreh1;
   el2= pdreh2;
 
-  el1.r= el1.r/180*M_PIl;
-  el2.r= el2.r/180*M_PIl;
+  el1.r= el1.r/180*PI;
+  el2.r= el2.r/180*PI;
 
   // negative Winkel bedeuten positiver Winkel + Inversion (Drehspiegelung)
 
@@ -920,8 +921,8 @@ void generiere1polyederobj (const char* pdateiname, cvektor4 pdreh1, cvektor4 pd
   el2= pdreh2;
   efkein= pefk;
 
-  el1.r= el1.r/180*M_PIl;
-  el2.r= el2.r/180*M_PIl;
+  el1.r= el1.r/180*PI;
+  el2.r= el2.r/180*PI;
 
   // negative Winkel bedeuten positiver Winkel + Inversion (Drehspiegelung)
 
@@ -1000,19 +1001,19 @@ void generiere1polyederobj (const char* pdateiname, cvektor4 pdreh1, cvektor4 pd
 // ----------------- kantenkörperdatei print -------------------------------
 
   printtextobj (kkdatei, "# Gruppenordnung: ");
-  printrealobj (kkdatei, bliste.anz);
+  printrealobj (kkdatei, real (bliste.anz));
   printtextobj (kkdatei, "\n");
   printtextobj (kkdatei, "# Drehungen: ");
-  printrealobj (kkdatei, cluster.kern->anz);
+  printrealobj (kkdatei, real (cluster.kern->anz));
   printtextobj (kkdatei, "\n");
 
   if (bliste.anz != cluster.kern->anz)
     {
     printtextobj (kkdatei, "# kleinster Drehspiegelungswinkel: ");
-    printzahlobj (kkdatei, cluster.gruppe->miniwinkel/M_PIl*180,2);
+    printzahlobj (kkdatei, cluster.gruppe->miniwinkel/PI*180,2);
     printtextobj (kkdatei, "°\n");
     printtextobj (kkdatei, "# Spiegelebenen: ");
-    printrealobj (kkdatei, cluster.spieg->anz);
+    printrealobj (kkdatei, real (cluster.spieg->anz));
     printtextobj (kkdatei, "\n");
     }
 
@@ -1054,7 +1055,7 @@ void generiere1polyederobj (const char* pdateiname, cvektor4 pdreh1, cvektor4 pd
   printtextobj (kkdatei, "\n");
 
   printtextobj (kkdatei, "# Punkte: ");
-  printrealobj (kkdatei, vliste.anz);
+  printrealobj (kkdatei, real (vliste.anz));
   printtextobj (kkdatei, "\n");
   printtextobj (kkdatei, "\n");
 
@@ -1104,32 +1105,32 @@ void generierepolyederobj ()
   dreh3= cvektor4 (-180, 1, 0, sqrtl (2));  // Spiegelkante funktioniert nicht als Drehkante
 
   // Tetraeder E
-  objdatei= "Polyeder/11 T  E     Tetraeder.obj";
+  objdatei= "Polyeder/11  T  E     Tetraeder.obj";
   vefk= cvektor3 (0, 1, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Tetraeder F (dual)
-  objdatei= "Polyeder/12 T  F     Tetraeder dual.obj";
+  objdatei= "Polyeder/12  T  F     Tetraeder dual.obj";
   vefk= cvektor3 (1, 0, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Tetraeder K (Oktaeder)
-  objdatei= "Polyeder/13 T  K     Oktaeder.obj";
+  objdatei= "Polyeder/13  T  K     Oktaeder.obj";
   vefk= cvektor3 (0, 0, 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Tetraeder E+K (Tetraederstumpf)
-  objdatei= "Polyeder/14 T  E+K   Tetraederstumpf.obj";
+  objdatei= "Polyeder/14  T  E+K   Tetraederstumpf.obj";
   vefk= cvektor3 (0, 1, 2/sqrtl (3));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Tetraeder F+K (Tetraederstumpf dual)
-  objdatei= "Polyeder/15 T  F+K   Tetraederstumpf dual.obj";
+  objdatei= "Polyeder/15  T  F+K   Tetraederstumpf dual.obj";
   vefk= cvektor3 (1, 0, 2/sqrtl (3));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Tetraeder E+F (Kuboktaeder)
-  objdatei= "Polyeder/16 T  E+F   Kuboktaeder.obj";
+  objdatei= "Polyeder/16  T  E+F   Kuboktaeder.obj";
   vefk= cvektor3 (1, 1, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
@@ -1137,15 +1138,15 @@ void generierepolyederobj ()
   vefk= cvektor3 (1, 1, (sqrtl (5) - 1)/sqrtl (3));
 
   // Tetraeder E+F+K (Ikosaeder) FEK+
-  objdatei= "Polyeder/17 T  E+F+K Ikosaeder FEK+.obj";
+  objdatei= "Polyeder/17  T  E+F+K Ikosaeder FEK+.obj";
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Tetraeder E+F+K (Ikosaeder) FEK-
-  objdatei= "Polyeder/17 T  E+F+K Ikosaeder FEK-.obj";
+  objdatei= "Polyeder/17  T  E+F+K Ikosaeder FEK-.obj";
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, -1, 1);
 
   // Tetraeder E+F+K (Oktaederstumpf)
-  objdatei= "Polyeder/18 Td E+F+K Oktaederstumpf.obj";
+  objdatei= "Polyeder/18  Td E+F+K Oktaederstumpf.obj";
   vefk= cvektor3 (1, 1, 2/sqrtl (3));
   generiere1polyederobj (objdatei, dreh1, dreh3, vefk, 1, 1);
 
@@ -1156,32 +1157,32 @@ void generierepolyederobj ()
   dreh3= cvektor4 (-90, 0, 1, 0);
 
   // Würfel E
-  objdatei= "Polyeder/21 O  E     Würfel.obj";
+  objdatei= "Polyeder/21  O  E     Würfel.obj";
   vefk= cvektor3 (1, 0, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Oktaeder F
-  objdatei= "Polyeder/22 O  F     Oktaeder.obj";
+  objdatei= "Polyeder/22  O  F     Oktaeder.obj";
   vefk= cvektor3 (0, 1, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Kuboktaeder K
-  objdatei= "Polyeder/23 O  K     Kuboktaeder.obj";
+  objdatei= "Polyeder/23  O  K     Kuboktaeder.obj";
   vefk= cvektor3 (0, 0, 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Würfelstumpf E+K
-  objdatei= "Polyeder/24 O  E+K   Würfelstumpf.obj";
+  objdatei= "Polyeder/24  O  E+K   Würfelstumpf.obj";
   vefk= cvektor3 (1, 0, 2/sqrtl (3));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Oktaederstumpf F+K
-  objdatei= "Polyeder/25 O  F+K   Oktaederstumpf.obj";
+  objdatei= "Polyeder/25  O  F+K   Oktaederstumpf.obj";
   vefk= cvektor3 (0, 1, sqrtl (2));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Rhombenkuboktaeder E+F
-  objdatei= "Polyeder/26 O  E+F   Rhombenkuboktaeder.obj";
+  objdatei= "Polyeder/26  O  E+F   Rhombenkuboktaeder.obj";
   vefk= cvektor3 (1, sqrtl (real (2)/3), 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
@@ -1190,15 +1191,15 @@ void generierepolyederobj ()
   ermittleefkvektor (vefk, dreh1, dreh2, koerperv);
 
   // Cubus Simus E+F+K FEK+
-  objdatei= "Polyeder/27 O  E+F+K Cubus Simus FEK+.obj";
+  objdatei= "Polyeder/27  O  E+F+K Cubus Simus FEK+.obj";
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Cubus Simus E+F+K FEK-
-  objdatei= "Polyeder/27 O  E+F+K Cubus Simus FEK-.obj";
+  objdatei= "Polyeder/27  O  E+F+K Cubus Simus FEK-.obj";
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, -1, 1);
 
   // großes Rhombenkuboktaeder E+F+K
-  objdatei= "Polyeder/28 Oh E+F+K großes Rhombenkuboktaeder.obj";
+  objdatei= "Polyeder/28  Oh E+F+K großes Rhombenkuboktaeder.obj";
   vefk= cvektor3 (1, sqrtl (real (2)/3), 2/sqrtl (3));
   generiere1polyederobj (objdatei, dreh1, dreh3, vefk, 1, 1);
 
@@ -1215,32 +1216,32 @@ void generierepolyederobj ()
   real x;
 
   // Dodekaeder E
-  objdatei= "Polyeder/31 I  E     Dodekaeder.obj";
+  objdatei= "Polyeder/31  I  E     Dodekaeder.obj";
   vefk= cvektor3 (1, 0, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Ikosaeder F
-  objdatei= "Polyeder/32 I  F     Ikosaeder.obj";
+  objdatei= "Polyeder/32  I  F     Ikosaeder.obj";
   vefk= cvektor3 (0, 1, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Ikosidodekaeder K
-  objdatei= "Polyeder/33 I  K     Ikosidodekaeder.obj";
+  objdatei= "Polyeder/33  I  K     Ikosidodekaeder.obj";
   vefk= cvektor3 (0, 0, 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Dodekaederstumpf E+K
-  objdatei= "Polyeder/34 I  E+K   Dodekaederstumpf.obj";
+  objdatei= "Polyeder/34  I  E+K   Dodekaederstumpf.obj";
   vefk= cvektor3 (1, 0, 2/sqrtl (3));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Ikosaederstumpf F+K
-  objdatei= "Polyeder/35 I  F+K   Ikosaederstumpf.obj";
+  objdatei= "Polyeder/35  I  F+K   Ikosaederstumpf.obj";
   vefk= cvektor3 (0, 1, sqrtl (8/(5 - sqrtl(5))));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Rhombenikosidodekaeder E+F
-  objdatei= "Polyeder/36 I  E+F   Rhombenikosidodekaeder.obj";
+  objdatei= "Polyeder/36  I  E+F   Rhombenikosidodekaeder.obj";
   vefk= cvektor3 (1, sqrtl ((5 - sqrtl(5))/6), 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
@@ -1250,57 +1251,57 @@ void generierepolyederobj ()
   ermittleefkvektor (vefk, dreh1kart, dreh2kart, koerperv);
 
   // Dodecaedron simum E+F+K  FEK+
-  objdatei= "Polyeder/37 I  E+F+K Dodecaedron simum FEK+.obj";
+  objdatei= "Polyeder/37  I  E+F+K Dodecaedron simum FEK+.obj";
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Dodecaedron simum E+F+K  FEK-
-  objdatei= "Polyeder/37 I  E+F+K Dodecaedron simum FEK-.obj";
+  objdatei= "Polyeder/37  I  E+F+K Dodecaedron simum FEK-.obj";
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, -1, 1);
 
   // großes Rhombenkikosidodekaeder E+F+K
-  objdatei= "Polyeder/38 Ih E+F+K großes Rhombenikosidodekaeder.obj";
+  objdatei= "Polyeder/38  Ih E+F+K großes Rhombenikosidodekaeder.obj";
   vefk= cvektor3 (1, sqrtl ((5 - sqrtl(5))/6), 2/sqrtl (3));
   generiere1polyederobj (objdatei, dreh1, dreh3, vefk, 1, 1);
 
 //----------------------------------------------- Th -------------------------------------------------------
 
   // Th E (Würfel)
-  objdatei= "Polyeder/41 Th E     Würfel.obj";
+  objdatei= "Polyeder/41  Th E     Würfel.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1, 1, 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th F (Oktaeder)
-  objdatei= "Polyeder/42 Th F     Oktaeder.obj";
+  objdatei= "Polyeder/42  Th F     Oktaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1, 0, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th K (Kuboktaeder)
-  objdatei= "Polyeder/43 Th K     Kuboktaeder.obj";
+  objdatei= "Polyeder/43  Th K     Kuboktaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1, 1, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E+K (Würfelstumpf)
-  objdatei= "Polyeder/44 Th E+K   Würfelstumpf.obj";
+  objdatei= "Polyeder/44  Th E+K   Würfelstumpf.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1, 1, sqrtl (2) - 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th F+K (Ikosaeder)
-  objdatei= "Polyeder/45 Th F+K   Ikosaeder.obj";
+  objdatei= "Polyeder/45  Th F+K   Ikosaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (gk, 1, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E+F (Rhombenkuboktaeder)
-  objdatei= "Polyeder/46 Th E+F   Rhombenkuboktaeder.obj";
+  objdatei= "Polyeder/46  Th E+F   Rhombenkuboktaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1 + sqrtl (2), 1, 1);
@@ -1314,84 +1315,84 @@ void generierepolyederobj ()
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E (Trapezkörper Würfel F)
-  objdatei= "Polyeder/471 Th E-F  Trapezkörper Würfel F.obj";
+  objdatei= "Polyeder/471 Th E-F   Trapezkörper Würfel F.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.1, 1, 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E (Trapezkörper Würfel K)
-  objdatei= "Polyeder/471 Th E-K  Trapezkörper Würfel K.obj";
+  objdatei= "Polyeder/471 Th E-K   Trapezkörper Würfel K.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.1, 1.1, 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th F (Trapezkörper Oktaeder EK)
-  objdatei= "Polyeder/472 Th e+F+k  Trapezkörper Oktaeder EK.obj";
+  objdatei= "Polyeder/472 Th e+F+k Trapezkörper Oktaeder EK.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.2, 0.2, 0.1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th F (Trapezkörper Oktaeder E)
-  objdatei= "Polyeder/472 Th e+F Trapezkörper Oktaeder E.obj";
+  objdatei= "Polyeder/472 Th e+F   Trapezkörper Oktaeder E.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.1, 0.1, 0.1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th F (Trapezkörper Oktaeder K)
-  objdatei= "Polyeder/472 Th e+F+k  Trapezkörper Oktaeder K.obj";
+  objdatei= "Polyeder/472 Th e+F+k Trapezkörper Oktaeder K.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.1, 0.1, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th K (Trapezkörper Kuboktaeder EF)
-  objdatei= "Polyeder/473 Th e+f+K  Trapezkörper Kuboktaeder EF.obj";
+  objdatei= "Polyeder/473 Th e+f+K Trapezkörper Kuboktaeder EF.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.2, 1.1, 0.1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th K (Trapezkörper Kuboktaeder E)
-  objdatei= "Polyeder/473 Th e+f+K  Trapezkörper Kuboktaeder E.obj";
+  objdatei= "Polyeder/473 Th e+f+K Trapezkörper Kuboktaeder E.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.1, 1.1, 0.1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th K (Trapezkörper Kuboktaeder F)
-  objdatei= "Polyeder/473 Th e+f+K  Trapezkörper Kuboktaeder F.obj";
+  objdatei= "Polyeder/473 Th e+f+K Trapezkörper Kuboktaeder F.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.1, 1, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E+K (Trapezkörper Würfelstumpf F)
-  objdatei= "Polyeder/474 Th E+f+K  Trapezkörper Würfelstumpf.obj";
+  objdatei= "Polyeder/474 Th E+f+K Trapezkörper Würfelstumpf.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.1, 1, sqrtl (2) - 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th F+K (Trapezkörper Ikosaeder E)
-  objdatei= "Polyeder/475 Th e+F+K  Trapezkörper Ikosaeder.obj";
+  objdatei= "Polyeder/475 Th e+F+K Trapezkörper Ikosaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (gk + 0.1, 1.1, 0.1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E+F (Trapezkörper Rhombenkuboktaeder K)
-  objdatei= "Polyeder/476 Th E+F+k  Trapezkörper Rhombenkuboktaeder.obj";
+  objdatei= "Polyeder/476 Th E+F+k Trapezkörper Rhombenkuboktaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1.1 + sqrtl (2), 1.1, 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E+F+K (Trapezkörper Trapezkörper)
-  objdatei= "Polyeder/477 Th E+F+K  Trapezkörper Trapezkörper.obj";
+  objdatei= "Polyeder/477 Th E+F+K Trapezkörper Trapezkörper.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
   vefk= cvektor3 (1/sqrtl (3) + sqrtl (0.5) + 1, 1/sqrtl (3) + sqrtl (0.5), 1/sqrtl (3));
@@ -1400,7 +1401,7 @@ void generierepolyederobj ()
 //----- Sonderkörper ---------------------------------------------------------------------------------------
 
   // Würfel auf Spitze mit Sechseck
-  objdatei= "Polyeder/51 O  E     Würfel Spitze.obj";
+  objdatei= "Polyeder/51  O  E     Würfel Spitze.obj";
   dreh1= cvektor4 (120, 0, 0, 1);
   dreh2= cvektor4 (180, 1, 0, sqrtl (2));
   vefk= cvektor3 (1, 0, 0);
@@ -1606,18 +1607,18 @@ void ebenenwinkel3 ()  // Gruppe aus 3 Ebenenspiegelungen aufbauen
 
   printtext ("\nWinkel zwischen den Ebenen [0..180°]\n");
   vektor3eingabe (wi);
-  wi.x*= M_PIl/180;
-  wi.y*= M_PIl/180;
-  wi.z*= M_PIl/180;
+  wi.x*= PI/180;
+  wi.y*= PI/180;
+  wi.z*= PI/180;
   cbasis3 sachsen (spiegelachsenvonebenenwinkelk (wi));
   zeigedreibein (sachsen);
 
   getchar ();
   getchar ();
 
-  el1= cvektor4 (M_PIl, sachsen.x);
-  el2= cvektor4 (M_PIl, sachsen.y);
-  el3= cvektor4 (M_PIl, sachsen.z);
+  el1= cvektor4 (PI, sachsen.x);
+  el2= cvektor4 (PI, sachsen.y);
+  el3= cvektor4 (PI, sachsen.z);
   
   qliste.winkelachsehinzu (-el1);
   qliste.winkelachsehinzu (-el2);
@@ -1688,18 +1689,18 @@ void ebenenwinkel180 ()                               // 3 180° Drehungen
 
   printf ("\nWinkel zwischen den Ebenen [0..180°]\n");
   vektor3eingabe (wi);
-  wi.x*= M_PIl/180;
-  wi.y*= M_PIl/180;
-  wi.z*= M_PIl/180;
+  wi.x*= PI/180;
+  wi.y*= PI/180;
+  wi.z*= PI/180;
   cbasis3 sachsen (spiegelachsenvonebenenwinkelk (wi));
   zeigedreibein (sachsen);
 
   getchar ();
   getchar ();
 
-  el1= cvektor4 (M_PIl, sachsen.x);
-  el2= cvektor4 (M_PIl, sachsen.y);
-  el3= cvektor4 (M_PIl, sachsen.z);
+  el1= cvektor4 (PI, sachsen.x);
+  el2= cvektor4 (PI, sachsen.y);
+  el3= cvektor4 (PI, sachsen.z);
   
   qliste.winkelachsehinzu (el1);
   qliste.winkelachsehinzu (el2);
@@ -1742,16 +1743,16 @@ void ebenenachdreh ()                  // Ebenenwinkel -> Spiegelungen -> Drehun
 
   printf ("\nWinkel zwischen den Ebenen [0..180°]\n");
   vektor3eingabe (wi);
-  wi.x*= M_PIl/180;
-  wi.y*= M_PIl/180;
-  wi.z*= M_PIl/180;
+  wi.x*= PI/180;
+  wi.y*= PI/180;
+  wi.z*= PI/180;
   cbasis3 sachsen (spiegelachsenvonebenenwinkelk (wi));
   zeigedreibein (sachsen);
   // Spiegelachsen von Ebenenwinkel berechnet
 
-  real wis1= 180/M_PIl*winkelg (sachsen.x, sachsen.y);
-  real wis2= 180/M_PIl*winkelg (sachsen.x, sachsen.z);
-  real wis3= 180/M_PIl*winkelg (sachsen.y, sachsen.z);
+  real wis1= 180/PI*winkelg (sachsen.x, sachsen.y);
+  real wis2= 180/PI*winkelg (sachsen.x, sachsen.z);
+  real wis3= 180/PI*winkelg (sachsen.y, sachsen.z);
   printf ("\nWinkel zwischen den Spiegelachsen: %9.3Lf°%9.3Lf°%9.3Lf°\n", wis1, wis2, wis3);
   printvektor3ord (orientiere (normiere (sachsen.x)), 0);
   printvektor3ord (orientiere (normiere (sachsen.y)), 0);
@@ -1767,9 +1768,9 @@ void ebenenachdreh ()                  // Ebenenwinkel -> Spiegelungen -> Drehun
   cvektor3 achse1= orientiere (normiere (cvektor3 (wiachs1.i, wiachs1.j, wiachs1.ij)));
   cvektor3 achse2= orientiere (normiere (cvektor3 (wiachs2.i, wiachs2.j, wiachs2.ij)));
   cvektor3 achse3 (orientiere (normiere (cvektor3 (wiachs3.i, wiachs3.j, wiachs3.ij))));
-  real wid1 (180/M_PIl*winkelg (achse1, achse2));
-  real wid2 (180/M_PIl*winkelg (achse1, achse3));
-  real wid3 (180/M_PIl*winkelg (achse2, achse3));
+  real wid1 (180/PI*winkelg (achse1, achse2));
+  real wid2 (180/PI*winkelg (achse1, achse3));
+  real wid3 (180/PI*winkelg (achse2, achse3));
   printf ("Winkel zwischen den Drehachsen: %9.3Lf°%9.3Lf°%9.3Lf°\n", wid1, wid2, wid3);
   printb3liste (spiegeldrehungen);
   cvektor4 dreh1, dreh2;
@@ -1808,9 +1809,9 @@ void testespiegelebenen2 ()
 
   printf ("\nWinkel zwischen den Ebenen [0..180°]\n");
   vektor3eingabe (wi);
-  wi.x*= M_PIl/180;
-  wi.y*= M_PIl/180;
-  wi.z*= M_PIl/180;
+  wi.x*= PI/180;
+  wi.y*= PI/180;
+  wi.z*= PI/180;
 
   // Spiegelachsen von Ebenenwinkel
   sachsen= spiegelachsenvonebenenwinkelk (wi);
@@ -1828,7 +1829,7 @@ void testestern ()
 
   realeingabe (wi);
   printf ("\n");
-  wi*= M_PIl/180;
+  wi*= PI/180;
   stern= getsternbasis (wi);
   zeigedreibein (stern);
   stern= getsternbasis2 (wi);
@@ -1848,9 +1849,9 @@ void testestern ()
   cbasis3liste bliste (lmax);
   cvektor3liste vliste (lmax);
 
-  el1= cvektor4 (M_PIl, stern.x);
-  el2= cvektor4 (M_PIl, stern.y);
-  el3= cvektor4 (M_PIl, stern.z);
+  el1= cvektor4 (PI, stern.x);
+  el2= cvektor4 (PI, stern.y);
+  el3= cvektor4 (PI, stern.z);
   qliste.winkelachsehinzu (-el1);
   qliste.winkelachsehinzu (-el2);
   qliste.winkelachsehinzu (-el3);
@@ -2015,7 +2016,7 @@ void  testekonvertierung23 ()
   wiachs2= winkelachsefrommatrix (matrixfromwinkelachse (wiachs2));
   cvektor3 achse1= orientiere (normiere (cvektor3 (wiachs1.i, wiachs1.j, wiachs1.ij)));
   cvektor3 achse2= orientiere (normiere (cvektor3 (wiachs2.i, wiachs2.j, wiachs2.ij)));
-  real wiz= 180/M_PIl*winkelg (achse1, achse2);
+  real wiz= 180/PI*winkelg (achse1, achse2);
 
   printf ("Drehachsen: %9.3Lf°\n", wiz);
   printvektor3wi (achse1, wiachs1.r);
@@ -2027,9 +2028,9 @@ void  testekonvertierung23 ()
   spiegachsen.x= getspiegachse (drehspiegelungen.b[0]);
   spiegachsen.y= getspiegachse (drehspiegelungen.b[1]);
   spiegachsen.z= getspiegachse (drehspiegelungen.b[2]);
-  real wis1= 180/M_PIl*winkelg (spiegachsen.x, spiegachsen.y);
-  real wis2= 180/M_PIl*winkelg (spiegachsen.x, spiegachsen.z);
-  real wis3= 180/M_PIl*winkelg (spiegachsen.y, spiegachsen.z);
+  real wis1= 180/PI*winkelg (spiegachsen.x, spiegachsen.y);
+  real wis2= 180/PI*winkelg (spiegachsen.x, spiegachsen.z);
+  real wis3= 180/PI*winkelg (spiegachsen.y, spiegachsen.z);
   printf ("\nSpiegelachsen: %9.3Lf°%9.3Lf°%9.3Lf°\n", wis1, wis2, wis3);
   printb3liste (drehspiegelungen);
 
@@ -2041,9 +2042,9 @@ void  testekonvertierung23 ()
   achse1= orientiere (normiere (cvektor3 (wiachs1.i, wiachs1.j, wiachs1.ij)));
   achse2= orientiere (normiere (cvektor3 (wiachs2.i, wiachs2.j, wiachs2.ij)));
   cvektor3 achse3 (orientiere (normiere (cvektor3 (wiachs3.i, wiachs3.j, wiachs3.ij))));
-  real wid1 (180/M_PIl*winkelg (achse1, achse2));
-  real wid2 (180/M_PIl*winkelg (achse2, achse3));
-  real wid3 (180/M_PIl*winkelg (achse3, achse1));
+  real wid1 (180/PI*winkelg (achse1, achse2));
+  real wid2 (180/PI*winkelg (achse2, achse3));
+  real wid3 (180/PI*winkelg (achse3, achse1));
   printf ("Drehachsen: %9.3Lf°%9.3Lf°%9.3Lf°\n", wid1, wid2, wid3);
   printb3liste (spiegeldrehungen);
   }
@@ -2054,9 +2055,9 @@ void  testekonvertierung32 ()
   vektor3eingabe (spiegachsen.x);
   vektor3eingabe (spiegachsen.y);
   vektor3eingabe (spiegachsen.z);
-  real wis1= 180/M_PIl*winkelg (spiegachsen.x, spiegachsen.y);
-  real wis2= 180/M_PIl*winkelg (spiegachsen.x, spiegachsen.z);
-  real wis3= 180/M_PIl*winkelg (spiegachsen.y, spiegachsen.z);
+  real wis1= 180/PI*winkelg (spiegachsen.x, spiegachsen.y);
+  real wis2= 180/PI*winkelg (spiegachsen.x, spiegachsen.z);
+  real wis3= 180/PI*winkelg (spiegachsen.y, spiegachsen.z);
   printf ("\nSpiegelachsen: %9.3Lf°%9.3Lf°%9.3Lf°\n", wis1, wis2, wis3);
   printvektor3ord (orientiere (normiere (spiegachsen.x)), 0);
   printvektor3ord (orientiere (normiere (spiegachsen.y)), 0);
@@ -2070,9 +2071,9 @@ void  testekonvertierung32 ()
   cvektor3 achse1= orientiere (normiere (cvektor3 (wiachs1.i, wiachs1.j, wiachs1.ij)));
   cvektor3 achse2= orientiere (normiere (cvektor3 (wiachs2.i, wiachs2.j, wiachs2.ij)));
   cvektor3 achse3 (orientiere (normiere (cvektor3 (wiachs3.i, wiachs3.j, wiachs3.ij))));
-  real wid1 (180/M_PIl*winkelg (achse1, achse2));
-  real wid2 (180/M_PIl*winkelg (achse1, achse3));
-  real wid3 (180/M_PIl*winkelg (achse2, achse3));
+  real wid1 (180/PI*winkelg (achse1, achse2));
+  real wid2 (180/PI*winkelg (achse1, achse3));
+  real wid3 (180/PI*winkelg (achse2, achse3));
   printf ("Drehachsen: %9.3Lf°%9.3Lf°%9.3Lf°\n", wid1, wid2, wid3);
   printb3liste (spiegeldrehungen);
   cvektor4 dreh1, dreh2;
@@ -2083,9 +2084,9 @@ void  testekonvertierung32 ()
   spiegachsen.x= getspiegachse (drehspiegelungen.b[0]);
   spiegachsen.y= getspiegachse (drehspiegelungen.b[1]);
   spiegachsen.z= getspiegachse (drehspiegelungen.b[2]);
-  wis1= 180/M_PIl*winkelg (spiegachsen.x, spiegachsen.y);
-  wis2= 180/M_PIl*winkelg (spiegachsen.x, spiegachsen.z);
-  wis3= 180/M_PIl*winkelg (spiegachsen.y, spiegachsen.z);
+  wis1= 180/PI*winkelg (spiegachsen.x, spiegachsen.y);
+  wis2= 180/PI*winkelg (spiegachsen.x, spiegachsen.z);
+  wis3= 180/PI*winkelg (spiegachsen.y, spiegachsen.z);
   printf ("\nSpiegelachsen: %9.3Lf°%9.3Lf°%9.3Lf°\n", wis1, wis2, wis3);
   printb3liste (drehspiegelungen);
   }
@@ -2098,64 +2099,63 @@ void testespiegelebenen ()
 
   printf ("\nWinkel zwischen den Ebenen [0..180°]\n");
   vektor3eingabe (wi);
-  wi.x*= M_PIl/180;
-  wi.y*= M_PIl/180;
-  wi.z*= M_PIl/180;
+  wi.x*= PI/180;
+  wi.y*= PI/180;
+  wi.z*= PI/180;
 
   sachsen= spiegelachsenvonebenenwinkele (wi);
   printvektor3ord (sachsen.x, 0);
   printvektor3ord (sachsen.y, 0);
   printvektor3ord (sachsen.z, 0);
-  wixy= 180/M_PIl*winkelb (sachsen.x, sachsen.y);
-  wiyz= 180/M_PIl*winkelb (sachsen.y, sachsen.z);
-  wizx= 180/M_PIl*winkelb (sachsen.z, sachsen.x);
+  wixy= 180/PI*winkelb (sachsen.x, sachsen.y);
+  wiyz= 180/PI*winkelb (sachsen.y, sachsen.z);
+  wizx= 180/PI*winkelb (sachsen.z, sachsen.x);
   printf ("\nWinkel xy, yz, zx: %9.3Lf°%9.3Lf°%9.3Lf°\n", wixy, wizx, wiyz);
 
   sachsen= spiegelachsenvonebenenwinkel2 (wi);
   printvektor3ord (sachsen.x, 0);
   printvektor3ord (sachsen.y, 0);
   printvektor3ord (sachsen.z, 0);
-  wixy= 180/M_PIl*winkelb (sachsen.x, sachsen.y);
-  wiyz= 180/M_PIl*winkelb (sachsen.y, sachsen.z);
-  wizx= 180/M_PIl*winkelb (sachsen.z, sachsen.x);
+  wixy= 180/PI*winkelb (sachsen.x, sachsen.y);
+  wiyz= 180/PI*winkelb (sachsen.y, sachsen.z);
+  wizx= 180/PI*winkelb (sachsen.z, sachsen.x);
   printf ("\nWinkel xy, yz, zx: %9.3Lf°%9.3Lf°%9.3Lf°\n", wixy, wizx, wiyz);
 
   sachsen= spiegelachsenvonebenenwinkel3 (wi);
   printvektor3ord (sachsen.x, 0);
   printvektor3ord (sachsen.y, 0);
   printvektor3ord (sachsen.z, 0);
-  wixy= 180/M_PIl*winkelb (sachsen.x, sachsen.y);
-  wiyz= 180/M_PIl*winkelb (sachsen.y, sachsen.z);
-  wizx= 180/M_PIl*winkelb (sachsen.z, sachsen.x);
+  wixy= 180/PI*winkelb (sachsen.x, sachsen.y);
+  wiyz= 180/PI*winkelb (sachsen.y, sachsen.z);
+  wizx= 180/PI*winkelb (sachsen.z, sachsen.x);
   printf ("\nWinkel xy, yz, zx: %9.3Lf°%9.3Lf°%9.3Lf°\n", wixy, wizx, wiyz);
 
   sachsen= spiegelachsenvonebenenwinkelk (wi);
   printvektor3ord (sachsen.x, 0);
   printvektor3ord (sachsen.y, 0);
   printvektor3ord (sachsen.z, 0);
-  wixy= 180/M_PIl*winkelb (sachsen.x, sachsen.y);
-  wiyz= 180/M_PIl*winkelb (sachsen.y, sachsen.z);
-  wizx= 180/M_PIl*winkelb (sachsen.z, sachsen.x);
+  wixy= 180/PI*winkelb (sachsen.x, sachsen.y);
+  wiyz= 180/PI*winkelb (sachsen.y, sachsen.z);
+  wizx= 180/PI*winkelb (sachsen.z, sachsen.x);
   printf ("\nspiegelachsenvonebenenwinkelk:       Winkel xy, yz, zx: %9.3Lf°%9.3Lf°%9.3Lf°\n", wixy, wizx, wiyz);
 
   sachsen= getsternbasis (wi.x);
   printvektor3ord (sachsen.x, 0);
   printvektor3ord (sachsen.y, 0);
   printvektor3ord (sachsen.z, 0);
-  wixy= 180/M_PIl*winkelb (sachsen.x, sachsen.y);
-  wiyz= 180/M_PIl*winkelb (sachsen.y, sachsen.z);
-  wizx= 180/M_PIl*winkelb (sachsen.z, sachsen.x);
+  wixy= 180/PI*winkelb (sachsen.x, sachsen.y);
+  wiyz= 180/PI*winkelb (sachsen.y, sachsen.z);
+  wizx= 180/PI*winkelb (sachsen.z, sachsen.x);
   printf ("\nWinkel xy, yz, zx: %9.3Lf°%9.3Lf°%9.3Lf°\n", wixy, wizx, wiyz);
 
   sachsen= getsternbasis2 (wi.x);
   printvektor3ord (sachsen.x, 0);
   printvektor3ord (sachsen.y, 0);
   printvektor3ord (sachsen.z, 0);
-  wixy= 180/M_PIl*winkelb (sachsen.x, sachsen.y);
-  wiyz= 180/M_PIl*winkelb (sachsen.y, sachsen.z);
-  wizx= 180/M_PIl*winkelb (sachsen.z, sachsen.x);
+  wixy= 180/PI*winkelb (sachsen.x, sachsen.y);
+  wiyz= 180/PI*winkelb (sachsen.y, sachsen.z);
+  wizx= 180/PI*winkelb (sachsen.z, sachsen.x);
   printf ("\nWinkel xy, yz, zx: %9.3Lf°%9.3Lf°%9.3Lf°\n", wixy, wizx, wiyz);
-
   }
 
 void testevektordreh ()

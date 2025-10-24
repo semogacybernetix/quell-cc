@@ -23,22 +23,30 @@ void printtextobj (const char* pdateiname, const char* ptext);
 
 void printinteger (integer pn);
 
+//------------------------ cvektor3 ------------------------------------------------------------------
+void realeingabe (_Float32& pv);
+void realeingabe (_Float64& pv);
+void realeingabe (long double& pv);
+
 void printreal (_Float32 pr);
 void printreal (_Float64 pr);
 void printreal (long double pr);
-
 void printrealobj (const char* pdateiname, _Float32 pr);
 void printrealobj (const char* pdateiname, _Float64 pr);
 void printrealobj (const char* pdateiname, long double pr);
-
 void printzahlobj (const char* pdateiname, real pr, integer pst);
 void printzahlobj (const char* pdateiname, real pr, integer vst, integer pst);
 
+//------------------------ cvektor2 ------------------------------------------------------------------
 void vektor2eingabek (cvektor2& pp);
 void vektor2eingabep (ckomplexp& pp);
 
 void printvektor2komplex (const char* pstring, ckomplexk pv, integer psw);
 void printvektor2komplexp (const char* pstring, ckomplexp pv);
+
+//------------------------ cvektor3 ------------------------------------------------------------------
+void vektor3eingabe (cvektor3& pv);
+
 void printvektor3obj (const char* pdateiname, cvektor3 pv);
 void printvektor3perfobj (const char* pdateiname, cvektor3 pv, integer pst);
 void printvektor3perfobj (const char* pdateiname, cvektor3 pv, integer vst, integer pst);
@@ -48,16 +56,13 @@ void printvektor3ord (cvektor3 pv, integer pord);
 void printvektor3wi (cvektor3 pv, real wi);
 void printbasis3mat (cbasis3 pb, integer pord, integer pzykel);
 void printbasis3dreh (cbasis3 pb, integer pord, integer pzykel, integer ppaar);
+
+//------------------------ cvektor4 ------------------------------------------------------------------
+void quaternioneneingabe (cvektor4& pv);
+cvektor4 winkelachseeingabe ();
+
 void printvektor4quat (cvektor4 pv, integer pord, integer pzykel);
 void printvektor4dreh (cvektor4 pv, integer pord, integer pzykel, integer ppaar);
 void printvektor4drehobj (const char* pdateiname, cvektor4 pv);
-
-void realeingabe (_Float32& pv);
-void realeingabe (_Float64& pv);
-void realeingabe (long double& pv);
-
-void vektor3eingabe (cvektor3& pv);
-void quaternioneneingabe (cvektor4& pv);
-cvektor4 winkelachseeingabe ();
 
 #endif
