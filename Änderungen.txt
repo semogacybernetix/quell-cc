@@ -283,14 +283,19 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.22 Mi  0:41, sqrtv, sqrtk korrigiert, yr -> ykr Ungenauigkeit kubische Lösung, quartischlagrangeintr Routinen abgeglichen, polar Routinen korrigiert, 2:19 (Do)
 2025.10.23 Do  16:20 _Float16 entfernt weil nicht auf raspi5 raspian vorhanden, 16:35
 2025.10.24 Fr  6:47, quaterniontest für float80 gefixt, ray.cc Parametrisierungen Namen auf Konsistenz gebracht, symflip Kompilierungsfehler beseitigt, 9:34
+2025.10.26 So  8:00, norm von Vektoren entfernt, durch Produkt ersetzt, Kommentare Einrückung homogenisiert, korrigiert, 10:41
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 symflip Drehungen kaputt, reparieren
-quaternionentest auf andere floats als float80 flexiblisieren
+quaternionentest auf andere floats als float80 flexibilisieren
 Bereichstest für +-xl, yk, quadratische Gleichung12, x12  oder +-xl, yk, lag1+++, lag234 mit Helligkeit, Sättigung, Farbton
 neues Threadverfahren entwickeln
 apfel thread
 Platform neu machen statt linux X86, AARCH, AMD64, ARM64, RISC-V
 Benchmarks für screen Geschwindigkeit, float Geschwindigkeit
 printausgabe realzahlen mit Trennung 10er Gruppen, Binär, Hexadezimal
+
+Szenen Kreiskörper mit Torussen erstellen (Oktaeder, Kuboktaeder, Ikosidodekaeder, andere archimedische Körper)
+Clifford Torus stereografische Projektion 4D -> 3D implementieren
+4D-Raytracer entwickeln

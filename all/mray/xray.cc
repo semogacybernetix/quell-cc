@@ -172,12 +172,12 @@ void addtorus (cwelt& pwelt)
 
 void fliegethread ()
   {
-  //cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
-  cwelt* welt= new cwelt (900, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  //cwelt* welt= new cwelt (900, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450));
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450));
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1600, 900));
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450));
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1600, 900));
 
   flugsimu.setframerate (real (20.0));
   flugsimu.threadanz= 12;

@@ -106,81 +106,6 @@ void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   }
 */
 
-// ---------------------------- Torus -----------------------------------------------
-
-cstorus::cstorus (const real pr)
-  : r (pr)
-  {
-  }
-
-void cstorus::init (const cvektor3 &pov)
-  {
-  ov= pov;
-  }
-
-void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
-  {
-  real rq1, rvq, rov, ovq;
-  real rxq, ryq, rzq, oxq, oyq, ozq;
-  real rxox, ryoy, rzoz, rxry, ryrz, rzrx, oxoy, oyoz, ozox;
-  real sroxy, sroyz, srozx, proxy, proyz, prozx;
-  real A, B, C, D, E;
-
-  rq1= 1 - r*r;
-  rvq= rv%rv;
-  rov= rv%ov;
-  ovq= ov%ov;
-  rxq= rv.x*rv.x;
-  ryq= rv.y*rv.y;
-  rzq= rv.z*rv.z;
-  oxq= ov.x*ov.x;
-  oyq= ov.y*ov.y;
-  ozq= ov.z*ov.z;
-  rxox=rv.x*ov.x;
-  ryoy=rv.y*ov.y;
-  rzoz=rv.z*ov.z;
-  rxry=rv.x*rv.y;
-  ryrz=rv.y*rv.z;
-  rzrx=rv.z*rv.x;
-  oxoy=ov.x*ov.y;
-  oyoz=ov.y*ov.z;
-  ozox=ov.z*ov.x;
-  sroxy= rv.x*ov.y + rv.y*ov.x;
-  sroyz= rv.y*ov.z + rv.z*ov.y;
-  srozx= rv.z*ov.x + rv.x*ov.z;
-  proxy= rv.x*ov.y*rv.y*ov.x;
-  proyz= rv.y*ov.z*rv.z*ov.y;
-  prozx= rv.z*ov.x*rv.x*ov.z;
-
-  A= rxq*rxq + ryq*ryq + rzq*rzq + 2*(rxry*rxry + ryrz*ryrz + rzrx*rzrx);
-  B= 4*(rxq*rxox + ryq*ryoy + rzq*rzoz + rxry*sroxy + ryrz*sroyz + rzrx*srozx);
-  C= 2*(rq1*rvq + sroxy*sroxy + sroyz*sroyz + srozx*srozx + 2*(proxy + proyz + prozx - rxq - ryq) + 3*(rxq*oxq + ryq*oyq + rzq*ozq));
-  D= 4*(rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - 2*(rxox + ryoy));
-  E= rq1*(rq1 + 2*ovq) + oxq*oxq + oyq*oyq + ozq*ozq + 2*(oxoy*oxoy + oyoz*oyoz + ozox*ozox) - 4*(oxq + oyq);
-
-  quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
-  //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
-  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
-  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
-  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
-  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);
-
-/*
-  ckomplexk x1, x2, x3, x4;
-  //quartisch (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
-  quartischdiffpuintrc (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
-
-  if (arg (x1) < quantr)
-    psp.add (x1.x);
-  if (arg (x2) < quantr)
-    psp.add (x2.x);
-  if (arg (x3) < quantr)
-    psp.add (x3.x);
-  if (arg (x4) < quantr)
-    psp.add (x4.x);
-//*/
-  }
-
 // ---------------------------- zweischaliges Hyperboloid, Kegel, einschaliges Hyperboloid -----------------------------------------------
 
 cshyper::cshyper (const real &pf)    // dieser Wert wählt zwischen den Körpern aus (-1, 0, 1)
@@ -294,6 +219,81 @@ void cshpara::berechne (const cvektor3 &prv, cschnittpunkte &psp)
     psp.add (s1);
   if (s2 > 0)
     psp.add (s2);
+  }
+
+// ---------------------------- Torus -----------------------------------------------
+
+cstorus::cstorus (const real pr)
+  : r (pr)
+  {
+  }
+
+void cstorus::init (const cvektor3 &pov)
+  {
+  ov= pov;
+  }
+
+void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
+  {
+  real rq1, rvq, rov, ovq;
+  real rxq, ryq, rzq, oxq, oyq, ozq;
+  real rxox, ryoy, rzoz, rxry, ryrz, rzrx, oxoy, oyoz, ozox;
+  real sroxy, sroyz, srozx, proxy, proyz, prozx;
+  real A, B, C, D, E;
+
+  rq1= 1 - r*r;
+  rvq= rv%rv;
+  rov= rv%ov;
+  ovq= ov%ov;
+  rxq= rv.x*rv.x;
+  ryq= rv.y*rv.y;
+  rzq= rv.z*rv.z;
+  oxq= ov.x*ov.x;
+  oyq= ov.y*ov.y;
+  ozq= ov.z*ov.z;
+  rxox=rv.x*ov.x;
+  ryoy=rv.y*ov.y;
+  rzoz=rv.z*ov.z;
+  rxry=rv.x*rv.y;
+  ryrz=rv.y*rv.z;
+  rzrx=rv.z*rv.x;
+  oxoy=ov.x*ov.y;
+  oyoz=ov.y*ov.z;
+  ozox=ov.z*ov.x;
+  sroxy= rv.x*ov.y + rv.y*ov.x;
+  sroyz= rv.y*ov.z + rv.z*ov.y;
+  srozx= rv.z*ov.x + rv.x*ov.z;
+  proxy= rv.x*ov.y*rv.y*ov.x;
+  proyz= rv.y*ov.z*rv.z*ov.y;
+  prozx= rv.z*ov.x*rv.x*ov.z;
+
+  A= rxq*rxq + ryq*ryq + rzq*rzq + 2*(rxry*rxry + ryrz*ryrz + rzrx*rzrx);
+  B= 4*(rxq*rxox + ryq*ryoy + rzq*rzoz + rxry*sroxy + ryrz*sroyz + rzrx*srozx);
+  C= 2*(rq1*rvq + sroxy*sroxy + sroyz*sroyz + srozx*srozx + 2*(proxy + proyz + prozx - rxq - ryq) + 3*(rxq*oxq + ryq*oyq + rzq*ozq));
+  D= 4*(rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - 2*(rxox + ryoy));
+  E= rq1*(rq1 + 2*ovq) + oxq*oxq + oyq*oyq + ozq*ozq + 2*(oxoy*oxoy + oyoz*oyoz + ozox*ozox) - 4*(oxq + oyq);
+
+  //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
+  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
+  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
+  quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);
+
+/*
+  ckomplexk x1, x2, x3, x4;
+  //quartisch (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+  quartischdiffpuintrc (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
+
+  if (arg (x1) < quantr)
+    psp.add (x1.x);
+  if (arg (x2) < quantr)
+    psp.add (x2.x);
+  if (arg (x3) < quantr)
+    psp.add (x3.x);
+  if (arg (x4) < quantr)
+    psp.add (x4.x);
+//*/
   }
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************
@@ -501,7 +501,7 @@ cvektor3 clmannig::getpixel (const cvektor2 &pv)
   {
 //  return getpunkt (pv);
   return cvektor3 (255,255,0);
-  if (pv.x != pv.x) {};                            // pv benutzen
+  while (pv.x != pv.x);                            // pv benutzen
   }
 
 cvektor3 clmannig::getpixel16 (const cvektor2 &pv)
@@ -535,7 +535,7 @@ cmonochrom::cmonochrom (const cvektor3 &pfarbe)
 cvektor3 cmonochrom::getpunkt (const cvektor2 &pv)
   {
   return farbe;
-  if (pv.x != pv.x) {};  // pv benutzen, weil sonst der Compiler meckert
+  while (pv.x != pv.x);  // pv benutzen, weil sonst der Compiler meckert
   }
 
 //------------------------- Schachfeld ---------------------------------
@@ -708,8 +708,8 @@ cwelt::cwelt (const real &pabstand, const char* pname)
 
 cvektor3 cwelt::getpunkt (const cvektor2 &pv)
   {
-  cvektor3 sv (pv.x, pv.y, abstand);                                                       // Ebenenprojektion
-  //cvektor3 sv (sin(pv.x/abstand*2*PI), pv.y/abstand*2*PI, cos (pv.x/abstand*2*PI));      // Zylinderprojektion
+  cvektor3 sv (pv.x, pv.y, abstand);                                                        // Ebenenprojektion
+  //cvektor3 sv (sin(pv.x/abstand*2*PI), pv.y/abstand*2*PI, cos (pv.x/abstand*2*PI));         // Zylinderprojektion
 
   // Schnittpunkte erstellen, Schnittpunkte parametrisieren, Objekt begrenzen
   cschnittpunkte schnittpunkte;
@@ -811,7 +811,6 @@ void cwelt::dreheaugeachse (const real pwinkel)
 
 void cwelt::dreheaugenorm (const real pwinkel)
   {
-  if (pwinkel != pwinkel) {};  // wegen unused variable
   cvektor3 flugw (eulerwinkelfrommatrix (augbasis));
   cbasis3 bnorm (getroty (flugw.x));
   cvektor4 aw (winkelachsefrommatrix (augbasis/bnorm));
@@ -822,11 +821,11 @@ void cwelt::dreheaugenorm (const real pwinkel)
   cbasis3 db (matrixfromwinkelachse (aw));
   augbasis= normiere (augbasis*db);
   koerperliste.setzeauge (augpos, augbasis);
+  while (pwinkel != pwinkel);                                     // wegen unused variable, wird später noch benutzt?
   }
 
 void cwelt::dreheaugeein (const real pwinkel)
   {
-  if (pwinkel != pwinkel) {};  // wegen unused variable
   cvektor4 aw (winkelachsefrommatrix (augbasis));
   if (aw.r < 0.01745329)
     aw.r= -aw.r;
@@ -835,6 +834,7 @@ void cwelt::dreheaugeein (const real pwinkel)
   cbasis3 db (matrixfromwinkelachse (aw));
   augbasis= normiere (augbasis*db);
   koerperliste.setzeauge (augpos, augbasis);
+  while (pwinkel != pwinkel);                                     // wegen unused variable, wird später noch benutzt?
   }
 
 void cwelt::aktualisiere ()

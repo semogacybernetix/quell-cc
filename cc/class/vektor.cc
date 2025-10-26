@@ -437,14 +437,9 @@ long double atanhr (const long double& a)
 
 //--------------------- cvektor2 Vektor Funktionen ------------------------------------------------------------------------------------------------------------------------------------------------
 
-real norm (const cvektor2 pv)
-  {
-  return pv%pv;
-  }
-
 real absv (const cvektor2 pv)
   {
-  return sqrtr (norm (pv));
+  return sqrtr (pv%pv);
   }
 
 // Kreuzfunktion: unärer Operator, senkrechten Vektor in positver Orientierung ermitteln
@@ -508,8 +503,8 @@ real operator % (const cvektor2 &pv1, const cvektor2 &pv2)
 // komplexer Kehrwert
 ckomplexk kw (const ckomplexk pv)
   {
-  real z= norm (pv);
-  return ckomplexk (pv.x, -pv.y)*(1/z);
+  real z= pv%pv;
+  return ckomplexk (pv.x, -pv.y)/z;
   }
 
 ckomplexk sqrtvk (const ckomplexk pv)
@@ -551,10 +546,10 @@ void cbrtv (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
 
 ckomplexk expv (const ckomplexk pv)
   {
-  return kartes (ckomplexp (expr (pv.x), (pv.y)));        // keine Einschränkung Bijektivitätsbereich
+  return kartes (ckomplexp (expr (pv.x), (pv.y)));                // keine Einschränkung Bijektivitätsbereich
   }
 
-ckomplexk logv (const ckomplexk pv)                       // Rückgabe eingeschränkt auf waagerechten ]-pi, pi] Streifen
+ckomplexk logv (const ckomplexk pv)                               // Rückgabe eingeschränkt auf waagerechten ]-pi, pi] Streifen
   {
   ckomplexp lv= polar180 (pv);
   if (lv.b > 0)
@@ -665,7 +660,7 @@ ckomplexk operator ^ (const ckomplexk &pv, const real &pr)
 // kartesischkomplexe Potenz von kartesischkomplexer Zahl
 ckomplexk operator ^ (const ckomplexk &pv1, const ckomplexk &pv2)
   {
-  return expv (pv2*logv (pv1));          // Bijektivitätsbereich: waagerechter ]-pi,pi] Streifen in der rechten Halbebene ohne y-Achse
+  return expv (pv2*logv (pv1));                                   // Bijektivitätsbereich: waagerechter ]-pi,pi] Streifen in der rechten Halbebene ohne y-Achse
   }
 
 ckomplexk potenz (const ckomplexk pv1, const ckomplexk pv2)
@@ -805,9 +800,9 @@ ckomplexp operator ^ (const ckomplexp &pv, const real &pr)
 
 ckomplexp operator ^ (const ckomplexp &pv1, const ckomplexp &pv2)
   {
-  return expv (pv2*logv (pv1));                             // problematisch wegen Periodizität der exp, log Funktion
+  return expv (pv2*logv (pv1));                                   // problematisch wegen Periodizität der exp, log Funktion
 
-/*                                                          // zerlegte Berechung um bijektiven Bereich zu erweitern
+/*                                                                // zerlegte Berechung um bijektiven Bereich zu erweitern
   ckomplexp ret, retx, rety;
   retx= pv1^pv2.x;
   rety= ckomplexp (cosr (pv2.y), sinr (pv2.y));
@@ -827,7 +822,7 @@ ckomplexk kartes (const ckomplexp pv)
   return ckomplexk (pv.b*cosr (pv.w), pv.b*sinr (pv.w));
   }
 
-ckomplexp polar225 (const ckomplexk pv)      // Winkelrückgabe [0, 2pi[
+ckomplexp polar225 (const ckomplexk pv)                           // Winkelrückgabe [0, 2pi[
   {
   ckomplexp ret= polar180 (pv);
 
@@ -836,7 +831,7 @@ ckomplexp polar225 (const ckomplexk pv)      // Winkelrückgabe [0, 2pi[
   return ret;
   }
 
-ckomplexp polar360 (const ckomplexk pv)      // Winkelrückgabe [0, 2pi[
+ckomplexp polar360 (const ckomplexk pv)                           // Winkelrückgabe [0, 2pi[
   {
   ckomplexp ret= polar180 (pv);
 
@@ -845,12 +840,12 @@ ckomplexp polar360 (const ckomplexk pv)      // Winkelrückgabe [0, 2pi[
   return ret;
   }
 
-ckomplexp polar180 (const ckomplexk pv)     // Winkelrückgabe ]-pi, pi]
+ckomplexp polar180 (const ckomplexk pv)                           // Winkelrückgabe ]-pi, pi]
   {
   return ckomplexp (absv (pv), atan2r (pv.y, pv.x));
   }
 
-ckomplexp polarcos180 (const ckomplexk pv)      // Winkelrückgabe ]-pi, pi]
+ckomplexp polarcos180 (const ckomplexk pv)                        // Winkelrückgabe ]-pi, pi]
   {
   real phi= 0;
   real laenge (absv (pv));
@@ -862,16 +857,16 @@ ckomplexp polarcos180 (const ckomplexk pv)      // Winkelrückgabe ]-pi, pi]
   return ckomplexp (laenge, phi);
   }
 
-ckomplexp polartan180 (const ckomplexk pv)      // Winkelrückgabe ]-pi, pi]
+ckomplexp polartan180 (const ckomplexk pv)                        // Winkelrückgabe ]-pi, pi]
   {
   real phi= PI/4;
 
-  if (fabsr (pv.x) > fabsr (pv.y))   // pv.x = 0 geht weiter
+  if (fabsr (pv.x) > fabsr (pv.y))                                // pv.x = 0 geht weiter
     {
     phi= atanr (pv.y/pv.x);
 
     if (pv.x < 0)
-      {                                                // Klammer wegen ambigious else
+      {                                                           // Klammer wegen ambigious else
       if (pv.y >= 0)  // 180° statt -180°
         phi+= PI;
         else
@@ -893,13 +888,13 @@ ckomplexp polartan180 (const ckomplexk pv)      // Winkelrückgabe ]-pi, pi]
     return ckomplexp (absv (pv), phi);
     }
 
-    if (fabsr (pv.x) == 0)                 // Die Beträge von x und y sind ab dieser Stelle gleich deshalb ist pv der Nullvektor
+    if (fabsr (pv.x) == 0)                                        // Die Beträge von x und y sind ab dieser Stelle gleich deshalb ist pv der Nullvektor
       return (ckomplexp (0, 0));
 
-    if (pv.x < 0)                          // linke Hälfte also +-135°
+    if (pv.x < 0)                                                 // linke Hälfte also +-135°
       phi= PI*real (0.75);
 
-    if (pv.y < 0)                          // untere Hälfte also -45° oder -135°
+    if (pv.y < 0)                                                 // untere Hälfte also -45° oder -135°
       phi= -phi;
 
   return ckomplexp (absv (pv), phi);
@@ -971,12 +966,6 @@ cbasis2 operator - (const cbasis2 &pb1, const cbasis2 &pb2)
   return cbasis2 (pb1.x - pb2.x, pb1.y - pb2.y);
   }
 
-// Skalarmultiplikation
-cbasis2 operator * (const real &pf, const cbasis2 &pb)
-  {
-  return cbasis2 (pf*pb.x, pf*pb.y);
-  }
-
 // Skalardivision
 cbasis2 operator / (const cbasis2 &pb, const real &pf)
   {
@@ -1023,14 +1012,9 @@ void swap (cvektor3& a, cvektor3& b)
   b= c;
   }
 
-real norm (const cvektor3 &pv)
-  {
-  return pv%pv;
-  }
-
 real abs (const cvektor3 &pv)
   {
-  return sqrtr (norm (pv));
+  return sqrtr (pv%pv);
   }
 
 // Kreuzfunktion: unärer Operator, senkrechten Vektor in positver Orientierung ermitteln: kürzeste Komponente Null setzen, die anderen beiden senkrechtisieren
@@ -1045,13 +1029,13 @@ cvektor3 senk (const cvektor3 &pv)
 
 cvektor3 normiere (const cvektor3 &pv)
   {
-  real l (abs (pv));
+  real l= pv%pv;
   if (l <= vquant)
-    return cvektor3 (0, 0, 0);  // (0, 0,0) oder (1, 1, 1) ?
+    return cvektor3 (0, 0, 0);                                    // (0, 0,0) oder (1, 1, 1) ?
   return pv/l;
   }
 
-cvektor3 orientiere (const cvektor3 &pv)   // erster von 0 verschiedener Wert wird positiv gesetzt
+cvektor3 orientiere (const cvektor3 &pv)                          // erster von 0 verschiedener Wert wird positiv gesetzt
   {
   cvektor3 ret (pv);
   if (ret.x < 0)
@@ -1073,12 +1057,12 @@ cvektor3 orientiere (const cvektor3 &pv)   // erster von 0 verschiedener Wert wi
   return ret;
   }
 
-real winkelb (const cvektor3 &pv1, const cvektor3 &pv2)   // Betrag des Winkels zwischen 2 Vektoren ermitteln, Ergebnis: [0..pi]
+real winkelb (const cvektor3 &pv1, const cvektor3 &pv2)           // Betrag des Winkels zwischen 2 Vektoren ermitteln, Ergebnis: [0..pi]
   {
-  real nenner (abs (pv1)*abs (pv2));
+  real nenner ((pv1%pv1)*(pv2%pv2));
   if (nenner <= vquant)
     return 0;
-  real cw= (pv1%pv2)/nenner;
+  real cw= (pv1%pv2)/sqrtr (nenner);
   if (cw >= 1)
     return 0;
   if (cw <= -1)
@@ -1086,7 +1070,7 @@ real winkelb (const cvektor3 &pv1, const cvektor3 &pv2)   // Betrag des Winkels 
   return acosr (cw);
   }
 
-real winkelg (const cvektor3 &pv1, const cvektor3 &pv2)   // Betrag des Winkels zwischen 2 Geraden ermitteln, Ergebnis: [0..pi/2]
+real winkelg (const cvektor3 &pv1, const cvektor3 &pv2)           // Betrag des Winkels zwischen 2 Geraden ermitteln, Ergebnis: [0..pi/2]
   {
   real nenner (abs (pv1)*abs (pv2));
   if (nenner <= vquant)
@@ -1183,7 +1167,7 @@ cvektor3 operator / (const cvektor3 &pv, const cbasis3 &pb)
 
 real norm (cbasis3 pb)
   {
-  return norm (pb.x) + norm (pb.y) + norm (pb.z);
+  return pb.x%pb.x + pb.y%pb.y + pb.z%pb.z;
   }
 
 real abs (cbasis3 pb)
@@ -1218,7 +1202,7 @@ cbasis3 transp (const cbasis3 &pb)
                   cvektor3 (pb.x.z, pb.y.z, pb.z.z));
   }
 
-cvektor3 geteigen (const cbasis3 &pb)    // Eigenvektor von einer homogenen Basis berechnen (det = 0)
+cvektor3 geteigen (const cbasis3 &pb)                             // Eigenvektor von einer homogenen Basis berechnen (det = 0)
   {
   const cbasis3 orthobasis (transp (cbasis3 (pb.y^pb.z, pb.z^pb.x, pb.x^pb.y)));
   const real sx (orthobasis.x%orthobasis.x);
@@ -1257,7 +1241,7 @@ cbasis3 getrotz (const real &pf)
 // Spiegelungsmatrix direkt berechnen
 cbasis3 getspiegbasis (const cvektor3 &pv)
   {
-  if (abs (pv) <= vquant)   // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
+  if (abs (pv) <= vquant)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
     return cbasis3 (-1);
   cvektor3 nv= normiere (pv);
   return cbasis3 (1) - 2*cbasis3 (nv, nv, nv)*cbasis3 (nv);
@@ -1266,7 +1250,7 @@ cbasis3 getspiegbasis (const cvektor3 &pv)
 // Spiegelungsmatrix aus (Drehung von 180° um Spiegelachse) berechnen
 cbasis3 getdrehspiegbasis (const cvektor3 &pv)
   {
-  if (abs (pv) <= vquant)   // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
+  if (abs (pv) <= vquant)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
     return cbasis3 (-1);
   return -matrixfromwinkelachse (cvektor4 (PI, pv.x, pv.y, pv.z));
   }
@@ -1349,14 +1333,9 @@ cbasis3 operator | (const cbasis3 &pb1, const cbasis3 &pb2)
 
 //---------- cvektor4 Vektor Funktionen -----------------------------------------------------------------------------------------------
 
-real norm (const cvektor4 &pv)
-  {
-  return pv%pv;
-  }
-
 real abs (const cvektor4 &pv)
   {
-  return sqrtr (norm (pv));
+  return sqrtr (pv%pv);
   }
 
 // Kreuzfunktion: unärer Operator, senkrechten Vektor in positver Orientierung ermitteln
@@ -1367,7 +1346,7 @@ cvektor4 senk (const cvektor4 &pv)
 
 cvektor4 normiere (const cvektor4 &pv)
   {
-  const real q= norm (pv);
+  const real q= pv%pv;
   if (q <= vquant)
     return cvektor4 (0, 0, 0, 0);
   return pv/sqrtr (q);
@@ -1392,7 +1371,7 @@ integer aehnlich (const cvektor4 &pv1, const cvektor4 &pv2)
 // Kehrwert
 cvektor4 kw (const cvektor4 &pv)
   {
-  return cvektor4 (pv.r, -pv.i, -pv.j, -pv.ij)/norm (pv);
+  return cvektor4 (pv.r, -pv.i, -pv.j, -pv.ij)/(pv%pv);
   }
 
 cvektor3 getachse (const cvektor4 &pv)
@@ -1525,13 +1504,13 @@ cvektor4 quaternionfromwinkelachse (const cvektor4 pwa)
   {
   real wiha= pwa.r/2;
   cvektor3 achse= normiere (cvektor3 (pwa.i, pwa.j, pwa.ij));
-  return cvektor4 (cosr (wiha), sinr (wiha)*achse);                // negativer Winkel invertiert die Drehachse statt Winkel
-  }                                                                // Darstellung ist eindeutig. Das negative Quaternion, dessen Drehung zur gleichen Endposition führt (Matrix) ist eine andere Drehung
-                                                                   // 90° nach rechts drehen führt zur gleichen Endposition wie 270° nach links drehen, aber es sind verschiedene Drehungen
-                                                                   // Somit wird nicht eine Drehung durch 2 Quaternionen repräsentiert, sondern jede Drehung ist eindeutig durch genau ein Quaternion repräsentiert.
-                                                                   // Mehrdeutigkeit kommt durch Wicklungen zustande, d.h. wenn der Winkel größer als 360° ist.
-                                                                   // Jede Endposition wird durch genau 2 Drehungen erreicht. Das gilt auch für die Anfangsposition.
-                                                                   // Die Anfangsposition kann durch eine 0° Drehung oder durch eine 360° Drehung erreicht werden. In beiden Fällen spielt die Drehachse keine Rolle.
+  return cvektor4 (cosr (wiha), sinr (wiha)*achse);               // negativer Winkel invertiert die Drehachse statt Winkel
+  }                                                               // Darstellung ist eindeutig. Das negative Quaternion, dessen Drehung zur gleichen Endposition führt (Matrix) ist eine andere Drehung
+                                                                  // 90° nach rechts drehen führt zur gleichen Endposition wie 270° nach links drehen, aber es sind verschiedene Drehungen
+                                                                  // Somit wird nicht eine Drehung durch 2 Quaternionen repräsentiert, sondern jede Drehung ist eindeutig durch genau ein Quaternion repräsentiert.
+                                                                  // Mehrdeutigkeit kommt durch Wicklungen zustande, d.h. wenn der Winkel größer als 360° ist.
+                                                                  // Jede Endposition wird durch genau 2 Drehungen erreicht. Das gilt auch für die Anfangsposition.
+                                                                  // Die Anfangsposition kann durch eine 0° Drehung oder durch eine 360° Drehung erreicht werden. In beiden Fällen spielt die Drehachse keine Rolle.
 
 cvektor4 winkelachsefromquaternion (const cvektor4 pq)
   {
@@ -1550,12 +1529,12 @@ cvektor4 winkelachsefromquaternion (const cvektor4 pq)
   return cvektor4 (drehw, achse.x, achse.y, achse.z);
   }
 
-cvektor4 qwafrommatrix (const cbasis3 &pdreh)  // nur für Drehmatrizen, nicht für Drehspiegelungsmatrizen
+cvektor4 qwafrommatrix (const cbasis3 &pdreh)                     // nur für Drehmatrizen, nicht für Drehspiegelungsmatrizen
   {
   // Gibt den Winkel in Quaternionenform [-1 bis 1] und die Drehachse unnormiert aber richtig orientiert zurück.
 
   // ********************* Realteil direkt aus der Matrix berechnen, Problem bei 0° und 180° Drehungen abfangen
-  real qr= 1 + pdreh.x.x + pdreh.y.y + pdreh.z.z;              // qr [4..0] = [0..180]°
+  real qr= 1 + pdreh.x.x + pdreh.y.y + pdreh.z.z;                 // qr [4..0] = [0..180]°
   if (qr >= 4 - vquant)             //   0° Drehung
     return cvektor4 (1, 0, 0, 0);
 
@@ -1567,12 +1546,12 @@ cvektor4 qwafrommatrix (const cbasis3 &pdreh)  // nur für Drehmatrizen, nicht f
   cvektor3 drehachse (geteigen (hdreh));
 
   // Drehachse richtig orientieren
-  if (qr <= vquant)                 // 180° Drehung: Es gibt 2 Drehachsen statt nur einer
+  if (qr <= vquant)                                               // 180° Drehung: Es gibt 2 Drehachsen statt nur einer
     {
     qr= 0;
-    drehachse= orientiere (drehachse);  // bei 180° Drehung Achse mit positven ersten von 0 verschiedenem Wert aussuchen. (besser kleinste Anzahl von Minuszeichen)
+    drehachse= orientiere (drehachse);                            // bei 180° Drehung Achse mit positven ersten von 0 verschiedenem Wert aussuchen. (besser kleinste Anzahl von Minuszeichen)
     }
-    else                          // Drehung zwischen 0° und 180°
+    else                                                          // Drehung zwischen 0° und 180°
     {
     // Drehachse richtig orientieren (Testen ob die Drehung ein positives Volumen erzeugt, versagt bei 0° und 180° Drehungen da Volumen dann 0 ist)
     cvektor3 s1 (~drehachse);
@@ -1583,7 +1562,7 @@ cvektor4 qwafrommatrix (const cbasis3 &pdreh)  // nur für Drehmatrizen, nicht f
   return cvektor4 (sqrtr (qr)/2, drehachse.x, drehachse.y, drehachse.z);
   }
 
-cvektor4 winkelachsefrommatrix (const cbasis3 &pdreh)    // Bei Drehspiegelungen wird der Spiegelanteil durch Inversion der Drehspiegelungsmatrix entfernt und dann Winkel und Achse der verbleibenden Drehmatrix bestimmt
+cvektor4 winkelachsefrommatrix (const cbasis3 &pdreh)             // Bei Drehspiegelungen wird der Spiegelanteil durch Inversion der Drehspiegelungsmatrix entfernt und dann Winkel und Achse der verbleibenden Drehmatrix bestimmt
   {
   cvektor4 qwa;
   if (det (pdreh) > 0)
@@ -1602,8 +1581,8 @@ cvektor4 winkelachsefrommatrix (const cbasis3 &pdreh)    // Bei Drehspiegelungen
     {
     real wi= 2*acosr (qwa.r);
     if (aehnlich (wi, 0))
-      return cvektor4 (-2*PI, achse.x, achse.y, achse.z);                          // pq.r = -360°: Matrix ist die Punktspiegelungsmatrix (Inversion (-id))
-      //return cvektor4 (0, achse.x, achse.y, achse.z);                                   // Problemfall 0° wäre positiver Winkel also Drehung und nicht Drehspiegelung
+      return cvektor4 (-2*PI, achse.x, achse.y, achse.z);                       // pq.r = -360°: Matrix ist die Punktspiegelungsmatrix (Inversion (-id))
+      //return cvektor4 (0, achse.x, achse.y, achse.z);                         // Problemfall 0° wäre positiver Winkel also Drehung und nicht Drehspiegelung
     return cvektor4 (-2*acosr (qwa.r), achse.x, achse.y, achse.z);
     }
   return cvektor4 (2*acosr (qwa.r), achse.x, achse.y, achse.z);
@@ -1614,9 +1593,9 @@ cbasis3  matrixfromwinkelachse (const cvektor4 pq)
   return matrixfromquaternion (quaternionfromwinkelachse (pq));
   }
 
-cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)  // Funktioniert bei 0° und 180° Drehungen
+cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)              // Funktioniert bei 0° und 180° Drehungen
   {
-  cvektor4 qwa (qwafrommatrix (pdreh));                                 // Mehrdeutigkeit der Achse bei 180° Drehungen
+  cvektor4 qwa (qwafrommatrix (pdreh));                           // Mehrdeutigkeit der Achse bei 180° Drehungen
   if (qwa.r >= 1 - vquant)      // Drehung ist 0° Drehung
     return qwa;                // 1 zurückgeben
   cvektor3 achse (cvektor3 (qwa.i, qwa.j, qwa.ij));
@@ -1624,18 +1603,18 @@ cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)  // Funktioniert bei 0° un
   return cvektor4 (qwa.r, k*achse);
   }
 
-cvektor4 quaternionfrommatrix2 (const cbasis3 &pdreh)  // Kreuzproduktversion: versagt bei 180° Drehungen
+cvektor4 quaternionfrommatrix2 (const cbasis3 &pdreh)             // Kreuzproduktversion: versagt bei 180° Drehungen
   {
   real qr= sqrtr (1 + pdreh.x.x + pdreh.y.y + pdreh.z.z);
-  if (qr <= vquant)                      // 180° Drehung
-    return cvektor4 (0, 1, 0, 0);       // Bullshit zurückgeben
+  if (qr <= vquant)                                               // 180° Drehung
+    return cvektor4 (0, 1, 0, 0);                                 // Bullshit zurückgeben
   real qi= (pdreh.y.z - pdreh.z.y)/qr;
   real qj= (pdreh.z.x - pdreh.x.z)/qr;
   real qij=(pdreh.x.y - pdreh.y.x)/qr;
   return cvektor4 (qr, qi, qj, qij)/2;
   }
 
-cbasis3 matrixfromquaternion (const cvektor4 pq)   // Es kommen nur 2-fache Produkte vor, da mat (q) = mat (-q)
+cbasis3 matrixfromquaternion (const cvektor4 pq)                  // Es kommen nur 2-fache Produkte vor, da mat (q) = mat (-q)
   {
   real x, y, z;
   x= 1 - 2*(pq.j*pq.j + pq.ij*pq.ij);
@@ -2504,18 +2483,18 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, l, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
-  // Parameter reduzierte quartische Gleichung
+  // Parameter der reduzierten quartischen Gleichung
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
   rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
 
-  // Parameter reduzierte kubische Gleichung
+  // Parameter der reduzierten kubischen Gleichung
   pqq= pq*pq;
   pk= pqq/-144 + rq/-12;
   qk= pq*(pqq/1728 + rq/-48) + qq*qq/128;
 
-  // Lösungen reduzierte kubische Gleichung
+  // Lösungen der reduzierten kubischen Gleichung
   aq4= aq/-4;
   ak3= pq/-6;
   qq8= qq/8;
@@ -2534,11 +2513,11 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     ur1= sqrtr (ak3 + ykr1 - pk/ykr1);
     u2= sqrtv (ak3 + yk2 - pk/yk2);
 
-    // Lösungen reduzierte quartische Gleichung
+    // Lösungen der reduzierten quartischen Gleichung
     yr1=  ur1 + u2.x*2;
     yr2=  ur1 - u2.x*2;
 
-    // Lösungen normale quartische Gleichung
+    // Lösungen der normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*(u2.x*u2.x + u2.y*u2.y);
     if (fabsr (bed + qq8) < fabsr (bed - qq8))
@@ -2562,23 +2541,23 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     {
     // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
     l= -sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
-    ykr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                         // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
+    ykr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
     ykr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
     ykr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
 
-    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0))    // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
+    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0)) // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
     ur1= sqrtr (ak3 + ykr1);
     ur2= sqrtr (ak3 + ykr2);
     ur3= sqrtr (ak3 + ykr3);
 
-    // Lösungen reduzierte quartische Gleichung
+    // Lösungen der reduzierten quartischen Gleichung
     yr1=  ur1 + ur2 + ur3;
     yr2=  ur1 - ur2 - ur3;
     yr3=  ur2 - ur1 - ur3;
     yr4=  ur3 - ur1 - ur2;
 
-    // Lösungen normale quartische Gleichung
+    // Lösungen der normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*ur2*ur3;
     if (fabsr (bed + qq8) < fabsr (bed - qq8))
@@ -2613,18 +2592,18 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, vxl, uk1, uk2, l, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
-  // Parameter reduzierte quartische Gleichung
+  // Parameter der reduzierten quartischen Gleichung
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
   rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
 
-  // Parameter reduzierte kubische Gleichung
+  // Parameter der reduzierten kubischen Gleichung
   pqq= pq*pq;
   pk= pqq/-144 + rq/-12;
   qk= pq*(pqq/1728 + rq/-48) + qq*qq/128;
 
-  // Lösungen reduzierte kubische Gleichung
+  // Lösungen der reduzierten kubischen Gleichung
   aq4= aq/-4;
   ak3= pq/-6;
   qq8= qq/8;
@@ -2643,11 +2622,11 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     ur1= sqrtr (ak3 + ykr1);
     u2= sqrtv (ak3 + yk2);
 
-    // Lösungen reduzierte quartische Gleichung
+    // Lösungen der reduzierten quartischen Gleichung
     yr1=  ur1 + u2.x*2;
     yr2=  ur1 - u2.x*2;
 
-    // Lösungen normale quartische Gleichung
+    // Lösungen den normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*(u2.x*u2.x + u2.y*u2.y);
     if (fabsr (bed + qq8) < fabsr (bed - qq8))
@@ -2671,23 +2650,23 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     {
     // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
     l= -sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
-    ykr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                         // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
+    ykr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
     ykr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
     ykr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
 
-    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0))    // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
+    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0)) // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
     ur1= sqrtr (ak3 + ykr1);
     ur2= sqrtr (ak3 + ykr2);
     ur3= sqrtr (ak3 + ykr3);
 
-    // Lösungen reduzierte quartische Gleichung
+    // Lösungen der reduzierten quartischen Gleichung
     yr1=  ur1 + ur2 + ur3;
     yr2=  ur1 - ur2 - ur3;
     yr3=  ur2 - ur1 - ur3;
     yr4=  ur3 - ur1 - ur2;
 
-    // Lösungen normale quartische Gleichung
+    // Lösungen der normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*ur2*ur3;
     if (fabsr (bed + qq8) < fabsr (bed - qq8))

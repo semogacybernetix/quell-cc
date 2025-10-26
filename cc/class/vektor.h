@@ -275,20 +275,19 @@ long double atanhr (const long double& a);
 
 //--------------------- cvektor2 Vektor Funktionen ------------------------------------------------------------------------------
 
-//real     norm    (const cvektor2 pv);
-real     absv    (const cvektor2 pv);  // Länge des Vektors
-cvektor2 senk    (const cvektor2 &pv);
+real     absv    (const cvektor2 pv);                                           // Länge des Vektors
+cvektor2 senk    (const cvektor2 &pv);                                          // um +90° gedrehter Vektor (Kreuzfunktion in R2, unärer Operator)
 
 // ---------- cvektor2 Vektor Operatoren ----------------------------------------------------------------------------------------------
 
-integer  operator == (const cvektor2 &pv1, const cvektor2 &pv2);
-cvektor2 operator -  (const cvektor2 &pv);                                       // Vorzeichen
-cvektor2 operator +  (const cvektor2 &pv1, const cvektor2 &pv2);                 // Addition
-cvektor2 operator -  (const cvektor2 &pv1, const cvektor2 &pv2);                 // Subtraktion
-cvektor2 operator *  (const real &pf, const cvektor2 &pv);                       // Skalar Links Multiplikation
-cvektor2 operator *  (const cvektor2 &pv, const real &pf);                       // Skalar Rechts Multiplikation
-cvektor2 operator /  (const cvektor2 &pv, const real &pf);                       // Skalar Division
-real     operator %  (const cvektor2 &pv1, const cvektor2 &pv2);                 // Skalarprodukt
+integer  operator == (const cvektor2 &pv1, const cvektor2 &pv2);                // Vergleich
+cvektor2 operator -  (const cvektor2 &pv);                                      // Vorzeichen
+cvektor2 operator +  (const cvektor2 &pv1, const cvektor2 &pv2);                // Addition
+cvektor2 operator -  (const cvektor2 &pv1, const cvektor2 &pv2);                // Subtraktion
+cvektor2 operator *  (const real &pf, const cvektor2 &pv);                      // Skalar Links Multiplikation
+cvektor2 operator *  (const cvektor2 &pv, const real &pf);                      // Skalar Rechts Multiplikation
+cvektor2 operator /  (const cvektor2 &pv, const real &pf);                      // Skalar Division
+real     operator %  (const cvektor2 &pv1, const cvektor2 &pv2);                // Skalarprodukt
 
 // -------------------- ckomplexk Funktionen ----------------------------------------------------------------
 
@@ -296,9 +295,9 @@ real     operator %  (const cvektor2 &pv1, const cvektor2 &pv2);                
 ckomplexk kartes    (const ckomplexp pv);
 
 // unäre Funktionen
-ckomplexk sqrtv     (const ckomplexk pv);  // Quadratwurzel Hauptwert √  Sprung bei 0/360°
-ckomplexk sqrtvk    (const ckomplexk pv);  // Quadratwurzel Hauptwert √ ohne Zwischenumwandlung in Polarkoordinaten Sprung bei 180/-180°
-ckomplexk cbrtv     (const ckomplexk pv);  // Kubikwurzel Hauptwert  ∛
+ckomplexk sqrtv     (const ckomplexk pv);                                       // Quadratwurzel Hauptwert √  Sprung bei +-180°
+ckomplexk sqrtvk    (const ckomplexk pv);                                       // Quadratwurzel Hauptwert √ ohne Zwischenumwandlung in Polarkoordinaten Sprung bei 180/-180°
+ckomplexk cbrtv     (const ckomplexk pv);                                       // Kubikwurzel ∛ Sprung bei +-180°
 void      cbrtv     (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);  // Kubikwurzel komplett  ∛
 ckomplexk expv      (const ckomplexk pv);
 ckomplexk logv      (const ckomplexk pv);
@@ -337,7 +336,6 @@ void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
 void kubischeresolventebuch (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventepdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventelagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
-void kubischeresolvente1z (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolvente3z (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertbuchu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
@@ -361,20 +359,20 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
 // --------------------- ckomplexk Operatoren ---------------------------------------------------------
 
 // vererbte Operatoren
-ckomplexk operator - (const ckomplexk &pv);                                      // Vorzeichen
-ckomplexk operator + (const ckomplexk &pv1, const ckomplexk &pv2);               // Addition
-ckomplexk operator - (const ckomplexk &pv1, const ckomplexk &pv2);               // Subtraktion
-ckomplexk operator * (const real &pf, const ckomplexk &pv);                      // Skalar Links Multiplikation
-ckomplexk operator * (const ckomplexk &pv, const real &pf);                      // Skalar Rechts Multiplikation
-ckomplexk operator / (const ckomplexk &pv, const real &pf);                      // Skalar Division
+ckomplexk operator - (const ckomplexk &pv);                                     // Vorzeichen
+ckomplexk operator + (const ckomplexk &pv1, const ckomplexk &pv2);              // Addition
+ckomplexk operator - (const ckomplexk &pv1, const ckomplexk &pv2);              // Subtraktion
+ckomplexk operator * (const real &pf, const ckomplexk &pv);                     // Skalar Links Multiplikation
+ckomplexk operator * (const ckomplexk &pv, const real &pf);                     // Skalar Rechts Multiplikation
+ckomplexk operator / (const ckomplexk &pv, const real &pf);                     // Skalar Division
 
 // ckomplexk Operatoren
-ckomplexk operator * (const ckomplexk &pv1, const ckomplexk &pv2);               // Multiplikation
-ckomplexk operator / (const ckomplexk &pv1, const ckomplexk &pv2);               // Division
-ckomplexk operator / (const real &pf,       const ckomplexk &pv);                // Skalar Division reelle Zahl / komplexe Zahl
-ckomplexk operator ^ (const ckomplexk &pv,  const integer &pn);                  // komplexe Potenz mit ganzem Exponenten
-ckomplexk operator ^ (const ckomplexk &pv,  const real &pr);                     // komplexe Potenz mit reellem Exponenten
-ckomplexk operator ^ (const ckomplexk &pv1, const ckomplexk &pv2);               // komplexe Potenz mit komplexem Exponenten
+ckomplexk operator * (const ckomplexk &pv1, const ckomplexk &pv2);              // Multiplikation
+ckomplexk operator / (const ckomplexk &pv1, const ckomplexk &pv2);              // Division
+ckomplexk operator / (const real &pf,       const ckomplexk &pv);               // Skalar Division reelle Zahl / komplexe Zahl
+ckomplexk operator ^ (const ckomplexk &pv,  const integer &pn);                 // komplexe Potenz mit ganzem Exponenten
+ckomplexk operator ^ (const ckomplexk &pv,  const real &pr);                    // komplexe Potenz mit reellem Exponenten
+ckomplexk operator ^ (const ckomplexk &pv1, const ckomplexk &pv2);              // komplexe Potenz mit komplexem Exponenten
 
 // -------------------- ckomplexp Funktionen -------------------------------------------
 
@@ -386,10 +384,10 @@ ckomplexp polarcos180  (const ckomplexk pv);
 ckomplexp polartan180  (const ckomplexk pv);
 
 // unäre Funktionen
-ckomplexp kw        (const ckomplexp pv);  // komplexer Kehrwert
-ckomplexp sqrtvk    (const ckomplexp pv);  // Quadratwurzel √ ohne Polarkoordinaten berechnet Sprung bei +-180°  ungenauer als sqrtv
-ckomplexp sqrtv     (const ckomplexp pv);  // Quadratwurzel √ Sprung bei +-180°
-ckomplexp cbrtv     (const ckomplexp pv);  // Kubikwurzel   ∛ Sprung bei +-180°
+ckomplexp kw        (const ckomplexp pv);                                       // komplexer Kehrwert
+ckomplexp sqrtvk    (const ckomplexp pv);                                       // Quadratwurzel √ ohne Polarkoordinaten berechnet Sprung bei +-180°  ungenauer als sqrtv
+ckomplexp sqrtv     (const ckomplexp pv);                                       // Quadratwurzel √ Sprung bei +-180°
+ckomplexp cbrtv     (const ckomplexp pv);                                       // Kubikwurzel   ∛ Sprung bei +-180°
 ckomplexp expv      (const ckomplexp pv);
 ckomplexp logv      (const ckomplexp pv);
 ckomplexp coshv     (const ckomplexp pv);
@@ -400,18 +398,18 @@ ckomplexp sinv      (const ckomplexp pv);
 // -------------------- ckomplexp Operatoren ----------------------------------------------------------------
 
 // vererbte Operatoren
-ckomplexp operator - (const ckomplexp &pv);                                      // Vorzeichen
-ckomplexp operator + (const ckomplexp &pv1, const ckomplexp &pv2);               // Addition
-ckomplexp operator - (const ckomplexp &pv1, const ckomplexp &pv2);               // Subtraktion
-ckomplexp operator * (const real &pf, const ckomplexp &pv);                      // Skalar Multiplikation
-ckomplexp operator / (const ckomplexp &pv, const real &pf);                      // Skalar Division
+ckomplexp operator - (const ckomplexp &pv);                                     // Vorzeichen
+ckomplexp operator + (const ckomplexp &pv1, const ckomplexp &pv2);              // Addition
+ckomplexp operator - (const ckomplexp &pv1, const ckomplexp &pv2);              // Subtraktion
+ckomplexp operator * (const real &pf, const ckomplexp &pv);                     // Skalar Multiplikation
+ckomplexp operator / (const ckomplexp &pv, const real &pf);                     // Skalar Division
 
 // ckomplexp Operatoren
-ckomplexp operator * (const ckomplexp &pv1, const ckomplexp &pv2);               // Multiplikation
-ckomplexp operator / (const ckomplexp &pv1, const ckomplexp &pv2);               // Division
-ckomplexp operator / (const real &pf,       const ckomplexp &pv);                // reelle Zahl / komplexe Zahl
-ckomplexp operator ^ (const ckomplexp &pv,  const real &pr);                     // komplexe Potenz mit reellem Exponenten
-ckomplexp operator ^ (const ckomplexp &pv1, const ckomplexp &pv2);               // komplexe Potenz mit komplexem Exponenten
+ckomplexp operator * (const ckomplexp &pv1, const ckomplexp &pv2);              // Multiplikation
+ckomplexp operator / (const ckomplexp &pv1, const ckomplexp &pv2);              // Division
+ckomplexp operator / (const real &pf,       const ckomplexp &pv);               // reelle Zahl / komplexe Zahl
+ckomplexp operator ^ (const ckomplexp &pv,  const real &pr);                    // komplexe Potenz mit reellem Exponenten
+ckomplexp operator ^ (const ckomplexp &pv1, const ckomplexp &pv2);              // komplexe Potenz mit komplexem Exponenten
 
 // -------------------- gemischtkomplexe Funktionen (Mischung: kartesischkomplex, polarkomplex) ----------------------------------------------------------------
 
@@ -422,7 +420,7 @@ ckomplexk kartes    (const ckomplexp pv);
 
 // --------------------- Operatoren für Kugelkoordinaten ------------------------------------------------------
 
-real      operator | (const ckugelk &pv1, const ckugelk &pv2);                   // Winkel zwischen zwei dreidimensionalen Einheitsvektoren in Kugelkoordinaten
+real     operator | (const ckugelk &pv1, const ckugelk &pv2);                   // Winkel zwischen zwei dreidimensionalen Einheitsvektoren in Kugelkoordinaten
 
 //---------- cvektor2, cbasis2 --------------------------------------------------------------------------------
 
@@ -445,11 +443,10 @@ cbasis2 operator ~ (const cbasis2  &pb);
 cbasis2 operator + (const cbasis2 &pb1, const cbasis2 &pb2);
 cbasis2 operator - (const cbasis2 &pb1, const cbasis2 &pb2);
 
-// Skalarmultiplikation
-//cbasis2 operator * (const real &pf, const cbasis2 &pb);
+// Skalaroperatoren
 cbasis2 operator / (const cbasis2 &pb, const real &pf);
 
-// Matrixmultiplikation
+// Matrixoperatoren
 cbasis2 operator * (const cbasis2 &pb1, const cbasis2 &pb2);
 cbasis2 operator & (const cbasis2 &pb1, const cbasis2 &pb2);
 cbasis2 operator / (const cbasis2 &pb1, const cbasis2 &pb2);
@@ -459,7 +456,6 @@ cbasis2 operator | (const cbasis2 &pb1, const cbasis2 &pb2);
 
 void swap (cvektor3& a, cvektor3& b);
 
-real     norm       (const cvektor3 &pv);
 real     abs        (const cvektor3 &pv);
 cvektor3 senk       (const cvektor3 &pv);
 cvektor3 normiere   (const cvektor3 &pv);
@@ -541,7 +537,6 @@ cbasis3  operator | (const cbasis3 &pb1, const cbasis3 &pb2);
 
 //---------- cvektor4 Vektor Funktionen -----------------------------------------------------------------------------------------------
 
-real     norm     (const cvektor4 &pv);
 real     abs      (const cvektor4 &pv);
 cvektor4 senk     (const cvektor4 &pv);
 cvektor4 normiere (const cvektor4 &pv);
@@ -579,7 +574,7 @@ real     operator % (const cvektor4 &pv1, const cvektor4 &pv2);
 cvektor4 operator * (const cvektor4 &pv1, const cvektor4 &pv2);
 cvektor4 operator / (const cvektor4 &pv1, const cvektor4 &pv2);
 cvektor4 operator | (const cvektor4 &pv1, const cvektor4 &pv2);
-cvektor3 operator * (const cvektor4 &pq, const cvektor3 &pv);    // 3D-Vektor mit Drehquaternion drehen
+cvektor3 operator * (const cvektor4 &pq, const cvektor3 &pv);                   // 3D-Vektor mit Drehquaternion drehen
 
 //----------------------------- Operatoren für Heptanionen --------------------------------------------------------
 // Heptanionenmultiplikation

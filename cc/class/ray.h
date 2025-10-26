@@ -90,7 +90,7 @@ struct cstorus : public clschnitt
 
 //------------------------- Parametrisierungsobjekte -------------------------------------------------------------------------------------------------
 
-struct clpara                                                // abstraktes Parametrisierungsobjekt, von dem die konkreten Parametrisierungsobjekte abgeleitet sind
+struct clpara                                                     // abstraktes Parametrisierungsobjekt, von dem die konkreten Parametrisierungsobjekte abgeleitet sind
   {
   virtual cvektor2 berechne (const cvektor3 &pv)= 0;
   };
@@ -307,8 +307,8 @@ struct cwelt : public clmannig
   void dreheaugey (const real pwinkel);
   void dreheaugez (const real pwinkel);
   void dreheaugeachse (const real pwinkel);
-  void dreheaugenorm (const real pwinkel);
-  void dreheaugeein (const real pwinkel);   // auf Einheitsposition setzen
+  void dreheaugenorm (const real pwinkel);   // pwinkel ?
+  void dreheaugeein (const real pwinkel);    // auf Einheitsposition setzen
   void aktualisiere ();
 
   ckoerperliste  koerperliste;
