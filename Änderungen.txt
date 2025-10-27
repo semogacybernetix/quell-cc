@@ -287,13 +287,17 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-symflip Drehungen kaputt, reparieren
-quaternionentest auf andere floats als float80 flexibilisieren
+bewstep, drehstep Erhöhung auf 1/4 s begrenzen
+Zeitauflösung auf mehr als 1/100 s erhöhen
+neuer branch showsolutions
 Bereichstest für +-xl, yk, quadratische Gleichung12, x12  oder +-xl, yk, lag1+++, lag234 mit Helligkeit, Sättigung, Farbton
+
+symflip Drehungen fehlerhaft: reparieren
+quaternionentest auf andere floats als float80 flexibilisieren
 neues Threadverfahren entwickeln
 apfel thread
 Platform neu machen statt linux X86, AARCH, AMD64, ARM64, RISC-V
-Benchmarks für screen Geschwindigkeit, float Geschwindigkeit
+Benchmarks für xscreen Geschwindigkeit, fbscreen, float Geschwindigkeit
 printausgabe realzahlen mit Trennung 10er Gruppen, Binär, Hexadezimal
 
 Szenen Kreiskörper mit Torussen erstellen (Oktaeder, Kuboktaeder, Ikosidodekaeder, andere archimedische Körper)
