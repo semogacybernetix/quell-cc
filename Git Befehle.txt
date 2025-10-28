@@ -1,63 +1,79 @@
-Symflip
 
-github.com
-semoga@gmx.net
-Haus1530
+------------------------------------------------------------------------
+Git Konfigurationsdateien
+------------------------------------------------------------------------
 
-
-git clone
-
-Git konfigurieren
 /etc/gitconfig
 ~/.gitconfig
-
 .git/config im Repository
 
-git config --list --show-origin               alle Konfiguration mit den dazugehörigen Orten auflisten
+------------------------------------------------------------------------
+remote repository bearbeiten
+------------------------------------------------------------------------
 
-git remote -v                                 alle konfigurierten Remote-Repositorys anzeigen
+git remote -v                    alle konfigurierten Remote-Repositorys anzeigen
 
 git remote add symflip https://github.com/semogacybernetix/symflip                   remote repository zur Konfiguration hinzufügen
 
-git status                    Status abfragen
-
-git remote -v                 Verbindung herstellen
+git remote -v                    Verbindung herstellen
 git remote show
-git remote rename             Remote Repository in der Konfiguration umbenennen
-git remote remove symflip     Remote Repository aus der Konfiguration entfernen
-
+git remote rename                Remote Repository in der Konfiguration umbenennen
+git remote remove symflip        Remote Repository aus der Konfiguration entfernen
 
 ------------------------------------------------------------------------
 lokales repository anlegen
 ------------------------------------------------------------------------
 
 # userdaten anlegen
-git config --global user.name blauser
+git config --global user.name pc-bla
 git config --global user.email semoga@gmx.net
 git init                                       # leeres .git anlegen
 git add *                                      #rekursiv ganzen Verzeichnisbaum hinzufügen
-
 git remote
-
 git remote add origin https://github.com/semogacybernetix/symflip.git
 
 ------------------------------------------------------------------------
-Version vom lokalen Repository zum Remote-Repository hochladen
+neues lokales repository vom remote repository erzeugen
 ------------------------------------------------------------------------
 
-git commit -a                 Änderungen fixieren
-git push -u origin master     Änderungen hochladen
-
-git commit -m "Version ..."
+cd ~
+git clone https://github.com/semogacybernetix/quell-cc.git                           Verzeichnis quell-cc wird angelegt und die Dateien vom remote repository werden dorthin heruntergeladen
 
 ------------------------------------------------------------------------
-Version vom Remote Repository zum lokalen Repository runterladen
+vorhandenes lokales repository auf Stand des remote-repositorys aktualisieren
 ------------------------------------------------------------------------
 
-git fetch
+cd quell-cc
 git pull
+
+------------------------------------------------------------------------
+lokales Repository überprüfen
+------------------------------------------------------------------------
+
+git config --list --show-origin  alle Konfiguration mit den dazugehörigen Orten auflisten
+git config -l                    konfigurierte Daten ausgeben
+git status                       Aktualisierungszustand des repositorys anzeigen
+git log                          Chronik der commits mit ihren commit-ids anzeigen
+
+------------------------------------------------------------------------
+lokales repository auf ältere Version bringen ohne am remote repository etwas zu ändern
+------------------------------------------------------------------------
+
+git log                          commit id herausfinden
+git reset --hard commit-id
+
+------------------------------------------------------------------------
+remote repository auf den Stand des lokalen repositorys aktualisieren
+------------------------------------------------------------------------
+
+git add .                        geänderte Dateien zur staging Area hinzufügen
+git commit -m "commit text"      Dateien aus der staging area in einen commit bringen
+git push                         alle ausstehenden commits auf das remote repository übertragen
 
 ------------------------------------------------------------------------
 allgemeine Befehle
 ------------------------------------------------------------------------
+
+git reset --staged               Dateien aus der staging area entfernen
+git commit --amend               Text des letzten commits ändern
 
