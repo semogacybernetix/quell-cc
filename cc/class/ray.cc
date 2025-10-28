@@ -108,7 +108,7 @@ void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
 
 // ---------------------------- zweischaliges Hyperboloid, Kegel, einschaliges Hyperboloid -----------------------------------------------
 
-cshyper::cshyper (const real &pf)    // dieser Wert wählt zwischen den Körpern aus (-1, 0, 1)
+cshyper::cshyper (const real &pf)                                 // dieser Wert wählt zwischen den Körpern aus (-1, 0, 1)
   {
   f= pf;
   ov= cvektor3 (0, 0, 0);
@@ -267,11 +267,11 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   proyz= rv.y*ov.z*rv.z*ov.y;
   prozx= rv.z*ov.x*rv.x*ov.z;
 
-  A= rxq*rxq + ryq*ryq + rzq*rzq + 2*(rxry*rxry + ryrz*ryrz + rzrx*rzrx);
-  B= 4*(rxq*rxox + ryq*ryoy + rzq*rzoz + rxry*sroxy + ryrz*sroyz + rzrx*srozx);
-  C= 2*(rq1*rvq + sroxy*sroxy + sroyz*sroyz + srozx*srozx + 2*(proxy + proyz + prozx - rxq - ryq) + 3*(rxq*oxq + ryq*oyq + rzq*ozq));
-  D= 4*(rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - 2*(rxox + ryoy));
-  E= rq1*(rq1 + 2*ovq) + oxq*oxq + oyq*oyq + ozq*ozq + 2*(oxoy*oxoy + oyoz*oyoz + ozox*ozox) - 4*(oxq + oyq);
+  A= rxq*rxq + ryq*ryq + rzq*rzq + (rxry*rxry + ryrz*ryrz + rzrx*rzrx)*2;
+  B= (rxq*rxox + ryq*ryoy + rzq*rzoz + rxry*sroxy + ryrz*sroyz + rzrx*srozx)*4;
+  C= (rq1*rvq + sroxy*sroxy + sroyz*sroyz + srozx*srozx + (proxy + proyz + prozx - rxq - ryq)*2 + (rxq*oxq + ryq*oyq + rzq*ozq)*3)*2;
+  D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
+  E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
   quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
@@ -393,7 +393,7 @@ cvektor2 cpararpara::berechne (const cvektor3 &pv)
   }
 
 //----------- Torus signed ----------------------------
-/*
+//*
 cvektor2 cparatorus::berechne (const cvektor3 &pv)
   {
   cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));
@@ -403,9 +403,9 @@ cvektor2 cparatorus::berechne (const cvektor3 &pv)
     else
     return cvektor2 (atan2r (pv.y, pv.x), -wi);
   }
-*/
+//*/
 //----------- Torus unsigned ----------------------------
-
+/*
 cvektor2 cparatorus::berechne (const cvektor3 &pv)
   {
   cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));
@@ -415,7 +415,7 @@ cvektor2 cparatorus::berechne (const cvektor3 &pv)
     else
     return cvektor2 (PI + atan2r (pv.y, pv.x), PI*2 - wi);
   }
-
+//*/
 // ************************************************************************** Begrenzungsobjekte *******************************************************************************************************************************************
 
 // -------------------- keine Begrenzung ------------------------------------
@@ -499,9 +499,9 @@ clmannig::clmannig ()
 
 cvektor3 clmannig::getpixel (const cvektor2 &pv)
   {
-//  return getpunkt (pv);
+  //return getpunkt (pv);
   return cvektor3 (255,255,0);
-  while (pv.x != pv.x);                            // pv benutzen
+  while (pv.x != pv.x);                                           // pv benutzen
   }
 
 cvektor3 clmannig::getpixel16 (const cvektor2 &pv)
@@ -514,7 +514,7 @@ cvektor3 clmannig::getpixel16 (const cvektor2 &pv)
     xm= pv.x - 1;
     for (integer xl= 0; xl < 4; xl++)
       {
-//      sum= sum + getpunkt (cvektor2 (real (xm + drand48 ()/4), real (ym + drand48 ()/4)));
+      //sum= sum + getpunkt (cvektor2 (real (xm + drand48 ()/4), real (ym + drand48 ()/4)));
       sum= sum + getpunkt (cvektor2 (real (xm), real (ym)));
       xm= xm + real (0.25);
       }
@@ -535,7 +535,7 @@ cmonochrom::cmonochrom (const cvektor3 &pfarbe)
 cvektor3 cmonochrom::getpunkt (const cvektor2 &pv)
   {
   return farbe;
-  while (pv.x != pv.x);  // pv benutzen, weil sonst der Compiler meckert
+  while (pv.x != pv.x);                                           // pv benutzen, weil sonst der Compiler meckert
   }
 
 //------------------------- Schachfeld ---------------------------------
@@ -720,7 +720,8 @@ cvektor3 cwelt::getpunkt (const cvektor2 &pv)
     // Richtungsvektor ermitteln
     cvektor3 transrich= koerperliste.koerper[klauf]->transbasis*sv;
 
-    // Schnittpunkt berechnen
+    // Schnittpunkt von der Schnittpunktberechnungsroutine des Körpers berechnen lassen und in Schnittpunkte eintragen lassen
+    // Die Schnittpunktroutine darf den Schnittpunkt nur eintragen, wenn er vor dem Auge liegt (schnittpunkte.abstand > 0)
     koerperliste.koerper[klauf]->schnitt->berechne (transrich, schnittpunkte);
 
     // Mannigfaltigkeit begrenzen (Schnittpunkte ausserhalb der Grenzen als nicht sichtbar markieren)
@@ -867,8 +868,8 @@ void cpunktscreen::fuelle (clmannig &pmannig)
   for (integer ny= 0; ny < yanz; ++ny)
     for (integer nx= 0; nx < xanz; ++nx)
       {
-//      vbild[ny*xanz + nx].pos.x= real (real (nx) + xoff + drand48 ());
-//      vbild[ny*xanz + nx].pos.y= real (real (ny) + yoff + drand48 ());
+      //vbild[ny*xanz + nx].pos.x= real (real (nx) + xoff + drand48 ());
+      //vbild[ny*xanz + nx].pos.y= real (real (ny) + yoff + drand48 ());
       vbild[ny*xanz + nx].pos.x= real (real (nx) + xoff);
       vbild[ny*xanz + nx].pos.y= real (real (ny) + yoff);
       vbild[ny*xanz + nx].farbe= pmannig.getpunkt (vbild[ny*xanz + nx].pos);
