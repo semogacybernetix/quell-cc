@@ -14,8 +14,6 @@ winkelachse von 180° Drehungen: welche der beiden Achsen soll zurückgegeben we
 #include "vektor.h"
 #include "../../conio/vektorcon.h"     // zum Debuggen
 
-real vquant= real (1e-8);
-
 //------------------------------------------- Schnittpunkte Klasse ---------------------------------------------------------
 cschnittpunkte::cschnittpunkte ()
   {
@@ -1029,10 +1027,7 @@ cvektor3 senk (const cvektor3 &pv)
 
 cvektor3 normiere (const cvektor3 &pv)
   {
-  real l= pv%pv;
-  if (l <= vquant)
-    return cvektor3 (0, 0, 0);                                    // (0, 0,0) oder (1, 1, 1) ?
-  return pv/l;
+  return pv/sqrtr (pv%pv);
   }
 
 cvektor3 orientiere (const cvektor3 &pv)                          // erster von 0 verschiedener Wert wird positiv gesetzt
@@ -1040,17 +1035,17 @@ cvektor3 orientiere (const cvektor3 &pv)                          // erster von 
   cvektor3 ret (pv);
   if (ret.x < 0)
     ret= -ret;
-  if (fabsr (ret.x) <= vquant)
+  if (fabsr (ret.x) <= quantr)
     {
     ret.x= 0;
     if (ret.y < 0)
       ret= -ret;
-    if (fabsr (ret.y) <= vquant)
+    if (fabsr (ret.y) <= quantr)
       {
       ret.y= 0;
       if (ret.z < 0)
         ret= -ret;
-      if (fabsr (ret.z) <= vquant)
+      if (fabsr (ret.z) <= quantr)
         ret.z= 0;
       }
     }
@@ -1059,28 +1054,12 @@ cvektor3 orientiere (const cvektor3 &pv)                          // erster von 
 
 real winkelb (const cvektor3 &pv1, const cvektor3 &pv2)           // Betrag des Winkels zwischen 2 Vektoren ermitteln, Ergebnis: [0..pi]
   {
-  real nenner ((pv1%pv1)*(pv2%pv2));
-  if (nenner <= vquant)
-    return 0;
-  real cw= (pv1%pv2)/sqrtr (nenner);
-  if (cw >= 1)
-    return 0;
-  if (cw <= -1)
-    return PI;
-  return acosr (cw);
+  return acosr ((pv1%pv2)/sqrtr ((pv1%pv1)*(pv2%pv2)));
   }
 
 real winkelg (const cvektor3 &pv1, const cvektor3 &pv2)           // Betrag des Winkels zwischen 2 Geraden ermitteln, Ergebnis: [0..pi/2]
   {
-  real nenner (abs (pv1)*abs (pv2));
-  if (nenner <= vquant)
-    return 0;
-  real cw= (pv1%pv2)/nenner;
-  if (cw < 0)
-    cw= -cw;
-  if (cw >= 1)
-    return 0;
-  return acosr (cw);
+  return acosr (fabsr ((pv1%pv2)/sqrtr ((pv1%pv1)*(pv2%pv2))));
   }
 
 //---------- cvektor3 Operatoren ------------------------------------------------------------------------------------------
@@ -1241,7 +1220,7 @@ cbasis3 getrotz (const real &pf)
 // Spiegelungsmatrix direkt berechnen
 cbasis3 getspiegbasis (const cvektor3 &pv)
   {
-  if (abs (pv) <= vquant)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
+  if (abs (pv) <= quantr)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
     return cbasis3 (-1);
   cvektor3 nv= normiere (pv);
   return cbasis3 (1) - 2*cbasis3 (nv, nv, nv)*cbasis3 (nv);
@@ -1250,7 +1229,7 @@ cbasis3 getspiegbasis (const cvektor3 &pv)
 // Spiegelungsmatrix aus (Drehung von 180° um Spiegelachse) berechnen
 cbasis3 getdrehspiegbasis (const cvektor3 &pv)
   {
-  if (abs (pv) <= vquant)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
+  if (abs (pv) <= quantr)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
     return cbasis3 (-1);
   return -matrixfromwinkelachse (cvektor4 (PI, pv.x, pv.y, pv.z));
   }
@@ -1263,7 +1242,7 @@ cvektor3 getspiegachse (const cbasis3 &pb)
 integer aehnlich (const cbasis3 &pb1, const cbasis3 &pb2)
   {
   real dif= abs (pb1 - pb2);
-  if (dif <= vquant)
+  if (dif <= quantr)
     return 1;
   return 0;
   }
@@ -1347,7 +1326,7 @@ cvektor4 senk (const cvektor4 &pv)
 cvektor4 normiere (const cvektor4 &pv)
   {
   const real q= pv%pv;
-  if (q <= vquant)
+  if (q <= quantr)
     return cvektor4 (0, 0, 0, 0);
   return pv/sqrtr (q);
   }
@@ -1361,7 +1340,7 @@ cvektor4 operator ~ (const cvektor4 &pv)
 integer aehnlich (const cvektor4 &pv1, const cvektor4 &pv2)
   {
   real dif= abs (pv1 - pv2);
-  if (dif <= vquant)
+  if (dif <= quantr)
     return 1;
   return 0;
   }
@@ -1514,17 +1493,17 @@ cvektor4 quaternionfromwinkelachse (const cvektor4 pwa)
 
 cvektor4 winkelachsefromquaternion (const cvektor4 pq)
   {
-  if (pq.r >= 1 - vquant)
+  if (pq.r >= 1 - quantr)
     return cvektor4 (0, 0, 0, 0);
-  if (pq.r <= -1 + vquant)
+  if (pq.r <= -1 + quantr)
     return cvektor4 (2*PI, 0, 0, 0);
   real drehw= acosr (pq.r)*2;
   cvektor3 achse (normiere (cvektor3 (pq.i, pq.j, pq.ij)));
-  if (fabsr (achse.x) <= vquant)
+  if (fabsr (achse.x) <= quantr)
     achse.x= 0;
-  if (fabsr (achse.y) <= vquant)
+  if (fabsr (achse.y) <= quantr)
     achse.y= 0;
-  if (fabsr (achse.z) <= vquant)
+  if (fabsr (achse.z) <= quantr)
     achse.z= 0;
   return cvektor4 (drehw, achse.x, achse.y, achse.z);
   }
@@ -1535,7 +1514,7 @@ cvektor4 qwafrommatrix (const cbasis3 &pdreh)                     // nur für Dr
 
   // ********************* Realteil direkt aus der Matrix berechnen, Problem bei 0° und 180° Drehungen abfangen
   real qr= 1 + pdreh.x.x + pdreh.y.y + pdreh.z.z;                 // qr [4..0] = [0..180]°
-  if (qr >= 4 - vquant)             //   0° Drehung
+  if (qr >= 4 - quantr)             //   0° Drehung
     return cvektor4 (1, 0, 0, 0);
 
   // ********************* Drehachse durch Eigenwerte berechnen, Eigenvektor numerisch stabil, Länge: [5 1/3 bis 16]
@@ -1546,7 +1525,7 @@ cvektor4 qwafrommatrix (const cbasis3 &pdreh)                     // nur für Dr
   cvektor3 drehachse (geteigen (hdreh));
 
   // Drehachse richtig orientieren
-  if (qr <= vquant)                                               // 180° Drehung: Es gibt 2 Drehachsen statt nur einer
+  if (qr <= quantr)                                               // 180° Drehung: Es gibt 2 Drehachsen statt nur einer
     {
     qr= 0;
     drehachse= orientiere (drehachse);                            // bei 180° Drehung Achse mit positven ersten von 0 verschiedenem Wert aussuchen. (besser kleinste Anzahl von Minuszeichen)
@@ -1569,11 +1548,11 @@ cvektor4 winkelachsefrommatrix (const cbasis3 &pdreh)             // Bei Drehspi
     qwa= qwafrommatrix (pdreh);
     else
     qwa= qwafrommatrix (-pdreh);
-  if (fabsr (qwa.i) <= vquant)
+  if (fabsr (qwa.i) <= quantr)
     qwa.i= 0;
-  if (fabsr (qwa.j) <= vquant)
+  if (fabsr (qwa.j) <= quantr)
     qwa.j= 0;
-  if (fabsr (qwa.ij) <= vquant)
+  if (fabsr (qwa.ij) <= quantr)
     qwa.ij= 0;
   cvektor3 achse (qwa.i, qwa.j, qwa.ij);
   achse= normiere (achse);
@@ -1596,7 +1575,7 @@ cbasis3  matrixfromwinkelachse (const cvektor4 pq)
 cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)              // Funktioniert bei 0° und 180° Drehungen
   {
   cvektor4 qwa (qwafrommatrix (pdreh));                           // Mehrdeutigkeit der Achse bei 180° Drehungen
-  if (qwa.r >= 1 - vquant)      // Drehung ist 0° Drehung
+  if (qwa.r >= 1 - quantr)      // Drehung ist 0° Drehung
     return qwa;                // 1 zurückgeben
   cvektor3 achse (cvektor3 (qwa.i, qwa.j, qwa.ij));
   real k= sqrtr (1 - qwa.r*qwa.r)/abs (achse);
@@ -1606,7 +1585,7 @@ cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)              // Funktionier
 cvektor4 quaternionfrommatrix2 (const cbasis3 &pdreh)             // Kreuzproduktversion: versagt bei 180° Drehungen
   {
   real qr= sqrtr (1 + pdreh.x.x + pdreh.y.y + pdreh.z.z);
-  if (qr <= vquant)                                               // 180° Drehung
+  if (qr <= quantr)                                               // 180° Drehung
     return cvektor4 (0, 1, 0, 0);                                 // Bullshit zurückgeben
   real qi= (pdreh.y.z - pdreh.z.y)/qr;
   real qj= (pdreh.z.x - pdreh.x.z)/qr;
@@ -1659,7 +1638,7 @@ cvektor3 eulerwinkelfrommatrix (const cbasis3& pdm)
 
   // Längengrad- und Rollberechnung
   real cosbr= cosr (breite);
-  if (cosbr > vquant)  // Breite nicht polar
+  if (cosbr > quantr)  // Breite nicht polar
     {
     // Längengradberechnung
     vl= pdm.z.z/cosbr;
@@ -1683,7 +1662,7 @@ cvektor3 eulerwinkelfrommatrix (const cbasis3& pdm)
     if (pdm.x.y > 0)
       roll= -roll;
     }
-  if (cosbr <= vquant)  // Spezialfall Breite polar
+  if (cosbr <= quantr)  // Spezialfall Breite polar
     {
     vl= pdm.x.x;
     if (fabsr (vl) < 1)

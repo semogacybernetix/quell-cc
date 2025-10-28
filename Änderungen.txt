@@ -284,7 +284,9 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.23 Do  16:20 _Float16 entfernt weil nicht auf raspi5 raspian vorhanden, 16:35
 2025.10.24 Fr  6:47, quaterniontest für float80 gefixt, ray.cc Parametrisierungen Namen auf Konsistenz gebracht, symflip Kompilierungsfehler beseitigt, 9:34
 2025.10.26 So  8:00, norm von Vektoren entfernt, durch Produkt ersetzt, Kommentare Einrückung homogenisiert, korrigiert, 10:41
-2025.10.27 Mo  20:40, Torusformel Faktoren hinten angehangen, xl=0 aus kubischer Resolvente bei quartischintr Routinen entfernt, harter Parametrisierungsfehler beim Torus, 1:32, 6:10 
+2025.10.27 Mo  20:40, Torusformel Faktoren hinten angehangen, xl=0 aus kubischer Resolvente bei quartischintr Routinen entfernt, harter Parametrisierungsfehler beim Torus, 1:32
+2025.10.28 Mo  6:10, Parametrisierungsfehler Torus gesucht, checkouts rückwärts durchgegangen, Torus getestet, dann die beiden Versionen wo es geht, nicht mehr geht mit beyond compare verglichen,
+               Fehler gefunden: /sqrtr (l) in normiere (v3) sqrtr vergessen, 8:46
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

@@ -393,7 +393,7 @@ cvektor2 cpararpara::berechne (const cvektor3 &pv)
   }
 
 //----------- Torus signed ----------------------------
-//*
+/*
 cvektor2 cparatorus::berechne (const cvektor3 &pv)
   {
   cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));
@@ -403,9 +403,9 @@ cvektor2 cparatorus::berechne (const cvektor3 &pv)
     else
     return cvektor2 (atan2r (pv.y, pv.x), -wi);
   }
-//*/
+/*/
 //----------- Torus unsigned ----------------------------
-/*
+
 cvektor2 cparatorus::berechne (const cvektor3 &pv)
   {
   cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));
@@ -415,7 +415,7 @@ cvektor2 cparatorus::berechne (const cvektor3 &pv)
     else
     return cvektor2 (PI + atan2r (pv.y, pv.x), PI*2 - wi);
   }
-//*/
+
 // ************************************************************************** Begrenzungsobjekte *******************************************************************************************************************************************
 
 // -------------------- keine Begrenzung ------------------------------------
