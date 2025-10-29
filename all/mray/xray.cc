@@ -141,16 +141,22 @@ void addtorus (cwelt& pwelt)
 
   // Körperlagen
   cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
+  cbasis3 kl2 (cvektor3 (0,0,100), cvektor3 (0,100,0), cvektor3 (100,0,0));
+  cbasis3 kl3 (cvektor3 (0,100,0), cvektor3 (100,0,0), cvektor3 (0,0,100));
   //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,400), cvektor3 (0,25,0));          // flacher Ellipsentorus
 
   // Texturen
   cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 80/PI, 10/PI);
+  cschachfeld* textur2= new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,255,0), 80/PI, 10/PI);
+  cschachfeld* textur3= new cschachfeld (cvektor3 (255,127,0), cvektor3 (0,255,255), 80/PI, 10/PI);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 800/PI, 20/PI);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/15);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
 
   // Körper
   ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
+  ckoerper* koerper2= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur2, kst1, kl2);
+  ckoerper* koerper3= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur3, kst1, kl3);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.0125)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/sechseck1024.jpg"), real (8/PI), real (1/PI)), kst1, kl1);
@@ -167,6 +173,8 @@ void addtorus (cwelt& pwelt)
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
+  pwelt.addkoerper (koerper2);
+  pwelt.addkoerper (koerper3);
 
   // Augposition setzen
   pwelt.setzeposition (cvektor3 (0, 100, -300));
@@ -174,12 +182,13 @@ void addtorus (cwelt& pwelt)
 
 void fliegethread ()
   {
-  cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  //cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
   //cwelt* welt= new cwelt (900, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  cwelt* welt= new cwelt (1500, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450));
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450));
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1600, 900));
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450));
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1900, 1000));
 
   flugsimu.setframerate (real (20.0));
   flugsimu.threadanz= 12;
