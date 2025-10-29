@@ -287,6 +287,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.27 Mo  20:40, Torusformel Faktoren hinten angehangen, xl=0 aus kubischer Resolvente bei quartischintr Routinen entfernt, harter Parametrisierungsfehler beim Torus, 1:32
 2025.10.28 Di  6:10, Parametrisierungsfehler Torus gesucht, checkouts rückwärts durchgegangen, Torus getestet, dann die beiden Versionen wo es geht, nicht mehr geht mit beyond compare verglichen,
                Fehler gefunden: /sqrtr (l) in normiere (v3) sqrtr vergessen, Git Befehle aktualisiert, 9:45
+2025.10.29 Mi  14:03, ytk in kubischreellteil von quartischintr Routinen eingefügt, kubischreellc und u erstellt, linearfaktoren kubischreellu,c eingefügt, quartischintr Routinen Lösungen der Größe nach sortiert, 16:51
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
