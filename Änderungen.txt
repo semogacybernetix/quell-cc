@@ -288,12 +288,13 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.10.28 Di  6:10, Parametrisierungsfehler Torus gesucht, checkouts rückwärts durchgegangen, Torus getestet, dann die beiden Versionen wo es geht, nicht mehr geht mit beyond compare verglichen,
                Fehler gefunden: /sqrtr (l) in normiere (v3) sqrtr vergessen, Git Befehle aktualisiert, 9:45
 2025.10.29 Mi  14:03, ytk in kubischreellteil von quartischintr Routinen eingefügt, kubischreellc und u erstellt, linearfaktoren kubischreellu,c eingefügt, quartischintr Routinen Lösungen der Größe nach sortiert, 16:51
+
+2025.11.01 Sa  13:39, x3,x4 in quartischintr Routinen verwendet, kubische Resolventenfärbungen, Lösungsfärbungen implementiert,
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 bewstep, drehstep Erhöhung auf 1/4 s begrenzen
 Zeitauflösung auf mehr als 1/100 s erhöhen
-neuer branch showsolutions
 Bereichstest für +-xl, yk, quadratische Gleichung12, x12  oder +-xl, yk, lag1+++, lag234 mit Helligkeit, Sättigung, Farbton
 
 symflip Drehungen fehlerhaft: reparieren

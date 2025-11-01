@@ -2182,7 +2182,7 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
 
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, b1, b2, aq4, D, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, b1, b2, aq4, D, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2240,18 +2240,18 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   if (uq >= b2)
     {
     D= sqrtr (uq - b2);
-    x1= aq4 + u - D;
-    x2= aq4 + u + D;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
+    x3= aq4 + u - D;
+    x4= aq4 + u + D;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
     }
   }
 
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, z, v, u, uq, b1, b2, aq4, D, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, z, v, u, uq, b1, b2, aq4, D, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2308,18 +2308,18 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   if (uq >= b2)
     {
     D= sqrtr (uq - b2);
-    x1= aq4 - u - D;
-    x2= aq4 - u + D;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
+    x3= aq4 - u - D;
+    x4= aq4 - u + D;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
     }
   }
 
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2387,18 +2387,18 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   if (uq >= b2)
     {
     D= sqrtr (uq - b2);
-    x1= aq4 + u - D;
-    x2= aq4 + u + D;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
+    x3= aq4 + u - D;
+    x4= aq4 + u + D;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
     }
   }
 
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2;
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2465,12 +2465,12 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (uq >= b2)
     {
     D= sqrtr (uq - b2);
-    x1= aq4 + u - D;
-    x2= aq4 + u + D;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
+    x3= aq4 + u - D;
+    x4= aq4 + u + D;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
     }
   }
 
