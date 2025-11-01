@@ -289,7 +289,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
                Fehler gefunden: /sqrtr (l) in normiere (v3) sqrtr vergessen, Git Befehle aktualisiert, 9:45
 2025.10.29 Mi  14:03, ytk in kubischreellteil von quartischintr Routinen eingefügt, kubischreellc und u erstellt, linearfaktoren kubischreellu,c eingefügt, quartischintr Routinen Lösungen der Größe nach sortiert, 16:51
 
-2025.11.01 Sa  13:39, x3,x4 in quartischintr Routinen verwendet, kubische Resolventenfärbungen, Lösungsfärbungen implementiert,
+2025.11.01 Sa  13:39, x3,x4 in quartischintr Routinen verwendet, kubische Resolventenfärbungen, Lösungsfärbungen in allen quartischintr Routinen implementiert, 18:25
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
