@@ -642,7 +642,29 @@ void ckoerper::begrenze (const cvektor3 &ptransrich, const integer pnr, cschnitt
 
 cvektor3 ckoerper::faerbe (const integer pnr, cschnittpunkte &psp)
   {
-  return mannig->getpunkt (psp.mannigpos[pnr]);
+  cvektor3 endfarbe;
+  endfarbe= mannig->getpunkt (psp.mannigpos[pnr]);
+
+//*
+  if (psp.resweg[pnr] == 1)
+    endfarbe= (endfarbe + cvektor3 (255, 0, 0))/2;
+  if (psp.resweg[pnr] == 2)
+    endfarbe= (endfarbe + cvektor3 (0, 255, 0))/2;
+  if (psp.resweg[pnr] == 3)
+    endfarbe= (endfarbe + cvektor3 (0, 0, 255))/2;
+//*/
+
+/*
+  if (psp.quartweg[pnr] == 1)
+    endfarbe= (endfarbe + 3*cvektor3 (255, 0, 0))/4;
+  if (psp.quartweg[pnr] == 2)
+    endfarbe= (endfarbe + 3*cvektor3 (255, 127, 0))/4;
+  if (psp.quartweg[pnr] == 3)
+    endfarbe= (endfarbe + 3*cvektor3 (0, 255, 0))/4;
+  if (psp.quartweg[pnr] == 4)
+    endfarbe= (endfarbe + 3*cvektor3 (0, 255, 255))/4;
+//*/
+  return endfarbe;
   }
 
 void ckoerper::aktualisiere ()
