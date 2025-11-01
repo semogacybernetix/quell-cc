@@ -273,11 +273,11 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
-  quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
-  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
+  quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);
 
 /*
@@ -645,7 +645,7 @@ cvektor3 ckoerper::faerbe (const integer pnr, cschnittpunkte &psp)
   cvektor3 endfarbe;
   endfarbe= mannig->getpunkt (psp.mannigpos[pnr]);
 
-//*
+/*
   if (psp.resweg[pnr] == 1)
     endfarbe= (endfarbe + cvektor3 (255, 0, 0))/2;
   if (psp.resweg[pnr] == 2)
@@ -654,15 +654,19 @@ cvektor3 ckoerper::faerbe (const integer pnr, cschnittpunkte &psp)
     endfarbe= (endfarbe + cvektor3 (0, 0, 255))/2;
 //*/
 
-/*
+//*
   if (psp.quartweg[pnr] == 1)
     endfarbe= (endfarbe + 3*cvektor3 (255, 0, 0))/4;
   if (psp.quartweg[pnr] == 2)
     endfarbe= (endfarbe + 3*cvektor3 (255, 127, 0))/4;
   if (psp.quartweg[pnr] == 3)
-    endfarbe= (endfarbe + 3*cvektor3 (0, 255, 0))/4;
-  if (psp.quartweg[pnr] == 4)
     endfarbe= (endfarbe + 3*cvektor3 (0, 255, 255))/4;
+  if (psp.quartweg[pnr] == 4)
+    endfarbe= (endfarbe + 3*cvektor3 (127, 0, 255))/4;
+  if (psp.quartweg[pnr] == 5)
+    endfarbe= (endfarbe + 3*cvektor3 (0, 0, 0))/4;
+  if (psp.quartweg[pnr] == 6)
+    endfarbe= (endfarbe + 3*cvektor3 (255, 255, 255))/4;
 //*/
   return endfarbe;
   }

@@ -144,7 +144,7 @@ void addtorus (cwelt& pwelt)
   //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,400), cvektor3 (0,25,0));          // flacher Ellipsentorus
 
   // Texturen
-  cschachfeld* textur1= new cschachfeld (cvektor3 (100,100,100), cvektor3 (200,200,200), 80/PI, 10/PI);
+  cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 80/PI, 10/PI);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 800/PI, 20/PI);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/15);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
@@ -172,7 +172,7 @@ void addtorus (cwelt& pwelt)
   pwelt.setzeposition (cvektor3 (0, 100, -300));
   }
 
-void addoktaeder (cwelt& pwelt)
+void addtorusoktaeder (cwelt& pwelt)
   {
   // Körperstandpunkte
   cvektor3 kst1 (0,0,0);
@@ -221,11 +221,11 @@ void addoktaeder (cwelt& pwelt)
 void fliegethread ()
   {
   //cwelt* welt= new cwelt (450, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
-  //cwelt* welt= new cwelt (900, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
-  cwelt* welt= new cwelt (1000, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  cwelt* welt= new cwelt (1200, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
+  //cwelt* welt= new cwelt (1920, cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450));
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1000, 500));
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1200, 700));
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080));
 
   flugsimu.setframerate (real (20.0));

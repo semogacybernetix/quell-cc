@@ -2182,7 +2182,7 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
 
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, b1, b2, aq4, D, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, b1, b2, aq4, D, x1, x2, x3, x4;
   integer resweg;
 
   // Parameter reduzierte quartische Gleichung
@@ -2256,26 +2256,27 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   if (uq >= b2)
     {
     D= sqrtr (uq - b2);
-    x1= aq4 + u - D;
-    x2= aq4 + u + D;
-    if (x1 > 0)
+    x3= aq4 + u - D;
+    x4= aq4 + u + D;
+    if (x3 > 0)
       {
       psp.resweg[psp.anz]= resweg;
       psp.quartweg[psp.anz]= 3;
-      psp.add (x1);
+      psp.add (x3);
       }
-    if (x2 > 0)
+    if (x4 > 0)
       {
       psp.resweg[psp.anz]= resweg;
       psp.quartweg[psp.anz]= 4;
-      psp.add (x2);
+      psp.add (x4);
       }
     }
   }
 
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, z, v, u, uq, b1, b2, aq4, D, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, z, v, u, uq, b1, b2, aq4, D, x1, x2, x3, x4;
+  integer resweg;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2295,16 +2296,23 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     {
     //vxl= sqrtr (xl);                                              // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
     //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                  // außerdem zusätzliche Stern-Artefakte beim Torus
-    if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+    if (qk >= 0)
+      {                                                           // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytk= cbrtr (qk + sqrtr (xl));
+      resweg= 1;
+      }
       else
+      {
       ytk= cbrtr (qk - sqrtr (xl));                               // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      resweg= 2;
+      }
     yk= (ytk - pk/ytk)/2;                                         // ytk = 0 ausgeschlossen, da Auslöschung verhindert
     }
     else                                                          // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (-pk);
     yk= l*cosr (acosr (qk/(pk*-l))/3);                            // pk*l = 0 garnicht, qk/(pk*l) > 1 sehr selten, qk/(pk*l) < -1 garnicht
+    resweg= 3;
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -2325,25 +2333,42 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     x1= aq4 + u - D;
     x2= aq4 + u + D;
     if (x1 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 1;
       psp.add (x1);
+      }
     if (x2 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 2;
       psp.add (x2);
+      }
     }
   if (uq >= b2)
     {
     D= sqrtr (uq - b2);
-    x1= aq4 - u - D;
-    x2= aq4 - u + D;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
+    x3= aq4 - u - D;
+    x4= aq4 - u + D;
+    if (x3 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 3;
+      psp.add (x3);
+      }
+    if (x4 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 4;
+      psp.add (x4);
+      }
     }
   }
 
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2, x3, x4;
+  integer resweg;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2363,16 +2388,23 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     {
     //vxl= sqrtr (xl);                                              // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
     //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                  // außerdem zusätzliche Stern-Artefakte beim Torus
-    if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+    if (qk >= 0)
+      {                                                           // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytk= cbrtr (qk + sqrtr (xl));
+      resweg= 1;
+      }
       else
+      {
       ytk= cbrtr (qk - sqrtr (xl));                               // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      resweg= 2;
+      }
     yk= (ytk - pk/ytk)/2;                                         // ytk = 0 ausgeschlossen, da Auslöschung verhindert
     }
     else                                                          // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (-pk);
     yk= l*cosr (acosr (qk/(pk*-l))/3);                            // pk*l = 0 garnicht, qk/(pk*l) > 1 sehr selten, qk/(pk*l) < -1 garnicht
+    resweg= 3;
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -2404,25 +2436,42 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     x1= aq4 - u - D;
     x2= aq4 - u + D;
     if (x1 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 1;
       psp.add (x1);
+      }
     if (x2 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 2;
       psp.add (x2);
+      }
     }
   if (uq >= b2)
     {
     D= sqrtr (uq - b2);
-    x1= aq4 + u - D;
-    x2= aq4 + u + D;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
+    x3= aq4 + u - D;
+    x4= aq4 + u + D;
+    if (x3 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 3;
+      psp.add (x3);
+      }
+    if (x4 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 4;
+      psp.add (x4);
+      }
     }
   }
 
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2;
+  real aqq, pq, qq, rq, pqq, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2, x3, x4;
+  integer resweg;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2440,17 +2489,24 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (xl >= 0)                                                    // 2 oder 0 Schnittpunkte mit dem Torus
     {
     //vxl= sqrtr (xl);                                              // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
-    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl));                    // außerdem zusätzliche Stern-Artefakte beim Torus
-    if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl));                  // außerdem zusätzliche Stern-Artefakte beim Torus
+    if (qk >= 0)
+      {                                                           // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytk= cbrtr (qk + sqrtr (xl));
+      resweg= 1;
+      }
       else
+      {
       ytk= cbrtr (qk - sqrtr (xl));                               // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-    yk= (ytk - pk/ytk);                                           // ytk = 0 ausgeschlossen, da Auslöschung verhindert
+      resweg= 2;
+      }
+    yk= (ytk - pk/ytk);                                         // ytk = 0 ausgeschlossen, da Auslöschung verhindert
     }
     else                                                          // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (-pk);
-    yk= l*cosr (acosr (qk/(pk*-l))/3)*2;                          // pk*l = 0 garnicht, qk/(pk*l) > 1 sehr selten, qk/(pk*l) < -1 garnicht
+    yk= l*cosr (acosr (qk/(pk*-l))/3)*2;                            // pk*l = 0 garnicht, qk/(pk*l) > 1 sehr selten, qk/(pk*l) < -1 garnicht
+    resweg= 3;
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -2482,19 +2538,35 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     x1= aq4 - u - D;
     x2= aq4 - u + D;
     if (x1 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 1;
       psp.add (x1);
+      }
     if (x2 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 2;
       psp.add (x2);
+      }
     }
   if (uq >= b2)
     {
     D= sqrtr (uq - b2);
-    x1= aq4 + u - D;
-    x2= aq4 + u + D;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
+    x3= aq4 + u - D;
+    x4= aq4 + u + D;
+    if (x3 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 3;
+      psp.add (x3);
+      }
+    if (x4 > 0)
+      {
+      psp.resweg[psp.anz]= resweg;
+      psp.quartweg[psp.anz]= 4;
+      psp.add (x4);
+      }
     }
   }
 
@@ -2552,9 +2624,17 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
 
     // die reell-positiven Lösungen an den Schnittpunktspeicher übergeben
     if (xr1 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 5;
       psp.add (xr1);
+      }
     if (xr2 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 6;
       psp.add (xr2);
+      }
     }
     else
     {
@@ -2596,13 +2676,29 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
 
     // positive Lösungen an den Schnittpunktspeicher übergeben
     if (xr1 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 1;
       psp.add (xr1);
+      }
     if (xr2 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 2;
       psp.add (xr2);
+      }
     if (xr3 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 3;
       psp.add (xr3);
+      }
     if (xr4 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 4;
       psp.add (xr4);
+      }
     }
   }
 
@@ -2661,9 +2757,17 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
 
     // die reell-positiven Lösungen an den Schnittpunktspeicher übergeben
     if (xr1 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 5;
       psp.add (xr1);
+      }
     if (xr2 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 6;
       psp.add (xr2);
+      }
     }
     else
     {
@@ -2705,13 +2809,29 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
 
     // positive Lösungen an den Schnittpunktspeicher übergeben
     if (xr1 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 1;
       psp.add (xr1);
+      }
     if (xr2 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 2;
       psp.add (xr2);
+      }
     if (xr3 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 3;
       psp.add (xr3);
+      }
     if (xr4 > 0)
+      {
+      psp.resweg[psp.anz]= 1;
+      psp.quartweg[psp.anz]= 4;
       psp.add (xr4);
+      }
     }
   }
 
