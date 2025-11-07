@@ -784,25 +784,10 @@ void kubischeingabezw ()
   vektor2eingabek (x3);
 
 //  kubischzwischenwerte (x1, x2, x3);
-//  kubischweg1 (x1, x2, x3);
-  kubischweg2 (x1, x2, x3);
+  kubischweg1 (x1, x2, x3);
   }
 
 //--------------------------------------------------------------------------- quartische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
-
-void quartischlin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
-  {
-  ckomplexk p, q, r, y1, y2, y3, y4, a4;
-
-  quartischreduziertk (a, b, c, d, p, q, r);
-  quartischreduziertpdfw2 (p, q, r, y1, y2, y3, y4);
-
-  a4= a/4;
-  x1= y1 - a4;
-  x2= y2 - a4;
-  x3= y3 - a4;
-  x4= y4 - a4;
-  }
 
 void quartischzwischenwerte (ckomplexk qx1, ckomplexk qx2, ckomplexk qx3, ckomplexk& qx4)
   {
@@ -1694,6 +1679,134 @@ void quartischzurück (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
   printtext ("\n");
   }
 
+void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+  {
+  real pq, qq, rq, pk, qk, xl, ytrk, yrk, l, u, d, v, aq4;
+  ckomplexk ytk1, ytk2, ytk3, yk1, yk2, yk3, yk, D1, D2, y1, y2, y3, y4, diffpyk, diffpxq, diffpy1, diffpy2, diffpy3;
+  ckomplexk resb1, resb2, resb3, diffb1, diffb2, diffb3;
+
+  // Parameter reduzierte quartische Gleichung
+  pq= aq*aq/8*-3 + bq;
+  qq= aq*(aq*aq/8 + bq/-2) + cq;
+  rq= aq*(aq*aq*aq/8*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+
+  // Parameter reduzierte kubische Gleichung
+  pk= pq*pq/-9 + rq*4/-3;
+  qk= pq*(pq*pq/27 + rq*4/-3) + qq*qq/2;
+
+  // Lösung der normalen linearen Gleichung
+  xl= pk*pk*pk + qk*qk;
+
+  // reelle Lösung der kubischen Resolvente
+  if (xl >= 0)
+    {
+    if (qk >= 0)
+      ytrk= cbrtr (qk + sqrtr (xl));
+      else
+      ytrk= cbrtr (qk - sqrtr (xl));
+    yrk= (ytrk - pk/ytrk);
+    }
+    else
+    {
+    l= sqrtr (-pk);
+    yrk= l*cosr (acosr (qk/(pk*-l))/3)*2;
+    }
+
+  // Lösung der reduzierten kubischen Gleichung
+  cbrtv (qk + sqrtv (ckomplexk (xl)), ytk1, ytk2, ytk3);
+  yk1= (ytk1 - pk/ytk1);
+  yk2= (ytk2 - pk/ytk2);
+  yk3= (ytk3 - pk/ytk3);
+
+  // Lösungen der beiden quadratischen Gleichungen
+  u= sqrtr (yrk/4 - pq/6);
+  d= yrk/-4 + pq/-3;
+  v= qq/u/4;
+
+  D1= sqrtv (ckomplexk (d + v));
+  D2= sqrtv (ckomplexk (d - v));
+
+  // Lösungen der normalen quartischen Gleichung
+  aq4= aq/-4;
+  y1= - u - D1;
+  y2= - u + D1;
+  y3= + u - D2;
+  y4= + u + D2;
+
+  x1= aq4 + y1;
+  x2= aq4 + y2;
+  x3= aq4 + y3;
+  x4= aq4 + y4;
+
+  printtext ("-------------------------------- quartischweg3 ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- Parameter --------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("a           ", aq, 0);
+  printvektor2komplex ("b           ", bq, 0);
+  printvektor2komplex ("c           ", cq, 0);
+  printvektor2komplex ("d           ", dq, 0);
+  printtext ("\n");
+
+  printtext ("-------------------------------- xl ----------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("xl          ", xl, 0);
+  printtext ("\n");
+
+  printtext ("-------------------------------- u ----------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("u           ", u, 0);
+  printtext ("\n");
+
+  printtext ("-------------------------------- kubische Resolvente yk -------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("yrk         ", ckomplexk (yrk), 0);
+  printtext ("\n");
+  printvektor2komplex ("yk1         ", yk1, 0);
+  printvektor2komplex ("yk2         ", yk2, 0);
+  printvektor2komplex ("yk3         ", yk3, 0);
+  printtext ("\n");
+
+  kubischeresolventebuch (pq, qq, rq, resb1, resb2, resb3);
+  printtext ("-------------------------------- kubische Resolvente resb -------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("resb1       ", resb1, 0);
+  printvektor2komplex ("resb2       ", resb2, 0);
+  printvektor2komplex ("resb3       ", resb3, 0);
+  printtext ("\n");
+
+  kubischeresolventez (pq, qq, rq, resb1, resb2, resb3);
+  printtext ("-------------------------------- kubische Resolvente z -------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("resb1       ", resb1, 0);
+  printvektor2komplex ("resb2       ", resb2, 0);
+  printvektor2komplex ("resb3       ", resb3, 0);
+  printtext ("\n");
+
+  diffpy1= y1*y2 + y3*y4;
+  diffpy2= y1*y3 + y2*y4;
+  diffpy3= y1*y4 + y2*y3;
+  printtext ("-------------------------------- Diffpres ------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("diffpy1     ", diffpy1, 0);
+  printvektor2komplex ("diffpy2     ", diffpy2, 0);
+  printvektor2komplex ("diffpy3     ", diffpy3, 0);
+  printtext ("\n");
+
+  printtext ("-------------------------------- -V(xl*-108) ----------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("-V(xl*-108) ", -sqrtv (ckomplexk (xl*-108)), 0);
+  printtext ("\n");
+
+  diffpyk= (yk1-yk2)*(yk2-yk3)*(yk3-yk1);
+  printtext ("-------------------------------- diffp yk ------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("diffpyk     ", diffpyk, 0);
+  printtext ("\n");
+
+  diffpxq= (x1-x2)*(x1-x3)*(x1-x4)*(x2-x3)*(x2-x4)*(x4-x3);
+  printtext ("-------------------------------- diffp xq ------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("diffpxq     ", diffpxq, 0);
+  printtext ("\n");
+
+  printtext ("-------------------------------- quartischweg3 Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", x1, 0);
+  printvektor2komplex ("x2          ", x2, 0);
+  printvektor2komplex ("x3          ", x3, 0);
+  printvektor2komplex ("x4          ", x4, 0);
+  printtext ("\n");
+  }
+
 void quartischparameter ()
   {
   ckomplexk a, b, c, d, p, q, r, z1, z2, z3, dp, y1, y2, y3, y4, x1, x2, x3, x4;
@@ -1703,15 +1816,30 @@ void quartischparameter ()
   vektor2eingabek (c);
   vektor2eingabek (d);
 
-  quartischreduziertk (a, b, c, d, p, q, r);
-  kubischeresolventediffp (p, q, r, z1, z2, z3);
+  quartischweg3 (a.x, b.x, c.x, d.x, x1, x2, x3, x4);
+  return;
 
+  quartischreduziertk (a, b, c, d, p, q, r);
+
+  kubischeresolventediffp (p, q, r, z1, z2, z3);
   dp= (z1 - z2)*(z2 - z3)*(z3 - z1);
-  printtext ("---------------------- Differenzenprodukt der Lösungen -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("---------------------- Differenzenprodukt der kubischen Resolvente diffp --------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("dp          ", dp, 0);
   printtext ("\n");
 
-  printtext ("---------------------- kubische Resolvente Differenzenprodukt -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("---------------------- kubische Resolvente diffp -------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("z1          ", z1, 0);
+  printvektor2komplex ("z2          ", z2, 0);
+  printvektor2komplex ("z3          ", z3, 0);
+  printtext ("\n");
+
+  kubischeresolventez (p, q, r, z1, z2, z3);
+  dp= (z1 - z2)*(z2 - z3)*(z3 - z1);
+  printtext ("---------------------- Differenzenprodukt der kubischen Resolvente z --------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("dp          ", dp, 0);
+  printtext ("\n");
+
+  printtext ("---------------------- kubische Resolvente z -------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("z1          ", z1, 0);
   printvektor2komplex ("z2          ", z2, 0);
   printvektor2komplex ("z3          ", z3, 0);
@@ -1820,11 +1948,11 @@ void quartischeingabezw ()
   vektor2eingabek (x3);
   vektor2eingabek (x4);
 
-  quartischzwischenwerte (x1, x2, x3, x4);
+//  quartischzwischenwerte (x1, x2, x3, x4);
 //  quartischwegdiffp (x1, x2, x3, x4);
 //  quartischwegpdfw2 (x1, x2, x3, x4);
 //  quartischwegdiffpkurz (x1, x2, x3, x4);
-//  quartischwegz1kurz (x1, x2, x3, x4);
+  quartischwegz1kurz (x1, x2, x3, x4);
 //  quartischwegz3kurz (x1, x2, x3, x4);
   }
 

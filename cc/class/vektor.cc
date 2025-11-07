@@ -1766,12 +1766,10 @@ void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, 
 
   quadratisch (q, p*p*p/-27, u1, u2);
 
-  if (absv (u1) > absv (u2))                                      // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
-    u= u1;
+  if (absv (u1) >= absv (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+    cbrtv (u1, z1, z2, z3);
     else
-    u=u2;
-
-  cbrtv (u, z1, z2, z3);
+    cbrtv (u2, z1, z2, z3);
 
   y1= z1 - p/(z1*3);
   y2= z2 - p/(z2*3);
@@ -1784,12 +1782,10 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
 
   quadratisch (q*27, p*p*p*-27, u1, u2);
 
-  if (absv (u1) > absv (u2))                                      // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
-    u= u1;
+  if (absv (u1) >= absv (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+    cbrtv (u1, z1, z2, z3);
     else
-    u=u2;
-
-  cbrtv (u, z1, z2, z3);
+    cbrtv (u2, z1, z2, z3);
 
   y1= z1/3 - p/z1;
   y2= z2/3 - p/z2;
@@ -1907,6 +1903,16 @@ void kubischeresolventelagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
   kubisch (ak, bk, ck, z1, z2, z3);
   }
 
+void kubischeresolventez (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
+  {
+  ckomplexk pk, qk;
+
+  pk= (p*p + r*12)/-3;
+  qk= p*(r*36 - p*p)/real (13.5) - q*q;
+
+  kubischreduziertcardano (pk, qk, z1, z2, z3);
+  }
+
 void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
   {
   ckomplexk pk, qk;
@@ -1914,7 +1920,6 @@ void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1,
   pk= (p*p + r*12)/-3;
   qk= p*(r*36 - p*p)/real (13.5) - q*q;
 
-  //kubischreduziertcardano (pk, qk, z1, z2, z3);                   // kubischeresolventez
   kubischreduziertcardano3 (pk, qk, z1, z2, z3);
   }
 
@@ -2146,7 +2151,7 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
   real aqq, pq, qq, rq, pqq, rq4, pk, qk, aq4;
-  ckomplexk yk, z, u, v, d, D1, D2;
+  ckomplexk ytk, yk, pq3, u, v, d, D1, D2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2161,14 +2166,15 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
   // Lösung der reduzierten kubischen Gleichung
-  yk= cbrtv (qk + sqrtv (ckomplexk (pk*pk*pk + qk*qk)));
+  ytk= cbrtv (qk + sqrtv (ckomplexk (pk*pk*pk + qk*qk)));
+  yk= (ytk - pk/ytk)/4;
 
   // Lösungen der beiden quadratischen Gleichungen
-  z= pq/3 - pk/yk + yk;
-  u= sqrtv (z - pq)/2;
+  pq3= pq/-3;
+  u= sqrtv (yk + pq3/2);
   v= qq/u/4;
+  d= pq3 - yk;
 
-  d= (z + pq)/-4;
   D1= sqrtv (d + v);
   D2= sqrtv (d - v);
 
@@ -2197,7 +2203,7 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
   // reelle Lösung der kubischen Resolvente
-  xl= qk*qk + pk*pk*pk;
+  xl= pk*pk*pk + qk*qk;
   if (xl >= 0)                                                    // 2 oder 0 Schnittpunkte mit dem Torus
     {
     //vxl= sqrtr (xl);                                              // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
@@ -2266,7 +2272,7 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
   // reelle Lösung der kubischen Resolvente
-  xl= qk*qk + pk*pk*pk;
+  xl= pk*pk*pk + qk*qk;
   if (xl >= 0)                                                    // 2 oder 0 Schnittpunkte mit dem Torus
     {
     //vxl= sqrtr (xl);                                              // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
@@ -2334,7 +2340,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
   // reelle Lösung der kubischen Resolvente
-  xl= qk*qk + pk*pk*pk;
+  xl= pk*pk*pk + qk*qk;
   if (xl >= 0)                                                    // 2 oder 0 Schnittpunkte mit dem Torus
     {
     //vxl= sqrtr (xl);                                              // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
@@ -2412,7 +2418,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   qk= pq*(pqq/216 + rq/-6) + qq*qq/16;
 
   // reelle Lösung der kubischen Resolvente
-  xl= qk*qk + pk*pk*pk;
+  xl= pk*pk*pk + qk*qk;
   if (xl >= 0)                                                    // 2 oder 0 Schnittpunkte mit dem Torus
     {
     //vxl= sqrtr (xl);                                              // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
@@ -2496,7 +2502,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   qq8= qq/8;
 
   // Lösungen der kubischen Resolvente
-  xl= qk*qk + pk*pk*pk;
+  xl= pk*pk*pk + qk*qk;
   if (xl > 0)                                                     // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
     {                                                             // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
     if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
@@ -2604,7 +2610,7 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   qq8= qq/8;
 
   // Lösungen der kubischen Resolvente
-  xl= qk*qk + pk*pk*pk;
+  xl= pk*pk*pk + qk*qk;
   if (xl > 0)                                                     // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
     {
     // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
