@@ -1682,9 +1682,9 @@ void quartischzurück (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
 void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
   real pq, qq, rq, pk, qk, xl, ytrk, l, phi3, yrk, xrk, aq4;
-  ckomplexk yk2, yk3, xk2, xk3, D1, D2, y1, y2, y3, y4, diffpxl, diffpyk, diffpyq, diffpy1, diffpy2, diffpy3;
+  ckomplexk yk2, yk3, xk2, xk3, y1, y2, y3, y4, diffpxl, diffpyk, diffpyq, diffpy1, diffpy2, diffpy3;
+  ckomplexk yk, z, uq, u, v, bed, b1, b2, D1, D2;
   ckomplexk nul1, nul2, nul3, nul4;
-  ckomplexk yk, u, v, d;
 
   // Parameter reduzierte quartische Gleichung
   pq= aq*aq/8*-3 + bq;
@@ -1708,12 +1708,12 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
       ytrk= cbrtr (qk + sqrtr (xl));
       else
       ytrk= cbrtr (qk - sqrtr (xl));
-    yk2= ckomplexk (ytrk/-2, ytrk*sqrtr (real (0.75)));
+    yk2= ckomplexk (ytrk/-2, ytrk*-sqrtr (real (0.75)));
     yk3= ckomplexk (yk2.x, -yk2.y);
 
-    yrk= ytrk - pk/ytrk;
-    yk2= yk2 - pk/yk2;
-    yk3= yk3 - pk/yk3;
+    yrk= (ytrk - pk/ytrk);
+    yk2= (yk2 - pk/yk2);
+    yk3= (yk3 - pk/yk3);
     }
     else
     {
@@ -1733,15 +1733,29 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
   xk2= yk2 + pq/3;
   xk3= yk3 + pq/3;
 
-  // Lösungen der beiden quadratischen Gleichungen
-  yk= yk3;
-  u= sqrtv (yk/4 - pq/6);
-  v= qq/u/4;
-  //v= sqrtv (z*z
-  d= yk/-4 + pq/-3;
+  // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
+  yk= yrk;
 
-  D1= sqrtv (ckomplexk (d + v));
-  D2= sqrtv (ckomplexk (d - v));
+  z= yk/2 + pq/6;
+  uq= yk/4 - pq/6;
+  u= sqrtv (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
+  v= sqrtv (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
+
+  // Bedingung -2uv = qq
+  bed= u*v*-2;
+  if (absv (bed + qq) < absv (bed - qq))
+    {
+    b1= z - v;
+    b2= z + v;
+    }
+    else
+    {
+    b1= z + v;
+    b2= z - v;
+    }
+
+  D1= sqrtv (uq - b1);
+  D2= sqrtv (uq - b2);
 
   // Lösungen der reduzierten quartischen Gleichung
   aq4= aq/-4;
@@ -1780,10 +1794,6 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
 
   printtext ("-------------------------------- xl ----------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("xl          ", xl, 0);
-  printtext ("\n");
-
-  printtext ("-------------------------------- u ----------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("u           ", u, 0);
   printtext ("\n");
 
   printtext ("-------------------------------- reduzierte kubische Resolvente diffp ---------------------------------------------------------------------------------------------------------------\n");
