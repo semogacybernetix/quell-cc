@@ -1681,62 +1681,94 @@ void quartischzurück (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
 
 void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
-  real pq, qq, rq, pk, qk, xl, ytrk, yrk, l, u, d, v, aq4;
-  ckomplexk ytk1, ytk2, ytk3, yk1, yk2, yk3, yk, D1, D2, y1, y2, y3, y4, diffpyk, diffpxq, diffpy1, diffpy2, diffpy3;
-  ckomplexk resb1, resb2, resb3, diffb1, diffb2, diffb3;
+  real pq, qq, rq, pk, qk, xl, ytrk, l, phi3, yrk, xrk, aq4;
+  ckomplexk yk2, yk3, xk2, xk3, D1, D2, y1, y2, y3, y4, diffpxl, diffpyk, diffpyq, diffpy1, diffpy2, diffpy3;
+  ckomplexk nul1, nul2, nul3, nul4;
+  ckomplexk yk, u, v, d;
 
   // Parameter reduzierte quartische Gleichung
   pq= aq*aq/8*-3 + bq;
   qq= aq*(aq*aq/8 + bq/-2) + cq;
   rq= aq*(aq*aq*aq/8*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
 
-  // Parameter reduzierte kubische Gleichung
+  // Parameter der reduzierten kubischen Gleichung Resolvente diffp
   pk= pq*pq/-9 + rq*4/-3;
   qk= pq*(pq*pq/27 + rq*4/-3) + qq*qq/2;
 
   // Lösung der normalen linearen Gleichung
   xl= pk*pk*pk + qk*qk;
 
-  // reelle Lösung der kubischen Resolvente
-  if (xl >= 0)
-    {
-    if (qk >= 0)
+  // das Differenzenprodukt der Lösungen der reduzierten kubischen Gleichung
+  diffpxl= -sqrtv (ckomplexk (xl*-108));
+
+  // Lösungen der kubischen Resolvente
+  if (xl > 0)                                                     // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
+    {                                                             // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
+    if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytrk= cbrtr (qk + sqrtr (xl));
       else
       ytrk= cbrtr (qk - sqrtr (xl));
-    yrk= (ytrk - pk/ytrk);
+    yk2= ckomplexk (ytrk/-2, ytrk*sqrtr (real (0.75)));
+    yk3= ckomplexk (yk2.x, -yk2.y);
+
+    yrk= ytrk - pk/ytrk;
+    yk2= yk2 - pk/yk2;
+    yk3= yk3 - pk/yk3;
     }
     else
     {
-    l= sqrtr (-pk);
-    yrk= l*cosr (acosr (qk/(pk*-l))/3)*2;
+    // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
+    l= sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
+    phi3= acosr (qk/(pk*-l))/3;
+    yrk= l*cosr (phi3)*2;                         // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
+    yk2= l*cosr (phi3 - PI23)*2;
+    yk3= l*cosr (phi3 + PI23)*2;
     }
 
-  // Lösung der reduzierten kubischen Gleichung
-  cbrtv (qk + sqrtv (ckomplexk (xl)), ytk1, ytk2, ytk3);
-  yk1= (ytk1 - pk/ytk1);
-  yk2= (ytk2 - pk/ytk2);
-  yk3= (ytk3 - pk/ytk3);
+  // das Differenzenprodukt der Lösungen der reduzierten kubischen Gleichung
+  diffpyk= (yrk-yk2)*(yk2-yk3)*(yk3-yrk);
+
+  // Lösung der normalen kubischen Gleichung
+  xrk= yrk + pq/3;
+  xk2= yk2 + pq/3;
+  xk3= yk3 + pq/3;
 
   // Lösungen der beiden quadratischen Gleichungen
-  u= sqrtr (yrk/4 - pq/6);
-  d= yrk/-4 + pq/-3;
+  yk= yk3;
+  u= sqrtv (yk/4 - pq/6);
   v= qq/u/4;
+  //v= sqrtv (z*z
+  d= yk/-4 + pq/-3;
 
   D1= sqrtv (ckomplexk (d + v));
   D2= sqrtv (ckomplexk (d - v));
 
-  // Lösungen der normalen quartischen Gleichung
+  // Lösungen der reduzierten quartischen Gleichung
   aq4= aq/-4;
-  y1= - u - D1;
-  y2= - u + D1;
-  y3= + u - D2;
-  y4= + u + D2;
+  y1= -u - D1;
+  y2= -u + D1;
+  y3=  u - D2;
+  y4=  u + D2;
 
+  // das Differenzenprodukt der Lösungen der reduzierten quartischen Gleichung
+  diffpyq= (y1-y2)*(y1-y3)*(y1-y4)*(y2-y3)*(y2-y4)*(y3-y4);
+
+  // Die kubische Resolvente diffp aus den Lösungen der reduzierten quartischen Gleichung
+  diffpy1= y1*y2 + y3*y4;
+  diffpy2= y1*y3 + y2*y4;
+  diffpy3= y1*y4 + y2*y3;
+
+  // Lösungen der normalen quartischen Gleichung
   x1= aq4 + y1;
   x2= aq4 + y2;
   x3= aq4 + y3;
   x4= aq4 + y4;
+
+  // Nullstellen der normalen quartischen Gleichung
+  nul1= x1*x1*x1*x1 + x1*x1*x1*aq + x1*x1*bq + x1*cq + dq;
+  nul2= x2*x2*x2*x2 + x2*x2*x2*aq + x2*x2*bq + x2*cq + dq;
+  nul3= x3*x3*x3*x3 + x3*x3*x3*aq + x3*x3*bq + x3*cq + dq;
+  nul4= x4*x4*x4*x4 + x4*x4*x4*aq + x4*x4*bq + x4*cq + dq;
 
   printtext ("-------------------------------- quartischweg3 ----------------------------------------------------------------------------------------------------------------------------\n");
   printtext ("-------------------------------- Parameter --------------------------------------------------------------------------------------------------------------------------------\n");
@@ -1754,56 +1786,48 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
   printvektor2komplex ("u           ", u, 0);
   printtext ("\n");
 
-  printtext ("-------------------------------- kubische Resolvente yk -------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("yrk         ", ckomplexk (yrk), 0);
-  printtext ("\n");
-  printvektor2komplex ("yk1         ", yk1, 0);
+  printtext ("-------------------------------- reduzierte kubische Resolvente diffp ---------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("yrk         ", yrk, 0);
   printvektor2komplex ("yk2         ", yk2, 0);
   printvektor2komplex ("yk3         ", yk3, 0);
   printtext ("\n");
 
-  kubischeresolventebuch (pq, qq, rq, resb1, resb2, resb3);
-  printtext ("-------------------------------- kubische Resolvente resb -------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("resb1       ", resb1, 0);
-  printvektor2komplex ("resb2       ", resb2, 0);
-  printvektor2komplex ("resb3       ", resb3, 0);
+  printtext ("-------------------------------- normale kubische Resolvente diffp -------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("xrk         ", xrk, 0);
+  printvektor2komplex ("xk2         ", xk2, 0);
+  printvektor2komplex ("xk3         ", xk3, 0);
   printtext ("\n");
 
-  kubischeresolventez (pq, qq, rq, resb1, resb2, resb3);
-  printtext ("-------------------------------- kubische Resolvente z -------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("resb1       ", resb1, 0);
-  printvektor2komplex ("resb2       ", resb2, 0);
-  printvektor2komplex ("resb3       ", resb3, 0);
+  printtext ("-------------------------------- Lösungspolynome der reduzierten quartischen Lösungen ---------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("y1y2 + y3y4 ", diffpy1, 0);
+  printvektor2komplex ("y1y3 + y2y4 ", diffpy2, 0);
+  printvektor2komplex ("y1y4 + y2y3 ", diffpy3, 0);
   printtext ("\n");
 
-  diffpy1= y1*y2 + y3*y4;
-  diffpy2= y1*y3 + y2*y4;
-  diffpy3= y1*y4 + y2*y3;
-  printtext ("-------------------------------- Diffpres ------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("diffpy1     ", diffpy1, 0);
-  printvektor2komplex ("diffpy2     ", diffpy2, 0);
-  printvektor2komplex ("diffpy3     ", diffpy3, 0);
+  printtext ("-------------------------------- skalierte normale lineare Lösung -------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("-√(xl*-108) ", diffpxl, 0);
   printtext ("\n");
 
-  printtext ("-------------------------------- -V(xl*-108) ----------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("-V(xl*-108) ", -sqrtv (ckomplexk (xl*-108)), 0);
-  printtext ("\n");
-
-  diffpyk= (yk1-yk2)*(yk2-yk3)*(yk3-yk1);
-  printtext ("-------------------------------- diffp yk ------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- Differenzenprodukt der Lösungen der reduzierten kubischen Resolvente diffp ------------------------------------------------------------------------------\n");
   printvektor2komplex ("diffpyk     ", diffpyk, 0);
   printtext ("\n");
 
-  diffpxq= (x1-x2)*(x1-x3)*(x1-x4)*(x2-x3)*(x2-x4)*(x4-x3);
-  printtext ("-------------------------------- diffp xq ------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("diffpxq     ", diffpxq, 0);
+  printtext ("-------------------------------- Differenzenprodukt der Lösungen der reduzierten quartischen Gleichung --------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("diffpyq     ", diffpyq, 0);
   printtext ("\n");
 
-  printtext ("-------------------------------- quartischweg3 Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- Lösungen der normalen quartischen Gleichung -----------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
   printvektor2komplex ("x2          ", x2, 0);
   printvektor2komplex ("x3          ", x3, 0);
   printvektor2komplex ("x4          ", x4, 0);
+  printtext ("\n");
+
+  printtext ("-------------------------------- Nullstellen der normalen quartischen Gleichung ---------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("nul1          ", nul1, 0);
+  printvektor2komplex ("nul2          ", nul2, 0);
+  printvektor2komplex ("nul3          ", nul3, 0);
+  printvektor2komplex ("nul4          ", nul4, 0);
   printtext ("\n");
   }
 
@@ -2102,3 +2126,4 @@ utf-8 Codierung
   ÄÖÜ äöü ß  Umlaute
 
 */
+

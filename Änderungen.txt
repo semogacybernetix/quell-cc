@@ -292,7 +292,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.01 Sa  13:39, x3,x4 in quartischintr Routinen verwendet, kubische Resolventenfärbungen, Lösungsfärbungen in allen quartischintr Routinen implementiert, 18:25
 
 2025.11.04 Di  15 Uhr, linearfaktoren Differenzenprodukt, kubische Resolvente bei kubischfaktoren und quartischfaktoren eingefügt
-2025.11.06 Do  12:48, Gleichung bla  14:04, 19:15 Gleichung bla, 1:10
+2025.11.06 Do  12:48, quartischdiffpintrc Formel verbessert, z elimiert, 14:04, 19:15 linearfaktoren quartischweg3 zwischenwerte, Inkonsistenz bei Differenzenprodukt kubischer Resolvente, Strees, 1:10
+2025.11.07 Fr  9:32, linearfaktoren quartischweg3 Fehlerstress, quartischlangrangeintru,c 3 reelle Lösungen optimiert, 13:21
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

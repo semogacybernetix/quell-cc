@@ -2482,7 +2482,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
 void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, l, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter der reduzierten quartischen Gleichung
@@ -2541,10 +2541,11 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     else
     {
     // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
-    l= -sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
-    ykr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
-    ykr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
-    ykr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
+    l= sqrtr (-pk);                                               // -pk nie unter 0 wegen xl
+    phi3= acosr (qk/(pk*-l))/3;
+    ykr1= l*cosr (phi3)*2;                                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
+    ykr2= l*cosr (phi3 + PI23)*2;
+    ykr3= l*cosr (phi3 - PI23)*2;
 
     if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0)) // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
@@ -2590,7 +2591,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
 
 void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, vxl, uk1, uk2, l, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, vxl, uk1, uk2, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter der reduzierten quartischen Gleichung
@@ -2650,10 +2651,11 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     else
     {
     // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
-    l= -sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
-    ykr1= l*cosr (acosr (qk/(pk*l))/3)*-2;                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
-    ykr2= l*cosr (acosr (qk/(pk*l))/3 + PI23)*-2;
-    ykr3= l*cosr (acosr (qk/(pk*l))/3 - PI23)*-2;
+    l= sqrtr (-pk);                                               // -pk nie unter 0 wegen xl
+    phi3= acosr (qk/(pk*-l))/3;
+    ykr1= l*cosr (phi3)*2;                                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
+    ykr2= l*cosr (phi3 + PI23)*2;
+    ykr3= l*cosr (phi3 - PI23)*2;
 
     if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0)) // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;

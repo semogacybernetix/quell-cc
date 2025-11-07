@@ -13,7 +13,7 @@ typedef signed long long integer;
 //typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen      gibts nicht auf raspi5                                     5.00              3.96
 
 // ------------------------- 32 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
+typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ typedef signed long long integer;
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
-typedef __float80 real;       // hw             //   64 Bit: 19.26 Stellen 18/20 Stellen (verlässlich/unterscheidbar)                      6.90              0.53
+//typedef __float80 real;       // hw             //   64 Bit: 19.26 Stellen 18/20 Stellen (verlässlich/unterscheidbar)                      6.90              0.53
 //typedef long double real;     // hw                                                                                                        6.90      4.34    0.53         10.84                               5.55
 
 // ------------------------ 128 Bit -------------------------------------------------------------------------------------------------------------
