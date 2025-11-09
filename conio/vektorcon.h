@@ -31,9 +31,11 @@ void realeingabe (long double& pv);
 void printreal (_Float32 pr);
 void printreal (_Float64 pr);
 void printreal (long double pr);
+
 void printrealobj (const char* pdateiname, _Float32 pr);
 void printrealobj (const char* pdateiname, _Float64 pr);
 void printrealobj (const char* pdateiname, long double pr);
+
 void printzahlobj (const char* pdateiname, real pr, integer pst);
 void printzahlobj (const char* pdateiname, real pr, integer vst, integer pst);
 

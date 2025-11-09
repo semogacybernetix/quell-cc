@@ -2151,7 +2151,7 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
   real aqq, pq, qq, rq, pqq, rq4, pk, qk, aq4;
-  ckomplexk ytk, yk, pq3, u, v, d, D1, D2;
+  ckomplexk ytk, yk, u, v, d, D1, D2;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2170,10 +2170,9 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
   yk= (ytk - pk/ytk)/4;
 
   // Lösungen der beiden quadratischen Gleichungen
-  pq3= pq/-3;
-  u= sqrtv (yk + pq3/2);
+  u= sqrtv (yk + pq/-6);
   v= qq/u/4;
-  d= pq3 - yk;
+  d= pq/-3 - yk;
 
   D1= sqrtv (d + v);
   D2= sqrtv (d - v);

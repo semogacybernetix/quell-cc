@@ -205,13 +205,6 @@ void realeingabe (_Float64& pr)
   pr= _Float64 (pf);
   }
 
-void realeingabe (double& pr)
-  {
-  integer scanret;
-  scanret= scanf ("%lf", &pr);
-  scanret+= 0;
-  }
-
 void realeingabe (long double& pr)
   {
   integer scanret;
@@ -267,22 +260,6 @@ void printreal (long double pr)
   FILE* datei= fopen ("screenoutput.txt", "ab");
   printf ("%12.9Lf", pr);
   fprintf (datei, "%12.9Lf", pr);
-  fclose (datei);
-  }
-
-void printrealkomplex (double pr)
-  {
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%56.40lf", pr);
-  fprintf (datei, "%56.40lf", pr);
-  fclose (datei);
-  }
-
-void printrealkomplex (long double pr)
-  {
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%56.40Lf", pr);
-  fprintf (datei, "%56.40Lf", pr);
   fclose (datei);
   }
 

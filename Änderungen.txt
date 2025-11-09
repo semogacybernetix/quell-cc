@@ -294,6 +294,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.04 Di  15 Uhr, linearfaktoren Differenzenprodukt, kubische Resolvente bei kubischfaktoren und quartischfaktoren eingefügt
 2025.11.06 Do  12:48, quartischdiffpintrc Formel verbessert, z elimiert, 14:04, 19:15 linearfaktoren quartischweg3 zwischenwerte, Inkonsistenz bei Differenzenprodukt kubischer Resolvente, Strees, 1:10
 2025.11.07 Fr  9:32, linearfaktoren quartischweg3 Fehlerstress, quartischlangrangeintru,c 3 reelle Lösungen optimiert, 13:21, 17 Uhr, quartischweg3 fehlerbereinigt, vollendet, 18:01
+2025.11.09 So  21 Uhr, realeingabe Fehler raspi5 beseitigt, quartischdiffpintrc pq3 entfernt, 22:02
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
