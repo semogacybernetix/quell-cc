@@ -1848,7 +1848,8 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   kubischreduziertcardano3 (p, q, y1, y2, y3);
   //kubischreduziertu (p, q, y1, y2, y3);
   //kubischreduziertu3 (p, q, y1, y2, y3);
-  //kubischreduziertreell (p.x, q.x, yr);
+  //kubischreduziertreellu (p.x, q.x, yr);
+  //kubischreduziertreellc (p.x, q.x, yr);
 
   x1= (y1 - a)/3;
   x2= (y2 - a)/3;

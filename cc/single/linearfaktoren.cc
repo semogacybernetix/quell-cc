@@ -1624,7 +1624,7 @@ void quartischwegz3kurz (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk&
 
 void quartischzurück (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, ckomplexk& aq, ckomplexk& bq, ckomplexk& cq, ckomplexk& dq)
   {
-  ckomplexk y1, y2, y3, y4, dpy, z1, z2, z3, s1, s2, s3;
+  ckomplexk y1, y2, y3, y4, dpy, z1, z2, z3;
 
   // quartische Parameter aus den quartischen Lösungen: x1, x2, x3, x4 -> aq, bq, cq, dq
   aq= -(x1 + x2 + x3 + x4);
@@ -1644,38 +1644,22 @@ void quartischzurück (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
   // 2. Zwischenwert: Lösungen der kubischen Resolvente aus den Lösungen der reduzierten quartischen Gleichung
   z1= y1*y2 + y3*y4;
   z2= y1*y3 + y2*y4;
-  z3= y1*y4 + y3*y2;
-
-  // 3. Zwischenwert: kubische Resolvente aus Rückrechnung der x-Werte
-  s1= x1*x2 + x3*x4;
-  s2= x1*x3 + x2*x4;
-  s3= x1*x4 + x3*x2;
+  z3= y1*y4 + y2*y3;
 
   // ---------------------------------------------------------- Variablenausgabe --------------------------------------------------------------------------
-  printtext ("------------------------------------ Parameter der normalen quartischen Gleichung ------------------------------------------------------------------------\n");
+  printtext ("----------------------------------------------------------- Parameter der normalen quartischen Gleichung --------------------------------------------------------------------\n");
   printvektor2komplex ("a          ", aq, 0);
   printvektor2komplex ("b          ", bq, 0);
   printvektor2komplex ("c          ", cq, 0);
   printvektor2komplex ("d          ", dq, 0);
   printtext ("\n");
-  printtext ("----------------------------------------------------------- 1. Zwischenwert -------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("dpy/√-108  ", dpy/sqrtv (ckomplexk (-108)), 1);
+  printtext ("----------------------------------------------------------- 1. Zwischenwert (Differenzenprodukt) ----------------------------------------------------------------------------\n");
+  printvektor2komplex ("(y1-y2)*(y1-y3)*(y1-y4)*(y2-y3)*(y2-y4)*(y3-y4)", dpy, 1);
   printtext ("\n");
-  printtext ("----------------------------------------------------------- 2. Zwischenwert -------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("z1         ", z1, 0);
-  printvektor2komplex ("z2         ", z2, 0);
-  printvektor2komplex ("z3         ", z3, 0);
-  printtext ("\n");
-  printtext ("----------------------------------------------------------- Symmetrie der x-Werte -------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("s1         ", s1, 0);
-  printvektor2komplex ("s2         ", s2, 0);
-  printvektor2komplex ("s3         ", s3, 0);
-  printtext ("\n");
-  printtext ("---------------------------------------------------------- Lösungen der normalen quartischen Gleichung ----------------------------------------------------------------------\n");
-  printvektor2komplex ("x1         ", x1, 0);
-  printvektor2komplex ("x2         ", x2, 0);
-  printvektor2komplex ("x3         ", x3, 0);
-  printvektor2komplex ("x4         ", x4, 0);
+  printtext ("----------------------------------------------------------- 2. Zwischenwert (Produktsumme) ----------------------------------------------------------------------------------\n");
+  printvektor2komplex ("y1y2 + y3y4", z1, 0);
+  printvektor2komplex ("y1y3 + y2y4", z2, 0);
+  printvektor2komplex ("y1y4 + y2y3", z3, 0);
   printtext ("\n");
   }
 
@@ -1902,6 +1886,15 @@ void quartischloesungen ()
   vektor2eingabek (x4);
 
   quartischzurück (x1, x2, x3, x4, a, b, c, d);
+
+  quartischdiffpuintrc (a.x, b.x, c.x, d.x, x1, x2, x3, x4);
+
+  printtext ("-------------------------------- quartischdiffpuintrc Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", x1, 0);
+  printvektor2komplex ("x2          ", x2, 0);
+  printvektor2komplex ("x3          ", x3, 0);
+  printvektor2komplex ("x4          ", x4, 0);
+  printtext ("\n");
 
   quartischdiffpuintr (a.x, b.x, c.x, d.x, psp);
 
