@@ -1983,6 +1983,87 @@ void quartischeingabezw ()
 //  quartischwegz3kurz (x1, x2, x3, x4);
   }
 
+//--------------------------------------------------------------------------- quintische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
+
+void quintischreduziert3 (real c, real d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4, ckomplexk& x5)
+  {
+  real z, m, p, q, n, y, r, v, w, tv, tw, vp;
+  ckomplexk e5;
+
+  z= 5625;
+
+  y= sqrtr (z)/5;
+  r= y*d/(y*y*25 - c);
+  v= (y*y*y*3 - y*c - r*r)/(y*2);
+  w= (y*y*y*3 - y*c + r*r)/(y*2);
+
+  tv= (y*y + v)*r/(y*2);
+  tw= (y*y + w)*r/(y*2);
+
+  e5= ckomplexk (cosr (PI*2/5), sinr (PI*2/5));
+
+  m= quinr (tv - sqrtr (tv*tv + y*y*y*y*y));
+  n= quinr (tv + sqrtr (tv*tv + y*y*y*y*y));
+  p= quinr (tw + sqrtr (tw*tw - y*y*y*y*y));
+  q= quinr (tw - sqrtr (tw*tw - y*y*y*y*y));
+
+  vp= m*m*m*p + n*n*n*q;
+
+  x1= -(m + p + q + n);
+  x2= -(m*e5 + p*e5*e5 + q*e5*e5*e5 + n*e5*e5*e5*e5);
+  x3= -(m*e5*e5 + p*e5*e5*e5*e5 + q*e5 + n*e5*e5*e5);
+  x4= -(m*e5*e5*e5 + p*e5 + q*e5*e5*e5*e5 + n*e5*e5);
+  x5= -(m*e5*e5*e5*e5 + p*e5*e5*e5 + q*e5*e5 + n*e5);
+
+  printtext ("-------------------------------- quintischreduziert3 ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("y           ", y, 0);
+  printvektor2komplex ("r           ", r, 0);
+  printvektor2komplex ("v           ", v, 0);
+  printvektor2komplex ("w           ", w, 0);
+  printtext ("\n");
+  printvektor2komplex ("m           ", m, 0);
+  printvektor2komplex ("n           ", n, 0);
+  printvektor2komplex ("p           ", p, 0);
+  printvektor2komplex ("q           ", q, 0);
+  printtext ("\n");
+  printvektor2komplex ("vp          ", vp, 0);
+  printvektor2komplex ("e5          ", e5, 0);
+  printtext ("\n");
+  }
+
+void quintischparameter ()
+  {
+  real c, d;
+  ckomplexk x1, x2, x3, x4, x5, pr1, pr2, pr3, pr4, pr5;
+
+  //vektor2eingabek (c);
+  //vektor2eingabek (d);
+
+  c= -525;
+  d= -61500;
+
+  quintischreduziert3 (c, d, x1, x2, x3, x4, x5);
+
+  pr1= x1*x1*x1*x1*x1 + x1*c*5 + d;
+  pr2= x2*x2*x2*x2*x2 + x2*c*5 + d;
+  pr3= x3*x3*x3*x3*x3 + x3*c*5 + d;
+  pr4= x4*x4*x4*x4*x4 + x4*c*5 + d;
+  pr5= x5*x5*x5*x5*x5 + x5*c*5 + d;
+
+  printtext ("-------------------------------- quintischreduziert3 ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", x1, 0);
+  printvektor2komplex ("x2          ", x2, 0);
+  printvektor2komplex ("x3          ", x3, 0);
+  printvektor2komplex ("x4          ", x4, 0);
+  printvektor2komplex ("x5          ", x5, 0);
+  printtext ("\n");
+  printvektor2komplex ("pr1          ", pr1, 0);
+  printvektor2komplex ("pr2          ", pr2, 0);
+  printvektor2komplex ("pr3          ", pr3, 0);
+  printvektor2komplex ("pr4          ", pr4, 0);
+  printvektor2komplex ("pr5          ", pr5, 0);
+  }
+
 //--------------------------------------------------------------------------- andere Sachen --------------------------------------------------------------------------------------------------------------------------------------
 
 void polartest ()
@@ -1997,7 +2078,6 @@ void polartest ()
   austan= polartan180 (ein);
   aus360= polar360 (ein);
 
-/*
   printf ("\nPolarkoordinaten:\n");
   printf ("Eingabe:                  %60.40Lf %60.40Lf\n\n", ein.x, ein.y);
   printf ("polartan2:                %60.40Lf %60.40Lf\n", austan2.b, austan2.w*180/M_PIl);
@@ -2007,7 +2087,6 @@ void polartest ()
   printf ("polar180:                 %60.40Lf %60.40Lf\n", aus180.b, aus180.w*180/M_PIl);
   printf ("polar360:                 %60.40Lf %60.40Lf\n", aus360.b, aus360.w*180/M_PIl);
   printf ("\n");
-*/
   }
 
 void sqrttest ()
@@ -2042,7 +2121,7 @@ integer entscheidungseingabe ()
   printtext (" [1] quadratisch  K   [2] kubisch  K     [3] quartisch  K\n");
   printtext (" [4] quadratisch  L   [5] kubisch  L     [6] quartisch  L\n");
   printtext (" [7] quadratischw1 L  [8] kubischw1 L    [9] quartischw1 L\n");
-  printtext (" [91] sqrttest\n");
+  printtext (" [91] sqrttest        [92] quintisch K\n");
   printtext ("\n");
 
   scanret= scanf ("%lld", &ent);
@@ -2087,6 +2166,9 @@ int main ()
       break;
     case 91:
       sqrttest ();
+      break;
+    case 92:
+      quintischparameter ();
       break;
     }
   return 0;

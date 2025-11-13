@@ -297,6 +297,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.09 So  21 Uhr, realeingabe Fehler raspi5 beseitigt, quartischdiffpuintrc pq3 entfernt, 22:02
 
 2025.11.11 Di  13:43, linearfaktoren quartischlösungen gestrafft, 14:27
+2025.11.12 Mi  23:00, quintische Gleichung angefangen (quintischreduziert3) Endfehler: Bedingung für v, behoben, 1:36
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
