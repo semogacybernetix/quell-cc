@@ -1988,7 +1988,7 @@ void quartischeingabezw ()
 void quintischreduziert3 (real c, real d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4, ckomplexk& x5)
   {
   real z, m, p, q, n, y, r, v, w, tv, tw, vp;
-  ckomplexk e5;
+  ckomplexk e51, e52, zp, dp;
 
   z= 5625;
 
@@ -2000,34 +2000,54 @@ void quintischreduziert3 (real c, real d, ckomplexk& x1, ckomplexk& x2, ckomplex
   tv= (y*y + v)*r/(y*2);
   tw= (y*y + w)*r/(y*2);
 
-  e5= ckomplexk (cosr (PI*2/5), sinr (PI*2/5));
+  e51= ckomplexk (cosr (PI*2/5), sinr (PI*2/5));
+  e52= ckomplexk (cosr (PI*4/5), sinr (PI*4/5));
 
   m= quinr (tv - sqrtr (tv*tv + y*y*y*y*y));
   n= quinr (tv + sqrtr (tv*tv + y*y*y*y*y));
   p= quinr (tw + sqrtr (tw*tw - y*y*y*y*y));
   q= quinr (tw - sqrtr (tw*tw - y*y*y*y*y));
 
+  // Bedingungsgleichung v= m³p + n³q muss erfüllt sein  (m,n) bzw. (p,q) permutieren
   vp= m*m*m*p + n*n*n*q;
 
   x1= -(m + p + q + n);
-  x2= -(m*e5 + p*e5*e5 + q*e5*e5*e5 + n*e5*e5*e5*e5);
-  x3= -(m*e5*e5 + p*e5*e5*e5*e5 + q*e5 + n*e5*e5*e5);
-  x4= -(m*e5*e5*e5 + p*e5 + q*e5*e5*e5*e5 + n*e5*e5);
-  x5= -(m*e5*e5*e5*e5 + p*e5*e5*e5 + q*e5*e5 + n*e5);
+  x2= -(m*e51 + p*e52 + q/e52 + n/e51);
+  x3= -(m*e52 + p/e51 + q*e51 + n/e52);
+  x4= -(m/e52 + p*e51 + q/e51 + n*e52);
+  x5= -(m/e51 + p/e52 + q*e52 + n*e51);
+
+  zp= (x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1);
+  zp= zp*zp;
+
+  dp= (x1-x2)*(x1-x3)*(x1-x4)*(x1-x5)*(x2-x3)*(x2-x4)*(x2-x5)*(x3-x4)*(x3-x5)*(x4-x5);
 
   printtext ("-------------------------------- quintischreduziert3 ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- 1. Zwischenwert Differenzenprodukt --------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("(x1-x2)*(x1-x3)*(x1-x4)*(x1-x5)*(x2-x3)*(x2-x4)*(x2-x5)*(x3-x4)*(x3-x5)*(x4-x5)", dp, 0);
+  printtext ("\n");
+  printtext ("-------------------------------- 2. Zwischenwert bikubische Resolvente --------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("(x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1)", zp, 0);
+  printtext ("\n");
+  printvektor2komplex ("z           ", z, 0);
+  printvektor2komplex ("5z          ", z*5, 0);
+  printtext ("\n");
+
   printvektor2komplex ("y           ", y, 0);
   printvektor2komplex ("r           ", r, 0);
   printvektor2komplex ("v           ", v, 0);
   printvektor2komplex ("w           ", w, 0);
   printtext ("\n");
+
   printvektor2komplex ("m           ", m, 0);
   printvektor2komplex ("n           ", n, 0);
   printvektor2komplex ("p           ", p, 0);
   printvektor2komplex ("q           ", q, 0);
   printtext ("\n");
+
   printvektor2komplex ("vp          ", vp, 0);
-  printvektor2komplex ("e5          ", e5, 0);
+  printvektor2komplex ("e51         ", e51, 0);
+  printvektor2komplex ("e52         ", e52, 0);
   printtext ("\n");
   }
 

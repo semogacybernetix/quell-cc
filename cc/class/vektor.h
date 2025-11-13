@@ -21,8 +21,8 @@ typedef signed long long integer;
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
-//typedef __float80 real;       // hw             //   64 Bit: 19.26 Stellen 18/20 Stellen (verlässlich/unterscheidbar)                      6.90              0.53
 typedef long double real;     // hw                                                                                                        6.90      4.34    0.53         10.84                               5.55
+//typedef __float80 real;       // hw             //   64 Bit: 19.26 Stellen 18/20 Stellen (verlässlich/unterscheidbar)                      6.90              0.53
 
 // ------------------------ 128 Bit -------------------------------------------------------------------------------------------------------------
 //typedef _Float128 real;       // sw             //  113 Bit: 34.01 Stellen 33/35 Stellen (verlässlich/unterscheidbar)                      3.84      4.34    9.39         10.84
