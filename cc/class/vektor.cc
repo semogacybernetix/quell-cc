@@ -242,7 +242,7 @@ long double cbrtr (const long double& a)
   }
 
 //------------------------------------------------------------------------------------ quinr ------------------------------------------------------------------------
-_Float32 quinr (const _Float32& a)
+_Float32 qnrtr (const _Float32& a)
   {
   if (a >= 0)
     return powf (a, _Float32 (0.2));
@@ -250,7 +250,7 @@ _Float32 quinr (const _Float32& a)
     return -powf (-a, _Float32 (0.2));
   }
 
-_Float64 quinr (const _Float64& a)
+_Float64 qnrtr (const _Float64& a)
   {
   if (a >= 0)
     return pow (a, _Float64 (0.2));
@@ -258,7 +258,7 @@ _Float64 quinr (const _Float64& a)
     return -pow (-a, _Float64 (0.2));
   }
 
-long double quinr (const long double& a)
+long double qnrtr (const long double& a)
   {
   if (a >= 0)
     return powl (a, (long double) (0.2));
@@ -565,6 +565,14 @@ void cbrtv (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   x1= kartes (vpol);
   x2= kartes (ckomplexp (vpol.b, vpol.w + PI23));
   x3= kartes (ckomplexp (vpol.b, vpol.w - PI23));
+  }
+
+ckomplexk qnrtv (const ckomplexk pv)
+  {
+  ckomplexp vpol= polar180 (pv);
+  vpol.b= cbrtr (vpol.b);
+  vpol.w= vpol.w/5;
+  return kartes (vpol);
   }
 
 ckomplexk expv (const ckomplexk pv)

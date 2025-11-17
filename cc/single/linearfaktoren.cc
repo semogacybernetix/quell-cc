@@ -1985,12 +1985,11 @@ void quartischeingabezw ()
 
 //--------------------------------------------------------------------------- quintische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
 
-void quintischreduziert3 (real c, real d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4, ckomplexk& x5)
+void quintischnacktresolvente (real c, real d, real z, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4, ckomplexk& x5, real& pr)
   {
-  real z, m, p, q, n, y, r, v, w, tv, tw, vp;
-  ckomplexk e51, e52, zp, dp;
-
-  z= 5625;
+  real m, n, p, q, tv, tw, y, r, v, w;
+  ckomplexk v1, v2, v3, v4;
+  ckomplexk e51, e52, zp1, zp2, zp3, zp4, zp5, zp6, dp, pr1, pr2, pr3, pr4, pr5;
 
   y= sqrtr (z)/5;
   r= y*d/(y*y*25 - c);
@@ -2003,13 +2002,30 @@ void quintischreduziert3 (real c, real d, ckomplexk& x1, ckomplexk& x2, ckomplex
   e51= ckomplexk (cosr (PI*2/5), sinr (PI*2/5));
   e52= ckomplexk (cosr (PI*4/5), sinr (PI*4/5));
 
-  m= quinr (tv - sqrtr (tv*tv + y*y*y*y*y));
-  n= quinr (tv + sqrtr (tv*tv + y*y*y*y*y));
-  p= quinr (tw + sqrtr (tw*tw - y*y*y*y*y));
-  q= quinr (tw - sqrtr (tw*tw - y*y*y*y*y));
+  m= qnrtr (tv - sqrtr (tv*tv + y*y*y*y*y));
+  n= qnrtr (tv + sqrtr (tv*tv + y*y*y*y*y));
+  p= qnrtr (tw + sqrtr (tw*tw - y*y*y*y*y));
+  q= qnrtr (tw - sqrtr (tw*tw - y*y*y*y*y));
 
   // Bedingungsgleichung v= m³p + n³q muss erfüllt sein  (m,n) bzw. (p,q) permutieren
-  vp= m*m*m*p + n*n*n*q;
+  v1= m*m*m*p + n*n*n*q;
+  v2= n*n*n*p + m*m*m*q;
+  v3= m*m*m*q + n*n*n*p;
+  v4= n*n*n*q + m*m*m*p;
+  if (absv (v - v1) > 0.1)
+    {
+    printvektor2komplex ("v          ", v, 1);
+    printtext ("\n");
+    printvektor2komplex ("v1         ", v1, 1);
+    printvektor2komplex ("v2         ", v2, 1);
+    printvektor2komplex ("v3         ", v3, 1);
+    printvektor2komplex ("v4         ", v4, 1);
+    printtext ("\n");
+    printvektor2komplex ("m          ", m, 1);
+    printvektor2komplex ("n          ", n, 1);
+    printvektor2komplex ("p          ", p, 1);
+    printvektor2komplex ("q          ", q, 1);
+    }
 
   x1= -(m + p + q + n);
   x2= -(m*e51 + p*e52 + q/e52 + n/e51);
@@ -2017,17 +2033,39 @@ void quintischreduziert3 (real c, real d, ckomplexk& x1, ckomplexk& x2, ckomplex
   x4= -(m/e52 + p*e51 + q/e51 + n*e52);
   x5= -(m/e51 + p/e52 + q*e52 + n*e51);
 
-  zp= (x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1);
-  zp= zp*zp;
+  pr1= x1*x1*x1*x1*x1 + x1*c*5 + d;
+  pr2= x2*x2*x2*x2*x2 + x2*c*5 + d;
+  pr3= x3*x3*x3*x3*x3 + x3*c*5 + d;
+  pr4= x4*x4*x4*x4*x4 + x4*c*5 + d;
+  pr5= x5*x5*x5*x5*x5 + x5*c*5 + d;
+
+  pr= absv (pr1);
+  if (absv (pr2) > pr)
+    pr= absv (pr2);
+  if (absv (pr3) > pr)
+    pr= absv (pr3);
+  if (absv (pr4) > pr)
+    pr= absv (pr4);
+  if (absv (pr5) > pr)
+    pr= absv (pr5);
+
+//*
+  zp1= (x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1);
+  zp1= zp1*zp1;
+  zp2= (x2*x1 + x1*x3 + x3*x4 + x4*x5 + x5*x2);
+  zp2= zp2*zp2;
+  zp3= (x1*x3 + x3*x2 + x2*x4 + x4*x5 + x5*x1);
+  zp3= zp3*zp3;
 
   dp= (x1-x2)*(x1-x3)*(x1-x4)*(x1-x5)*(x2-x3)*(x2-x4)*(x2-x5)*(x3-x4)*(x3-x5)*(x4-x5);
 
-  printtext ("-------------------------------- quintischreduziert3 ----------------------------------------------------------------------------------------------------------------------------\n");
   printtext ("-------------------------------- 1. Zwischenwert Differenzenprodukt --------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("(x1-x2)*(x1-x3)*(x1-x4)*(x1-x5)*(x2-x3)*(x2-x4)*(x2-x5)*(x3-x4)*(x3-x5)*(x4-x5)", dp, 0);
   printtext ("\n");
   printtext ("-------------------------------- 2. Zwischenwert bikubische Resolvente --------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("(x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1)", zp, 0);
+  printvektor2komplex ("(x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1)", zp1, 0);
+  printvektor2komplex ("(x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1)", zp2, 0);
+  printvektor2komplex ("(x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1)", zp3, 0);
   printtext ("\n");
   printvektor2komplex ("z           ", z, 0);
   printvektor2komplex ("5z          ", z*5, 0);
@@ -2045,24 +2083,41 @@ void quintischreduziert3 (real c, real d, ckomplexk& x1, ckomplexk& x2, ckomplex
   printvektor2komplex ("q           ", q, 0);
   printtext ("\n");
 
-  printvektor2komplex ("vp          ", vp, 0);
+  printvektor2komplex ("v1          ", v1, 0);
   printvektor2komplex ("e51         ", e51, 0);
   printvektor2komplex ("e52         ", e52, 0);
   printtext ("\n");
+//*/
   }
 
 void quintischparameter ()
   {
-  real c, d;
-  ckomplexk x1, x2, x3, x4, x5, pr1, pr2, pr3, pr4, pr5;
+  real c, d, z, pr;
+  ckomplexk x1, x2, x3, x4, x5, pr1, pr2, pr3, pr4, pr5, cp, dp;
 
   //vektor2eingabek (c);
   //vektor2eingabek (d);
 
   c= -525;
   d= -61500;
+  //z= 5625;
+  z= 5625;
 
-  quintischreduziert3 (c, d, x1, x2, x3, x4, x5);
+/*
+  for (real lauf3= 0; lauf3 <= 6; lauf3+= 2)
+  for (real lauf5= 2; lauf5 <= 14; lauf5+= 2)
+  for (real lauf7= 0; lauf7 <= 6; lauf7+= 2)
+    {
+    z= powr (3, lauf3)*powr (5, lauf5)*powr (7, lauf7);
+    //printf ("z= %20.10Lf\n", z);
+    quintischnacktresolvente (c, d, z, x1, x2, x3, x4, x5, pr);
+    printf ("z= %20.0Lf  pr= %20.10Lf\n", z, pr);
+    }
+
+  return;
+//*/
+
+  quintischnacktresolvente (c, d, z, x1, x2, x3, x4, x5, pr);
 
   pr1= x1*x1*x1*x1*x1 + x1*c*5 + d;
   pr2= x2*x2*x2*x2*x2 + x2*c*5 + d;
@@ -2070,18 +2125,30 @@ void quintischparameter ()
   pr4= x4*x4*x4*x4*x4 + x4*c*5 + d;
   pr5= x5*x5*x5*x5*x5 + x5*c*5 + d;
 
-  printtext ("-------------------------------- quintischreduziert3 ----------------------------------------------------------------------------------------------------------------------------\n");
+  dp= -(x1*x2*x3*x4*x5);
+  cp= (x1*x2*x3*x4 + x1*x2*x3*x5 + x1*x2*x4*x5 + x1*x3*x4*x5 + x2*x3*x4*x5)/5;
+
+  printtext ("-------------------------------- quintisch Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
   printvektor2komplex ("x2          ", x2, 0);
   printvektor2komplex ("x3          ", x3, 0);
   printvektor2komplex ("x4          ", x4, 0);
   printvektor2komplex ("x5          ", x5, 0);
   printtext ("\n");
+
+  printtext ("-------------------------------- Nullstellenprobe ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("pr           ", pr, 0);
+  printtext ("\n");
   printvektor2komplex ("pr1          ", pr1, 0);
   printvektor2komplex ("pr2          ", pr2, 0);
   printvektor2komplex ("pr3          ", pr3, 0);
   printvektor2komplex ("pr4          ", pr4, 0);
   printvektor2komplex ("pr5          ", pr5, 0);
+  printtext ("\n");
+
+  printtext ("-------------------------------- Koeffizientenprobe -----------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("cp           ", cp, 0);
+  printvektor2komplex ("dp           ", dp, 0);
   }
 
 //--------------------------------------------------------------------------- andere Sachen --------------------------------------------------------------------------------------------------------------------------------------

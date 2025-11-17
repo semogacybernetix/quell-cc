@@ -182,7 +182,7 @@ const cbasis3 einsb3 (1);
 //--------------------------------------------------------------------------------------- Funktionen und Operatoren -----------------------------------------------------------------------------------
 //--------------------- integer Funktionen ------------------------------------------------------------------------------
 
-void     swap (integer& a, integer& b);
+//void     swap       (integer& a, integer& b);
 integer  max        (integer a, integer b);
 void     savemax    (integer& pmax, integer pr);
 
@@ -191,92 +191,74 @@ void     savemax    (integer& pmax, integer pr);
 _Float32 fmodr (const _Float32& a, const _Float32& b);
 _Float64 fmodr (const _Float64& a, const _Float64& b);
 long double fmodr (const long double& a, const long double& b);
-//_Float128 fmodr (const _Float128& a, const _Float128& b);
 
 _Float32 floorr (const _Float32& a);
 _Float64 floorr (const _Float64& a);
 long double floorr (const long double& a);
-//_Float128 floorr (const _Float128& a);
 
 _Float32 fabsr (const _Float32& a);
 _Float64 fabsr (const _Float64& a);
 long double fabsr (const long double& a);
-//_Float128 fabsr (const _Float128& a);
 
 _Float32 sqrtr (const _Float32& a);
 _Float64 sqrtr (const _Float64& a);
 long double sqrtr (const long double& a);
-//_Float128 sqrtr (const _Float128& a);
 
 _Float32 cbrtr (const _Float32& a);
 _Float64 cbrtr (const _Float64& a);
 long double cbrtr (const long double& a);
-//_Float128 cbrtr (const _Float128& a);
 
-_Float32 quinr (const _Float32& a);
-_Float64 quinr (const _Float64& a);
-long double quinr (const long double& a);
-//_Float128 cbrtr (const _Float128& a);
+_Float32 qnrtr (const _Float32& a);
+_Float64 qnrtr (const _Float64& a);
+long double qnrtr (const long double& a);
 
 _Float32 expr (const _Float32& a);
 _Float64 expr (const _Float64& a);
 long double expr (const long double& a);
-//_Float128 expr (const _Float128& a);
 
 _Float32 logr (const _Float32& a);
 _Float64 logr (const _Float64& a);
 long double logr (const long double& a);
-//_Float128 logr (const _Float128& a);
 
 _Float32 powr (const _Float32& a, const _Float32& b);
 _Float64 powr (const _Float64& a, const _Float64& b);
 long double powr (const long double& a, const long double& b);
-//_Float128 powr (const _Float128& a, const _Float128& b);
 
 _Float32 sinr (const _Float32& a);
 _Float64 sinr (const _Float64& a);
 long double sinr (const long double& a);
-//_Float128 sinr (const _Float128& a);
 
 _Float32 cosr (const _Float32& a);
 _Float64 cosr (const _Float64& a);
 long double cosr (const long double& a);
-//_Float128 cosr (const _Float128& a);
 
 _Float32 asinr (const _Float32& a);
 _Float64 asinr (const _Float64& a);
 long double asinr (const long double& a);
-//_Float128 asinr (const _Float128& a);
 
 _Float32 acosr (const _Float32& a);
 _Float64 acosr (const _Float64& a);
 long double acosr (const long double& a);
-//_Float128 acosr (const _Float128& a);
 
 _Float32 atanr (const _Float32& a);
 _Float64 atanr (const _Float64& a);
 long double atanr (const long double& a);
-//_Float128 atanr (const _Float128& a);
 
 _Float32 atan2r (const _Float32& a, const _Float32& b);
 _Float64 atan2r (const _Float64& a, const _Float64& b);
 long double atan2r (const long double& a, const long double& b);
-//_Float128 atan2r (const _Float128& a, const _Float128& b);
 
 _Float32 asinhr (const _Float32& a);
 _Float64 asinhr (const _Float64& a);
 long double asinhr (const long double& a);
-//_Float128 asinhr (const _Float128& a);
 
 _Float32 acoshr (const _Float32& a);
 _Float64 acoshr (const _Float64& a);
 long double acoshr (const long double& a);
-//_Float128 acoshr (const _Float128& a);
 
 _Float32 atanhr (const _Float32& a);
 _Float64 atanhr (const _Float64& a);
 long double atanhr (const long double& a);
-//_Float128 atanhr (const _Float128& a);
 
 //--------------------- cvektor2 Vektor Funktionen ------------------------------------------------------------------------------
 
@@ -304,6 +286,7 @@ ckomplexk sqrtv     (const ckomplexk pv);                                       
 ckomplexk sqrtvk    (const ckomplexk pv);                                       // Quadratwurzel Hauptwert √ ohne Zwischenumwandlung in Polarkoordinaten Sprung bei 180/-180°
 ckomplexk cbrtv     (const ckomplexk pv);                                       // Kubikwurzel ∛ Sprung bei +-180°
 void      cbrtv     (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);  // Kubikwurzel komplett  ∛
+ckomplexk qnrtv     (const ckomplexk pv);                                       // Kubikwurzel ∛ Sprung bei +-180°
 ckomplexk expv      (const ckomplexk pv);
 ckomplexk logv      (const ckomplexk pv);
 ckomplexk coshv     (const ckomplexk pv);
