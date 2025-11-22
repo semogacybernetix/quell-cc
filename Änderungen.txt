@@ -300,6 +300,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.12 Mi  23:00, quintische Gleichung angefangen (quintischreduziert3) Endfehler: Bedingung für v, behoben, 1:36
 2025.11.13 Do  15:18, quintischreduziert3: Produktsumme, Differenzenprodukt implementiert, Einheitswurzeln vereinfacht, 16:46
 2025.11.17 Mo  19:05, quintischnacktresolvente erstellt, bikubische Resolvente Permutationen hinzugefügt, 22:19
+2025.11.21 Fr  23:51, Kompilierungsfehler bei quaternionentest: swap (int, int) auskommentiert, dadurch wird swap (cvektor3, cvektor3) mit Konvertierung des ints zu cvektor3 aufgerufen -> Lvalue, Rvalue Zuweisungsfehler,
+                      Kompilierungsfehler nach langem überlegen gefunden, behoben, quaternionentest funktioniert nicht, Überlauf, keine Textausgabe, 2:43
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

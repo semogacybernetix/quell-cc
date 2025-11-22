@@ -182,7 +182,7 @@ const cbasis3 einsb3 (1);
 //--------------------------------------------------------------------------------------- Funktionen und Operatoren -----------------------------------------------------------------------------------
 //--------------------- integer Funktionen ------------------------------------------------------------------------------
 
-//void     swap       (integer& a, integer& b);
+void     swap       (integer& a, integer& b);
 integer  max        (integer a, integer b);
 void     savemax    (integer& pmax, integer pr);
 

@@ -152,7 +152,8 @@ integer max (integer a, integer b)
   {
   if (a >= b)
     return a;
-  return b;
+    else
+    return b;
   }
 
 void savemax (integer& pmax, integer pr)
