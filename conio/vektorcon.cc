@@ -241,8 +241,8 @@ void printreal (_Float32 pr)
   {
   float pl= float (pr);
   FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9f", pl);
-  fprintf (datei, "%12.9f", pl);
+  printf ("%15.9f", pl);
+  fprintf (datei, "%15.9f", pl);
   fclose (datei);
   }
 
@@ -250,16 +250,16 @@ void printreal (_Float64 pr)
   {
   double pl= double (pr);
   FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9lf", pl);
-  fprintf (datei, "%12.9lf", pl);
+  printf ("%15.9lf", pl);
+  fprintf (datei, "%15.9lf", pl);
   fclose (datei);
   }
 
 void printreal (long double pr)
   {
   FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%12.9Lf", pr);
-  fprintf (datei, "%12.9Lf", pr);
+  printf ("%15.9Lf", pr);
+  fprintf (datei, "%15.9Lf", pr);
   fclose (datei);
   }
 
@@ -479,10 +479,17 @@ void printvektor3ord (cvektor3 pv, integer pord)
   {
   pv= pv;
   pord= pord;
-  FILE* datei= fopen ("screenoutput.txt", "ab");
+
+  printreal (pv.x);
+  printreal (pv.y);
+  printreal (pv.z);
+  printinteger (pord);
+  printtext ("\n");
+
+//  FILE* datei= fopen ("screenoutput.txt", "ab");
 //          printf ("%13.9Lf %13.9Lf %13.9Lf %8lld\n", pv.x, pv.y, pv.z, pord);
 //  fprintf (datei, "%13.9Lf %13.9Lf %13.9Lf %8lld\n", pv.x, pv.y, pv.z, pord);
-  fclose (datei);
+//  fclose (datei);
   }
 
 void printvektor3wi (cvektor3 pv, real wi)
@@ -503,10 +510,22 @@ void printbasis3mat (cbasis3 pb, integer pord, integer pzykel)
   pb= pb;
   pzykel= pzykel;
   pord= pord;
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-//          printf ("        %12.9Lf %12.9Lf %12.9Lf        %12.9Lf %12.9Lf %12.9Lf        %12.9Lf %12.9Lf %12.9Lf  %4.1Lf%6lld%24lld\n", pb.x.x, pb.x.y, pb.x.z, pb.y.x, pb.y.y, pb.y.z, pb.z.x, pb.z.y, pb.z.z, det (pb), pord, pzykel);
-//  fprintf (datei, "        %12.9Lf %12.9Lf %12.9Lf        %12.9Lf %12.9Lf %12.9Lf        %12.9Lf %12.9Lf %15.9Lf  %4.1Lf%6lld%24lld\n", pb.x.x, pb.x.y, pb.x.z, pb.y.x, pb.y.y, pb.y.z, pb.z.x, pb.z.y, pb.z.z, det (pb), pord, pzykel);
-  fclose (datei);
+
+  printreal (pb.x.x);
+  printreal (pb.x.y);
+  printreal (pb.x.z);
+  printtext ("    |");
+  printreal (pb.y.x);
+  printreal (pb.y.y);
+  printreal (pb.y.z);
+  printtext ("    |");
+  printreal (pb.z.x);
+  printreal (pb.z.y);
+  printreal (pb.z.z);
+  printreal (det (pb));
+  printinteger (pord);
+  printinteger (pzykel);
+  printtext ("\n");
   }
 
 void printbasis3dreh (cbasis3 pb, integer pord, integer pzykel, integer ppaar)
@@ -585,12 +604,21 @@ void printvektor4dreh (cvektor4 pv, integer pord, integer pzykel, integer ppaar)
   pzykel= pzykel;
   pord= pord;
   pv= pv;
-//  cvektor4 aw= winkelachsefromquaternion (pv);
-//  real wi= aw.r*180/PI;
-  FILE* datei= fopen ("screenoutput.txt", "ab");
-//          printf ("    %12.9Lf %12.9Lf %12.9Lf %10.3Lf  %3lld    %6lld%24lld\n", aw.i, aw.j, aw.ij, wi, ppaar, pord, pzykel);
-//  fprintf (datei, "    %12.9Lf %12.9Lf %12.9Lf %10.3Lf  %3lld    %6lld%24lld\n", aw.i, aw.j, aw.ij, wi, ppaar, pord, pzykel);
-  fclose (datei);
+  cvektor4 aw= winkelachsefromquaternion (pv);
+  real wi= aw.r*180/PI;
+
+  printreal (aw.i);
+  printreal (aw.j);
+  printreal (aw.ij);
+  printtext ("   ");
+  printreal (wi);
+  printtext ("  ");
+  printinteger (ppaar);
+  printtext ("  ");
+  printinteger (pord);
+  printtext ("  ");
+  printinteger (pzykel);
+  printtext ("\n");
   }
 
 void printvektor4drehobj (const char* pdateiname, cvektor4 pv)
