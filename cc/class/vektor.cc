@@ -576,6 +576,24 @@ ckomplexk qnrtv (const ckomplexk pv)
   return kartes (vpol);
   }
 
+ckomplexk pown (const ckomplexk a, const integer n)
+  {
+  ckomplexk ret= 1;
+
+  for (integer lauf= 0; lauf < n; lauf++)
+    ret= ret*a;
+  return ret;
+  }
+
+ckomplexk potenz (const ckomplexk pv1, const ckomplexk pv2)
+  {
+  ckomplexk ret, retx, rety;
+
+  retx= pv1^pv2.x;
+  rety= cosv (logv (pv1)*pv2.y) + ik*sinv (logv (pv1)*pv2.y);
+  return retx*rety;
+  }
+
 ckomplexk expv (const ckomplexk pv)
   {
   return kartes (ckomplexp (expr (pv.x), (pv.y)));                // keine Einschränkung Bijektivitätsbereich
@@ -693,15 +711,6 @@ ckomplexk operator ^ (const ckomplexk &pv, const real &pr)
 ckomplexk operator ^ (const ckomplexk &pv1, const ckomplexk &pv2)
   {
   return expv (pv2*logv (pv1));                                   // Bijektivitätsbereich: waagerechter ]-pi,pi] Streifen in der rechten Halbebene ohne y-Achse
-  }
-
-ckomplexk potenz (const ckomplexk pv1, const ckomplexk pv2)
-  {
-  ckomplexk ret, retx, rety;
-
-  retx= pv1^pv2.x;
-  rety= cosv (logv (pv1)*pv2.y) + ik*sinv (logv (pv1)*pv2.y);
-  return retx*rety;
   }
 
 //--------------------- ckomplexp Funktionen für polarkomplexe Zahlen -----------------------------------------------------------------
@@ -1069,17 +1078,17 @@ cvektor3 orientiere (const cvektor3 &pv)                          // erster von 
   cvektor3 ret (pv);
   if (ret.x < 0)
     ret= -ret;
-  if (fabsr (ret.x) <= quantr)
+  if (fabsr (ret.x) <= quantg)
     {
     ret.x= 0;
     if (ret.y < 0)
       ret= -ret;
-    if (fabsr (ret.y) <= quantr)
+    if (fabsr (ret.y) <= quantg)
       {
       ret.y= 0;
       if (ret.z < 0)
         ret= -ret;
-      if (fabsr (ret.z) <= quantr)
+      if (fabsr (ret.z) <= quantg)
         ret.z= 0;
       }
     }
@@ -1254,7 +1263,7 @@ cbasis3 getrotz (const real &pf)
 // Spiegelungsmatrix direkt berechnen
 cbasis3 getspiegbasis (const cvektor3 &pv)
   {
-  if (abs (pv) <= quantr)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
+  if (abs (pv) <= quantg)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
     return cbasis3 (-1);
   cvektor3 nv= normiere (pv);
   return cbasis3 (1) - 2*cbasis3 (nv, nv, nv)*cbasis3 (nv);
@@ -1263,7 +1272,7 @@ cbasis3 getspiegbasis (const cvektor3 &pv)
 // Spiegelungsmatrix aus (Drehung von 180° um Spiegelachse) berechnen
 cbasis3 getdrehspiegbasis (const cvektor3 &pv)
   {
-  if (abs (pv) <= quantr)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
+  if (abs (pv) <= quantg)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
     return cbasis3 (-1);
   return -matrixfromwinkelachse (cvektor4 (PI, pv.x, pv.y, pv.z));
   }
@@ -1276,7 +1285,7 @@ cvektor3 getspiegachse (const cbasis3 &pb)
 integer aehnlich (const cbasis3 &pb1, const cbasis3 &pb2)
   {
   real dif= abs (pb1 - pb2);
-  if (dif <= quantr)
+  if (dif <= quantg)
     return 1;
   return 0;
   }
@@ -1360,7 +1369,7 @@ cvektor4 senk (const cvektor4 &pv)
 cvektor4 normiere (const cvektor4 &pv)
   {
   const real q= pv%pv;
-  if (q <= quantr)
+  if (q <= quantg)
     return cvektor4 (0, 0, 0, 0);
   return pv/sqrtr (q);
   }
@@ -1374,7 +1383,7 @@ cvektor4 operator ~ (const cvektor4 &pv)
 integer aehnlich (const cvektor4 &pv1, const cvektor4 &pv2)
   {
   real dif= abs (pv1 - pv2);
-  if (dif <= quantr)
+  if (dif <= quantg)
     return 1;
   return 0;
   }
@@ -1527,17 +1536,17 @@ cvektor4 quaternionfromwinkelachse (const cvektor4 pwa)
 
 cvektor4 winkelachsefromquaternion (const cvektor4 pq)
   {
-  if (pq.r >= 1 - quantr)
+  if (pq.r >= 1 - quantg)
     return cvektor4 (0, 0, 0, 0);
-  if (pq.r <= -1 + quantr)
+  if (pq.r <= -1 + quantg)
     return cvektor4 (2*PI, 0, 0, 0);
   real drehw= acosr (pq.r)*2;
   cvektor3 achse (normiere (cvektor3 (pq.i, pq.j, pq.ij)));
-  if (fabsr (achse.x) <= quantr)
+  if (fabsr (achse.x) <= quantg)
     achse.x= 0;
-  if (fabsr (achse.y) <= quantr)
+  if (fabsr (achse.y) <= quantg)
     achse.y= 0;
-  if (fabsr (achse.z) <= quantr)
+  if (fabsr (achse.z) <= quantg)
     achse.z= 0;
   return cvektor4 (drehw, achse.x, achse.y, achse.z);
   }
@@ -1548,7 +1557,7 @@ cvektor4 qwafrommatrix (const cbasis3 &pdreh)                     // nur für Dr
 
   // ********************* Realteil direkt aus der Matrix berechnen, Problem bei 0° und 180° Drehungen abfangen
   real qr= 1 + pdreh.x.x + pdreh.y.y + pdreh.z.z;                 // qr [4..0] = [0..180]°
-  if (qr >= 4 - quantr)             //   0° Drehung
+  if (qr >= 4 - quantg)             //   0° Drehung
     return cvektor4 (1, 0, 0, 0);
 
   // ********************* Drehachse durch Eigenwerte berechnen, Eigenvektor numerisch stabil, Länge: [5 1/3 bis 16]
@@ -1559,7 +1568,7 @@ cvektor4 qwafrommatrix (const cbasis3 &pdreh)                     // nur für Dr
   cvektor3 drehachse (geteigen (hdreh));
 
   // Drehachse richtig orientieren
-  if (qr <= quantr)                                               // 180° Drehung: Es gibt 2 Drehachsen statt nur einer
+  if (qr <= quantg)                                               // 180° Drehung: Es gibt 2 Drehachsen statt nur einer
     {
     qr= 0;
     drehachse= orientiere (drehachse);                            // bei 180° Drehung Achse mit positven ersten von 0 verschiedenem Wert aussuchen. (besser kleinste Anzahl von Minuszeichen)
@@ -1582,11 +1591,11 @@ cvektor4 winkelachsefrommatrix (const cbasis3 &pdreh)             // Bei Drehspi
     qwa= qwafrommatrix (pdreh);
     else
     qwa= qwafrommatrix (-pdreh);
-  if (fabsr (qwa.i) <= quantr)
+  if (fabsr (qwa.i) <= quantg)
     qwa.i= 0;
-  if (fabsr (qwa.j) <= quantr)
+  if (fabsr (qwa.j) <= quantg)
     qwa.j= 0;
-  if (fabsr (qwa.ij) <= quantr)
+  if (fabsr (qwa.ij) <= quantg)
     qwa.ij= 0;
   cvektor3 achse (qwa.i, qwa.j, qwa.ij);
   achse= normiere (achse);
@@ -1609,7 +1618,7 @@ cbasis3  matrixfromwinkelachse (const cvektor4 pq)
 cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)              // Funktioniert bei 0° und 180° Drehungen
   {
   cvektor4 qwa (qwafrommatrix (pdreh));                           // Mehrdeutigkeit der Achse bei 180° Drehungen
-  if (qwa.r >= 1 - quantr)      // Drehung ist 0° Drehung
+  if (qwa.r >= 1 - quantg)      // Drehung ist 0° Drehung
     return qwa;                // 1 zurückgeben
   cvektor3 achse (cvektor3 (qwa.i, qwa.j, qwa.ij));
   real k= sqrtr (1 - qwa.r*qwa.r)/abs (achse);
@@ -1619,7 +1628,7 @@ cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)              // Funktionier
 cvektor4 quaternionfrommatrix2 (const cbasis3 &pdreh)             // Kreuzproduktversion: versagt bei 180° Drehungen
   {
   real qr= sqrtr (1 + pdreh.x.x + pdreh.y.y + pdreh.z.z);
-  if (qr <= quantr)                                               // 180° Drehung
+  if (qr <= quantg)                                               // 180° Drehung
     return cvektor4 (0, 1, 0, 0);                                 // Bullshit zurückgeben
   real qi= (pdreh.y.z - pdreh.z.y)/qr;
   real qj= (pdreh.z.x - pdreh.x.z)/qr;
@@ -1672,7 +1681,7 @@ cvektor3 eulerwinkelfrommatrix (const cbasis3& pdm)
 
   // Längengrad- und Rollberechnung
   real cosbr= cosr (breite);
-  if (cosbr > quantr)  // Breite nicht polar
+  if (cosbr > quantg)  // Breite nicht polar
     {
     // Längengradberechnung
     vl= pdm.z.z/cosbr;
@@ -1696,7 +1705,7 @@ cvektor3 eulerwinkelfrommatrix (const cbasis3& pdm)
     if (pdm.x.y > 0)
       roll= -roll;
     }
-  if (cosbr <= quantr)  // Spezialfall Breite polar
+  if (cosbr <= quantg)  // Spezialfall Breite polar
     {
     vl= pdm.x.x;
     if (fabsr (vl) < 1)
@@ -1885,11 +1894,124 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   //kubischreduziertreellu (p.x, q.x, yr);
   //kubischreduziertreellc (p.x, q.x, yr);
 
+  //x1= (yr - a)/3;
   x1= (y1 - a)/3;
   x2= (y2 - a)/3;
   x3= (y3 - a)/3;
+  }
 
-  //x1= (yr - a)/3;
+void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
+  {
+  ckomplexk d, f1, f2, f3, r1, r2, r3, dp;
+  ckomplexk fr1, fr2, fr3, rr1, rr2, rr3;
+  real ar, br, cr;
+
+  kubisch (a, b, c, x1, x2, x3);
+
+  printtext ("-------------------------------------------- Berechnung der Zwischenwerte aus den Lösungen ------------------------------------------------------------------\n");
+  printvektor2komplex ("x1", x1, 0);
+  printvektor2komplex ("x2", x2, 0);
+  printvektor2komplex ("x3", x3, 0);
+  printtext ("\n");
+
+  r1= x1 + x2*e31 + x3*e32;
+  r2= x1 + x2*e32 + x3*e31;
+  r3= x1 + x2 + x3;
+
+  printvektor2komplex ("r1", r1, 0);
+  printvektor2komplex ("r2", r2, 0);
+  printvektor2komplex ("r3", r3, 0);
+  printtext ("\n");
+
+  f1= r1*r1*r1;
+  f2= r2*r2*r2;
+  f3= r3*r3*r3;
+
+  printvektor2komplex ("f1", f1, 0);
+  printvektor2komplex ("f2", f2, 0);
+  printvektor2komplex ("f3", f3, 0);
+  printtext ("\n");
+
+  dp= (x1-x2)*(x2-x3)*(x3-x1);
+
+  printvektor2komplex ("dp", dp, 0);
+  printtext ("\n");
+
+  printtext ("-------------------------------------------- Berechnung der Zwischenwerte aus den Koeffizienten -------------------------------------------------------------\n");
+  ar= a.x;
+  br= b.x;
+  cr= c.x;
+
+  d= a*a*b*b + a*a*a*c*-4 + b*b*b*-4 + a*b*c*18 + c*c*-27;
+  d= sqrtv (d);
+
+  //f1= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*sqrtr (6.75);
+  //f2= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*-sqrtr (6.75);
+  //f3= -(a*a*a);
+
+  printvektor2komplex ("f1", f1, 0);
+  printvektor2komplex ("f2", f2, 0);
+  printvektor2komplex ("f3", f3, 0);
+  printtext ("\n");
+
+  fr1= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*sqrtr (6.75);
+  fr2= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*-sqrtr (6.75);
+  fr3= -(ar*ar*ar);
+
+  printvektor2komplex ("fr1", fr1, 0);
+  printvektor2komplex ("fr2", fr2, 0);
+  printvektor2komplex ("fr3", fr3, 0);
+  printtext ("\n");
+
+  r1= cbrtv (f1);
+  r2= cbrtv (f2);
+  r3= cbrtv (f3);
+
+  rr1= cbrtv (fr1);
+  rr2= cbrtv (fr2);
+  rr3= cbrtv (fr3);
+
+  printvektor2komplex ("r1", r1, 0);
+  printvektor2komplex ("r2", r2, 0);
+  printvektor2komplex ("r3", r3, 0);
+  printtext ("\n");
+
+  printvektor2komplex ("rr1", rr1, 0);
+  printvektor2komplex ("rr2", rr2, 0);
+  printvektor2komplex ("rr3", rr3, 0);
+  printtext ("\n");
+
+  x1= (r1 + r2 + r3)/3;
+  x2= (r1*e32 + r2*e31 + r3)/3;
+  x3= (r1*e31 + r2*e32 + r3)/3;
+
+  printvektor2komplex ("x1 a", x1, 0);
+  printvektor2komplex ("x2 a", x2, 0);
+  printvektor2komplex ("x3 a", x3, 0);
+  printtext ("\n");
+
+  for (integer lauf1= 0; lauf1 < 3; lauf1++)
+  for (integer lauf2= 0; lauf2 < 3; lauf2++)
+  for (integer lauf3= 0; lauf3 < 3; lauf3++)
+    {
+    r1= r1*pown (e31,lauf1);
+    r2= r2*pown (e31,lauf2);
+    r3= r3*pown (e31,lauf3);
+
+    printvektor2komplex ("r1", r1, 0);
+    printvektor2komplex ("r2", r2, 0);
+    printvektor2komplex ("r3", r3, 0);
+    printtext ("\n");
+
+    x1= (r1 + r2 + r3)/3;
+    x2= (r1*e32 + r2*e31 + r3)/3;
+    x3= (r1*e31 + r2*e32 + r3)/3;
+
+    printvektor2komplex ("x1", x1, 0);
+    printvektor2komplex ("x2", x2, 0);
+    printvektor2komplex ("x3", x3, 0);
+    printtext ("\n");
+    }
   }
 
 //--------------------------------------------------- kubische Resolventen ---------------------------------------------------------------------------------------------------------------------------------------------------------

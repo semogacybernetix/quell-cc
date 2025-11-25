@@ -237,41 +237,54 @@ void kubischloesungen ()
 
   kubischreduziertk (a, b, c, p, q);
 
-  printvektor2komplex ("a           ", a, 0);
-  printvektor2komplex ("b           ", b, 0);
-  printvektor2komplex ("c           ", c, 0);
+  printvektor2komplex ("a", a, 0);
+  printvektor2komplex ("b", b, 0);
+  printvektor2komplex ("c", c, 0);
   printtext ("\n");
+
   kubischreduziertcardano (p, q, y1, y2, y3);
   printtext ("---------------------- kubisch cardano -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", y1 - a/3, 0);
-  printvektor2komplex ("x2          ", y2 - a/3, 0);
-  printvektor2komplex ("x3          ", y3 - a/3, 0);
+  printvektor2komplex ("x1", y1 - a/3, 0);
+  printvektor2komplex ("x2", y2 - a/3, 0);
+  printvektor2komplex ("x3", y3 - a/3, 0);
   printtext ("\n");
+
   kubischreduziertcardano3 (p, q, y1, y2, y3);
   printtext ("---------------------- kubisch cardano3 -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", (y1 - a)/3, 0);
-  printvektor2komplex ("x2          ", (y2 - a)/3, 0);
-  printvektor2komplex ("x3          ", (y3 - a)/3, 0);
+  printvektor2komplex ("x1", (y1 - a)/3, 0);
+  printvektor2komplex ("x2", (y2 - a)/3, 0);
+  printvektor2komplex ("x3", (y3 - a)/3, 0);
   printtext ("\n");
+
   kubischreduziertu (p, q, y1, y2, y3);
   printtext ("---------------------- kubisch u -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", y1 - a/3, 0);
-  printvektor2komplex ("x2          ", y2 - a/3, 0);
-  printvektor2komplex ("x3          ", y3 - a/3, 0);
+  printvektor2komplex ("x1", y1 - a/3, 0);
+  printvektor2komplex ("x2", y2 - a/3, 0);
+  printvektor2komplex ("x3", y3 - a/3, 0);
   printtext ("\n");
+
   kubischreduziertu3 (p, q, y1, y2, y3);
   printtext ("---------------------- kubisch u3 -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", (y1*3 - a)/3, 0);
-  printvektor2komplex ("x2          ", (y2*3 - a)/3, 0);
-  printvektor2komplex ("x3          ", (y3*3 - a)/3, 0);
+  printvektor2komplex ("x1", (y1*3 - a)/3, 0);
+  printvektor2komplex ("x2", (y2*3 - a)/3, 0);
+  printvektor2komplex ("x3", (y3*3 - a)/3, 0);
   printtext ("\n");
+
+  kubischelementar (a, b, c, x1, x2, x3);
+  printtext ("---------------------- kubisch elementar --------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1", x1, 0);
+  printvektor2komplex ("x2", x2, 0);
+  printvektor2komplex ("x3", x3, 0);
+  printtext ("\n");
+
   kubischreduziertreellc (p.x, q.x, y);
   printtext ("---------------------- kubisch reell c -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("y           ", y - a.x/3, 0);
+  printvektor2komplex ("x", y - a.x/3, 0);
   printtext ("\n");
+
   kubischreduziertreellu (p.x, q.x, y);
   printtext ("---------------------- kubisch reell u -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("y           ", y - a.x/3, 0);
+  printvektor2komplex ("x", y - a.x/3, 0);
   printtext ("\n");
   }
 

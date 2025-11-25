@@ -303,6 +303,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.21 Fr  23:51, Kompilierungsfehler bei quaternionentest: swap (int, int) auskommentiert, dadurch wird swap (cvektor3, cvektor3) mit Konvertierung des ints zu cvektor3 aufgerufen -> Lvalue, Rvalue Zuweisungsfehler,
                       Kompilierungsfehler nach langem überlegen gefunden, behoben, quaternionentest funktioniert nicht, Überlauf, keine Textausgabe, 2:43
 2025.11.22 Sa  10:18, vektorcon.cc: Printroutinen für [1] quaternionentest.cc umgeschrieben, 11:18
+2025.11.23 So  23:56, kubischelementar angefangen, Berechnung fehlerhaft, 1:01
+2025.11.24 Mo  08:00, kubischelementar, 12 Uhr, 21 Uhr, Fehlerbeseitigung quantv, quantg, quantr, immer noch Überlauf, 1 Uhr
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

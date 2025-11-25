@@ -2,7 +2,7 @@
 
 #include <iostream>  // printf zum debuggen
 
-real gquant= real (1e-8);
+//real quantg= real (1e-8);
 
 //------------------------ Gruppenfunktionen ---------------------------------------------------------------------------------
 
@@ -100,19 +100,19 @@ cbasis3 spiegelachsenvonebenenwinkele (const cvektor3 wi)  // über gleichschenk
   real viy= cosr (wi.y);
   real viz= cosr (wi.z);
 
-  if (ebx >= gquant)
+  if (ebx >= quantg)
     spieg3.x= (viy + viz)/ebx/2;        // dritte Spiegelachse über Skalarprodukte ausrechnen
     else
     spieg3.x= 0;                          // wi.x = 180°, wi.y + wi.z = 180° wi.y [0..180°]
 
-   if (eby >= gquant)
+   if (eby >= quantg)
     spieg3.y= (viy - viz)/eby/2;
     else
     spieg3.y= 0;                          // wi.x = 0°, wi.y = wi.z, wi.y [0..180°]
 
   spieg3.z= 1 - spieg3.x*spieg3.x - spieg3.y*spieg3.y;  // 2 Schnittpunkte der Kreise, negativer Wert = positive Determinante
 
-  if (spieg3.z > -gquant)
+  if (spieg3.z > -quantg)
     spieg3.z= sqrtr (fabsr (spieg3.z));
     else
     spieg3.z= 0;                          // Dreiecksungleichung ist nicht erfüllt
@@ -138,19 +138,19 @@ cbasis3 spiegelachsenvonebenenwinkeld (const cvektor3 wi)  // über gleichschenk
   real viy= cosr (wiy);
   real viz= cosr (wiz);
 
-  if (ebx >= gquant)
+  if (ebx >= quantg)
     spieg3.x= (viy + viz)/ebx/2;        // dritte Spiegelachse über Skalarprodukte ausrechnen
     else
     spieg3.x= 0;                          // wi.x = 180°, wi.y + wi.z = 180° wi.y [0..180°]
 
-   if (eby >= gquant)
+   if (eby >= quantg)
     spieg3.y= (viy - viz)/eby/2;
     else
     spieg3.y= 0;                          // wi.x = 0°, wi.y = wi.z, wi.y [0..180°]
 
   spieg3.z= 1 - spieg3.x*spieg3.x - spieg3.y*spieg3.y;  // 2 Schnittpunkte der Kreise, negativer Wert = positive Determinante
 
-  if (spieg3.z > -gquant)
+  if (spieg3.z > -quantg)
     spieg3.z= sqrtr (fabsr (spieg3.z));
     else
     spieg3.z= 0;                          // Dreiecksungleichung ist nicht erfüllt
@@ -358,7 +358,7 @@ integer cvektor3liste::elposition (cvektor3 pv)  // Listenposition eines Element
   for (integer lauf= 0;lauf < anz; lauf++)
     {
     dif= abs (pv - v[lauf]);
-    if (dif <= gquant)
+    if (dif <= quantg)
       return lauf;
     }
   return -1;
@@ -945,7 +945,7 @@ cvektor3 ccluster::ermittleefkdreibein (cvektor3 pvektor, real praum)
   for (integer lauf= 0; lauf < kliste->anz; lauf++)
     {
     voldreibein= det (cbasis3 (fliste->v[retx], eliste->v[rety], kliste->v[lauf]));
-    if ((winkelb (pvektor, kliste->v[lauf]) < minwinkel) && (voldreibein*praum > gquant))  // kleinsten Winkel zwischen Körpervektor und Kantenvektor (2-zählige Achse) Volumen efk-Dreibein darf nicht null sein + Orientierung Volumen
+    if ((winkelb (pvektor, kliste->v[lauf]) < minwinkel) && (voldreibein*praum > quantg))  // kleinsten Winkel zwischen Körpervektor und Kantenvektor (2-zählige Achse) Volumen efk-Dreibein darf nicht null sein + Orientierung Volumen
       {
       minvektor= lauf;
       minwinkel= winkelb (pvektor, kliste->v[lauf]);

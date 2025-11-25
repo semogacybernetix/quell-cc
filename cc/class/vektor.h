@@ -138,7 +138,8 @@ struct coktonion : public cvektor8
 //--------------------------------------------------------------------------------------- Konstanten --------------------------------------------------------------------------------------------------
 
 // reelle Konstanten
-const real quantr= real (powl (0.1, sizeof (real)));
+//const real quantr= real (powl (0.1, sizeof (real)));
+const real quantg= 1e8;
 const real PI (real (M_PIl));                                                         // die Konstante pi vom Typ real
 const real PIh (real (M_PIl/2));                                                      // pi/2
 const real PI2 (real (M_PIl*2));                                                      // 2pi
@@ -287,12 +288,14 @@ ckomplexk sqrtvk    (const ckomplexk pv);                                       
 ckomplexk cbrtv     (const ckomplexk pv);                                       // Kubikwurzel ∛ Sprung bei +-180°
 void      cbrtv     (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);  // Kubikwurzel komplett  ∛
 ckomplexk qnrtv     (const ckomplexk pv);                                       // Kubikwurzel ∛ Sprung bei +-180°
+
 ckomplexk expv      (const ckomplexk pv);
 ckomplexk logv      (const ckomplexk pv);
 ckomplexk coshv     (const ckomplexk pv);
 ckomplexk sinhv     (const ckomplexk pv);
 ckomplexk cosv      (const ckomplexk pv);
 ckomplexk sinv      (const ckomplexk pv);
+ckomplexk pown      (const ckomplexk a, const integer n);
 ckomplexk potenz    (const ckomplexk pv1, const ckomplexk pv2);
 
 // ------- Schnittpunktklasse ------------------------------------------------------------------------------------------------
@@ -312,6 +315,7 @@ struct cschnittpunkte
 // -------------------- Lösungsformeln für Polynome ----------------------------------------------------------------
 
 void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2);
+
 void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertcardano (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertcardano3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
@@ -321,23 +325,28 @@ void kubischreduziertreellc (real p, real q, real& y);
 void kubischreduziertreellu (real p, real q, real& y);
 void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, ckomplexk& q);
 void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);
+void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);
+
 void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventebuch (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventepdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventelagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventez (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
+
 void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertbuchu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertbuchv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
+
 void quartischreduziertbuch3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertpdfw23 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& p, ckomplexk& q, ckomplexk& r);
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
+
 void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);

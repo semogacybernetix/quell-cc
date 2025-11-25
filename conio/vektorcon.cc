@@ -309,7 +309,7 @@ void vektor2eingabek (cvektor2& pp)
   {
   printtext ("a real:         ");
   realeingabe (pp.x);
-  printtext ("a imaginär      ");
+  printtext ("a imaginär:     ");
   realeingabe (pp.y);
   printtext ("\n");
   }
