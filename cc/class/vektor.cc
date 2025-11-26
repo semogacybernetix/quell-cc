@@ -1945,8 +1945,8 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   d= a*a*b*b + a*a*a*c*-4 + b*b*b*-4 + a*b*c*18 + c*c*-27;
   d= sqrtv (d);
 
-  //f1= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*sqrtr (6.75);
-  //f2= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*-sqrtr (6.75);
+  //f1= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*sqrtr (real (6.75));
+  //f2= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*-sqrtr (real (6.75));
   //f3= -(a*a*a);
 
   printvektor2komplex ("f1", f1, 0);
@@ -1954,8 +1954,8 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   printvektor2komplex ("f3", f3, 0);
   printtext ("\n");
 
-  fr1= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*sqrtr (6.75);
-  fr2= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*-sqrtr (6.75);
+  fr1= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*sqrtr (real (6.75));
+  fr2= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*-sqrtr (real (6.75));
   fr3= -(ar*ar*ar);
 
   printvektor2komplex ("fr1", fr1, 0);

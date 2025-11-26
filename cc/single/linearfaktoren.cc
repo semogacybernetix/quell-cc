@@ -2177,7 +2177,7 @@ void polartest ()
   auscos= polarcos180 (ein);
   austan= polartan180 (ein);
   aus360= polar360 (ein);
-
+/*
   printf ("\nPolarkoordinaten:\n");
   printf ("Eingabe:                  %60.40Lf %60.40Lf\n\n", ein.x, ein.y);
   printf ("polartan2:                %60.40Lf %60.40Lf\n", austan2.b, austan2.w*180/M_PIl);
@@ -2187,6 +2187,7 @@ void polartest ()
   printf ("polar180:                 %60.40Lf %60.40Lf\n", aus180.b, aus180.w*180/M_PIl);
   printf ("polar360:                 %60.40Lf %60.40Lf\n", aus360.b, aus360.w*180/M_PIl);
   printf ("\n");
+*/
   }
 
 void sqrttest ()
