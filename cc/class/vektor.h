@@ -138,7 +138,7 @@ struct coktonion : public cvektor8
 //--------------------------------------------------------------------------------------- Konstanten --------------------------------------------------------------------------------------------------
 
 // reelle Konstanten
-//const real quantr= real (powl (0.1, sizeof (real)));
+const real quantr= real (powl (0.1, sizeof (real)));
 const real quantg= real (1e-8);
 const real PI (real (M_PIl));                                                         // die Konstante pi vom Typ real
 const real PIh (real (M_PIl/2));                                                      // pi/2

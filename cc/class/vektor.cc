@@ -2360,7 +2360,7 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
-  rq4= rq*4/-3;
+  rq4= rq/real (-0.75);
   pk= pqq/-9 + rq4;
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
@@ -2396,7 +2396,7 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
-  rq4= rq*4/-3;
+  rq4= rq/real (-0.75);
   pk= pqq/-9 + rq4;
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
@@ -2465,7 +2465,7 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
-  rq4= rq*4/-3;
+  rq4= rq/real (-0.75);
   pk= pqq/-9 + rq4;
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
@@ -2533,7 +2533,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
-  rq4= rq*4/-3;
+  rq4= rq/real (-0.75);
   pk= pqq/-9 + rq4;
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
