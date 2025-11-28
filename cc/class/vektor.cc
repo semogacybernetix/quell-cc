@@ -1902,9 +1902,9 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
 
 void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   {
-  ckomplexk d, f1, f2, f3, r1, r2, r3, dp;
-  ckomplexk fr1, fr2, fr3, rr1, rr2, rr3;
-  real ar, br, cr;
+  ckomplexk d, f1, f2, f3, r1, r2, r3, f_1, f_2, f_3, r_1, r_2, r_3, ff1, ff2, ff3, f_f1, f_f2, f_f3, dp;
+  ckomplexk fr1, fr2, fr3, rr1, rr2, rr3, k;
+  real ar, br, cr, dr;
 
   kubisch (a, b, c, x1, x2, x3);
 
@@ -1918,23 +1918,62 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   r2= x1 + x2*e32 + x3*e31;
   r3= x1 + x2 + x3;
 
+  r_1= x2 + x1*e31 + x3*e32;
+  r_2= x2 + x1*e32 + x3*e31;
+  r_3= x2 + x1 + x3;
+
   printvektor2komplex ("r1", r1, 0);
   printvektor2komplex ("r2", r2, 0);
   printvektor2komplex ("r3", r3, 0);
+  printvektor2komplex ("r_1", r_1, 0);
+  printvektor2komplex ("r_2", r_2, 0);
+  printvektor2komplex ("r_3", r_3, 0);
   printtext ("\n");
 
   f1= r1*r1*r1;
   f2= r2*r2*r2;
   f3= r3*r3*r3;
 
+  f_1= r_1*r_1*r_1;
+  f_2= r_2*r_2*r_2;
+  f_3= r_3*r_3*r_3;
+
   printvektor2komplex ("f1", f1, 0);
   printvektor2komplex ("f2", f2, 0);
   printvektor2komplex ("f3", f3, 0);
+  printvektor2komplex ("f_1", f_1, 0);
+  printvektor2komplex ("f_2", f_2, 0);
+  printvektor2komplex ("f_3", f_3, 0);
+  printtext ("\n");
+
+  ff1= f1 + f_1;
+  ff2= f2 + f_2;
+  ff3= f3 + f_3;
+
+  f_f1= f1 - f_1;
+  f_f2= f2 - f_2;
+  f_f3= f3 - f_3;
+
+  f_f1= f_f1*f_f1;
+  f_f2= f_f2*f_f2;
+  f_f3= f_f3*f_f3;
+
+  printvektor2komplex ("ff1", ff1, 0);
+  printvektor2komplex ("ff2", ff2, 0);
+  printvektor2komplex ("ff3", ff3, 0);
+  printvektor2komplex ("f_f1", f_f1, 0);
+  printvektor2komplex ("f_f2", f_f2, 0);
+  printvektor2komplex ("f_f3", f_f3, 0);
   printtext ("\n");
 
   dp= (x1-x2)*(x2-x3)*(x3-x1);
 
   printvektor2komplex ("dp", dp, 0);
+  printtext ("\n");
+
+  k= (x1*x1*x2 + x2*x2*x1 + x2*x2*x3 + x3*x3*x2 + x3*x3*x1 + x1*x1*x3)/2;
+
+  printvektor2komplex ("k", k, 0);
   printtext ("\n");
 
   printtext ("-------------------------------------------- Berechnung der Zwischenwerte aus den Koeffizienten -------------------------------------------------------------\n");
@@ -1943,11 +1982,13 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   cr= c.x;
 
   d= a*a*b*b + a*a*a*c*-4 + b*b*b*-4 + a*b*c*18 + c*c*-27;
+  dr= ar*ar*br*br + ar*ar*ar*cr*-4 + br*br*br*-4 + ar*br*cr*18 + cr*cr*-27;
+  dr= sqrtr (dr);
   d= sqrtv (d);
 
-  //f1= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*sqrtr (real (6.75));
-  //f2= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*-sqrtr (real (6.75));
-  //f3= -(a*a*a);
+//  f1= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*sqrtr (real (6.75));
+//  f2= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*-sqrtr (real (6.75));
+  f3= -(a*a*a);
 
   printvektor2komplex ("f1", f1, 0);
   printvektor2komplex ("f2", f2, 0);
@@ -1989,7 +2030,7 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   printvektor2komplex ("x2 a", x2, 0);
   printvektor2komplex ("x3 a", x3, 0);
   printtext ("\n");
-
+/*
   for (integer lauf1= 0; lauf1 < 3; lauf1++)
   for (integer lauf2= 0; lauf2 < 3; lauf2++)
   for (integer lauf3= 0; lauf3 < 3; lauf3++)
@@ -2012,6 +2053,7 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
     printvektor2komplex ("x3", x3, 0);
     printtext ("\n");
     }
+*/
   }
 
 //--------------------------------------------------- kubische Resolventen ---------------------------------------------------------------------------------------------------------------------------------------------------------

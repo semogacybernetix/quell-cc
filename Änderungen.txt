@@ -306,6 +306,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.23 So  23:56, kubischelementar angefangen, Berechnung fehlerhaft, 1:01
 2025.11.24 Mo  08:00, kubischelementar, 12 Uhr, 21 Uhr, Fehlerbeseitigung quantv, quantg, quantr, immer noch Überlauf, 1 Uhr
 2025.11.26 Mi  21:01, 1234 Fehler in quartischdiffpvintr (0/0), lagrangeu,c: sqrt (-) gefunden, Kommentare vektor.h, 22:39
+2025.11.27 Do  23 Uhr, kubischelementar Versuch Fehler in realteil Differenzenproduktquadrat -a³ - 9/2ab - 27/2c zu finden, 0 Uhr
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
