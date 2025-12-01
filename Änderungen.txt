@@ -229,7 +229,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2025.09.10 Mi  8:20 xray korrigiert, xray katzenturm geht, threadfestigkeit noch nicht gegeben, 9:20
 
-2025.09.11 Do  16 Uhr, xray und includes vollständig transparent auf float32,64,80 angepasst, endlich threadfehler mit Störpunkten behoben (transrich war global, dadurch Störpunkte) große Freude, 21:23
+2025.09.11 Do  16 Uhr, xray und includes vollständig transparent auf float32,64,80 angepasst, endlich threadfehler mit Störpunkten behoben (transrich bei ckoerper war global, dadurch Störpunkte) große Freude, 21:23
 2025.09.12 Fr  12 Uhr, Torusformel für raytracer erstellt, in xray einprogrammiert, quartische Gleichung in vektor.h, vektor.cc einprogrammiert, 14:12
 2025.09.13 Sa  8:15 Torusformel einprogrammiert, geht nicht, neu berechnet, wieder einprogrammiert, beulenförmige Missbildung, Variablenoptimierung, immer noch Beule, 1:24
 2025.09.14 So  6:37 Fehlersuche Torusformel, 2 Fehler gefunden (k -8rxox + ryoy, k^4 Term von x²y² vergessen), Formel fehlerfrei, geschafft :), 7:41, getestet, f32-80, Parametrisierung, mit jpg Bild texturiert, 9:10
@@ -307,6 +307,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.24 Mo  08:00, kubischelementar, 12 Uhr, 21 Uhr, Fehlerbeseitigung quantv, quantg, quantr, immer noch Überlauf, 1 Uhr
 2025.11.26 Mi  21:01, 1234 Fehler in quartischdiffpvintr (0/0), lagrangeu,c: sqrt (-) gefunden, Kommentare vektor.h, 22:39
 2025.11.27 Do  23 Uhr, kubischelementar Versuch Fehler in realteil Differenzenproduktquadrat -a³ - 9/2ab - 27/2c zu finden, 0 Uhr
+
+2025.11.30 So  20 Uhr, cflugsimu.fliegethread: Framerate auf 100 fps begrenzt, drehstep, bewstep auf 200 ms Schrittrate begrenzt, fbray in xray integriert, fbscr ray geht mit Segfault, fast 2x schneller als cxscreen, 1:37
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

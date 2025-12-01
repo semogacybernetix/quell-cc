@@ -293,8 +293,8 @@ struct ckoerperliste
 
 struct cwelt : public clmannig
   {
-  cwelt (const real &pabstand, const cvektor3 &paugpos, const cbasis3 &paugbasis);
-  cwelt (const real &pabstand, const char* pname);
+  cwelt (const cvektor3 &paugpos, const cbasis3 &paugbasis);
+  cwelt (const char* pname);
   cvektor3 getpunkt (const cvektor2 &pv);
   void addkoerper (ckoerper* pkoerper);
 
@@ -312,7 +312,7 @@ struct cwelt : public clmannig
   void aktualisiere ();
 
   ckoerperliste  koerperliste;
-  real           abstand;               // Abstand der Bildebene in Pixeln vom Ursprung in z-Richtung = Abstand des Betrachters vom Monitor in Pixeln
+  real           abstand;                    // Abstand der Bildebene in Pixeln vom Ursprung in z-Richtung = Abstand des Betrachters vom Monitor in Pixeln
   cvektor3       augpos;
   cbasis3        augbasis;
   cvektor4       augdrehaw;

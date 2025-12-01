@@ -3,6 +3,7 @@
 
 #include "../../cc/screen/vscr.h"
 
+// cxscreen ist nicht threadfest
 struct cxscreen : public clscreen8
   {
   cxscreen (const char* pname, integer px, integer py);

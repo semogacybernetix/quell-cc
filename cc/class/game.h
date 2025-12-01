@@ -7,7 +7,7 @@
 
 struct cflugsimu
   {
-  cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen);
+  cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen, real pabstand);
   void setframerate (real pfrate);
   void welttoscreenl ();
   void welttoscreenz ();

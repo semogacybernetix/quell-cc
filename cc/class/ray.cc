@@ -686,15 +686,15 @@ void ckoerperliste::setzeauge (const cvektor3 &paugpos, const cbasis3 &paugbasis
 
 //----------------------------- Welt ---------------------------------------------------------------------------------------------------------
 
-cwelt::cwelt (const real &pabstand, const cvektor3 &paugpos, const cbasis3 &paugbasis)
-  : abstand (pabstand), augpos (paugpos), augbasis (paugbasis)
+cwelt::cwelt (const cvektor3 &paugpos, const cbasis3 &paugbasis)
+  : abstand (1), augpos (paugpos), augbasis (paugbasis)
   {
   augdrehaw= cvektor4 (0, 0, 0, 0);
   himmelfarbe= cvektor3 (0, 0, 255);
   }
 
-cwelt::cwelt (const real &pabstand, const char* pname)
-  : abstand (pabstand), augpos (0,0,0),
+cwelt::cwelt (const char* pname)
+  : abstand (1), augpos (0,0,0),
     augbasis (cvektor3 (0,0,0), cvektor3 (0,0,0), cvektor3 (0,0,0))
   {
   augdrehaw= cvektor4 (0, 0, 0, 0);

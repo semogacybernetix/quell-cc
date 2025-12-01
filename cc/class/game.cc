@@ -54,12 +54,13 @@ void* threadrekursiv (void*)
 
 //---------------------------------------------------- cflugsimu ----------------------------------------------------------
 
-cflugsimu::cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen)
+cflugsimu::cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen, real pabstand)
   : welt (pwelt), keyboard (plkeyboard), screen (plscreen),
     xoff (real ((1 - screen->xanz))/2), yoff (real ((1 - screen->yanz))/2),
     bewstep (1), drehstep (50)
 
   {
+  welt->abstand= pabstand;
   pixelanz= screen->xanz*screen->yanz;
   pixelpos= 0;
   flugsimuthread= this;
@@ -98,7 +99,7 @@ void cflugsimu::setframerate (real pfrate)          // (Dauer eines Frames in Mi
   printtext (" ticks\n\n");
   }
 
-void cflugsimu::welttoscreenl ()               // linearer Pixeldurchgang
+void cflugsimu::welttoscreenl ()                                  // linearer Pixeldurchgang
   {
   for (integer ypp= 0; ypp < screen->yanz; ++ypp)
     for (integer xpp= 0; xpp < screen->xanz; ++xpp)
@@ -111,7 +112,7 @@ void cflugsimu::welttoscreenl ()               // linearer Pixeldurchgang
       }
   }
 
-void cflugsimu::welttoscreenz ()              // zufallsreihenfolgiger Pixeldurchgang
+void cflugsimu::welttoscreenz ()                                  // zufallsreihenfolgiger Pixeldurchgang
   {
   integer nanz= screen->xanz*screen->yanz;
   integer xpp, ypp;
@@ -129,7 +130,7 @@ void cflugsimu::welttoscreenz ()              // zufallsreihenfolgiger Pixeldurc
     }
   }
 
-void cflugsimu::welttoscreenthread (integer pthreadnr)
+void cflugsimu::welttoscreenthread (integer pthreadnr)            // segmentierter linearer Pixeldurchgang
   {
 //  printf ("Threadnr    %lld\n", pthreadnr);
   integer nanz= screen->xanz*screen->yanz;
@@ -163,51 +164,55 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
 
   tms zeit;
   real ticksps= real (sysconf (_SC_CLK_TCK));
-  clock_t zeitpos= times (&zeit);
+  clock_t framestart= times (&zeit);
+  clock_t keystart= times (&zeit);
   printtext ("ticks/sek: ");
   printreal (ticksps);
   printtext ("\n");
 
   integer koerper= 0;
-  integer framezeit;
   keyboard->putkey (19, 5, 1);
     do
     {
     if (keyboard->getkey (19, 5))
       {
+      framestart= times (&zeit);
       rektiefe= threadanz;
 //      printf ("vor arbeit %ld\n", rektiefe);
       threadrekursiv (0);
-      screen->flush ();
       //welttoscreenz ();
-      framezeit= (times (&zeit) - zeitpos);
-      //cout << "Zeit: " << framezeit << "  fps: " << 1/framezeit << endl;
-//      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
-      printinteger (framezeit);
+      screen->flush ();
+
+      while (times (&zeit) - framestart == 0)
+        usleep (10);
+      integer frameticks= (times (&zeit) - framestart);
+//      cout << "framedauer: " << framedauer << "  fps: " << 1/framedauer << endl;
+//      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
+      printinteger (frameticks);
       printtext (" tks    ");
-      if (framezeit > 0)
-        printinteger (100/framezeit);
+      if (framedauer > 0)
+        printinteger (100/frameticks);
         else
         printtext ("---");
-
       printtext (" fps\n");
+/*
       flugw= eulerwinkelfrommatrix (welt->augbasis);
       flugw= 180/PI*flugw;
       drehaw= winkelachsefrommatrix (welt->augbasis);
-
-      //nwinkel= 180/PI*drehaw.r;
-      // Zeile löschen \r
-      //printf ("Eulerwinkel: %15.9Lf %15.9Lf %15.9Lf          drehaw: %12.9Lf %12.9Lf %12.9Lf          Drehwinkel:%12.4Lf\n", flugw.x, flugw.y, flugw.z, drehaw.i, drehaw.j, drehaw.ij, nwinkel);
-      //printf ("                          augdrehaw: %12.9Lf %12.9Lf %12.9Lf          Drehwinkel:%12.4Lf\n", welt->augdrehaw.i, welt->augdrehaw.j, welt->augdrehaw.ij, welt->augdrehaw.r/PI*180);
-      //drehmatrixausgabe (welt->augbasis);
-
+      nwinkel= 180/PI*drehaw.r;
+       Zeile löschen \r
+      printf ("Eulerwinkel: %15.9Lf %15.9Lf %15.9Lf          drehaw: %12.9Lf %12.9Lf %12.9Lf          Drehwinkel:%12.4Lf\n", flugw.x, flugw.y, flugw.z, drehaw.i, drehaw.j, drehaw.ij, nwinkel);
+      printf ("                          augdrehaw: %12.9Lf %12.9Lf %12.9Lf          Drehwinkel:%12.4Lf\n", welt->augdrehaw.i, welt->augdrehaw.j, welt->augdrehaw.ij, welt->augdrehaw.r/PI*180);
+      drehmatrixausgabe (welt->augbasis);
+*/
       fflush (stdout);
-      zeitpos= times (&zeit);
       }
       else
-        usleep (50000);
+       usleep (10000);
 
     keyboard->flush ();
+    if (keyboard->getkey (19, 5) == 0)
+      continue;
     if (koerper == 0)
       {
       // Bewegungen
@@ -219,12 +224,30 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       if (keyboard->getkey (4, 3)) welt->verschiebeauge (cvektor3 (0, -bewstep, 0));
 
       // Bewegungszoomfaktor ändern
-      if (keyboard->getkey (1, 2)) bewstep*= real (1.4142);
-      if (keyboard->getkey (1, 3)) bewstep/= real (1.4142);
+      if (keyboard->getkey (1, 2) && (times (&zeit) - keystart > 20))
+        {
+        bewstep*= real (1.7);
+        keystart= times (&zeit);
+        }
+
+      if (keyboard->getkey (1, 3) && (times (&zeit) - keystart > 20))
+        {
+        bewstep/= real (1.7);
+        keystart= times (&zeit);
+        }
 
       // Drehzoomquotient ändern
-      if (keyboard->getkey (11, 2)) drehstep*= real (1.4142);
-      if (keyboard->getkey (11, 3)) drehstep/= real (1.4142);
+      if (keyboard->getkey (11, 2) && (times (&zeit) - keystart > 25))
+        {
+        drehstep*= real (1.3);
+        keystart= times (&zeit);
+        }
+
+      if (keyboard->getkey (11, 3) && (times (&zeit) - keystart > 25))
+        {
+        drehstep/= real (1.3);
+        keystart= times (&zeit);
+        }
 
       // Drehungen
       if (keyboard->getkey (8, 2))
@@ -286,7 +309,7 @@ void cflugsimu::fliege ()                              // ohne Körper drehen zu
   printtext ("\n");
 
   integer koerper= 0;
-  integer framezeit;
+  integer framedauer;
   keyboard->putkey (19, 5, 1);
     do
     {
@@ -295,13 +318,13 @@ void cflugsimu::fliege ()                              // ohne Körper drehen zu
       welttoscreenz ();
       //welttoscreentakt ();
       screen->flush ();
-      framezeit= (times (&zeit) - ticks)*10;
-      //cout << "Zeit: " << framezeit << "  fps: " << 1/framezeit << endl;
-//      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
+      framedauer= (times (&zeit) - ticks)*10;
+      //cout << "Zeit: " << framedauer << "  fps: " << 1/framedauer << endl;
+//      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
       printtext ("Frame: ");
-      printinteger (framezeit);
+      printinteger (framedauer);
       printtext (" ms  fps: ");
-      printreal (1000/real (framezeit));
+      printreal (1000/real (framedauer));
       printtext ("\n");
       flugw= eulerwinkelfrommatrix (welt->augbasis);
       flugw= 180/PI*flugw;
@@ -679,7 +702,7 @@ void cflugsimu::fliegespiel (cbasis3& spiegelebenen, ckoerper* bewkugel)
 
   // Bewegungskugel initialisieren
   cvektor3 bewkugelpos;
-  integer zeitpos;
+  integer framestart;
   cbasis3 spiegbasis1, spiegbasis2, spiegbasis3;
   spiegbasis1= getspiegbasis (spiegelebenen.x);
   spiegbasis2= getspiegbasis (spiegelebenen.y);
@@ -692,7 +715,7 @@ void cflugsimu::fliegespiel (cbasis3& spiegelebenen, ckoerper* bewkugel)
   printreal (ticksps);
   printtext ("\n");
   integer koerper= 0;
-  real framezeit;
+  real framedauer;
   keyboard->putkey (19, 5, 1);
     do
     {
@@ -701,14 +724,14 @@ void cflugsimu::fliegespiel (cbasis3& spiegelebenen, ckoerper* bewkugel)
       welt->aktualisiere ();
       welttoscreenz ();
       screen->flush ();
-      framezeit= real (times (&zeit) - ticks)/ticksps;
-      zeitpos= times (&zeit);
-      //cout << "Zeit: " << framezeit << "  fps: " << 1/framezeit << endl;
-//      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
+      framedauer= real (times (&zeit) - ticks)/ticksps;
+      framestart= times (&zeit);
+      //cout << "Zeit: " << framedauer << "  fps: " << 1/framedauer << endl;
+//      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
       printtext ("Zeit: ");
-      printreal (framezeit);
+      printreal (framedauer);
       printtext ("  fps: ");
-      printreal (1/framezeit);
+      printreal (1/framedauer);
       printtext ("\n");
       flugw= eulerwinkelfrommatrix (welt->augbasis);
       flugw= 180/PI*flugw;
@@ -784,7 +807,7 @@ void cflugsimu::fliegespiel (cbasis3& spiegelebenen, ckoerper* bewkugel)
         bewkugel->startpos= bewkugelpos;
         bewkugelpos= spiegbasis1*bewkugelpos;
         bewkugel->stoppos= bewkugelpos;
-        bewkugel->startzeit= real (zeitpos);
+        bewkugel->startzeit= real (framestart);
         bewkugel->stopzeit= bewkugel->startzeit + 500;
         }
       if (keyboard->getkey (2, 1))
@@ -793,7 +816,7 @@ void cflugsimu::fliegespiel (cbasis3& spiegelebenen, ckoerper* bewkugel)
         bewkugel->startpos= bewkugelpos;
         bewkugelpos= spiegbasis2*bewkugelpos;
         bewkugel->stoppos= bewkugelpos;
-        bewkugel->startzeit= real (zeitpos);
+        bewkugel->startzeit= real (framestart);
         bewkugel->stopzeit= bewkugel->startzeit + 500;
         }
       if (keyboard->getkey (3, 1))
@@ -802,7 +825,7 @@ void cflugsimu::fliegespiel (cbasis3& spiegelebenen, ckoerper* bewkugel)
         bewkugel->startpos= bewkugelpos;
         bewkugelpos= spiegbasis3*bewkugelpos;
         bewkugel->stoppos= bewkugelpos;
-        bewkugel->startzeit= real (zeitpos);
+        bewkugel->startzeit= real (framestart);
         bewkugel->stopzeit= bewkugel->startzeit + 500;
         }
 
@@ -836,7 +859,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
   // Bewegungskugel initialisieren
   cvektor3 bewkugelpos;
   cvektor3liste besuchsliste (1000);
-  real zeitpos;
+  real framestart;
   cbasis3 spiegbasis1, spiegbasis2, spiegbasis3;
   spiegbasis1= getspiegbasis (spiegelebenen.x);
   spiegbasis2= getspiegbasis (spiegelebenen.y);
@@ -854,7 +877,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
   //cout << "ticks/sek: " << ticksps << endl;
 
   integer koerper= 0;
-  real framezeit;
+  real framedauer;
   keyboard->putkey (19, 5, 1);
     do
     {
@@ -863,14 +886,14 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
       welt->aktualisiere ();
       welttoscreentakt (0, renderanz); // Fehler
       screen->flush ();
-      framezeit= real (times (&zeit) - ticks)/ticksps;
-//      cout << "Zeit: " << framezeit << "  fps: " << 1/framezeit << endl;
+      framedauer= real (times (&zeit) - ticks)/ticksps;
+//      cout << "Zeit: " << framedauer << "  fps: " << 1/framedauer << endl;
       printtext ("Zeit: ");
-      printreal (framezeit);
+      printreal (framedauer);
       printtext ("  fps: ");
-      printreal (1/framezeit);
-      //printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framezeit, 1/framezeit);
-      zeitpos= real (times (&zeit));
+      printreal (1/framedauer);
+      //printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
+      framestart= real (times (&zeit));
       flugw= eulerwinkelfrommatrix (welt->augbasis);
       flugw= 180/PI*flugw;
       drehaw= winkelachsefrommatrix (welt->augbasis);
@@ -941,7 +964,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
       // an Spiegelebene 1 spiegeln
       if (keyboard->getkey (1, 1))
         {
-        if (zeitpos > bewkugel->stopzeit)
+        if (framestart > bewkugel->stopzeit)
           {
           bewkugelpos= bewkugel->stoppos;
           if (besuchsliste.elposition (bewkugelpos) < 0)
@@ -950,7 +973,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
             beskugel= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, bewkugel->startpos, real (0.08)*kzoom*einsb3);
             beskugel->startpos= bewkugelpos;
             beskugel->stoppos= spiegbasis1*bewkugelpos;
-            beskugel->startzeit= zeitpos;
+            beskugel->startzeit= framestart;
             beskugel->stopzeit= beskugel->startzeit + 500;
             welt->addkoerper (beskugel);
             }
@@ -958,7 +981,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
           bewkugel->startpos= bewkugelpos;
           bewkugelpos= spiegbasis1*bewkugelpos;
           bewkugel->stoppos= bewkugelpos;
-          bewkugel->startzeit= zeitpos;
+          bewkugel->startzeit= framestart;
           bewkugel->stopzeit= bewkugel->startzeit + 500;
           }
         }
@@ -966,7 +989,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
       // an Spiegelebene 2 spiegeln
       if (keyboard->getkey (2, 1))
         {
-        if (zeitpos > bewkugel->stopzeit)
+        if (framestart > bewkugel->stopzeit)
           {
           bewkugelpos= bewkugel->stoppos;
           if (besuchsliste.elposition (bewkugelpos) < 0)
@@ -975,7 +998,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
             beskugel= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, bewkugel->startpos, real (0.08)*kzoom*einsb3);
             beskugel->startpos= bewkugelpos;
             beskugel->stoppos= spiegbasis2*bewkugelpos;
-            beskugel->startzeit= zeitpos;
+            beskugel->startzeit= framestart;
             beskugel->stopzeit= beskugel->startzeit + 500;
             welt->addkoerper (beskugel);
             }
@@ -983,7 +1006,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
           bewkugel->startpos= bewkugelpos;
           bewkugelpos= spiegbasis2*bewkugelpos;
           bewkugel->stoppos= bewkugelpos;
-          bewkugel->startzeit= zeitpos;
+          bewkugel->startzeit= framestart;
           bewkugel->stopzeit= bewkugel->startzeit + 500;
           }
         }
@@ -991,7 +1014,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
       // an Spiegelebene 3 spiegeln
       if (keyboard->getkey (3, 1))
         {
-        if (zeitpos > bewkugel->stopzeit)
+        if (framestart > bewkugel->stopzeit)
           {
           bewkugelpos= bewkugel->stoppos;
           if (besuchsliste.elposition (bewkugelpos) < 0)
@@ -1000,7 +1023,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
             beskugel= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, bewkugel->startpos, real (0.08)*kzoom*einsb3);
             beskugel->startpos= bewkugelpos;
             beskugel->stoppos= spiegbasis3*bewkugelpos;
-            beskugel->startzeit= zeitpos;
+            beskugel->startzeit= framestart;
             beskugel->stopzeit= beskugel->startzeit + 500;
             welt->addkoerper (beskugel);
             }
@@ -1008,7 +1031,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
           bewkugel->startpos= bewkugelpos;
           bewkugelpos= spiegbasis3*bewkugelpos;
           bewkugel->stoppos= bewkugelpos;
-          bewkugel->startzeit= zeitpos;
+          bewkugel->startzeit= framestart;
           bewkugel->stopzeit= bewkugel->startzeit + 500;
           }
         }

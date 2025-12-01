@@ -402,7 +402,7 @@ void cxmemoryscreen::flush ()
   {
   for (integer ylauf= 0; ylauf < yanz; ylauf++)
     for (integer xlauf= 0; xlauf < xanz; xlauf++)
-      { 
+      {
       XSetForeground (mydisplay, mygc, bildspeicher[ylauf*xanz + xlauf]);
       XDrawPoint (mydisplay, mywindow, mygc, int (xlauf), int (ypix1 - ylauf));
       }
