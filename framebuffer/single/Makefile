@@ -42,12 +42,13 @@ $(ppfad)timings: timings.cc
 #----------------------------------------------------------------------------------------------------------
 fbquad:
 	make -C ../../cc/class $(opfad)vektor.o
+	make -C ../../conio $(opfad)vektorcon.o
 	make -C ../../cc/screen/ $(opfad)vscr.o
 	make -C ../screen/ $(opfad)fbscr.o
 	make $(ppfad)$@
 
-$(ppfad)fbquad: $(opfad)fbquad.o $(opfad)fbscr.o $(opfad)vscr.o $(opfad)vektor.o
-	$(comp) $(opfad)fbquad.o $(opfad)fbscr.o $(opfad)vscr.o $(opfad)vektor.o -o $@
+$(ppfad)fbquad: $(opfad)fbquad.o $(opfad)fbscr.o $(opfad)vscr.o $(opfad)vektorcon.o $(opfad)vektor.o
+	$(comp) $(opfad)fbquad.o $(opfad)fbscr.o $(opfad)vscr.o $(opfad)vektorcon.o $(opfad)vektor.o -o $@
 
 $(opfad)fbquad.o: fbquad.cc ../screen/fbscr.h ../../cc/screen/vscr.h ../../cc/class/vektor.h
 	$(comp) $< -c $(copts) -o $@

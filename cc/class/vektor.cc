@@ -1848,7 +1848,7 @@ void kubischreduziertreellc (real p, real q, real& y)
     }
     else
     {
-    l= sqrtr (p*(real (4)/-3));
+    l= sqrtr (p/real (-0.75));
     y= l*cosr (acosr (q*3/(p*l))/3);
     }
   }
@@ -1869,7 +1869,7 @@ void kubischreduziertreellu (real p, real q, real& y)
     }
     else
     {
-    l= sqrtr (p*(real (4)/-3));
+    l= sqrtr (p/real (-0.75));
     y= l*cosr (acosr (q*3/(p*l))/3);
     }
   }
@@ -2356,7 +2356,7 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
@@ -2392,7 +2392,7 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
@@ -2461,7 +2461,7 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
@@ -2529,7 +2529,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
@@ -2608,7 +2608,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
@@ -2687,7 +2687,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
 
   // Parameter der reduzierten kubischen Gleichung
   pqq= pq*pq;
@@ -2796,7 +2796,7 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   aqq= aq*aq/8;
   pq= aqq*-3 + bq;
   qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*(real (3)/-32) + aq*bq/16 + cq/-4) + dq;
+  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
 
   // Parameter der reduzierten kubischen Gleichung
   pqq= pq*pq;

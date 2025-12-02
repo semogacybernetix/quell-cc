@@ -309,15 +309,15 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.27 Do  23 Uhr, kubischelementar Versuch Fehler in realteil Differenzenproduktquadrat -a³ - 9/2ab - 27/2c zu finden, 0 Uhr
 
 2025.11.30 So  20 Uhr, cflugsimu.fliegethread: Framerate auf 100 fps begrenzt, drehstep, bewstep auf 200 ms Schrittrate begrenzt, fbray in xray integriert, fbscr ray geht mit Segfault, fast 2x schneller als cxscreen, 1:37
+2025.12.02 Di  11:45, compile Fehler fbquad behoben (vektorcon.o hat gefehlt), -3/32 mit -0.09375 in quartischintr Routinen ersetzt, fliegetakt, 14:02
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-bewstep, drehstep Erhöhung auf 1/4 s begrenzen
+xray framebuffer, keyboardbuffer
 Zeitauflösung auf mehr als 1/100 s erhöhen
-Bereichstest für +-xl, yk, quadratische Gleichung12, x12  oder +-xl, yk, lag1+++, lag234 mit Helligkeit, Sättigung, Farbton
 
+quaternionentest Überlauffehler, auf andere floats als float80 flexibilisieren
 symflip Drehungen fehlerhaft: reparieren
-quaternionentest auf andere floats als float80 flexibilisieren
 neues Threadverfahren entwickeln
 apfel thread
 Platform neu machen statt linux amd64, arm64, riscv64

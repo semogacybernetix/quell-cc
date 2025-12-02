@@ -248,11 +248,13 @@ void fliegethread ()
   cwelt* welt= new cwelt (cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
   //cwelt* welt= new cwelt (cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
 
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 400);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
   //cflugsimu flugsimu (welt, new cxkeyboard, new cfbscreen ("xray", 0, 0), 1200);
+
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 400);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450), 450);
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1200, 700), 1200);
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1200, 700), 1200);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080), 1920);
 
   flugsimu.setframerate (real (20.0));
@@ -285,11 +287,16 @@ void fliegetakt ()
   //addkugel (*welt);
   addtorus (*welt);
 
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 400, 225), 225);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cfbscreen ("fbray", 800, 450), 450);
+
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxmemoryscreen ("xray", 800, 450), 450);
+
+  cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 256, 128), 256);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 512, 256), 512);
+
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 400, 225), 225);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450), 450);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 200);
-  cflugsimu flugsimu (welt, new cxkeyboard, new cfbscreen ("fbray", 800, 450), 450);
 
   flugsimu.setframerate (real (20));               // Framerate setzen
   flugsimu.threadanz= 12;
@@ -304,7 +311,6 @@ void fliegetakt ()
 
 int main ()
   {
-  //xray18 ();
   fliegethread ();
   //fliegetakt ();
   return 0;
