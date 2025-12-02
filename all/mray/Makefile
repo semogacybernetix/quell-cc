@@ -18,7 +18,7 @@ comp=g++
 # -------------------------- Makeoptionen ------------------------------------
 
 copts=-std=$(CCSTANDARD) -Wall -Wextra -Wconversion -pedantic-errors -O2
-lopts=-lpthread -ljpeg -lX11
+lopts=-lpthread -ljpeg -lX11 -lncurses
 #lopts=-L$(opfad) -lscr -lpthread -ljpeg -lX11
 #lopts=-L$(opfad) -lquadmath -lscr -lpthread -ljpeg -lX11
 
@@ -38,6 +38,7 @@ xray:
 
 	make -C ../../cc/keyboard $(opfad)vkbd.o
 	make -C ../../xwindow/keyboard $(opfad)xkbd.o
+	make -C ../../framebuffer/keyboard $(opfad)nckbd.o
 
 	make -C ../../cc/screen $(opfad)vscr.o
 	make -C ../../xwindow/screen $(opfad)xscr.o
@@ -49,7 +50,7 @@ xray:
 $(opfad)xray.o: xray.cc ../../cc/class/vektor.h
 	$(comp) $< -c $(copts) -o $@
 
-$(ppfad)xray: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)ray.o $(opfad)game.o $(opfad)vektorcon.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)vscr.o $(opfad)xscr.o $(opfad)fbscr.o $(opfad)jpegscr.o $(opfad)xray.o
+$(ppfad)xray: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)ray.o $(opfad)game.o $(opfad)vektorcon.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)nckbd.o $(opfad)vscr.o $(opfad)xscr.o $(opfad)fbscr.o $(opfad)jpegscr.o $(opfad)xray.o
 	$(comp) $+ $(lopts) -o $@
 
 xraythread:

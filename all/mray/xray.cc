@@ -1,6 +1,10 @@
 #include "../../cc/class/game.h"
 #include "../../cc/screen/allscr.h"
 #include "../../xwindow/keyboard/xkbd.h"
+#include "../../framebuffer/keyboard/nckbd.h"
+
+#include <curses.h>
+#include <unistd.h>
 
 void addebene (cwelt& pwelt)
   {
@@ -249,11 +253,11 @@ void fliegethread ()
   //cwelt* welt= new cwelt (cvektor3 (0), cbasis3 (1));  // Bildschirmentfernung, Standpunkt, Lage
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cfbscreen ("xray", 0, 0), 1200);
+  cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1920, 1080), 1920);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 400);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 800, 450), 450);
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1200, 700), 1200);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080), 1920);
 
@@ -309,8 +313,23 @@ void fliegetakt ()
   flugsimu.fliegetakt ();
   }
 
+void tastatur ()
+  {
+  int ein;
+
+  initscr ();
+  for (unsigned long lauf= 0; lauf < 5;)
+    {
+    ein= getch ();
+    //usleep (100000);
+    printf ("%d\n", ein);
+    }
+  endwin ();
+  }
+
 int main ()
   {
+  //tastatur ();
   fliegethread ();
   //fliegetakt ();
   return 0;

@@ -188,6 +188,8 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       integer frameticks= (times (&zeit) - framestart);
 //      cout << "framedauer: " << framedauer << "  fps: " << 1/framedauer << endl;
 //      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
+
+/*
       printinteger (frameticks);
       printtext (" tks    ");
       if (framedauer > 0)
@@ -195,6 +197,8 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
         else
         printtext ("---");
       printtext (" fps\n");
+*/
+
 /*
       flugw= eulerwinkelfrommatrix (welt->augbasis);
       flugw= 180/PI*flugw;

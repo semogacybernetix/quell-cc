@@ -309,7 +309,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.27 Do  23 Uhr, kubischelementar Versuch Fehler in realteil Differenzenproduktquadrat -a³ - 9/2ab - 27/2c zu finden, 0 Uhr
 
 2025.11.30 So  20 Uhr, cflugsimu.fliegethread: Framerate auf 100 fps begrenzt, drehstep, bewstep auf 200 ms Schrittrate begrenzt, fbray in xray integriert, fbscr ray geht mit Segfault, fast 2x schneller als cxscreen, 1:37
-2025.12.02 Di  11:45, compile Fehler fbquad behoben (vektorcon.o hat gefehlt), -3/32 mit -0.09375 in quartischintr Routinen ersetzt, fliegetakt, 14:02
+2025.12.02 Di  11:45, compile Fehler fbquad behoben (vektorcon.o hat gefehlt), -3/32 mit -0.09375 in quartischintr Routinen ersetzt, fliegetakt, 14:02,
+               19:30 ncurses Keyboardklasse erstellt, Tasten ermittelt, xray mit framebuffer und ncurses keyboard getestet, 23:54
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -325,5 +326,6 @@ Benchmarks für xscreen Geschwindigkeit, fbscreen, float Geschwindigkeit
 printausgabe realzahlen mit Trennung 10er Gruppen, Binär, Hexadezimal
 
 Szenen Kreiskörper mit Torussen erstellen (Oktaeder, Kuboktaeder, Ikosidodekaeder, andere archimedische Körper)
+andere Flächen, Cassini, Lemniskate implementieren
 Clifford Torus stereografische Projektion 4D -> 3D implementieren
 4D-Raytracer entwickeln
