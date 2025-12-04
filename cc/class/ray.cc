@@ -413,7 +413,7 @@ cvektor2 cparatorus::berechne (const cvektor3 &pv)
   if (pv.z >= 0)
     return cvektor2 (PI + atan2r (pv.y, pv.x), wi);
     else
-    return cvektor2 (PI + atan2r (pv.y, pv.x), PI*2 - wi);
+    return cvektor2 (PI + atan2r (pv.y, pv.x), PI2 - wi);
   }
 
 // ************************************************************************** Begrenzungsobjekte *******************************************************************************************************************************************

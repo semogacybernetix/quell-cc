@@ -185,7 +185,7 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
 
       while (times (&zeit) - framestart == 0)
         usleep (10);
-      integer frameticks= (times (&zeit) - framestart);
+      //integer frameticks= (times (&zeit) - framestart);
 //      cout << "framedauer: " << framedauer << "  fps: " << 1/framedauer << endl;
 //      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
 
