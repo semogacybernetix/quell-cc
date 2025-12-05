@@ -23,14 +23,15 @@ struct cflugsimu
   integer  threadanz;              // Anzahl der Threads (von außen setzbar)
 
   private:
+  integer      pixelanz;           // Anzahl der Pixel des screens
+  integer      pixelpos;           // momentane Pixelposition beim Rendern
+  integer      ftks;               // minimale Framedauer[ticks]
+
   real         tickms;             // Dauer eines Ticks in Millisekunden
   real         framems;            // Anzeigedauer eines Frames in Millisekunden
   real         frametks;           // Zeitdauer eines Frames in Ticks
   real         framepos;           // Zeitpunkt
   real         framedauer;         // Zeitpunkt
-
-  integer      pixelanz;           // Anzahl der Pixel des screens
-  integer      pixelpos;           // momentane Pixelposition beim Rendern
 
   cwelt*       welt;
   clkeyboard*  keyboard;

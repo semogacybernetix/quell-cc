@@ -7,6 +7,7 @@ cnckeyboard::cnckeyboard ()
   noecho ();
   //curs_set (0);                                                 // blockiert die Bildschirmausgabe
   //raw ();                                                       // blockiert die Bildschirmausgabe
+  key[0][0]= 0;
   }
 
 cnckeyboard::~cnckeyboard ()
@@ -23,7 +24,7 @@ void cnckeyboard::flush ()
     ein= getch ();                                                // Prefix für Umlaute abfangen
 
   // Funktionstastenreihe
-  if (ein == 27) key[0][0]= 1; else key[0][0]= 0;
+  //if (ein == 27) key[0][0]= 1; else key[0][0]= 0;               // ausgeschaltet wegen Terminalverfälschung nach Abbruch
 
 /*
   // Zahlenreihe

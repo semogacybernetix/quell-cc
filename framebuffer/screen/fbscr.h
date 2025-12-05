@@ -16,9 +16,10 @@ struct cfbscreen : public clscreen8
 
   private:
   int             dbuffer;
+  integer         fbxanz;
   integer         yanz1;
-  integer         zanz;      // Bytes Farbtiefe
-  // signed long     xof, yof;      // gespeicherter Offset bei framebuffer Hardwarscrolling
+  integer         zanz;              // Bytes Farbtiefe
+  //signed long     xof, yof;          // gespeicherter Offset bei framebuffer Hardwarscrolling
   };
 
 #endif

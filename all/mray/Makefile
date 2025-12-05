@@ -47,7 +47,8 @@ xray:
 
 	make $(ppfad)xray
 
-$(opfad)xray.o: xray.cc ../../cc/class/vektor.h
+# Abhängigkeitsbaum der h-Dateien noch nicht durchtraversiert
+$(opfad)xray.o: xray.cc ../../cc/class/game.h ../../cc/class/ray.h ../../cc/screen/vscr.h ../../cc/keyboard/vkbd.h ../../cc/screen/allscr.h ../../xwindow/keyboard/xkbd.h ../../framebuffer/keyboard/nckbd.h
 	$(comp) $< -c $(copts) -o $@
 
 $(ppfad)xray: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)ray.o $(opfad)game.o $(opfad)vektorcon.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)nckbd.o $(opfad)vscr.o $(opfad)xscr.o $(opfad)fbscr.o $(opfad)jpegscr.o $(opfad)xray.o

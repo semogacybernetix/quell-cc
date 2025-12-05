@@ -311,6 +311,9 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.11.30 So  20 Uhr, cflugsimu.fliegethread: Framerate auf 100 fps begrenzt, drehstep, bewstep auf 200 ms Schrittrate begrenzt, fbray in xray integriert, fbscr ray geht mit Segfault, fast 2x schneller als cxscreen, 1:37
 2025.12.02 Di  11:45, compile Fehler fbquad behoben (vektorcon.o hat gefehlt), -3/32 mit -0.09375 in quartischintr Routinen ersetzt, fliegetakt, 14:02,
                19:30 ncurses Keyboardklasse erstellt, Tasten ermittelt, xray mit framebuffer und ncurses keyboard getestet, 23:54
+2025.12.03 Mi  9 Uhr, Polynome Formeln durchgesehen, Parametrisierung Torus: PI*2 -> PI2, 10 Uhr
+2025.12.05 Fr  6:58, framebufferscreen xanz, yanz werden verwendet implementiert, maximale framerate wird verwendet, Makefile Abhängigkeitsfehler bei h-Dateien von xray.o behoben, h-Dateien Abhängigkeitsbaum noch nicht
+               vollständig durchtraversiert, xray.cc geliftet, Funktion tastatur in /cc/single/tastatur.cc ausgelagert, 10:11
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

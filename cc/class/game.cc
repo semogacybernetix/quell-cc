@@ -92,6 +92,8 @@ void cflugsimu::setframerate (real pfrate)          // (Dauer eines Frames in Mi
   framems= pfrate;
   frametks= framems/tickms;
   framedauer= 100/pfrate;
+  ftks= 100/integer (pfrate);
+
   printtext ("framerate:  ");
   printreal (pfrate);
   printtext (" fps  frameduration:  ");
@@ -183,22 +185,21 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       //welttoscreenz ();
       screen->flush ();
 
-      while (times (&zeit) - framestart == 0)
+      while (times (&zeit) - framestart < ftks)
         usleep (10);
-      //integer frameticks= (times (&zeit) - framestart);
+      integer frameticks= (times (&zeit) - framestart);
 //      cout << "framedauer: " << framedauer << "  fps: " << 1/framedauer << endl;
 //      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
 
-/*
+//*
       printinteger (frameticks);
       printtext (" tks    ");
-      if (framedauer > 0)
+      if ((framedauer > 0) && (frameticks != 0))
         printinteger (100/frameticks);
         else
         printtext ("---");
       printtext (" fps\n");
-*/
-
+//*/
 /*
       flugw= eulerwinkelfrommatrix (welt->augbasis);
       flugw= 180/PI*flugw;
