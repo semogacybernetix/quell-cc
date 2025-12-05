@@ -141,21 +141,29 @@ void addkugel (cwelt& pwelt)
 
   // Texturen
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 18/PI, 18/PI);
-  cschachfeld* textur2= new cschachfeld (cvektor3 (255,255,0), cvektor3 (255,0,255), 18/PI, 18/PI);
+  //cschachfeld* textur2= new cschachfeld (cvektor3 (255,255,0), cvektor3 (255,0,255), 18/PI, 18/PI);
+
+  // Begrenzungen
+  cbegrrechteck* begr1= new cbegrrechteck (-10, 10, -2.15, 1.87);
 
   // Körper
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, textur1, kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur2, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur2, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), 2/PI, 2/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), 12/PI, 12/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (0.5)/PI, real (0.5)/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp-n.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, begr1, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp.jpg"), real (0.56)/PI, real (0.78)/PI), kst1, kl1);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
 
   // Augposition setzen
-  pwelt.setzeposition (cvektor3 (0, 100, -300));
+  pwelt.setzeposition (cvektor3 (0, 0, -300));
+
+  // Hintergrundfarbe setzen
+  pwelt.himmelfarbe= cvektor3 (30,75,90);
   }
 
 void addtorus (cwelt& pwelt)
@@ -187,13 +195,14 @@ void addtorus (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinmauer.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
   ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
 
-  pwelt.himmelfarbe= cvektor3 (30,75,90);
-
   // Körper addieren
   pwelt.addkoerper (koerper1);
 
   // Augposition setzen
   pwelt.setzeposition (cvektor3 (0, 100, -300));
+
+  // Hintergrundfarbe setzen
+  pwelt.himmelfarbe= cvektor3 (30,75,90);
   }
 
 void addtorusoktaeder (cwelt& pwelt)
@@ -250,30 +259,31 @@ void fliege ()
   //addkoord (*welt);
   //addebenen90 (*welt);
   //addzylinder (*welt);
-  //addkugel (*welt);
-  addtorus (*welt);
+  addkugel (*welt);
+  //addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
-  //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1920, 1080), 1920);
-  //lugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1920, 960), 1920);
-  //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1024, 512), 1024);
-  //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 512, 256), 512);
 
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 400);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 512, 256), 450);
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1200, 700), 1200);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 320);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 512, 256), 512);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1500, 1000), 1200);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080), 1920);
 
-  flugsimu.setframerate (20);
+  //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 512, 256), 512);
+  //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1024, 512), 1024);
+  //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1920, 960), 1920);
+  //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1920, 1080), 1920);
+
+  flugsimu.setframerate (50);
   flugsimu.threadanz= 12;
   flugsimu.bewstep= real (1);
   flugsimu.drehstep= real (0.0125);
 
   //flugsimu.fliege ();
   //flugsimu.fliegek ();
-  flugsimu.fliegethread ();   // geht nicht mit cxscreen
   //flugsimu.fliegetakt ();
+  flugsimu.fliegethread ();   // geht nicht mit cxscreen
   }
 
 int main ()

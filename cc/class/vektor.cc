@@ -1739,13 +1739,13 @@ cvektor4 quaternionfromeulerwinkel (const cvektor3 pflugw)
 
 void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   {
-  ckomplexk a2, D;
+  ckomplexk a2, d;
 
   a2= a/-2;
-  D= sqrtv (a2*a2 - b);
+  d= sqrtv (a2*a2 - b);
 
-  x1= a2 + D;
-  x2= a2 - D;
+  x1= a2 + d;
+  x2= a2 - d;
   }
 
 // ------------------------------------------------------- kubisch ----------------------------------------------------------------------------------------------------------------------------------------------------------

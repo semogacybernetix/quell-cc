@@ -67,21 +67,23 @@ cskugel::cskugel ()
 void cskugel::init (const cvektor3 &pov)
   {
   ov= pov;
-  C= ov%ov - 1;
+  c= ov%ov - 1;
   }
 
 void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
-  real A= prv%prv;
-  real B= -(prv%ov);
+//  real a= prv%prv;
+//  real b= -(prv%ov);
+  real a= prv.x*prv.x + prv.y*prv.y + prv.z*prv.z;
+  real b= -prv.x*ov.x - prv.y*ov.y - prv.z*ov.z;
 
-  real D= B*B - A*C;
-  if (D < 0)
+  real d= b*b - a*c;
+  if (d < 0)
     return;
 
-  real E= sqrtr (D);
-  real s1= (B + E)/A;
-  real s2= (B - E)/A;
+  real e= sqrtr (d);
+  real s1= (b + e)/a;
+  real s2= (b - e)/a;
 
   if (s1 > 0)
     psp.add (s1);
@@ -94,10 +96,10 @@ void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
   ckomplexk x1, x2;
 
-  real A= prv%prv;
-  real B= prv%ov;
+  real a= prv%prv;
+  real b= prv%ov;
 
-  quadratisch1 (2*B/A, C/A, x1, x2);
+  quadratisch (2*b/a, c/a, x1, x2);
 
   if (ag (x1) < 1e-8)
     psp.add (x1.x);
@@ -567,6 +569,23 @@ cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
   {
   integer x= integer (fmodr (fabsr (pv.x*kx*ymax), xmax));
   integer y= integer (fmodr (fabsr (pv.y*ky*ymax), ymax));
+  integer r, g, b;
+  screen->getpixel (x, y, r, g, b);
+  return cvektor3 (real (r), real (g), real (b));
+  }
+
+// zentriertes Bild
+cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real pky)
+  : screen (pscreen), kx (pkx), ky (pky), xmax (real (screen->xanz) - 1), ymax (real (screen->yanz) - 1)
+  {
+  xz= real (screen->xanz)/-2;
+  yz= real (screen->yanz)/-1.9507;
+  }
+
+cvektor3 cscreenmannigz::getpunkt (const cvektor2 &pv)
+  {
+  integer x= integer (fmodr (fabsr ((pv.x + xz)*kx*ymax), xmax));
+  integer y= integer (fmodr (fabsr ((pv.y + yz)*ky*ymax), ymax));
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);
   return cvektor3 (real (r), real (g), real (b));

@@ -40,7 +40,7 @@ struct cskugel : public clschnitt
 
   private:
   cvektor3 ov;
-  real C;
+  real c;
   };
 
 struct cshyper : public clschnitt
@@ -240,6 +240,16 @@ struct cscreenmannig : public clmannig     // Zum Texturieren mit Bildern
   private:
   clscreen8* screen;
   real kx, ky, xmax, ymax;
+  };
+
+struct cscreenmannigz : public clmannig     // Zum Texturieren mit Bildern zentriert
+  {
+  cscreenmannigz (clscreen8* pscreen, const real pkx, const real pky);
+  cvektor3 getpunkt (const cvektor2 &pv);
+
+  private:
+  clscreen8* screen;
+  real kx, ky, xmax, ymax, xz, yz;
   };
 
 // ------------------------------------------------------------------------------- Geometrische Gebilde -----------------------------------------------------------------------------------------------------------------------------------
