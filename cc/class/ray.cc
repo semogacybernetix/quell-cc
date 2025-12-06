@@ -72,8 +72,8 @@ void cskugel::init (const cvektor3 &pov)
 
 void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
-//  real a= prv%prv;
-//  real b= -(prv%ov);
+  //real a= prv%prv;
+  //real b= -(prv%ov);
   real a= prv.x*prv.x + prv.y*prv.y + prv.z*prv.z;
   real b= -prv.x*ov.x - prv.y*ov.y - prv.z*ov.z;
 
@@ -579,13 +579,13 @@ cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real p
   : screen (pscreen), kx (pkx), ky (pky), xmax (real (screen->xanz) - 1), ymax (real (screen->yanz) - 1)
   {
   xz= real (screen->xanz)/-2;
-  yz= real (screen->yanz)/-1.9507;
+  yz= real (screen->yanz)/-2;
   }
 
 cvektor3 cscreenmannigz::getpunkt (const cvektor2 &pv)
   {
-  integer x= integer (fmodr (fabsr ((pv.x + xz)*kx*ymax), xmax));
-  integer y= integer (fmodr (fabsr ((pv.y + yz)*ky*ymax), ymax));
+  integer x= integer (fmodr (fabsr (pv.x*kx*ymax), xmax));
+  integer y= integer (fmodr (fabsr (pv.y*ky*ymax), ymax));
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);
   return cvektor3 (real (r), real (g), real (b));

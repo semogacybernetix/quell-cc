@@ -144,7 +144,7 @@ void addkugel (cwelt& pwelt)
   //cschachfeld* textur2= new cschachfeld (cvektor3 (255,255,0), cvektor3 (255,0,255), 18/PI, 18/PI);
 
   // Begrenzungen
-  cbegrrechteck* begr1= new cbegrrechteck (-10, 10, -2.15, 1.87);
+  cbegrrechteck* begr1= new cbegrrechteck (-10, 10, -2, 2);
 
   // Körper
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, textur1, kst1, kl1);
@@ -154,7 +154,7 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (0.5)/PI, real (0.5)/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp-n.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, begr1, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp.jpg"), real (0.56)/PI, real (0.78)/PI), kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelwu, begr1, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/Mercator symmetrisch.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
