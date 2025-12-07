@@ -134,17 +134,19 @@ void addzylinder (cwelt& pwelt)
 void addkugel (cwelt& pwelt)
   {
   // Körperstandpunkte
-  cvektor3 kst1 (0,0,0);
+  cvektor3 kstkugel (0,0,0);
+  cvektor3 kstauge (300,0,0);
 
   // Körperlagen
-  cbasis3 kl1 (cvektor3 (50,0,0), cvektor3 (0,0,50), cvektor3 (0,50,0));
+  cbasis3 klkugel (cvektor3 (100,0,0), cvektor3 (0,100,0), cvektor3 (0,0,100));
+  cbasis3 klauge (cvektor3 (0,1,0), cvektor3 (0,0,1), cvektor3 (-1,0,0));
 
   // Texturen
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 18/PI, 18/PI);
   //cschachfeld* textur2= new cschachfeld (cvektor3 (255,255,0), cvektor3 (255,0,255), 18/PI, 18/PI);
 
   // Begrenzungen
-  cbegrrechteck* begr1= new cbegrrechteck (-10, 10, -2, 2);
+  //cbegrrechteck* begr1= new cbegrrechteck (-10, 10, -2, 2);
 
   // Körper
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, textur1, kst1, kl1);
@@ -154,13 +156,15 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (0.5)/PI, real (0.5)/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp-n.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelwu, begr1, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/Mercator symmetrisch.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, begr1, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/Mercator symmetrisch.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/Mercator symmetrisch.jpg"), real (1000), real (1000)), kstkugel, klkugel);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
 
   // Augposition setzen
-  pwelt.setzeposition (cvektor3 (0, 0, -300));
+  pwelt.setzeposition (kstauge);
+  pwelt.setzelage (klauge);
 
   // Hintergrundfarbe setzen
   pwelt.himmelfarbe= cvektor3 (30,75,90);
@@ -199,7 +203,7 @@ void addtorus (cwelt& pwelt)
   pwelt.addkoerper (koerper1);
 
   // Augposition setzen
-  pwelt.setzeposition (cvektor3 (0, 100, -300));
+  pwelt.setzeposition (cvektor3 (0, 100, -3000));
 
   // Hintergrundfarbe setzen
   pwelt.himmelfarbe= cvektor3 (30,75,90);
@@ -267,7 +271,7 @@ void fliege ()
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 320);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 512, 256), 512);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1500, 1000), 1200);
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1300, 1000), 1300);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080), 1920);
 
   //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 512, 256), 512);

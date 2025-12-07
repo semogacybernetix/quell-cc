@@ -1,4 +1,4 @@
-2025.09.29  actually the raytracer. Fly in a torus, move and turn, increase and decrese moving speed and turning speed
+2025.09.29  Raytracing game engine. Fly in a torus, move and turn, increase and decrese moving speed and turning speed
             cd all/mray make xray
             test the torus by switching the real type in cc/class/vektor.h between _Float_32 and _Float64
 

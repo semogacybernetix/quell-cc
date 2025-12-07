@@ -328,7 +328,7 @@ cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), pv.z);
   }
 
-//----------- Kugel normal ----------------------------
+//----------- Kugel normal ------------------------------------------------------------------------------------------------------------
 
 cvektor2 cparakugel::berechne (const cvektor3 &pv)
   {
@@ -345,10 +345,14 @@ cvektor2 cparakugelw::berechne (const cvektor3 &pv)
     return cvektor2 (PI2 + atan2r (pv.y, pv.x), atanhr (pv.z));
   }
 
+//----------- Kugel winkeltreu ------------------------
+
 cvektor2 cparakugelr::berechne (const cvektor3 &pv)
   {
   return cvektor2 (pv.x/(1 + pv.z), pv.y/(1 + pv.z));
   }
+
+//----------- Kugel winkeltreu ------------------------
 
 cvektor2 cparakugelu::berechne (const cvektor3 &pv)
   {
@@ -357,6 +361,8 @@ cvektor2 cparakugelu::berechne (const cvektor3 &pv)
     else
     return cvektor2 (PI2 + atan2r (pv.y, pv.x), PIh + asinr (pv.z));
   }
+
+//----------- Kugel winkeltreu ------------------------
 
 cvektor2 cparakugelwu::berechne (const cvektor3 &pv)
   {
@@ -567,8 +573,11 @@ cscreenmannig::cscreenmannig (clscreen8* pscreen, const real pkx, const real pky
 
 cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
   {
-  integer x= integer (fmodr (fabsr (pv.x*kx*ymax), xmax));
-  integer y= integer (fmodr (fabsr (pv.y*ky*ymax), ymax));
+  //integer x= integer (fmodr (fabsr (pv.x*kx), xmax));
+  //integer y= integer (fmodr (fabsr (pv.y*ky), ymax));
+  integer x= integer (pv.x*kx);
+  integer y= integer (pv.y*ky);
+
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);
   return cvektor3 (real (r), real (g), real (b));
