@@ -315,7 +315,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.12.05 Fr  6:58, framebufferscreen xanz, yanz werden verwendet implementiert, maximale framerate wird verwendet, Makefile Abhängigkeitsfehler bei h-Dateien von xray.o behoben, h-Dateien Abhängigkeitsbaum noch nicht
                vollständig durchtraversiert, xray.cc geliftet, Funktion tastatur in /cc/single/tastatur.cc ausgelagert, 10:11, 12 Uhr, screenmannigz hinzugefügt, Erdabbildung justiert, 14:12
                22 Uhr, symmetrische Merkatorkarte erstellt, versucht einzubinden: total fehlerhaft, 3:31
-2025.12.07 So  18:41, 
+2025.12.07 So  18:41, Fehlerfindung Kugelparametrisierung, 20 Uhr, 21 Uhr, die Fehler in Kugelparametrisierung gefunden, behoben, Mercatorkarten runtergeladen, zentriert, bearbeitet, eingepflegt, media Verzeichnis erstellt, 2:39
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

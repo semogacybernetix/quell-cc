@@ -91,7 +91,7 @@ void cjpegdatei::putpixel (integer px, integer py, integer pr, integer pg, integ
 
 void cjpegdatei::getpixel (integer px, integer py, integer &pr, integer &pg, integer &pb)
   {
-  if ((px >= xanz) || (py >= yanz))
+  if ((px < 0) || (py < 0) || (px >= xanz) || (py >= yanz))
     {
     pr= pg= pb= 0;
     return;

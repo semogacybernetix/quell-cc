@@ -339,37 +339,21 @@ cvektor2 cparakugel::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugelw::berechne (const cvektor3 &pv)
   {
-  if (pv.y >= 0)
-    return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
-    else
-    return cvektor2 (PI2 + atan2r (pv.y, pv.x), atanhr (pv.z));
+  return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
   }
 
-//----------- Kugel winkeltreu ------------------------
+//----------- Kugel stereografisch vom Südpol ------------------------
 
-cvektor2 cparakugelr::berechne (const cvektor3 &pv)
+cvektor2 cparakugels::berechne (const cvektor3 &pv)
   {
   return cvektor2 (pv.x/(1 + pv.z), pv.y/(1 + pv.z));
   }
 
-//----------- Kugel winkeltreu ------------------------
+//----------- Kugel gnomonisch vom Südpol ------------------------
 
-cvektor2 cparakugelu::berechne (const cvektor3 &pv)
+cvektor2 cparakugelg::berechne (const cvektor3 &pv)
   {
-  if (pv.y >= 0)
-    return cvektor2 (atan2r (pv.y, pv.x), PIh + asinr (pv.z));
-    else
-    return cvektor2 (PI2 + atan2r (pv.y, pv.x), PIh + asinr (pv.z));
-  }
-
-//----------- Kugel winkeltreu ------------------------
-
-cvektor2 cparakugelwu::berechne (const cvektor3 &pv)
-  {
-  if (pv.y >= 0)
-    return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
-    else
-    return cvektor2 (PI2 + atan2r (pv.y, pv.x), atanhr (pv.z));
+  return cvektor2 (pv.x/pv.z, pv.y/pv.z);
   }
 
 //----------- Hyperboloid normal -----------------------
@@ -421,7 +405,7 @@ cvektor2 cparatorus::berechne (const cvektor3 &pv)
   if (pv.z >= 0)
     return cvektor2 (PI + atan2r (pv.y, pv.x), wi);
     else
-    return cvektor2 (PI + atan2r (pv.y, pv.x), PI2 - wi);
+    return cvektor2 (PI + atan2r (pv.y, pv.x), PI2-wi);
   }
 
 // ************************************************************************** Begrenzungsobjekte *******************************************************************************************************************************************
@@ -573,8 +557,6 @@ cscreenmannig::cscreenmannig (clscreen8* pscreen, const real pkx, const real pky
 
 cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
   {
-  //integer x= integer (fmodr (fabsr (pv.x*kx), xmax));
-  //integer y= integer (fmodr (fabsr (pv.y*ky), ymax));
   integer x= integer (pv.x*kx);
   integer y= integer (pv.y*ky);
 
@@ -587,14 +569,15 @@ cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
 cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real pky)
   : screen (pscreen), kx (pkx), ky (pky), xmax (real (screen->xanz) - 1), ymax (real (screen->yanz) - 1)
   {
-  xz= real (screen->xanz)/-2;
-  yz= real (screen->yanz)/-2;
+  xz= real (screen->xanz)/2;
+  yz= real (screen->yanz)/2;
   }
 
 cvektor3 cscreenmannigz::getpunkt (const cvektor2 &pv)
   {
-  integer x= integer (fmodr (fabsr (pv.x*kx*ymax), xmax));
-  integer y= integer (fmodr (fabsr (pv.y*ky*ymax), ymax));
+  integer x= integer (pv.x*kx*xz + xz);
+  integer y= integer (pv.y*ky*yz + yz);
+
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);
   return cvektor3 (real (r), real (g), real (b));
