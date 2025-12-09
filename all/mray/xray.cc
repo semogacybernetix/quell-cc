@@ -173,7 +173,7 @@ void addkugel (cwelt& pwelt)
   pwelt.setzelage (klauge);
 
   // Hintergrundfarbe setzen
-  pwelt.himmelfarbe= cvektor3 (30,75,90);
+  pwelt.himmelfarbe= cvektor3 (30, 75, 90);
   }
 
 void addtorus (cwelt& pwelt)
@@ -203,16 +203,16 @@ void addtorus (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Palmen.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steine.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinmauer.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
 
   // Augposition setzen
-  pwelt.setzeposition (cvektor3 (0, 100, -3000));
+  pwelt.setzeposition (cvektor3 (0, 100, -300));
 
   // Hintergrundfarbe setzen
-  pwelt.himmelfarbe= cvektor3 (30,75,90);
+  pwelt.himmelfarbe= cvektor3 (30, 75, 90);
   }
 
 void addtorusoktaeder (cwelt& pwelt)

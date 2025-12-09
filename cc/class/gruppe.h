@@ -8,9 +8,9 @@ struct cbasis3liste
   integer uebergelaufen;
   integer maxanz;                   // Anzahl von Elementen, bei denen die Liste voll ist
   integer anz;                      // Anzahl der Elemente der Liste
-  
+
   cbasis3* b;
-  
+
   integer* ord;                     // Ordnung eines Elements (Anzahl der Potenzen des Elements)
   integer maxord;                   // Ordnung des Elements mit der höchsten Ordnung
   real* winkel;                     // Winkel der Drehung oder Drehinversion

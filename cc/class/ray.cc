@@ -367,14 +367,14 @@ cvektor2 cparahypere::berechne (const cvektor3 &pv)
 
 cvektor2 cparahyperz::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), acoshr (fabsr (pv.z)));
+  return cvektor2 (atan2r (pv.y, pv.x), acoshr (absr (pv.z)));
   }
 
 //------------------ Kegel ------------------------------------
 
 cvektor2 cparakegelw::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), logr (fabsr (pv.z)));
+  return cvektor2 (atan2r (pv.y, pv.x), logr (absr (pv.z)));
   }
 
 //----------- Rotationsparaboloid ----------------------
@@ -542,7 +542,7 @@ cschachfeld::cschachfeld (const cvektor3 &pfb1, const cvektor3 &pfb2, const real
 
 cvektor3 cschachfeld::getpunkt (const cvektor2 &pv)
   {
-  if (integer (fabsr (floorr (pv.x*kx) + floorr (pv.y*ky))) & 1)
+  if (integer (absr (floorr (pv.x*kx) + floorr (pv.y*ky))) & 1)
     return fb2;
     else
     return fb1;
@@ -555,17 +555,18 @@ cscreenmannig::cscreenmannig (clscreen8* pscreen, const real pkx, const real pky
   {
   }
 
+// nicht zentriertes Bild, gezoomt, periodisch
 cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
   {
-  integer x= integer (pv.x*kx);
-  integer y= integer (pv.y*ky);
+  integer x= integer (modr (absr (pv.x*kx*ymax), xmax));
+  integer y= integer (modr (absr (pv.y*ky*ymax), ymax));
 
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);
   return cvektor3 (real (r), real (g), real (b));
   }
 
-// zentriertes Bild
+// zentriertes Bild, nicht gezoomt, nicht periodisch
 cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real pky)
   : screen (pscreen), kx (pkx), ky (pky), xmax (real (screen->xanz) - 1), ymax (real (screen->yanz) - 1)
   {

@@ -4,7 +4,7 @@
 #include <cmath>
 
 using namespace std;
-  
+
 void kugelkzvol ()
   {
 // Kantenlängeneingabe
@@ -14,9 +14,9 @@ void kugelkzvol ()
   printf ("  Kantenlänge:     ");
   int ret= scanf ("%Lf", &klen);
   if (ret == 0) return;
-  
-// Volumenberechnung  
-  
+
+// Volumenberechnung
+
   //Volumen Zylinder
   long double r1= klen/2;
   long double d2= klen + 2*klen/sqrt(2);
@@ -36,17 +36,17 @@ void kugelkzvol ()
   long double volzyl2= r1*r1*r1*M_PI*(4*sqrt(2) + 6);
   long double volkeg2= r1*r1*r1*M_PI*(5*sqrt(2)/3 + 2);
   long double obkeg= r1*r1*M_PI*(8*sqrt(2) + 14);
-  
+
   // Volumen 8-spitz
   long double volspitz= r1*r1*r1*M_PI*(sqrt(2) - 1)/3;
   long double volstumpf= r1*r1*r1*M_PI/3*(3 + sqrt (2));
   long double vol8spitz= 2*(volspitz + volstumpf);
-  
+
   // Oberfläche 8-spitz
   long double obspitz= r1*r1*M_PI*sqrt (4 - 2*sqrt(2));
   long double obstumpf= r1*r1*M_PI*(1 + sqrt(2))*sqrt(4 - 2*sqrt(2));
   long double ob8spitz= 2*(obspitz + obstumpf);
-  
+
   printf ("\n");
   printf ("  Kantenlänge            :              %18.3Lf\n", klen);
   printf ("  Zylinderdurchmesser    :              %18.3Lf\n", d2);
@@ -60,7 +60,7 @@ void kugelkzvol ()
   printf ("  Oberfläche Kugelnäherung:             %18.3Lf\n", obkeg);
   printf ("  Volumen 8-spitz:                      %18.8Lf\n", vol8spitz);
   printf ("  Oberfläche 8-spitz:                   %18.8Lf\n", ob8spitz);
-  
+
   printf ("\n");
   return;
   }

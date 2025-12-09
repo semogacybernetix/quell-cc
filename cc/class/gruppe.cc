@@ -113,7 +113,7 @@ cbasis3 spiegelachsenvonebenenwinkele (const cvektor3 wi)  // über gleichschenk
   spieg3.z= 1 - spieg3.x*spieg3.x - spieg3.y*spieg3.y;  // 2 Schnittpunkte der Kreise, negativer Wert = positive Determinante
 
   if (spieg3.z > -quantg)
-    spieg3.z= sqrtr (fabsr (spieg3.z));
+    spieg3.z= sqrtr (absr (spieg3.z));
     else
     spieg3.z= 0;                          // Dreiecksungleichung ist nicht erfüllt
   return cbasis3 (spieg1, spieg2, spieg3);
@@ -151,7 +151,7 @@ cbasis3 spiegelachsenvonebenenwinkeld (const cvektor3 wi)  // über gleichschenk
   spieg3.z= 1 - spieg3.x*spieg3.x - spieg3.y*spieg3.y;  // 2 Schnittpunkte der Kreise, negativer Wert = positive Determinante
 
   if (spieg3.z > -quantg)
-    spieg3.z= sqrtr (fabsr (spieg3.z));
+    spieg3.z= sqrtr (absr (spieg3.z));
     else
     spieg3.z= 0;                          // Dreiecksungleichung ist nicht erfüllt
   return cbasis3 (spieg1, spieg2, spieg3);
@@ -357,7 +357,7 @@ integer cvektor3liste::elposition (cvektor3 pv)  // Listenposition eines Element
   real dif;
   for (integer lauf= 0;lauf < anz; lauf++)
     {
-    dif= abs (pv - v[lauf]);
+    dif= absr (pv - v[lauf]);
     if (dif <= quantg)
       return lauf;
     }

@@ -205,7 +205,7 @@ void realeingabe (_Float64& pr)
   pr= _Float64 (pf);
   }
 
-void realeingabe (long double& pr)
+void realeingabe (_Float8x& pr)
   {
   integer scanret;
   scanret= scanf ("%Lf", &pr);
@@ -255,7 +255,7 @@ void printreal (_Float64 pr)
   fclose (datei);
   }
 
-void printreal (long double pr)
+void printreal (_Float8x pr)
   {
   FILE* datei= fopen ("screenoutput.txt", "ab");
   printf ("%15.9Lf", pr);
@@ -281,7 +281,7 @@ void printrealobj (const char* pdateiname, _Float64 pr)
   fclose (datei);
   }
 
-void printrealobj (const char* pdateiname, long double pr)
+void printrealobj (const char* pdateiname, _Float8x pr)
   {
   FILE* datei= fopen (pdateiname, "ab");
   //printf ("%0.10Lg", pr);
@@ -331,7 +331,7 @@ char* schreibzahl (real z)            // Zahlstring von einer Realzahl erzeugen
   char* ret= new char[1000];
 
   // Vorkommastellen im Array speichern
-  real vk= fabsr (z);
+  real vk= absr (z);
   integer vork= integer (vk);
   char zw, zx;
   for (integer lauf= 0; lauf < 20; lauf++)

@@ -7,6 +7,7 @@
 // ------------------------------------------------------------------------  Datentypen -----------------------------------------------------
 
 typedef signed long long integer;
+typedef long double _Float8x;
 
 //                                                                                                                                           xray N97  raspi5  Apfel N97  Apfel raspi5                     orangepi5
 // ------------------------- 16 Bit -------------------------------------------------------------------------------------------------------------
@@ -21,11 +22,14 @@ typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
-//typedef long double real;     // hw                                                                                                        6.90      4.34    0.53         10.84                               5.55
+//typedef _Float8x real;        // AMD64: 80 Bit hw, ARM64: 128 Bit sw                                                                       6.90      4.34    0.53         10.84                               5.55
+//typedef long double real;     // AMD64: 80 Bit hw, ARM64: 128 Bit sw
+
+// ------------------------- 80 Bit -------------------------------------------------------------------------------------------------------------
 //typedef __float80 real;       // hw             //   64 Bit: 19.26 Stellen 18/20 Stellen (verlässlich/unterscheidbar)                      6.90              0.53
 
 // ------------------------ 128 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float128 real;       // sw             //  113 Bit: 34.01 Stellen 33/35 Stellen (verlässlich/unterscheidbar)                      3.84      4.34    9.39         10.84
+//typedef _Float128 real;       // sw             //  113 Bit: 34.01 Stellen 33/35 Stellen (verlässlich/unterscheidbar)                      3.84      4.34    9.39         10.84                               5.55
 //typedef __float128 real;      // sw             //  20 mal langsamer als __float80                                                         3.84              9.39
 
 struct cvektor2
@@ -189,81 +193,81 @@ void     savemax    (integer& pmax, integer pr);
 
 //--------------------- real Funktionen ------------------------------------------------------------------------------
 
-_Float32 fmodr (const _Float32& a, const _Float32& b);
-_Float64 fmodr (const _Float64& a, const _Float64& b);
-long double fmodr (const long double& a, const long double& b);
+_Float32 modr (const _Float32& a, const _Float32& b);
+_Float64 modr (const _Float64& a, const _Float64& b);
+_Float8x modr (const _Float8x& a, const _Float8x& b);
 
 _Float32 floorr (const _Float32& a);
 _Float64 floorr (const _Float64& a);
-long double floorr (const long double& a);
+_Float8x floorr (const _Float8x& a);
 
-_Float32 fabsr (const _Float32& a);
-_Float64 fabsr (const _Float64& a);
-long double fabsr (const long double& a);
+_Float32 absr (const _Float32& a);
+_Float64 absr (const _Float64& a);
+_Float8x absr (const _Float8x& a);
 
 _Float32 sqrtr (const _Float32& a);
 _Float64 sqrtr (const _Float64& a);
-long double sqrtr (const long double& a);
+_Float8x sqrtr (const _Float8x& a);
 
 _Float32 cbrtr (const _Float32& a);
 _Float64 cbrtr (const _Float64& a);
-long double cbrtr (const long double& a);
+_Float8x cbrtr (const _Float8x& a);
 
 _Float32 qnrtr (const _Float32& a);
 _Float64 qnrtr (const _Float64& a);
-long double qnrtr (const long double& a);
+_Float8x qnrtr (const _Float8x& a);
 
 _Float32 expr (const _Float32& a);
 _Float64 expr (const _Float64& a);
-long double expr (const long double& a);
+_Float8x expr (const _Float8x& a);
 
 _Float32 logr (const _Float32& a);
 _Float64 logr (const _Float64& a);
-long double logr (const long double& a);
+_Float8x logr (const _Float8x& a);
 
 _Float32 powr (const _Float32& a, const _Float32& b);
 _Float64 powr (const _Float64& a, const _Float64& b);
-long double powr (const long double& a, const long double& b);
+_Float8x powr (const _Float8x& a, const _Float8x& b);
 
 _Float32 sinr (const _Float32& a);
 _Float64 sinr (const _Float64& a);
-long double sinr (const long double& a);
+_Float8x sinr (const _Float8x& a);
 
 _Float32 cosr (const _Float32& a);
 _Float64 cosr (const _Float64& a);
-long double cosr (const long double& a);
+_Float8x cosr (const _Float8x& a);
 
 _Float32 asinr (const _Float32& a);
 _Float64 asinr (const _Float64& a);
-long double asinr (const long double& a);
+_Float8x asinr (const _Float8x& a);
 
 _Float32 acosr (const _Float32& a);
 _Float64 acosr (const _Float64& a);
-long double acosr (const long double& a);
+_Float8x acosr (const _Float8x& a);
 
 _Float32 atanr (const _Float32& a);
 _Float64 atanr (const _Float64& a);
-long double atanr (const long double& a);
+_Float8x atanr (const _Float8x& a);
 
 _Float32 atan2r (const _Float32& a, const _Float32& b);
 _Float64 atan2r (const _Float64& a, const _Float64& b);
-long double atan2r (const long double& a, const long double& b);
+_Float8x atan2r (const _Float8x& a, const _Float8x& b);
 
 _Float32 asinhr (const _Float32& a);
 _Float64 asinhr (const _Float64& a);
-long double asinhr (const long double& a);
+_Float8x asinhr (const _Float8x& a);
 
 _Float32 acoshr (const _Float32& a);
 _Float64 acoshr (const _Float64& a);
-long double acoshr (const long double& a);
+_Float8x acoshr (const _Float8x& a);
 
 _Float32 atanhr (const _Float32& a);
 _Float64 atanhr (const _Float64& a);
-long double atanhr (const long double& a);
+_Float8x atanhr (const _Float8x& a);
 
 //--------------------- cvektor2 Vektor Funktionen ------------------------------------------------------------------------------
 
-real     absv    (const cvektor2 pv);                                           // Länge des Vektors
+real     absr    (const cvektor2 pv);                                           // Länge des Vektors
 cvektor2 senk    (const cvektor2 &pv);                                          // um +90° gedrehter Vektor (Kreuzfunktion in R2, unärer Operator)
 
 // ---------- cvektor2 Vektor Operatoren ----------------------------------------------------------------------------------------------
@@ -283,20 +287,20 @@ real     operator %  (const cvektor2 &pv1, const cvektor2 &pv2);                
 ckomplexk kartes    (const ckomplexp pv);
 
 // unäre Funktionen
-ckomplexk sqrtv     (const ckomplexk pv);                                       // Quadratwurzel Hauptwert √  Sprung bei +-180°
-ckomplexk sqrtvk    (const ckomplexk pv);                                       // Quadratwurzel Hauptwert √ ohne Zwischenumwandlung in Polarkoordinaten Sprung bei 180/-180°
-ckomplexk cbrtv     (const ckomplexk pv);                                       // Kubikwurzel ∛ Sprung bei +-180°
-void      cbrtv     (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);  // Kubikwurzel komplett  ∛
-ckomplexk qnrtv     (const ckomplexk pv);                                       // Kubikwurzel ∛ Sprung bei +-180°
+ckomplexk sqrtr  (const ckomplexk pv);                                               // Quadratwurzel Hauptwert √  Sprung bei +-180°
+ckomplexk sqrtkr (const ckomplexk pv);                                               // Quadratwurzel Hauptwert √ ohne Zwischenumwandlung in Polarkoordinaten Sprung bei 180/-180°
+ckomplexk cbrtr  (const ckomplexk pv);                                               // Kubikwurzel ∛ Sprung bei +-180°
+void      cbrtr  (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);  // Kubikwurzel komplett  ∛
+ckomplexk qnrtr  (const ckomplexk pv);                                               // Kubikwurzel ∛ Sprung bei +-180°
 
-ckomplexk expv      (const ckomplexk pv);
-ckomplexk logv      (const ckomplexk pv);
-ckomplexk coshv     (const ckomplexk pv);
-ckomplexk sinhv     (const ckomplexk pv);
-ckomplexk cosv      (const ckomplexk pv);
-ckomplexk sinv      (const ckomplexk pv);
-ckomplexk pown      (const ckomplexk a, const integer n);
-ckomplexk potenz    (const ckomplexk pv1, const ckomplexk pv2);
+ckomplexk expr   (const ckomplexk pv);
+ckomplexk logr   (const ckomplexk pv);
+ckomplexk coshr  (const ckomplexk pv);
+ckomplexk sinhr  (const ckomplexk pv);
+ckomplexk cosr   (const ckomplexk pv);
+ckomplexk sinr   (const ckomplexk pv);
+ckomplexk powr   (const ckomplexk a, const integer n);
+ckomplexk powr   (const ckomplexk pv1, const ckomplexk pv2);
 
 // ------- Schnittpunktklasse ------------------------------------------------------------------------------------------------
 
@@ -326,7 +330,6 @@ void kubischreduziertreellc (real p, real q, real& y);
 void kubischreduziertreellu (real p, real q, real& y);
 void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, ckomplexk& q);
 void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);
-void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);
 
 // kubische Resolventen komplex
 void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
@@ -345,7 +348,7 @@ void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
 void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 
 // quartische Formeln komplex mit zentrierter dreifacher Resolvente
-void quartischreduziertbuch3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
+void quartischreduziertbuchf3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertpdfw23 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& p, ckomplexk& q, ckomplexk& r);
@@ -381,23 +384,23 @@ ckomplexk operator ^ (const ckomplexk &pv1, const ckomplexk &pv2);              
 // -------------------- ckomplexp Funktionen -------------------------------------------
 
 // Umwandlungsfunktionen
-ckomplexp polar225  (const ckomplexk pv);
-ckomplexp polar360  (const ckomplexk pv);
-ckomplexp polar180  (const ckomplexk pv);
-ckomplexp polarcos180  (const ckomplexk pv);
-ckomplexp polartan180  (const ckomplexk pv);
+ckomplexp polar225    (const ckomplexk pv);
+ckomplexp polar360    (const ckomplexk pv);
+ckomplexp polar180    (const ckomplexk pv);
+ckomplexp polarcos180 (const ckomplexk pv);
+ckomplexp polartan180 (const ckomplexk pv);
 
 // unäre Funktionen
-ckomplexp kw        (const ckomplexp pv);                                       // komplexer Kehrwert
-ckomplexp sqrtvk    (const ckomplexp pv);                                       // Quadratwurzel √ ohne Polarkoordinaten berechnet Sprung bei +-180°  ungenauer als sqrtv
-ckomplexp sqrtv     (const ckomplexp pv);                                       // Quadratwurzel √ Sprung bei +-180°
-ckomplexp cbrtv     (const ckomplexp pv);                                       // Kubikwurzel   ∛ Sprung bei +-180°
-ckomplexp expv      (const ckomplexp pv);
-ckomplexp logv      (const ckomplexp pv);
-ckomplexp coshv     (const ckomplexp pv);
-ckomplexp sinhv     (const ckomplexp pv);
-ckomplexp cosv      (const ckomplexp pv);
-ckomplexp sinv      (const ckomplexp pv);
+ckomplexp kw     (const ckomplexp pv);                                          // komplexer Kehrwert
+ckomplexp sqrtkr (const ckomplexp pv);                                          // Quadratwurzel √ ohne Polarkoordinaten berechnet Sprung bei +-180°  ungenauer als sqrtr
+ckomplexp sqrtr  (const ckomplexp pv);                                          // Quadratwurzel √ Sprung bei +-180°
+ckomplexp cbrtr  (const ckomplexp pv);                                          // Kubikwurzel   ∛ Sprung bei +-180°
+ckomplexp expr   (const ckomplexp pv);
+ckomplexp logr   (const ckomplexp pv);
+ckomplexp coshr  (const ckomplexp pv);
+ckomplexp sinhr  (const ckomplexp pv);
+ckomplexp cosr   (const ckomplexp pv);
+ckomplexp sinr   (const ckomplexp pv);
 
 // -------------------- ckomplexp Operatoren ----------------------------------------------------------------
 
@@ -460,7 +463,7 @@ cbasis2 operator | (const cbasis2 &pb1, const cbasis2 &pb2);
 
 void swap (cvektor3& a, cvektor3& b);
 
-real     abs        (const cvektor3 &pv);
+real     absr       (const cvektor3 &pv);
 cvektor3 senk       (const cvektor3 &pv);
 cvektor3 normiere   (const cvektor3 &pv);
 cvektor3 orientiere (const cvektor3 &pv);
@@ -505,7 +508,7 @@ cvektor3 operator / (const cvektor3 &pv, const cbasis3  &pb);
 //---------- cbasis3 Funktionen ------------------------------------------------------------------------------------------
 
 real     norm      (cbasis3 pb);
-real     abs       (cbasis3 pb);
+real     absr       (cbasis3 pb);
 real     det       (const cbasis3 &pb);
 cbasis3  normiere  (const cbasis3 &pb);
 cbasis3  normiere2 (const cbasis3 &pb);
@@ -541,7 +544,7 @@ cbasis3  operator | (const cbasis3 &pb1, const cbasis3 &pb2);
 
 //---------- cvektor4 Vektor Funktionen -----------------------------------------------------------------------------------------------
 
-real     abs      (const cvektor4 &pv);
+real     absr     (const cvektor4 &pv);
 cvektor4 senk     (const cvektor4 &pv);
 cvektor4 normiere (const cvektor4 &pv);
 

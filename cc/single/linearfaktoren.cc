@@ -10,8 +10,8 @@ using namespace std;
 
 void quadratischreduziert (ckomplexk p, ckomplexk& y1, ckomplexk& y2)
   {
-  y1=  sqrtv (-p);
-  y2= -sqrtv (-p);
+  y1=  sqrtr (-p);
+  y2= -sqrtr (-p);
   }
 
 void quadratischreduziertk (ckomplexk a, ckomplexk b, ckomplexk& p)
@@ -35,7 +35,7 @@ void quadratisch2 (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   {
   ckomplexk D;
 
-  D= sqrtv (a*a - b*4);
+  D= sqrtr (a*a - b*4);
 
   x1= -(a - D)/2;
   x2= -(a + D)/2;
@@ -45,7 +45,7 @@ void quadratischp (ckomplexp a, ckomplexp b, ckomplexp& x1, ckomplexp& x2)
   {
   ckomplexp D;
 
-  D= sqrtv (a*a - b*4);
+  D= sqrtr (a*a - b*4);
 
   x1= -(a - D)/2;
   x2= -(a + D)/2;
@@ -99,8 +99,8 @@ void quadratischweg1 (ckomplexk ad, ckomplexk bd)
   xl= yl - al;
 
   // Rückübergabe der Lösungen der linearen Gleichung an die Lösungen der quadratischen Gleichung
-  y1d=  sqrtv (xl);
-  y2d= -sqrtv (xl);
+  y1d=  sqrtr (xl);
+  y2d= -sqrtr (xl);
 
   // Rücktransformation ydp -> xdp
   x1d= y1d - ad/2;
@@ -133,8 +133,8 @@ void quadratischweg2 (ckomplexk ad, ckomplexk bd)
   xl= ad*ad/4 - bd;
 
   // Lösungen reduzierte quadratische Gleichung
-  y1=  sqrtv (xl);
-  y2= -sqrtv (xl);
+  y1=  sqrtr (xl);
+  y2= -sqrtr (xl);
 
   // Lösungen normale quadratische Gleichung
   x1= y1 - ad/2;
@@ -179,6 +179,8 @@ void quadratischeingabezw ()
 
 //--------------------------------------------------------------------------- kubische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
 
+void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);
+
 void kubischparameter ()
   {
   ckomplexk a, b, c, p, q, dp, y1, y2, y3;
@@ -188,7 +190,7 @@ void kubischparameter ()
   vektor2eingabek (c);
 
   kubischreduziertk (a, b, c, p, q);
-  dp= sqrtv (q*q/4 + p*p*p/27)*sqrtv (ckomplexk (-108));
+  dp= sqrtr (q*q/4 + p*p*p/27)*sqrtr (ckomplexk (-108));
   printtext ("---------------------- Differenzenprodukt der Lösungen -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("dp          ", dp, 0);
   printtext ("\n");
@@ -364,8 +366,8 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   dpp= -(kpp*kpp*kpp)*27 - kqp*kqp*real (182.25);
 
   // zentrierte quadratische Lösungen aus zentriertem quadratischem Parameter: D, kq -> dy1, dy2
-  dy1= -sqrtv (-dpp);
-  dy2=  sqrtv (-dpp);
+  dy1= -sqrtr (-dpp);
+  dy2=  sqrtr (-dpp);
 
   // quadratische Lösungen aus zentrierten quadratischen Lösungen: dy1, dy2 -> dx1, dx2
   dx1= dy1 - kqp*real (13.5);
@@ -374,7 +376,7 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   dbx= dx1*dx2;
 
   // kubische Lösungen aus quadratischer Lösung: dx1, kp -> kx1
-  cbrtv (dx1, kx1, kx2, kx3);
+  cbrtr (dx1, kx1, kx2, kx3);
 
   kx1= (kx1/3 - kpp/kx1);
   kx2= (kx2/3 - kpp/kx2);
@@ -433,8 +435,8 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   // Lösungen Faktor 4.32   D= -60.75 d²
   D27_lm= -dq*real (60.75);
   D27_pm= kqp*kqp*real (1640.25) + kpp*kpp*kpp*243;
-  uh3_27pm= -kqp*real (40.5) + sqrtv (D27_lm);
-  vh3_27pm= -kqp*real (40.5) - sqrtv (D27_lm);
+  uh3_27pm= -kqp*real (40.5) + sqrtr (D27_lm);
+  vh3_27pm= -kqp*real (40.5) - sqrtr (D27_lm);
   bed= kpp*cbrtr (real (-243));
   uvaddition (uh3_27pm, vh3_27pm, bed, L1_27pm, L2_27pm, L3_27pm);
   L1_27pm= L1_27pm/cbrtr (real (81));
@@ -444,8 +446,8 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   // Lösungen Faktor 3    D= -6.75 d²
   D3_lm= -dq*real (6.75);
   D3_pm= kqp*kqp*real (182.25) + kpp*kpp*kpp*27;
-  uh3_3pm= -kqp*real (13.5) + sqrtv (D3_lm);
-  vh3_3pm= -kqp*real (13.5) - sqrtv (D3_lm);
+  uh3_3pm= -kqp*real (13.5) + sqrtr (D3_lm);
+  vh3_3pm= -kqp*real (13.5) - sqrtr (D3_lm);
   bed= -kpp*3;
   uvaddition (uh3_3pm, vh3_3pm, bed, L1_3pm, L2_3pm, L3_3pm);
   L1_3pm= L1_3pm/3;
@@ -455,8 +457,8 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   // Lösungen Faktor 2.18  D = -d²
   D21_lm= -dq;
   D21_pm= kqp*kqp*27 + kpp*kpp*kpp*4;
-  uh3_21pm= -kqp*sqrtr (real (27)) + sqrtv (D21_lm);
-  vh3_21pm= -kqp*sqrtr (real (27)) - sqrtv (D21_lm);
+  uh3_21pm= -kqp*sqrtr (real (27)) + sqrtr (D21_lm);
+  vh3_21pm= -kqp*sqrtr (real (27)) - sqrtr (D21_lm);
   bed= kpp*cbrtr (real (-4));
   uvaddition (uh3_21pm, vh3_21pm, bed, L1_21pm, L2_21pm, L3_21pm);
   L1_21pm= L1_21pm/cbrtr (sqrtr (real (108)));  // = sqrtr (3)*cbrtr (2)
@@ -466,40 +468,40 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   // Lösungen Faktor -2.18i D = d²
   D21_l= dq;
   D21_p= kqp*kqp*-27 + kpp*kpp*kpp*-4;
-  uh3_21p= -kqp*sqrtr (real (27))*ik - sqrtv (D21_l);
-  vh3_21p= -kqp*sqrtr (real (27))*ik + sqrtv (D21_l);
+  uh3_21p= -kqp*sqrtr (real (27))*ik - sqrtr (D21_l);
+  vh3_21p= -kqp*sqrtr (real (27))*ik + sqrtr (D21_l);
   d_21p= uh3_21p - vh3_21p;
-  bed= -kpp*cbrtv (-einsk*4);
+  bed= -kpp*cbrtr (-einsk*4);
   uvaddition (uh3_21p, vh3_21p, bed, L1_21p, L2_21p, L3_21p);
-  L1_21p= L1_21p/cbrtv (ik*sqrtr (real (108)));
-  L2_21p= L2_21p/cbrtv (ik*sqrtr (real (108)));
-  L3_21p= L3_21p/cbrtv (ik*sqrtr (real (108)));
+  L1_21p= L1_21p/cbrtr (ik*sqrtr (real (108)));
+  L2_21p= L2_21p/cbrtr (ik*sqrtr (real (108)));
+  L3_21p= L3_21p/cbrtr (ik*sqrtr (real (108)));
 
   // Lösungen Faktor 1.73i  D = d²/4
   D17_l= dq/4;
   D17_p= -(kqp*kqp)*27/4 - kpp*kpp*kpp;
-  uh3_17p= -kqp/2*sqrtv (-27*einsk) + sqrtv (D17_l);
-  vh3_17p= -kqp/2*sqrtv (-27*einsk) - sqrtv (D17_l);
+  uh3_17p= -kqp/2*sqrtr (-27*einsk) + sqrtr (D17_l);
+  vh3_17p= -kqp/2*sqrtr (-27*einsk) - sqrtr (D17_l);
   d_17p= uh3_17p - vh3_17p;
-  bed= kpp*-cbrtv (-einsk);
+  bed= kpp*-cbrtr (-einsk);
   uvaddition (uh3_17p, vh3_17p, bed, L1_17p, L2_17p, L3_17p);
-  L1_17p= L1_17p/cbrtv (ik*sqrtr (real (27)));
-  L2_17p= L2_17p/cbrtv (ik*sqrtr (real (27)));
-  L3_17p= L3_17p/cbrtv (ik*sqrtr (real (27)));
+  L1_17p= L1_17p/cbrtr (ik*sqrtr (real (27)));
+  L2_17p= L2_17p/cbrtr (ik*sqrtr (real (27)));
+  L3_17p= L3_17p/cbrtr (ik*sqrtr (real (27)));
 
   // Lösungen Faktor 1      D=d²/-108
   D1_lm= dq/-108;
   D1_pm= kqp*kqp/4 + kpp*kpp*kpp/27;
-  uh3_1pm= -kqp/2 + sqrtv (D1_lm);
-  vh3_1pm= -kqp/2 - sqrtv (D1_lm);
+  uh3_1pm= -kqp/2 + sqrtr (D1_lm);
+  vh3_1pm= -kqp/2 - sqrtr (D1_lm);
   bed= kpp/-3;
   uvaddition (uh3_1pm, vh3_1pm, bed, L1_1pm, L2_1pm, L3_1pm);
 
   // Lösungen Faktor -i     D= d²/108
   D1_l= dq/108;
   D1_p= kqp*kqp/-4 + kpp*kpp*kpp/-27;
-  uh3_1p= -kqp/2*ik + sqrtv (D1_l);
-  vh3_1p= -kqp/2*ik - sqrtv (D1_l);
+  uh3_1p= -kqp/2*ik + sqrtr (D1_l);
+  vh3_1p= -kqp/2*ik - sqrtr (D1_l);
   bed= kpp/3;
   uvaddition (uh3_1p, vh3_1p, bed, L1_1p, L2_1p, L3_1p);
   L1_1p= L1_1p/-ik;
@@ -641,8 +643,8 @@ void kubischweg1 (ckomplexk x1k, ckomplexk x2k, ckomplexk& x3k)
   xlp= -pd;
 
   // Rückübergabe der linearen Lösungen an die quadratischen Lösungen
-  y1dp=  sqrtv (xlp);
-  y2dp= -sqrtv (xlp);
+  y1dp=  sqrtr (xlp);
+  y2dp= -sqrtr (xlp);
 
   // Rücktransformation der Lösungen der reduzierten quadratischen Gleichung in die Lösungen der normalen quadratischen Gleichung
   x1dp= y1dp - ad2;
@@ -650,7 +652,7 @@ void kubischweg1 (ckomplexk x1k, ckomplexk x2k, ckomplexk& x3k)
 
   // Rückübergabe der quadratischen Lösungen an die kubischen Lösungen
   xdp= x1dp;
-  cbrtv (xdp, z1kp, z2kp, z3kp);
+  cbrtr (xdp, z1kp, z2kp, z3kp);
   y1kp= z1kp - pk/(z1kp*3);
   y2kp= z2kp - pk/(z2kp*3);
   y3kp= z3kp - pk/(z3kp*3);
@@ -689,8 +691,8 @@ void kubischweg1 (ckomplexk x1k, ckomplexk x2k, ckomplexk& x3k)
   printvektor2komplex ("x1dp       ", x1dp, 0);
   printvektor2komplex ("x2dp       ", x2dp, 0);
   printtext ("\n");
-  printvektor2komplex ("x1d/√-108  ", x1d/sqrtv (ckomplexk (-108)), 0);
-  printvektor2komplex ("x2d/√-108  ", x2d/sqrtv (ckomplexk (-108)), 0);
+  printvektor2komplex ("x1d/√-108  ", x1d/sqrtr (ckomplexk (-108)), 0);
+  printvektor2komplex ("x2d/√-108  ", x2d/sqrtr (ckomplexk (-108)), 0);
   printtext ("\n");
   printvektor2komplex ("z1kp       ", z1kp, 0);
   printvektor2komplex ("z2kp       ", z2kp, 0);
@@ -722,12 +724,12 @@ void kubischweg2 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
 
   // Lösungen der eingebetteten quadratischen Gleichung
   xl= pk*pk*pk/27 + qk*qk/4;
-  x1d= -qk/2 + sqrtv (xl);
-  x2d= -qk/2 - sqrtv (xl);
+  x1d= -qk/2 + sqrtr (xl);
+  x2d= -qk/2 - sqrtr (xl);
 
   // Lösungen u v
-  cbrtv (x1d, u1p, u2p, u3p);
-  cbrtv (x2d, v1p, v2p, v3p);
+  cbrtr (x1d, u1p, u2p, u3p);
+  cbrtr (x2d, v1p, v2p, v3p);
 
   // Rückübergabe der quadratischen Lösungen an die kubischen Lösungen
   y1p= u1p - pk/(u1p*3);
@@ -875,13 +877,13 @@ void quartischzwischenwerte (ckomplexk qx1, ckomplexk qx2, ckomplexk qx3, ckompl
   printvektor2komplex ("D3p           ", D3p, 1);
 
   // D3p, kqp -> dx1                dx1, kx1 Division 0/0 muss vermieden werden deshalb Betrag möglichst groß, andere Lösung auswählen
-  dx1= kqp*real (-13.5) - sqrtv (D3p);
-  dx2= kqp*real (-13.5) + sqrtv (D3p);
+  dx1= kqp*real (-13.5) - sqrtr (D3p);
+  dx2= kqp*real (-13.5) + sqrtr (D3p);
   dax= -(dx1 + dx2);
   dbx= dx1*dx2;
 
   // dx1, kpp -> kx1
-  cbrtv (dx2, kx1, kx2, kx3);
+  cbrtr (dx2, kx1, kx2, kx3);
   kx1= kx1 - kpp*3/kx1;
   kx2= kx2 - kpp*3/kx2;
   kx3= kx3 - kpp*3/kx3;
@@ -928,16 +930,16 @@ void quartischzwischenwerte (ckomplexk qx1, ckomplexk qx2, ckomplexk qx3, ckompl
   printtext ("\n");
 
   // kx1, qpp -> m1, m2
-  m1=  sqrtv ((kx1 - qpp*2)*3);
-  m2= -sqrtv ((kx1 - qpp*2)*3);
+  m1=  sqrtr ((kx1 - qpp*2)*3);
+  m2= -sqrtr ((kx1 - qpp*2)*3);
 
   // kx1, qpp, qqp -> n1, n2    Division durch 0 deshalb     kx1 <> 2qpp
-  n1qp= (kx1 + qpp - qqp/sqrtv ((kx1 - qpp*2)/27))*6;
-  n2qp= (kx1 + qpp + qqp/sqrtv ((kx1 - qpp*2)/27))*6;
+  n1qp= (kx1 + qpp - qqp/sqrtr ((kx1 - qpp*2)/27))*6;
+  n2qp= (kx1 + qpp + qqp/sqrtr ((kx1 - qpp*2)/27))*6;
 
   // kx1, qpp, qrp -> n1, n2
-  n1r= (kx1 + qpp + sqrtv ((kx1 + qpp)*(kx1 + qpp) - qrp*36))*6;
-  n2r= (kx1 + qpp - sqrtv ((kx1 + qpp)*(kx1 + qpp) - qrp*36))*6;
+  n1r= (kx1 + qpp + sqrtr ((kx1 + qpp)*(kx1 + qpp) - qrp*36))*6;
+  n2r= (kx1 + qpp - sqrtr ((kx1 + qpp)*(kx1 + qpp) - qrp*36))*6;
 
   printtext ("-------------------------------- die Parameter der quadratischen Gleichungen ------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("m1            ", m1, 1);
@@ -948,8 +950,8 @@ void quartischzwischenwerte (ckomplexk qx1, ckomplexk qx2, ckomplexk qx3, ckompl
   printvektor2komplex ("n2r           ", n2r, 1);
   printtext ("\n");
 
-  Dd1= sqrtv (m1*m1 - n1qp);
-  Dd2= sqrtv (m2*m2 - n2qp);
+  Dd1= sqrtr (m1*m1 - n1qp);
+  Dd2= sqrtr (m2*m2 - n2qp);
 
   printtext ("-------------------------------- die Determinanten der quadratischen Gleichungen ------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("Dd1           ", Dd1, 1);
@@ -1018,8 +1020,8 @@ void quartischwegdiffp (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
   x1l= -pd;
 
   // Rückübergabe der linearen Lösungen an die quadratischen Lösungen
-  y1d=  sqrtv (x1l);
-  y2d= -sqrtv (x1l);
+  y1d=  sqrtr (x1l);
+  y2d= -sqrtr (x1l);
 
   // Rücktransformation der Lösungen der reduzierten quadratischen Gleichung in die Lösungen der normalen quadratischen Gleichung
   ad2= ad/2;
@@ -1028,7 +1030,7 @@ void quartischwegdiffp (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
 
   // Rückübergabe der quadratischen Lösungen an die kubischen Lösungen
   xd= x1d;
-  cbrtv (xd, z1k, z2k, z3k);
+  cbrtr (xd, z1k, z2k, z3k);
   y1k= z1k - pk/(z1k*3);
   y2k= z2k - pk/(z2k*3);
   y3k= z3k - pk/(z3k*3);
@@ -1043,7 +1045,7 @@ void quartischwegdiffp (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
   xk= x1k;
 
   z= xk;
-  u= sqrtv (z - pq);
+  u= sqrtr (z - pq);
 
   a1=  u;
   a2= -u;
@@ -1118,8 +1120,8 @@ void quartischwegdiffp (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
   printvektor2komplex ("x1d        ", x1d, 0);
   printvektor2komplex ("x2d        ", x2d, 0);
   printtext ("\n");
-  printvektor2komplex ("x1ds/√-108 ", x1ds/sqrtv (ckomplexk (-108)), 0);
-  printvektor2komplex ("x2ds/√-108 ", x2ds/sqrtv (ckomplexk (-108)), 0);
+  printvektor2komplex ("x1ds/√-108 ", x1ds/sqrtr (ckomplexk (-108)), 0);
+  printvektor2komplex ("x2ds/√-108 ", x2ds/sqrtr (ckomplexk (-108)), 0);
   printtext ("\n");
   printvektor2komplex ("y1k        ", y1k, 0);
   printvektor2komplex ("y2k        ", y2k, 0);
@@ -1182,8 +1184,8 @@ void quartischwegpdfw2 (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
   x1l= -pd;
 
   // Rückübergabe der linearen Lösungen an die quadratischen Lösungen
-  y1d=  sqrtv (x1l);
-  y2d= -sqrtv (x1l);
+  y1d=  sqrtr (x1l);
+  y2d= -sqrtr (x1l);
 
   // Rücktransformation der Lösungen der reduzierten quadratischen Gleichung in die Lösungen der normalen quadratischen Gleichung
   ad2= ad/2;
@@ -1192,7 +1194,7 @@ void quartischwegpdfw2 (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
 
   // Rückübergabe der quadratischen Lösungen an die kubischen Lösungen
   xd= x1d;
-  cbrtv (xd, z1k, z2k, z3k);
+  cbrtr (xd, z1k, z2k, z3k);
   y1k= z1k - pk/(z1k*3);
   y2k= z2k - pk/(z2k*3);
   y3k= z3k - pk/(z3k*3);
@@ -1207,7 +1209,7 @@ void quartischwegpdfw2 (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
   xk= x1k;
 
   z= xk;
-  u= sqrtv (z);
+  u= sqrtr (z);
 
   a1=  u;
   a2= -u;
@@ -1282,8 +1284,8 @@ void quartischwegpdfw2 (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk& 
   printvektor2komplex ("x1d        ", x1d, 0);
   printvektor2komplex ("x2d        ", x2d, 0);
   printtext ("\n");
-  printvektor2komplex ("x1ds/√-108 ", x1ds/sqrtv (ckomplexk (-108)), 0);
-  printvektor2komplex ("x2ds/√-108 ", x2ds/sqrtv (ckomplexk (-108)), 0);
+  printvektor2komplex ("x1ds/√-108 ", x1ds/sqrtr (ckomplexk (-108)), 0);
+  printvektor2komplex ("x2ds/√-108 ", x2ds/sqrtr (ckomplexk (-108)), 0);
   printtext ("\n");
   printvektor2komplex ("y1k        ", y1k, 0);
   printvektor2komplex ("y2k        ", y2k, 0);
@@ -1328,12 +1330,12 @@ void quartischwegdiffpkurz (ckomplexk aq, ckomplexk bq, ckomplexk cq, ckomplexk 
   xl= pk*pk*pk/27 + qk*qk/4;
 
   // Rücktransformation der Lösung der normalen linearen Gleichung in die Lösungen der normalen quadratischen Gleichung: xl, qk -> x1d, x2d
-  x1d= qk/-2 + sqrtv (xl);
-  x2d= qk/-2 - sqrtv (xl);
+  x1d= qk/-2 + sqrtr (xl);
+  x2d= qk/-2 - sqrtr (xl);
 
   // Rückübergabe einer quadratischen Lösungen an die kubischen Lösungen: xd, pk -> y1k, y2k, y3k
   xd= x1d;
-  cbrtv (xd, z1k, z2k, z3k);
+  cbrtr (xd, z1k, z2k, z3k);
 
   x1k= z1k - pk/(z1k*3) + pq/3;
   x2k= z2k - pk/(z2k*3) + pq/3;
@@ -1343,7 +1345,7 @@ void quartischwegdiffpkurz (ckomplexk aq, ckomplexk bq, ckomplexk cq, ckomplexk 
   xk= x2k;
 
   z= xk;
-  u= sqrtv (z - pq);
+  u= sqrtr (z - pq);
 
   a1=  u;
   a2= -u;
@@ -1375,8 +1377,8 @@ void quartischwegdiffpkurz (ckomplexk aq, ckomplexk bq, ckomplexk cq, ckomplexk 
   printtext ("\n");
   printvektor2komplex ("xl (D)     ", xl, 1);
   printtext ("\n");
-  printvektor2komplex ("y1d        ",  sqrtv (xl), 0);
-  printvektor2komplex ("y2d        ", -sqrtv (xl), 0);
+  printvektor2komplex ("y1d        ",  sqrtr (xl), 0);
+  printvektor2komplex ("y2d        ", -sqrtr (xl), 0);
   printtext ("\n");
   printvektor2komplex ("x1d        ", x1d, 0);
   printvektor2komplex ("x2d        ", x2d, 0);
@@ -1422,12 +1424,12 @@ void quartischwegz1kurz (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk& x4
   xl= pk*pk*pk/27 + qk*qk/4;
 
   // Lösungen der normalen quadratischen Gleichung
-  x1d= qk/-2 + sqrtv (xl);
-  x2d= qk/-2 - sqrtv (xl);
+  x1d= qk/-2 + sqrtr (xl);
+  x2d= qk/-2 - sqrtr (xl);
 
   // Rückübergabe der quadratischen Lösungen an die kubischen Lösungen
   xd= x2d;
-  cbrtv (xd, z1k, z2k, z3k);
+  cbrtr (xd, z1k, z2k, z3k);
 
   y1k= z1k - pk/(z1k*3);
   y2k= z2k - pk/(z2k*3);
@@ -1437,7 +1439,7 @@ void quartischwegz1kurz (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk& x4
   yk= y1k;
 
   z= yk;
-  u= sqrtv (z - pq*2/3);
+  u= sqrtr (z - pq*2/3);
 
   a1=  u;
   a2= -u;
@@ -1480,10 +1482,10 @@ void quartischwegz1kurz (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk& x4
   printtext ("\n");
   printvektor2komplex ("xl (D)     ", xl, 1);
   printtext ("\n");
-  printvektor2komplex ("y1d        ",  sqrtv (xl), 0);
-  printvektor2komplex ("y2d        ", -sqrtv (xl), 0);
+  printvektor2komplex ("y1d        ",  sqrtr (xl), 0);
+  printvektor2komplex ("y2d        ", -sqrtr (xl), 0);
   printtext ("\n");
-  printvektor2komplex ("dpx/√-108  ", dpx/sqrtv (ckomplexk (-108)), 1);
+  printvektor2komplex ("dpx/√-108  ", dpx/sqrtr (ckomplexk (-108)), 1);
   printtext ("\n");
   printvektor2komplex ("y1k        ", y1k, 0);
   printvektor2komplex ("y2k        ", y2k, 0);
@@ -1530,12 +1532,12 @@ void quartischwegz3kurz (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk&
   xl= pk*pk*pk*27 + qk*qk*real (182.25);
 
   // Rücktransformation der Lösungen der reduzierten quadratischen Gleichung in die Lösungen der normalen quadratischen Gleichung
-  x1d= qk*real (-13.5) + sqrtv (xl);
-  x2d= qk*real (-13.5) - sqrtv (xl);
+  x1d= qk*real (-13.5) + sqrtr (xl);
+  x2d= qk*real (-13.5) - sqrtr (xl);
 
   // Rückübergabe der quadratischen Lösungen an die kubischen Lösungen
   xd= x2d;
-  cbrtv (xd, z1k, z2k, z3k);
+  cbrtr (xd, z1k, z2k, z3k);
 
   y1k= z1k - pk*3/z1k;
   y2k= z2k - pk*3/z2k;
@@ -1545,7 +1547,7 @@ void quartischwegz3kurz (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk&
   yk= y1k;
 
   z= yk;
-  u= sqrtv ((z - pq*2)/3);
+  u= sqrtr ((z - pq*2)/3);
 
   a1=  u;
   a2= -u;
@@ -1612,8 +1614,8 @@ void quartischwegz3kurz (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk&
   printvektor2komplex ("x1d        ", x1d, 0);
   printvektor2komplex ("x2d        ", x2d, 0);
   printtext ("\n");
-  printvektor2komplex ("x1ds/√-108 ", x1ds/sqrtv (ckomplexk (-108)), 0);
-  printvektor2komplex ("x2ds/√-108 ", x2ds/sqrtv (ckomplexk (-108)), 0);
+  printvektor2komplex ("x1ds/√-108 ", x1ds/sqrtr (ckomplexk (-108)), 0);
+  printvektor2komplex ("x2ds/√-108 ", x2ds/sqrtr (ckomplexk (-108)), 0);
   printtext ("\n");
   printvektor2komplex ("y1k        ", y1k, 0);
   printvektor2komplex ("y2k        ", y2k, 0);
@@ -1696,7 +1698,7 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
   xl= pk*pk*pk + qk*qk;
 
   // das Differenzenprodukt der Lösungen der reduzierten kubischen Gleichung
-  diffpxl= -sqrtv (ckomplexk (xl*-108));
+  diffpxl= -sqrtr (ckomplexk (xl*-108));
 
   // Lösungen der kubischen Resolvente
   if (xl > 0)                                                     // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
@@ -1735,12 +1737,12 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
 
   z= yk/2 + pq/6;
   uq= yk/4 - pq/6;
-  u= sqrtv (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
-  v= sqrtv (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
+  u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
+  v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
-  if (absv (bed + qq) < absv (bed - qq))
+  if (absr (bed + qq) < absr (bed - qq))
     {
     b1= z - v;
     b2= z + v;
@@ -1751,8 +1753,8 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
     b2= z - v;
     }
 
-  D1= sqrtv (uq - b1);
-  D2= sqrtv (uq - b2);
+  D1= sqrtr (uq - b1);
+  D2= sqrtr (uq - b2);
 
   // Lösungen der reduzierten quartischen Gleichung
   aq4= aq/-4;
@@ -1996,7 +1998,163 @@ void quartischeingabezw ()
 //  quartischwegz3kurz (x1, x2, x3, x4);
   }
 
-//--------------------------------------------------------------------------- quintische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------- Formeln mit Bezug zur quintischen Gleichung ----------------------------------------------------------------------------------------------------------
+
+void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
+  {
+  ckomplexk d, f1, f2, f3, r1, r2, r3, f_1, f_2, f_3, r_1, r_2, r_3, ff1, ff2, ff3, f_f1, f_f2, f_f3, dp;
+  ckomplexk fr1, fr2, fr3, rr1, rr2, rr3, k;
+  real ar, br, cr, dr;
+
+  kubisch (a, b, c, x1, x2, x3);
+
+  printtext ("-------------------------------------------- Berechnung der Zwischenwerte aus den Lösungen ------------------------------------------------------------------\n");
+  printvektor2komplex ("x1", x1, 0);
+  printvektor2komplex ("x2", x2, 0);
+  printvektor2komplex ("x3", x3, 0);
+  printtext ("\n");
+
+  r1= x1 + x2*e31 + x3*e32;
+  r2= x1 + x2*e32 + x3*e31;
+  r3= x1 + x2 + x3;
+
+  r_1= x2 + x1*e31 + x3*e32;
+  r_2= x2 + x1*e32 + x3*e31;
+  r_3= x2 + x1 + x3;
+
+  printvektor2komplex ("r1", r1, 0);
+  printvektor2komplex ("r2", r2, 0);
+  printvektor2komplex ("r3", r3, 0);
+  printvektor2komplex ("r_1", r_1, 0);
+  printvektor2komplex ("r_2", r_2, 0);
+  printvektor2komplex ("r_3", r_3, 0);
+  printtext ("\n");
+
+  f1= r1*r1*r1;
+  f2= r2*r2*r2;
+  f3= r3*r3*r3;
+
+  f_1= r_1*r_1*r_1;
+  f_2= r_2*r_2*r_2;
+  f_3= r_3*r_3*r_3;
+
+  printvektor2komplex ("f1", f1, 0);
+  printvektor2komplex ("f2", f2, 0);
+  printvektor2komplex ("f3", f3, 0);
+  printvektor2komplex ("f_1", f_1, 0);
+  printvektor2komplex ("f_2", f_2, 0);
+  printvektor2komplex ("f_3", f_3, 0);
+  printtext ("\n");
+
+  ff1= f1 + f_1;
+  ff2= f2 + f_2;
+  ff3= f3 + f_3;
+
+  f_f1= f1 - f_1;
+  f_f2= f2 - f_2;
+  f_f3= f3 - f_3;
+
+  f_f1= f_f1*f_f1;
+  f_f2= f_f2*f_f2;
+  f_f3= f_f3*f_f3;
+
+  printvektor2komplex ("ff1", ff1, 0);
+  printvektor2komplex ("ff2", ff2, 0);
+  printvektor2komplex ("ff3", ff3, 0);
+  printvektor2komplex ("f_f1", f_f1, 0);
+  printvektor2komplex ("f_f2", f_f2, 0);
+  printvektor2komplex ("f_f3", f_f3, 0);
+  printtext ("\n");
+
+  dp= (x1-x2)*(x2-x3)*(x3-x1);
+
+  printvektor2komplex ("dp", dp, 0);
+  printtext ("\n");
+
+  k= (x1*x1*x2 + x2*x2*x1 + x2*x2*x3 + x3*x3*x2 + x3*x3*x1 + x1*x1*x3)/2;
+
+  printvektor2komplex ("k", k, 0);
+  printtext ("\n");
+
+  printtext ("-------------------------------------------- Berechnung der Zwischenwerte aus den Koeffizienten -------------------------------------------------------------\n");
+  ar= a.x;
+  br= b.x;
+  cr= c.x;
+
+  d= a*a*b*b + a*a*a*c*-4 + b*b*b*-4 + a*b*c*18 + c*c*-27;
+  dr= ar*ar*br*br + ar*ar*ar*cr*-4 + br*br*br*-4 + ar*br*cr*18 + cr*cr*-27;
+  dr= sqrtr (dr);
+  d= sqrtr (d);
+
+//  f1= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*sqrtr (real (6.75));
+//  f2= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*-sqrtr (real (6.75));
+  f3= -(a*a*a);
+
+  printvektor2komplex ("f1", f1, 0);
+  printvektor2komplex ("f2", f2, 0);
+  printvektor2komplex ("f3", f3, 0);
+  printtext ("\n");
+
+  fr1= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*sqrtr (real (6.75));
+  fr2= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*-sqrtr (real (6.75));
+  fr3= -(ar*ar*ar);
+
+  printvektor2komplex ("fr1", fr1, 0);
+  printvektor2komplex ("fr2", fr2, 0);
+  printvektor2komplex ("fr3", fr3, 0);
+  printtext ("\n");
+
+  r1= cbrtr (f1);
+  r2= cbrtr (f2);
+  r3= cbrtr (f3);
+
+  rr1= cbrtr (fr1);
+  rr2= cbrtr (fr2);
+  rr3= cbrtr (fr3);
+
+  printvektor2komplex ("r1", r1, 0);
+  printvektor2komplex ("r2", r2, 0);
+  printvektor2komplex ("r3", r3, 0);
+  printtext ("\n");
+
+  printvektor2komplex ("rr1", rr1, 0);
+  printvektor2komplex ("rr2", rr2, 0);
+  printvektor2komplex ("rr3", rr3, 0);
+  printtext ("\n");
+
+  x1= (r1 + r2 + r3)/3;
+  x2= (r1*e32 + r2*e31 + r3)/3;
+  x3= (r1*e31 + r2*e32 + r3)/3;
+
+  printvektor2komplex ("x1 a", x1, 0);
+  printvektor2komplex ("x2 a", x2, 0);
+  printvektor2komplex ("x3 a", x3, 0);
+  printtext ("\n");
+/*
+  for (integer lauf1= 0; lauf1 < 3; lauf1++)
+  for (integer lauf2= 0; lauf2 < 3; lauf2++)
+  for (integer lauf3= 0; lauf3 < 3; lauf3++)
+    {
+    r1= r1*pown (e31,lauf1);
+    r2= r2*pown (e31,lauf2);
+    r3= r3*pown (e31,lauf3);
+
+    printvektor2komplex ("r1", r1, 0);
+    printvektor2komplex ("r2", r2, 0);
+    printvektor2komplex ("r3", r3, 0);
+    printtext ("\n");
+
+    x1= (r1 + r2 + r3)/3;
+    x2= (r1*e32 + r2*e31 + r3)/3;
+    x3= (r1*e31 + r2*e32 + r3)/3;
+
+    printvektor2komplex ("x1", x1, 0);
+    printvektor2komplex ("x2", x2, 0);
+    printvektor2komplex ("x3", x3, 0);
+    printtext ("\n");
+    }
+*/
+  }
 
 void quintischnacktresolvente (real c, real d, real z, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4, ckomplexk& x5, real& pr)
   {
@@ -2025,7 +2183,7 @@ void quintischnacktresolvente (real c, real d, real z, ckomplexk& x1, ckomplexk&
   v2= n*n*n*p + m*m*m*q;
   v3= m*m*m*q + n*n*n*p;
   v4= n*n*n*q + m*m*m*p;
-  if (absv (v - v1) > 0.1)
+  if (absr (v - v1) > 0.1)
     {
     printvektor2komplex ("v          ", v, 1);
     printtext ("\n");
@@ -2052,15 +2210,15 @@ void quintischnacktresolvente (real c, real d, real z, ckomplexk& x1, ckomplexk&
   pr4= x4*x4*x4*x4*x4 + x4*c*5 + d;
   pr5= x5*x5*x5*x5*x5 + x5*c*5 + d;
 
-  pr= absv (pr1);
-  if (absv (pr2) > pr)
-    pr= absv (pr2);
-  if (absv (pr3) > pr)
-    pr= absv (pr3);
-  if (absv (pr4) > pr)
-    pr= absv (pr4);
-  if (absv (pr5) > pr)
-    pr= absv (pr5);
+  pr= absr (pr1);
+  if (absr (pr2) > pr)
+    pr= absr (pr2);
+  if (absr (pr3) > pr)
+    pr= absr (pr3);
+  if (absr (pr4) > pr)
+    pr= absr (pr4);
+  if (absr (pr5) > pr)
+    pr= absr (pr5);
 
 //*
   zp1= (x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1);
@@ -2197,8 +2355,8 @@ void sqrttest ()
 
   vektor2eingabek (ein);
 
-  w1= sqrtv (ein);
-  w2= sqrtvk (ein);
+  w1= sqrtr (ein);
+  w2= sqrtkr (ein);
 
   q1= w1*w1;
   q2= w2*w2;
@@ -2206,8 +2364,8 @@ void sqrttest ()
   printtext ("-------------------------------- Parameter der quartischen Gleichung ---------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("Wert          ", ein, 1);
   printtext ("\n");
-  printvektor2komplex ("sqrtv         ", w1, 1);
-  printvektor2komplex ("sqrtvk        ", w2, 1);
+  printvektor2komplex ("sqrtr         ", w1, 1);
+  printvektor2komplex ("sqrtrk        ", w2, 1);
   printtext ("\n");
   printvektor2komplex ("q1            ", q1, 1);
   printvektor2komplex ("q2            ", q2, 1);
@@ -2312,4 +2470,3 @@ utf-8 Codierung
   ÄÖÜ äöü ß  Umlaute
 
 */
-

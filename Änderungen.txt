@@ -316,6 +316,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
                vollständig durchtraversiert, xray.cc geliftet, Funktion tastatur in /cc/single/tastatur.cc ausgelagert, 10:11, 12 Uhr, screenmannigz hinzugefügt, Erdabbildung justiert, 14:12
                22 Uhr, symmetrische Merkatorkarte erstellt, versucht einzubinden: total fehlerhaft, 3:31
 2025.12.07 So  18:41, Fehlerfindung Kugelparametrisierung, 20 Uhr, 21 Uhr, die Fehler in Kugelparametrisierung gefunden, behoben, Mercatorkarten runtergeladen, zentriert, bearbeitet, eingepflegt, media Verzeichnis erstellt, 2:39
+2025.12.09 Di  11:30, Konsistenz Typen und Funktionen gemacht, neuen Wahltyp _Float8x erstellt: _Float8x = {float80 hardware bei AMD64, float128 software bei ARM64}, Funktionen homogenisiert mit r am Ende, 14:56
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

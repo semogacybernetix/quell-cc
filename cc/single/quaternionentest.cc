@@ -28,7 +28,7 @@
  0.5                                                      2/4   cos 60°  sin 30°
  0.8090169943749474241022934171828                   (V5+1)/4   cos 36°  sin 54°
 
-Übersetzung fehlerfrei nur mit float80 oder long double als real weil printausgabe nur auf float80 und long double eingerichtet ist
+Übersetzung fehlerfrei nur mit _Float8x als real weil printausgabe nur auf _Float8x eingerichtet ist
 */
 
 #include "../../conio/vektorcon.h"
@@ -60,11 +60,11 @@ real kubischegleichung (real pa, real pb, real pc)
 void zeigekonstanten ()
   {
   printf ("\n");
-  long double gschnitt= sqrtl(1.25) - 1.1;
+  _Float8x gschnitt= sqrtl(1.25) - 1.1;
   printf ("%30.26Le\n", gschnitt);
-  long double gschnitt2= sqrtl(0.3125) - 0.55;
+  _Float8x gschnitt2= sqrtl(0.3125) - 0.55;
   printf ("%30.26Le\n", gschnitt2);
-  long double gschnitt3= cosl(PI*36/180);
+  _Float8x gschnitt3= cosl(PI*36/180);
   printf ("%30.26Le\n\n", gschnitt3);
   printf ("\n");
   }
@@ -85,7 +85,7 @@ void zeigepotenzen (cvektor4 pv)
   fclose (datei);
   }
 
-void zeigedrehungen (cvektor3 pv, cvektor3 pdv, long double pwi)
+void zeigedrehungen (cvektor3 pv, cvektor3 pdv, _Float8x pwi)
   {
   FILE* datei= fopen ("quaternionenoutput.txt", "ab");
   pdv= normiere (pdv);
@@ -286,11 +286,11 @@ void testedivision ()
 void testegoldenematrix ()
   {
   cvektor4 v1, v2, v3, v4, ein1, ass1, ass2, ass3;
-  long double r1= .25*(sqrtl(5) + 1);
-  long double i1= .25*(sqrtl(10 - 2*sqrtl(5)));
-  long double r2= .25*(sqrtl(5) - 1);
-  long double i2= .25*(sqrtl(10 + 2*sqrtl(5)));
-  long double d3= sqrtl(3)/2;
+  _Float8x r1= .25*(sqrtl(5) + 1);
+  _Float8x i1= .25*(sqrtl(10 - 2*sqrtl(5)));
+  _Float8x r2= .25*(sqrtl(5) - 1);
+  _Float8x i2= .25*(sqrtl(10 + 2*sqrtl(5)));
+  _Float8x d3= sqrtl(3)/2;
   v1= cvektor4 (r1, i1, 0, 0);
   v2= cvektor4 (r2, i2, 0, 0);
   v3= cvektor4 (r1, -i1, 0, 0);
@@ -435,7 +435,7 @@ void dreh2 ()
 
   qliste.schliesseab ();
   bliste.schliesseab ();
-  
+
   if (!qliste.uebergelaufen)
     {
     qliste.ermittleordnung ();
@@ -2214,7 +2214,7 @@ integer entscheidungseingabe ()
 
 float         8 Stellen
 double       16 Stellen
-long double  20 Stellen
+_Float8x  20 Stellen
 __float128   35 Stellen
 
 */
@@ -2227,7 +2227,7 @@ int main ()
 
 /*
   zahl1010 zahl;
-  long double wert= 128.343;
+  _Float8x wert= 128.343;
   zahl.erstelle (wert);
 
   printf ("%50.40Lf\n\n", wert);

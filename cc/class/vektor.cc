@@ -12,7 +12,6 @@ winkelachse von 180° Drehungen: welche der beiden Achsen soll zurückgegeben we
 */
 
 #include "vektor.h"
-#include "../../conio/vektorcon.h"     // zum Debuggen
 
 //------------------------------------------- Schnittpunkte Klasse ---------------------------------------------------------
 cschnittpunkte::cschnittpunkte ()
@@ -163,17 +162,17 @@ void savemax (integer& pmax, integer pr)
 
 //--------------------- real Funktionen -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------ fmodr ------------------------------------------------------------------------
-_Float32 fmodr (const _Float32& a, const _Float32& b)
+_Float32 modr (const _Float32& a, const _Float32& b)
   {
   return fmodf (a, b);
   }
 
-_Float64 fmodr (const _Float64& a, const _Float64& b)
+_Float64 modr (const _Float64& a, const _Float64& b)
   {
   return fmod (a, b);
   }
 
-long double fmodr (const long double& a, const long double& b)
+_Float8x modr (const _Float8x& a, const _Float8x& b)
   {
   return fmodl (a, b);
   }
@@ -189,23 +188,23 @@ _Float64 floorr (const _Float64& a)
   return floor (a);
   }
 
-long double floorr (const long double& a)
+_Float8x floorr (const _Float8x& a)
   {
   return floorl (a);
   }
 
-//------------------------------------------------------------------------------------ fabsr --------------------------------------------------------------------------
-_Float32 fabsr (const _Float32& a)
+//------------------------------------------------------------------------------------ absr ---------------------------------------------------------------------------
+_Float32 absr (const _Float32& a)
   {
   return fabsf (a);
   }
 
-_Float64 fabsr (const _Float64& a)
+_Float64 absr (const _Float64& a)
   {
   return fabs (a);
   }
 
-long double fabsr (const long double& a)
+_Float8x absr (const _Float8x& a)
   {
   return fabsl (a);
   }
@@ -221,7 +220,7 @@ _Float64 sqrtr (const _Float64& a)
   return sqrt (a);
   }
 
-long double sqrtr (const long double& a)
+_Float8x sqrtr (const _Float8x& a)
   {
   return sqrtl (a);
   }
@@ -237,7 +236,7 @@ _Float64 cbrtr (const _Float64& a)
   return cbrt (a);
   }
 
-long double cbrtr (const long double& a)
+_Float8x cbrtr (const _Float8x& a)
   {
   return cbrtl (a);
   }
@@ -259,12 +258,12 @@ _Float64 qnrtr (const _Float64& a)
     return -pow (-a, _Float64 (0.2));
   }
 
-long double qnrtr (const long double& a)
+_Float8x qnrtr (const _Float8x& a)
   {
   if (a >= 0)
-    return powl (a, (long double) (0.2));
+    return powl (a, (_Float8x) (0.2));
     else
-    return -powl (-a, (long double) (0.2));
+    return -powl (-a, (_Float8x) (0.2));
   }
 
 //------------------------------------------------------------------------------------ expr ------------------------------------------------------------------------
@@ -278,7 +277,7 @@ _Float64 expr (const _Float64& a)
   return exp (a);
   }
 
-long double expr (const long double& a)
+_Float8x expr (const _Float8x& a)
   {
   return expl (a);
   }
@@ -294,7 +293,7 @@ _Float64 logr (const _Float64& a)
   return log (a);
   }
 
-long double logr (const long double& a)
+_Float8x logr (const _Float8x& a)
   {
   return logl (a);
   }
@@ -310,7 +309,7 @@ _Float64 powr (const _Float64& a, const _Float64& b)
   return pow (a, b);
   }
 
-long double powr (const long double& a, const long double& b)
+_Float8x powr (const _Float8x& a, const _Float8x& b)
   {
   return powl (a, b);
   }
@@ -326,7 +325,7 @@ _Float64 sinr (const _Float64& a)
   return sin (a);
   }
 
-long double sinr (const long double& a)
+_Float8x sinr (const _Float8x& a)
   {
   return sinl (a);
   }
@@ -342,7 +341,7 @@ _Float64 cosr (const _Float64& a)
   return cos (a);
   }
 
-long double cosr (const long double& a)
+_Float8x cosr (const _Float8x& a)
   {
   return cosl (a);
   }
@@ -358,7 +357,7 @@ _Float64 asinr (const _Float64& a)
   return asin (a);
   }
 
-long double asinr (const long double& a)
+_Float8x asinr (const _Float8x& a)
   {
   return asinl (a);
   }
@@ -374,7 +373,7 @@ _Float64 acosr (const _Float64& a)
   return acos (a);
   }
 
-long double acosr (const long double& a)
+_Float8x acosr (const _Float8x& a)
   {
   return acosl (a);
   }
@@ -390,7 +389,7 @@ _Float64 atanr (const _Float64& a)
   return atan (a);
   }
 
-long double atanr (const long double& a)
+_Float8x atanr (const _Float8x& a)
   {
   return atanl (a);
   }
@@ -406,7 +405,7 @@ _Float64 atan2r (const _Float64& a, const _Float64& b)
   return atan2 (a, b);
   }
 
-long double atan2r (const long double& a, const long double& b)
+_Float8x atan2r (const _Float8x& a, const _Float8x& b)
   {
   return atan2l (a, b);
   }
@@ -422,7 +421,7 @@ _Float64 asinhr (const _Float64& a)
   return asinh (a);
   }
 
-long double asinhr (const long double& a)
+_Float8x asinhr (const _Float8x& a)
   {
   return asinhl (a);
   }
@@ -438,7 +437,7 @@ _Float64 acoshr (const _Float64& a)
   return acosh (a);
   }
 
-long double acoshr (const long double& a)
+_Float8x acoshr (const _Float8x& a)
   {
   return acoshl (a);
   }
@@ -454,14 +453,14 @@ _Float64 atanhr (const _Float64& a)
   return atanh (a);
   }
 
-long double atanhr (const long double& a)
+_Float8x atanhr (const _Float8x& a)
   {
   return atanhl (a);
   }
 
 //--------------------- cvektor2 Vektor Funktionen ------------------------------------------------------------------------------------------------------------------------------------------------
 
-real absv (const cvektor2 pv)
+real absr (const cvektor2 pv)
   {
   return sqrtr (pv%pv);
   }
@@ -531,7 +530,7 @@ ckomplexk kw (const ckomplexk pv)
   return ckomplexk (pv.x, -pv.y)/z;
   }
 
-ckomplexk sqrtvk (const ckomplexk pv)
+ckomplexk sqrtkr (const ckomplexk pv)
   {
   real bet= sqrtr (pv.x*pv.x + pv.y*pv.y);
   real re= sqrtr ((bet + pv.x)/2);
@@ -541,7 +540,7 @@ ckomplexk sqrtvk (const ckomplexk pv)
   return ckomplexk (re, im);
   }
 
-ckomplexk sqrtv (const ckomplexk pv)
+ckomplexk sqrtr (const ckomplexk pv)
   {
   ckomplexp vpol= polar180 (pv);
   vpol.b= sqrtr (vpol.b);
@@ -549,7 +548,7 @@ ckomplexk sqrtv (const ckomplexk pv)
   return kartes (vpol);
   }
 
-ckomplexk cbrtv (const ckomplexk pv)
+ckomplexk cbrtr (const ckomplexk pv)
   {
   ckomplexp vpol= polar180 (pv);
   vpol.b= cbrtr (vpol.b);
@@ -557,7 +556,7 @@ ckomplexk cbrtv (const ckomplexk pv)
   return kartes (vpol);
   }
 
-void cbrtv (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
+void cbrtr (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   {
   ckomplexp vpol= polar180 (pv);
   vpol.b= cbrtr (vpol.b);
@@ -590,7 +589,7 @@ ckomplexk potenz (const ckomplexk pv1, const ckomplexk pv2)
   ckomplexk ret, retx, rety;
 
   retx= pv1^pv2.x;
-  rety= cosv (logv (pv1)*pv2.y) + ik*sinv (logv (pv1)*pv2.y);
+  rety= cosr (logr (pv1)*pv2.y) + ik*sinr (logr (pv1)*pv2.y);
   return retx*rety;
   }
 
@@ -599,7 +598,7 @@ ckomplexk expv (const ckomplexk pv)
   return kartes (ckomplexp (expr (pv.x), (pv.y)));                // keine Einschränkung Bijektivitätsbereich
   }
 
-ckomplexk logv (const ckomplexk pv)                               // Rückgabe eingeschränkt auf waagerechten ]-pi, pi] Streifen
+ckomplexk logr (const ckomplexk pv)                               // Rückgabe eingeschränkt auf waagerechten ]-pi, pi] Streifen
   {
   ckomplexp lv= polar180 (pv);
   if (lv.b > 0)
@@ -619,12 +618,12 @@ ckomplexk sinhv (const ckomplexk pv)
   return (expv (pv) - expv (-pv))/2;
   }
 
-ckomplexk cosv (const ckomplexk pv)
+ckomplexk cosr (const ckomplexk pv)
   {
   return (expv (pv*ik) + expv (-pv*ik))/2;
   }
 
-ckomplexk sinv (const ckomplexk pv)
+ckomplexk sinr (const ckomplexk pv)
   {
   return ik*(expv (pv*ik) - expv (-pv*ik))/-2;
   }
@@ -710,7 +709,7 @@ ckomplexk operator ^ (const ckomplexk &pv, const real &pr)
 // kartesischkomplexe Potenz von kartesischkomplexer Zahl
 ckomplexk operator ^ (const ckomplexk &pv1, const ckomplexk &pv2)
   {
-  return expv (pv2*logv (pv1));                                   // Bijektivitätsbereich: waagerechter ]-pi,pi] Streifen in der rechten Halbebene ohne y-Achse
+  return expv (pv2*logr (pv1));                                   // Bijektivitätsbereich: waagerechter ]-pi,pi] Streifen in der rechten Halbebene ohne y-Achse
   }
 
 //--------------------- ckomplexp Funktionen für polarkomplexe Zahlen -----------------------------------------------------------------
@@ -721,12 +720,12 @@ ckomplexp kw (const ckomplexp pv)
   return ckomplexp (1/pv.b, -pv.w);
   }
 
-ckomplexp sqrtv (const ckomplexp pv)
+ckomplexp sqrtr (const ckomplexp pv)
   {
   return ckomplexp (sqrtr (pv.b), pv.w/2);
   }
 
-ckomplexp cbrtv (const ckomplexp pv)
+ckomplexp cbrtr (const ckomplexp pv)
   {
   return ckomplexp (cbrtr (pv.b), pv.w/3);
   }
@@ -736,7 +735,7 @@ ckomplexp expv (const ckomplexp pv)
   return ckomplexp (expr (pv.b), (pv.w));
   }
 
-ckomplexp logv (const ckomplexp pv)
+ckomplexp logr (const ckomplexp pv)
   {
   real retb;
 
@@ -757,12 +756,12 @@ ckomplexp sinhv (const ckomplexp pv)
   return (expv (pv) - expv (ew2*pv))/2;
   }
 
-ckomplexp cosv (const ckomplexp pv)
+ckomplexp cosr (const ckomplexp pv)
   {
   return (expv (pv*ew4) + expv (pv/ew4))/2;
   }
 
-ckomplexp sinv (const ckomplexp pv)
+ckomplexp sinr (const ckomplexp pv)
   {
   return (expv (pv*ew4) - expv (pv/ew4))/ew4/2;
   }
@@ -841,7 +840,7 @@ ckomplexp operator ^ (const ckomplexp &pv, const real &pr)
 
 ckomplexp operator ^ (const ckomplexp &pv1, const ckomplexp &pv2)
   {
-  return expv (pv2*logv (pv1));                                   // problematisch wegen Periodizität der exp, log Funktion
+  return expv (pv2*logr (pv1));                                   // problematisch wegen Periodizität der exp, log Funktion
 
 /*                                                                // zerlegte Berechung um bijektiven Bereich zu erweitern
   ckomplexp ret, retx, rety;
@@ -855,7 +854,7 @@ ckomplexp operator ^ (const ckomplexp &pv1, const ckomplexp &pv2)
 
 real arg (const ckomplexk pv)
   {
-  return fabsr (atan2r (pv.y, pv.x));
+  return absr (atan2r (pv.y, pv.x));
   }
 
 ckomplexk kartes (const ckomplexp pv)
@@ -883,13 +882,13 @@ ckomplexp polar360 (const ckomplexk pv)                           // Winkelrück
 
 ckomplexp polar180 (const ckomplexk pv)                           // Winkelrückgabe ]-pi, pi]
   {
-  return ckomplexp (absv (pv), atan2r (pv.y, pv.x));
+  return ckomplexp (absr (pv), atan2r (pv.y, pv.x));
   }
 
 ckomplexp polarcos180 (const ckomplexk pv)                        // Winkelrückgabe ]-pi, pi]
   {
   real phi= 0;
-  real laenge (absv (pv));
+  real laenge (absr (pv));
   if (laenge <= 0)
     return ckomplexp (0, 0);
   phi= acosr (pv.x/laenge);
@@ -902,7 +901,7 @@ ckomplexp polartan180 (const ckomplexk pv)                        // Winkelrück
   {
   real phi= PI/4;
 
-  if (fabsr (pv.x) > fabsr (pv.y))                                // pv.x = 0 geht weiter
+  if (absr (pv.x) > absr (pv.y))                                // pv.x = 0 geht weiter
     {
     phi= atanr (pv.y/pv.x);
 
@@ -914,10 +913,10 @@ ckomplexp polartan180 (const ckomplexk pv)                        // Winkelrück
         phi-= PI;
       }
 
-    return ckomplexp (absv (pv), phi);
+    return ckomplexp (absr (pv), phi);
     }
 
-  if (fabsr (pv.x) < fabsr (pv.y))  // pv.y = 0 geht weiter
+  if (absr (pv.x) < absr (pv.y))  // pv.y = 0 geht weiter
     {
     phi= atanr (pv.x/pv.y);
 
@@ -926,10 +925,10 @@ ckomplexp polartan180 (const ckomplexk pv)                        // Winkelrück
       else
       phi= PI/-2 - phi;
 
-    return ckomplexp (absv (pv), phi);
+    return ckomplexp (absr (pv), phi);
     }
 
-    if (fabsr (pv.x) == 0)                                        // Die Beträge von x und y sind ab dieser Stelle gleich deshalb ist pv der Nullvektor
+    if (absr (pv.x) == 0)                                        // Die Beträge von x und y sind ab dieser Stelle gleich deshalb ist pv der Nullvektor
       return (ckomplexp (0, 0));
 
     if (pv.x < 0)                                                 // linke Hälfte also +-135°
@@ -938,7 +937,7 @@ ckomplexp polartan180 (const ckomplexk pv)                        // Winkelrück
     if (pv.y < 0)                                                 // untere Hälfte also -45° oder -135°
       phi= -phi;
 
-  return ckomplexp (absv (pv), phi);
+  return ckomplexp (absr (pv), phi);
   }
 
 // ------------------------------------------------- Operatoren für Kugelkoordinaten -----------------------------------------------------
@@ -1053,7 +1052,7 @@ void swap (cvektor3& a, cvektor3& b)
   b= c;
   }
 
-real abs (const cvektor3 &pv)
+real absr (const cvektor3 &pv)
   {
   return sqrtr (pv%pv);
   }
@@ -1061,9 +1060,9 @@ real abs (const cvektor3 &pv)
 // Kreuzfunktion: unärer Operator, senkrechten Vektor in positver Orientierung ermitteln: kürzeste Komponente Null setzen, die anderen beiden senkrechtisieren
 cvektor3 senk (const cvektor3 &pv)
   {
-  if ((fabsr (pv.x) <= fabsr (pv.y)) && (fabsr (pv.x) <= fabsr (pv.z)))
+  if ((absr (pv.x) <= absr (pv.y)) && (absr (pv.x) <= absr (pv.z)))
     return cvektor3 (0, -pv.z, pv.y);
-  if (fabsr (pv.y) <= fabsr (pv.z))
+  if (absr (pv.y) <= absr (pv.z))
     return cvektor3 (pv.z, 0, -pv.x);
   return cvektor3 (-pv.y, pv.x, 0);
   }
@@ -1078,17 +1077,17 @@ cvektor3 orientiere (const cvektor3 &pv)                          // erster von 
   cvektor3 ret (pv);
   if (ret.x < 0)
     ret= -ret;
-  if (fabsr (ret.x) <= quantg)
+  if (absr (ret.x) <= quantg)
     {
     ret.x= 0;
     if (ret.y < 0)
       ret= -ret;
-    if (fabsr (ret.y) <= quantg)
+    if (absr (ret.y) <= quantg)
       {
       ret.y= 0;
       if (ret.z < 0)
         ret= -ret;
-      if (fabsr (ret.z) <= quantg)
+      if (absr (ret.z) <= quantg)
         ret.z= 0;
       }
     }
@@ -1102,7 +1101,7 @@ real winkelb (const cvektor3 &pv1, const cvektor3 &pv2)           // Betrag des 
 
 real winkelg (const cvektor3 &pv1, const cvektor3 &pv2)           // Betrag des Winkels zwischen 2 Geraden ermitteln, Ergebnis: [0..pi/2]
   {
-  return acosr (fabsr ((pv1%pv2)/sqrtr ((pv1%pv1)*(pv2%pv2))));
+  return acosr (absr ((pv1%pv2)/sqrtr ((pv1%pv1)*(pv2%pv2))));
   }
 
 //---------- cvektor3 Operatoren ------------------------------------------------------------------------------------------
@@ -1158,9 +1157,9 @@ cvektor3 operator ^ (const cvektor3 &pv1, const cvektor3 &pv2)
 // einen Vektor aus der Ebene wählen, auf dem der Vektor senkrecht steht
 cvektor3 operator ~ (const cvektor3 &pv)
   {
-  if ((fabsr (pv.x) < fabsr (pv.y)) && (fabsr (pv.x) < fabsr (pv.z)))
+  if ((absr (pv.x) < absr (pv.y)) && (absr (pv.x) < absr (pv.z)))
     return cvektor3 (0, pv.z, -pv.y);
-  if (fabsr (pv.y) < fabsr (pv.z))
+  if (absr (pv.y) < absr (pv.z))
     return cvektor3 (-pv.z, 0, pv.x);
   return cvektor3 (pv.y, -pv.x, 0);
   }
@@ -1192,7 +1191,7 @@ real norm (cbasis3 pb)
   return pb.x%pb.x + pb.y%pb.y + pb.z%pb.z;
   }
 
-real abs (cbasis3 pb)
+real absr (cbasis3 pb)
   {
   return sqrtr (norm (pb));
   }
@@ -1263,7 +1262,7 @@ cbasis3 getrotz (const real &pf)
 // Spiegelungsmatrix direkt berechnen
 cbasis3 getspiegbasis (const cvektor3 &pv)
   {
-  if (abs (pv) <= quantg)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
+  if (absr (pv) <= quantg)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
     return cbasis3 (-1);
   cvektor3 nv= normiere (pv);
   return cbasis3 (1) - 2*cbasis3 (nv, nv, nv)*cbasis3 (nv);
@@ -1272,7 +1271,7 @@ cbasis3 getspiegbasis (const cvektor3 &pv)
 // Spiegelungsmatrix aus (Drehung von 180° um Spiegelachse) berechnen
 cbasis3 getdrehspiegbasis (const cvektor3 &pv)
   {
-  if (abs (pv) <= quantg)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
+  if (absr (pv) <= quantg)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
     return cbasis3 (-1);
   return -matrixfromwinkelachse (cvektor4 (PI, pv.x, pv.y, pv.z));
   }
@@ -1284,7 +1283,7 @@ cvektor3 getspiegachse (const cbasis3 &pb)
 
 integer aehnlich (const cbasis3 &pb1, const cbasis3 &pb2)
   {
-  real dif= abs (pb1 - pb2);
+  real dif= absr (pb1 - pb2);
   if (dif <= quantg)
     return 1;
   return 0;
@@ -1355,7 +1354,7 @@ cbasis3 operator | (const cbasis3 &pb1, const cbasis3 &pb2)
 
 //---------- cvektor4 Vektor Funktionen -----------------------------------------------------------------------------------------------
 
-real abs (const cvektor4 &pv)
+real absr (const cvektor4 &pv)
   {
   return sqrtr (pv%pv);
   }
@@ -1382,7 +1381,7 @@ cvektor4 operator ~ (const cvektor4 &pv)
 
 integer aehnlich (const cvektor4 &pv1, const cvektor4 &pv2)
   {
-  real dif= abs (pv1 - pv2);
+  real dif= absr (pv1 - pv2);
   if (dif <= quantg)
     return 1;
   return 0;
@@ -1542,11 +1541,11 @@ cvektor4 winkelachsefromquaternion (const cvektor4 pq)
     return cvektor4 (2*PI, 0, 0, 0);
   real drehw= acosr (pq.r)*2;
   cvektor3 achse (normiere (cvektor3 (pq.i, pq.j, pq.ij)));
-  if (fabsr (achse.x) <= quantg)
+  if (absr (achse.x) <= quantg)
     achse.x= 0;
-  if (fabsr (achse.y) <= quantg)
+  if (absr (achse.y) <= quantg)
     achse.y= 0;
-  if (fabsr (achse.z) <= quantg)
+  if (absr (achse.z) <= quantg)
     achse.z= 0;
   return cvektor4 (drehw, achse.x, achse.y, achse.z);
   }
@@ -1591,11 +1590,11 @@ cvektor4 winkelachsefrommatrix (const cbasis3 &pdreh)             // Bei Drehspi
     qwa= qwafrommatrix (pdreh);
     else
     qwa= qwafrommatrix (-pdreh);
-  if (fabsr (qwa.i) <= quantg)
+  if (absr (qwa.i) <= quantg)
     qwa.i= 0;
-  if (fabsr (qwa.j) <= quantg)
+  if (absr (qwa.j) <= quantg)
     qwa.j= 0;
-  if (fabsr (qwa.ij) <= quantg)
+  if (absr (qwa.ij) <= quantg)
     qwa.ij= 0;
   cvektor3 achse (qwa.i, qwa.j, qwa.ij);
   achse= normiere (achse);
@@ -1621,7 +1620,7 @@ cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)              // Funktionier
   if (qwa.r >= 1 - quantg)      // Drehung ist 0° Drehung
     return qwa;                // 1 zurückgeben
   cvektor3 achse (cvektor3 (qwa.i, qwa.j, qwa.ij));
-  real k= sqrtr (1 - qwa.r*qwa.r)/abs (achse);
+  real k= sqrtr (1 - qwa.r*qwa.r)/absr (achse);
   return cvektor4 (qwa.r, k*achse);
   }
 
@@ -1672,7 +1671,7 @@ cvektor3 eulerwinkelfrommatrix (const cbasis3& pdm)
 
   // Breitengradberechnung
   vb= pdm.z.y;
-  if (fabsr (vb) < 1)
+  if (absr (vb) < 1)
     breite= asinr (vb);
   if (vb >= 1)
     breite= PI/2;
@@ -1685,7 +1684,7 @@ cvektor3 eulerwinkelfrommatrix (const cbasis3& pdm)
     {
     // Längengradberechnung
     vl= pdm.z.z/cosbr;
-    if (fabsr (vl) < 1)
+    if (absr (vl) < 1)
       laenge= acosr (vl);
     if (vl >= 1)
       laenge= 0;
@@ -1696,7 +1695,7 @@ cvektor3 eulerwinkelfrommatrix (const cbasis3& pdm)
 
     // Rollberechnung
     vr= pdm.y.y/cosbr;
-    if (fabsr (vr) < 1)
+    if (absr (vr) < 1)
       roll= acosr (vr);
     if (vr >= 1)
       roll= 0;
@@ -1708,7 +1707,7 @@ cvektor3 eulerwinkelfrommatrix (const cbasis3& pdm)
   if (cosbr <= quantg)  // Spezialfall Breite polar
     {
     vl= pdm.x.x;
-    if (fabsr (vl) < 1)
+    if (absr (vl) < 1)
       laenge= acosr (vl);
     if (vl >= 1)
       laenge= 0;
@@ -1742,7 +1741,7 @@ void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   ckomplexk a2, d;
 
   a2= a/-2;
-  d= sqrtv (a2*a2 - b);
+  d= sqrtr (a2*a2 - b);
 
   x1= a2 + d;
   x2= a2 - d;
@@ -1756,8 +1755,8 @@ void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomp
   integer   vindex[3];
 
   // die 3 Lösungen für u, v
-  cbrtv (z1, u1, u2, u3);
-  cbrtv (z2, v[0], v[2], v[1]);
+  cbrtr (z1, u1, u2, u3);
+  cbrtr (z2, v[0], v[2], v[1]);
 
   // Standardzuordnung der u's und v's (keine Verschiebung)
   vindex[0]= 0;
@@ -1766,7 +1765,7 @@ void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomp
 
   // Die Bedingung u*v = bed muss erfüllt sein
   // Die v-Sequenz einen Schritt rückwärts rotieren falls das u[0], v[1] Paar richtig ist
-  if ((absv (u1*v[1] - bed) < absv (u1*v[0] - bed)) && (absv (u1*v[1] - bed) < absv (u1*v[2] - bed)))
+  if ((absr (u1*v[1] - bed) < absr (u1*v[0] - bed)) && (absr (u1*v[1] - bed) < absr (u1*v[2] - bed)))
     {
     vindex[0]= 1;
     vindex[1]= 2;
@@ -1774,7 +1773,7 @@ void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomp
     }
 
   // Die v-Sequenz um einen Schritt vorwärts rotieren falls das u[0], v[2] Paar richtig ist
-  if ((absv (u1*v[2] - bed) < absv (u1*v[0] - bed)) && (absv (u1*v[2] - bed) < absv (u1*v[1] - bed)))
+  if ((absr (u1*v[2] - bed) < absr (u1*v[0] - bed)) && (absr (u1*v[2] - bed) < absr (u1*v[1] - bed)))
     {
     vindex[0]= 2;
     vindex[1]= 0;
@@ -1809,10 +1808,10 @@ void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, 
 
   quadratisch (q, p*p*p/-27, u1, u2);
 
-  if (absv (u1) >= absv (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
-    cbrtv (u1, z1, z2, z3);
+  if (absr (u1) >= absr (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+    cbrtr (u1, z1, z2, z3);
     else
-    cbrtv (u2, z1, z2, z3);
+    cbrtr (u2, z1, z2, z3);
 
   y1= z1 - p/(z1*3);
   y2= z2 - p/(z2*3);
@@ -1825,10 +1824,10 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
 
   quadratisch (q*27, p*p*p*-27, u1, u2);
 
-  if (absv (u1) >= absv (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
-    cbrtv (u1, z1, z2, z3);
+  if (absr (u1) >= absr (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+    cbrtr (u1, z1, z2, z3);
     else
-    cbrtv (u2, z1, z2, z3);
+    cbrtr (u2, z1, z2, z3);
 
   y1= z1/3 - p/z1;
   y2= z2/3 - p/z2;
@@ -1898,162 +1897,6 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   x1= (y1 - a)/3;
   x2= (y2 - a)/3;
   x3= (y3 - a)/3;
-  }
-
-void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
-  {
-  ckomplexk d, f1, f2, f3, r1, r2, r3, f_1, f_2, f_3, r_1, r_2, r_3, ff1, ff2, ff3, f_f1, f_f2, f_f3, dp;
-  ckomplexk fr1, fr2, fr3, rr1, rr2, rr3, k;
-  real ar, br, cr, dr;
-
-  kubisch (a, b, c, x1, x2, x3);
-
-  printtext ("-------------------------------------------- Berechnung der Zwischenwerte aus den Lösungen ------------------------------------------------------------------\n");
-  printvektor2komplex ("x1", x1, 0);
-  printvektor2komplex ("x2", x2, 0);
-  printvektor2komplex ("x3", x3, 0);
-  printtext ("\n");
-
-  r1= x1 + x2*e31 + x3*e32;
-  r2= x1 + x2*e32 + x3*e31;
-  r3= x1 + x2 + x3;
-
-  r_1= x2 + x1*e31 + x3*e32;
-  r_2= x2 + x1*e32 + x3*e31;
-  r_3= x2 + x1 + x3;
-
-  printvektor2komplex ("r1", r1, 0);
-  printvektor2komplex ("r2", r2, 0);
-  printvektor2komplex ("r3", r3, 0);
-  printvektor2komplex ("r_1", r_1, 0);
-  printvektor2komplex ("r_2", r_2, 0);
-  printvektor2komplex ("r_3", r_3, 0);
-  printtext ("\n");
-
-  f1= r1*r1*r1;
-  f2= r2*r2*r2;
-  f3= r3*r3*r3;
-
-  f_1= r_1*r_1*r_1;
-  f_2= r_2*r_2*r_2;
-  f_3= r_3*r_3*r_3;
-
-  printvektor2komplex ("f1", f1, 0);
-  printvektor2komplex ("f2", f2, 0);
-  printvektor2komplex ("f3", f3, 0);
-  printvektor2komplex ("f_1", f_1, 0);
-  printvektor2komplex ("f_2", f_2, 0);
-  printvektor2komplex ("f_3", f_3, 0);
-  printtext ("\n");
-
-  ff1= f1 + f_1;
-  ff2= f2 + f_2;
-  ff3= f3 + f_3;
-
-  f_f1= f1 - f_1;
-  f_f2= f2 - f_2;
-  f_f3= f3 - f_3;
-
-  f_f1= f_f1*f_f1;
-  f_f2= f_f2*f_f2;
-  f_f3= f_f3*f_f3;
-
-  printvektor2komplex ("ff1", ff1, 0);
-  printvektor2komplex ("ff2", ff2, 0);
-  printvektor2komplex ("ff3", ff3, 0);
-  printvektor2komplex ("f_f1", f_f1, 0);
-  printvektor2komplex ("f_f2", f_f2, 0);
-  printvektor2komplex ("f_f3", f_f3, 0);
-  printtext ("\n");
-
-  dp= (x1-x2)*(x2-x3)*(x3-x1);
-
-  printvektor2komplex ("dp", dp, 0);
-  printtext ("\n");
-
-  k= (x1*x1*x2 + x2*x2*x1 + x2*x2*x3 + x3*x3*x2 + x3*x3*x1 + x1*x1*x3)/2;
-
-  printvektor2komplex ("k", k, 0);
-  printtext ("\n");
-
-  printtext ("-------------------------------------------- Berechnung der Zwischenwerte aus den Koeffizienten -------------------------------------------------------------\n");
-  ar= a.x;
-  br= b.x;
-  cr= c.x;
-
-  d= a*a*b*b + a*a*a*c*-4 + b*b*b*-4 + a*b*c*18 + c*c*-27;
-  dr= ar*ar*br*br + ar*ar*ar*cr*-4 + br*br*br*-4 + ar*br*cr*18 + cr*cr*-27;
-  dr= sqrtr (dr);
-  d= sqrtv (d);
-
-//  f1= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*sqrtr (real (6.75));
-//  f2= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*-sqrtr (real (6.75));
-  f3= -(a*a*a);
-
-  printvektor2komplex ("f1", f1, 0);
-  printvektor2komplex ("f2", f2, 0);
-  printvektor2komplex ("f3", f3, 0);
-  printtext ("\n");
-
-  fr1= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*sqrtr (real (6.75));
-  fr2= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*-sqrtr (real (6.75));
-  fr3= -(ar*ar*ar);
-
-  printvektor2komplex ("fr1", fr1, 0);
-  printvektor2komplex ("fr2", fr2, 0);
-  printvektor2komplex ("fr3", fr3, 0);
-  printtext ("\n");
-
-  r1= cbrtv (f1);
-  r2= cbrtv (f2);
-  r3= cbrtv (f3);
-
-  rr1= cbrtv (fr1);
-  rr2= cbrtv (fr2);
-  rr3= cbrtv (fr3);
-
-  printvektor2komplex ("r1", r1, 0);
-  printvektor2komplex ("r2", r2, 0);
-  printvektor2komplex ("r3", r3, 0);
-  printtext ("\n");
-
-  printvektor2komplex ("rr1", rr1, 0);
-  printvektor2komplex ("rr2", rr2, 0);
-  printvektor2komplex ("rr3", rr3, 0);
-  printtext ("\n");
-
-  x1= (r1 + r2 + r3)/3;
-  x2= (r1*e32 + r2*e31 + r3)/3;
-  x3= (r1*e31 + r2*e32 + r3)/3;
-
-  printvektor2komplex ("x1 a", x1, 0);
-  printvektor2komplex ("x2 a", x2, 0);
-  printvektor2komplex ("x3 a", x3, 0);
-  printtext ("\n");
-/*
-  for (integer lauf1= 0; lauf1 < 3; lauf1++)
-  for (integer lauf2= 0; lauf2 < 3; lauf2++)
-  for (integer lauf3= 0; lauf3 < 3; lauf3++)
-    {
-    r1= r1*pown (e31,lauf1);
-    r2= r2*pown (e31,lauf2);
-    r3= r3*pown (e31,lauf3);
-
-    printvektor2komplex ("r1", r1, 0);
-    printvektor2komplex ("r2", r2, 0);
-    printvektor2komplex ("r3", r3, 0);
-    printtext ("\n");
-
-    x1= (r1 + r2 + r3)/3;
-    x2= (r1*e32 + r2*e31 + r3)/3;
-    x3= (r1*e31 + r2*e32 + r3)/3;
-
-    printvektor2komplex ("x1", x1, 0);
-    printvektor2komplex ("x2", x2, 0);
-    printvektor2komplex ("x3", x3, 0);
-    printtext ("\n");
-    }
-*/
   }
 
 //--------------------------------------------------- kubische Resolventen ---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2131,7 +1974,7 @@ void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk&
   kubischeresolventediffp (p, q, r, z1, z2, z3);
 
   z= z1;
-  u= sqrtv (z - p);
+  u= sqrtr (z - p);
 
   a1=  u;
   a2= -u;
@@ -2149,7 +1992,7 @@ void quartischreduziertbuchu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   kubischeresolventebuch (p, q, r, z1, z2, z3);
 
   z= z3;
-  u= sqrtv (z*2 - p);
+  u= sqrtr (z*2 - p);
 
   a1=  u;
   a2= -u;
@@ -2167,7 +2010,7 @@ void quartischreduziertbuchv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   kubischeresolventebuch (p, q, r, z1, z2, z3);
 
   z= z2;
-  v= sqrtv (z*z - r);
+  v= sqrtr (z*z - r);
 
   a1= q/v/-2;
   a2= q/v/2;
@@ -2185,12 +2028,12 @@ void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   kubischeresolventebuch (p, q, r, z1, z2, z3);
 
   z= z1;
-  u= sqrtv (z*2 - p);
-  v= sqrtv (z*z - r);
+  u= sqrtr (z*2 - p);
+  v= sqrtr (z*z - r);
 
   // Bedingung -2uv = q
   bed= u*v*-2;
-  if (absv (bed + q) < absv (bed - q))
+  if (absr (bed + q) < absr (bed - q))
     v= -v;
 
   a1=  u;
@@ -2209,7 +2052,7 @@ void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   kubischeresolventepdfw2 (p, q, r, z1, z2, z3);
 
   z= z1;
-  u= sqrtv (z);
+  u= sqrtr (z);
 
   a1=  u;
   a2= -u;
@@ -2226,9 +2069,9 @@ void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
 
   kubischeresolventelagrange (p, q, r, z1, z2, z3);
 
-  u1= sqrtv (z1);
-  u2= sqrtv (z2);
-  u3= sqrtv (z3);
+  u1= sqrtr (z1);
+  u2= sqrtr (z2);
+  u3= sqrtr (z3);
 
   y1=  u1 + u2 + u3;
   y2=  u1 - u2 - u3;
@@ -2237,7 +2080,7 @@ void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
 
   // Bedingung: -8*u1*u2*u3 = q
   bed= u1*u2*u3*-8;
-  if (absv (bed + q) < absv (bed - q))
+  if (absr (bed + q) < absr (bed - q))
     {
     y1= -y1;
     y2= -y2;
@@ -2253,13 +2096,13 @@ void quartischreduziertbuchf3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk&
   kubischeresolventez3 (p, q, r, z1, z2, z3);
 
   z= z1;
-  u= sqrtv ((z - p*2)/3);
+  u= sqrtr ((z - p*2)/3);
   v= z + p;
-  v= sqrtv (v*v - r*36)/6;
+  v= sqrtr (v*v - r*36)/6;
 
   // Bedingung -2uv = q
   bed= u*v*-2;
-  if (absv (bed + q) < absv (bed - q))
+  if (absr (bed + q) < absr (bed - q))
     v= -v;
 
   a1=  u;
@@ -2278,7 +2121,7 @@ void quartischreduziertpdfw23 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk&
   kubischeresolventez3 (p, q, r, z1, z2, z3);
 
   z= z1;
-  u= sqrtv ((z - p*2)/3);
+  u= sqrtr ((z - p*2)/3);
 
   a1=  u;
   a2= -u;
@@ -2295,9 +2138,9 @@ void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomple
 
   kubischeresolventez3 (p, q, r, z1, z2, z3);
 
-  u1= sqrtv ((z1/2 - p)/6);
-  u2= sqrtv ((z2/2 - p)/6);
-  u3= sqrtv ((z3/2 - p)/6);
+  u1= sqrtr ((z1/2 - p)/6);
+  u2= sqrtr ((z2/2 - p)/6);
+  u3= sqrtr ((z3/2 - p)/6);
 
   y1=  u1 + u2 + u3;
   y2=  u1 - u2 - u3;
@@ -2306,7 +2149,7 @@ void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomple
 
   // Bedingung: -8*u1*u2*u3 = q
   bed= u1*u2*u3*-8;
-  if (absv (bed + q) < absv (bed - q))
+  if (absr (bed + q) < absr (bed - q))
     {
     y1= -y1;
     y2= -y2;
@@ -2365,16 +2208,16 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
   // Lösung der reduzierten kubischen Gleichung
-  ytk= cbrtv (qk + sqrtv (ckomplexk (pk*pk*pk + qk*qk)));
+  ytk= cbrtr (qk + sqrtr (ckomplexk (pk*pk*pk + qk*qk)));
   yk= (ytk - pk/ytk)/4;
 
   // Lösungen der beiden quadratischen Gleichungen
-  u= sqrtv (yk + pq/-6);
+  u= sqrtr (yk + pq/-6);
   v= qq/u/4;
   d= pq/-3 - yk;
 
-  D1= sqrtv (d + v);
-  D2= sqrtv (d - v);
+  D1= sqrtr (d + v);
+  D2= sqrtr (d - v);
 
   // Lösungen der normalen quartischen Gleichung
   aq4= aq/-4;
@@ -2565,7 +2408,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
-  if (fabsr (bed + qq) < fabsr (bed - qq))
+  if (absr (bed + qq) < absr (bed - qq))
     {
     b1= z - v;
     b2= z + v;
@@ -2643,7 +2486,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
-  if (fabsr (bed + qq) < fabsr (bed - qq))
+  if (absr (bed + qq) < absr (bed - qq))
     {
     b1= z - v;
     b2= z + v;
@@ -2710,7 +2553,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     yk2= ckomplexk (ykr1/-2, ykr1*sqrtr (real (0.75)));
 
     ur1= sqrtr (ak3 + ykr1 - pk/ykr1);                            // Rücktransformation von ykr1
-    u2= sqrtv (ak3 + yk2 - pk/yk2);                               // Rücktransformation von yk2
+    u2= sqrtr (ak3 + yk2 - pk/yk2);                               // Rücktransformation von yk2
 
     // Lösungen der reduzierten quartischen Gleichung
     yr1=  ur1 + u2.x*2;
@@ -2719,7 +2562,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     // Lösungen der normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*(u2.x*u2.x + u2.y*u2.y);
-    if (fabsr (bed + qq8) < fabsr (bed - qq8))
+    if (absr (bed + qq8) < absr (bed - qq8))
       {
       xr1= aq4 + yr1;
       xr2= aq4 + yr2;
@@ -2760,7 +2603,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     // Lösungen der normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*ur2*ur3;
-    if (fabsr (bed + qq8) < fabsr (bed - qq8))
+    if (absr (bed + qq8) < absr (bed - qq8))
       {
       xr1= aq4 + yr1;
       xr2= aq4 + yr2;
@@ -2820,7 +2663,7 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     yk2= e31*uk1 + e32*uk2;
 
     ur1= sqrtr (ak3 + ykr1);
-    u2= sqrtv (ak3 + yk2);
+    u2= sqrtr (ak3 + yk2);
 
     // Lösungen der reduzierten quartischen Gleichung
     yr1=  ur1 + u2.x*2;
@@ -2829,7 +2672,7 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     // Lösungen den normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*(u2.x*u2.x + u2.y*u2.y);
-    if (fabsr (bed + qq8) < fabsr (bed - qq8))
+    if (absr (bed + qq8) < absr (bed - qq8))
       {
       xr1= aq4 + yr1;
       xr2= aq4 + yr2;
@@ -2870,7 +2713,7 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     // Lösungen der normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*ur2*ur3;
-    if (fabsr (bed + qq8) < fabsr (bed - qq8))
+    if (absr (bed + qq8) < absr (bed - qq8))
       {
       xr1= aq4 + yr1;
       xr2= aq4 + yr2;
