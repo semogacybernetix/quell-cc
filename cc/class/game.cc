@@ -143,8 +143,8 @@ void cflugsimu::welttoscreenthread (integer pthreadnr)            // segmentiert
   cvektor3 fb;
   for (integer n= ug; n < og; n++)
     {
-//    xpp= pixels[n].x;
-//    ypp= pixels[n].y;
+    //xpp= pixels[n].x;
+    //ypp= pixels[n].y;
     xpp= n % screen->xanz;
     ypp= n/screen->xanz;
     fb= welt->getpunkt (cvektor2 (real (xpp) + xoff, real (ypp) + yoff));

@@ -97,7 +97,7 @@ void addkatzenturm (cwelt& pwelt)
 
   // Körper addieren
   pwelt.addkoerper (new ckoerper (new csebene, new cparaebenew, ell1, textur1, kst1, kl1));
-  pwelt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/katze.jpg"), 10, 10), kst2, kl2));
+  pwelt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Bilder/katze.jpg"), 10, 10), kst2, kl2));
   pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, ell1, textur2, kst1, kl1));
 
   pwelt.verschiebeauge (cvektor3 (0, 500, -10000));
@@ -124,7 +124,7 @@ void addzylinder (cwelt& pwelt)
 
   // Körper addieren
   //pwelt.addkoerper (new ckoerper (new csebene, new cparawebene, ell1, textur1, kst1, kl1));
-  //pwelt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/katze.jpg"), 10, 10), kst2, kl1));
+  //pwelt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Bilder/katze.jpg"), 10, 10), kst2, kl1));
   //pwelt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, ell1, textur2, kst1, kl1));
   pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new (cbegrkeine), textur2, kst1, kl1));
 
@@ -134,11 +134,11 @@ void addzylinder (cwelt& pwelt)
 void addkugel (cwelt& pwelt)
   {
   // Körperstandpunkte
-  cvektor3 kstkugel (0,0,0);
+  cvektor3 kstobj (0,0,0);
   cvektor3 kstauge (500,0,0);
 
   // Körperlagen
-  cbasis3 klkugel (cvektor3 (100,0,0), cvektor3 (0,100,0), cvektor3 (0,0,-100));
+  cbasis3 klobj (cvektor3 (100,0,0), cvektor3 (0,100,0), cvektor3 (0,0,-100));
   cbasis3 klauge (cvektor3 (0,1,0), cvektor3 (0,0,-1), cvektor3 (-1,0,0));
 
   // Texturen
@@ -150,20 +150,19 @@ void addkugel (cwelt& pwelt)
 
   // Körper
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelg, new cbegrkeine, textur1, kstkugel, klkugel);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur2, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelu, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), 2/PI, 2/PI), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), 12/PI, 12/PI), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (0.5)/PI, real (0.5)/PI), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp-n.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/karten/mercatorp.jpg"), real (1)/PI, real (1)/PI), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur2, kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 2/PI, 2/PI), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 12/PI, 12/PI), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), real (0.5)/PI, real (0.5)/PI), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Texturen/karten/mercatorp.jpg"), real (1)/PI, real (1)/PI), kstobj, kl1);
 
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator monochrom.jpg"), real (1)/PI, real (1)/PI), kstkugel, klkugel);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator84.jpg"), real (1)/PI, real (1)/PI), kstkugel, klkugel);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator bunt.jpg"), real (1)/PI, real (1)/PI), kstkugel, klkugel);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator bunt2.jpg"), real (1)/PI, real (1)/PI), kstkugel, klkugel);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator symmetrisch.jpg"), real (1)/PI, real (1)/PI), kstkugel, klkugel);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator 2006.jpg"), real (1)/PI, real (1)/PI), kstkugel, klkugel);
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator 2020 lrou.jpg"), real (1)/PI, real (1)/PI), kstkugel, klkugel);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator monochrom.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);  // zu breit
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator84.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator bunt.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator bunt2.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator symmetrisch.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator 2006.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator 2020 lrou.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj); // zu schmal
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
@@ -179,10 +178,13 @@ void addkugel (cwelt& pwelt)
 void addtorus (cwelt& pwelt)
   {
   // Körperstandpunkte
-  cvektor3 kst1 (0,0,0);
+  cvektor3 kstobj (0,0,0);
+  cvektor3 kstauge (500,0,0);
 
   // Körperlagen
-  cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
+  cbasis3 klobj (cvektor3 (100,0,0), cvektor3 (0,100,0), cvektor3 (0,0,-100));
+  cbasis3 klauge (cvektor3 (0,1,0), cvektor3 (0,0,-1), cvektor3 (-1,0,0));
+
   //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,400), cvektor3 (0,25,0));          // flacher Ellipsentorus
 
   // Texturen
@@ -192,24 +194,27 @@ void addtorus (cwelt& pwelt)
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
 
   // Körper
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.0125)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/sechseck1024.jpg"), real (8/PI), real (1/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/wabe512.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/wabe-rs512.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Bergsee.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Meer.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Palmen.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steine.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinmauer.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur1, kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.0125)), new cparatorus, new cbegrkeine, textur1, kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/sechseck1024.jpg"), real (8/PI), real (1/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/wabe512.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/wabe-rs512.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Bergsee.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Meer.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Palmen.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steine.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinmauer.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (0.5/PI), real (0.5/PI)), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (40)), new cparatoruss, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator symmetrisch.jpg"), real (1/PI), real (2/PI)), kstobj, klobj);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
 
   // Augposition setzen
-  pwelt.setzeposition (cvektor3 (0, 100, -300));
+  pwelt.setzeposition (kstauge);
+  pwelt.setzelage (klauge);
 
   // Hintergrundfarbe setzen
   pwelt.himmelfarbe= cvektor3 (30, 75, 90);
@@ -218,7 +223,7 @@ void addtorus (cwelt& pwelt)
 void addtorusoktaeder (cwelt& pwelt)
   {
   // Körperstandpunkte
-  cvektor3 kst1 (0,0,0);
+  cvektor3 kstobj (0,0,0);
 
   // Körperlagen
   cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
@@ -235,20 +240,20 @@ void addtorusoktaeder (cwelt& pwelt)
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
 
   // Körper
-  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
-  ckoerper* koerper2= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur2, kst1, kl2);
-  ckoerper* koerper3= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, textur3, kst1, kl3);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.0125)), new cparatorus, new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/sechseck1024.jpg"), real (8/PI), real (1/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/wabe512.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/wabe-rs512.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Bergsee.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Meer.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Palmen.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steine.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinmauer.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/xwindow/xdia/texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatoruss, new cbegrkeine, textur1, kstobj, kl1);
+  ckoerper* koerper2= new ckoerper (new cstorus (real (0.125)), new cparatoruss, new cbegrkeine, textur2, kstobj, kl2);
+  ckoerper* koerper3= new ckoerper (new cstorus (real (0.125)), new cparatoruss, new cbegrkeine, textur3, kstobj, kl3);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.0125)), new cparatorus, new cbegrkeine, textur1, kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/sechseck1024.jpg"), real (8/PI), real (1/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/wabe512.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/wabe-rs512.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Bergsee.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Meer.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Palmen.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steine.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinmauer.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
 
   //pwelt.himmelfarbe= cvektor3 (30,75,90);
 

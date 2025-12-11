@@ -155,7 +155,12 @@ struct cpararpara : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparatorus : clpara
+struct cparatorusu : clpara
+  {
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+struct cparatoruss : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
@@ -203,9 +208,9 @@ struct cbegrellipse : clbegr
 struct clmannig     // abstrakte Textur, von der die konkreten Texturen abgeleitet sind
   {
   clmannig ();
-  virtual cvektor3 getpunkt (const cvektor2 &pv)= 0;         // Färbung eines Punktes berechnen
-  cvektor3 getpixel (const cvektor2 &pv);                    // Färbung einer Pixelfläche berechnen, benutzt getpunkt, allgemein für clmannig, unabhängig vom abgeleitetem Objekt
-  cvektor3 getpixel16 (const cvektor2 &pv);                  // Färbung einer Pixelfläche aus 16 Punkten berechnen
+  virtual cvektor3 getpunkt (const cvektor2 &pv)= 0;        // Färbung eines Punktes berechnen
+  cvektor3 getpixel (const cvektor2 &pv);                   // Färbung einer Pixelfläche berechnen, benutzt getpunkt, allgemein für clmannig, unabhängig vom abgeleitetem Objekt
+  cvektor3 getpixel16 (const cvektor2 &pv);                 // Färbung einer Pixelfläche aus 16 Punkten berechnen
   };
 
 struct cmonochrom : public clmannig
