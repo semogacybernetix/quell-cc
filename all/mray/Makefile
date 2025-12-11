@@ -54,40 +54,27 @@ $(opfad)xray.o: xray.cc ../../cc/class/game.h ../../cc/class/ray.h ../../cc/scre
 $(ppfad)xray: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)ray.o $(opfad)game.o $(opfad)vektorcon.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)nckbd.o $(opfad)vscr.o $(opfad)xscr.o $(opfad)fbscr.o $(opfad)jpegscr.o $(opfad)xray.o
 	$(comp) $+ $(lopts) -o $@
 
-xraythread:
-	make -C ../../cc/class $(opfad)vektor.o
-	make -C ../../cc/class $(opfad)gruppe.o
-	make -C ../../cc/class $(opfad)ray.o
-	make -C ../../cc/class $(opfad)game.o
-	make -C ../../cc/keyboard $(opfad)vkbd.o
-	make -C ../../xwindow/keyboard $(opfad)xkbd.o
-	make -C ../../cc/class/$(opfad)jpegscr.o
-	make -C ../../xwindow/screen $(opfad)xscr.o
-	make -C ../../cc/screen $(opfad)libscr.a
-	make $(ppfad)xraythread
-
-$(ppfad)xraythread: $(opfad)xraythread.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)libscr.a $(opfad)xscr.o $(opfad)vektor.o $(opfad)gruppe.o $(opfad)ray.o $(opfad)game.o
-	$(comp) $+ $(lopts) -o $@
-
-$(opfad)xraythread.o: xraythread.cc
-	$(comp) $< -c $(copts) -o $@
-
 symmetriegruppen:
 	make -C ../../cc/class $(opfad)vektor.o
 	make -C ../../cc/class $(opfad)gruppe.o
 	make -C ../../cc/class $(opfad)ray.o
 	make -C ../../cc/class $(opfad)game.o
-	make -C ../../cc/keyboard $(opfad)vkbd.o
-	make -C ../../cc/screen $(opfad)libscr.a
+
 	make -C ../../conio $(opfad)vektorcon.o
 	make -C ../../conio $(opfad)gruppecon.o
+
+	make -C ../../cc/keyboard $(opfad)vkbd.o
 	make -C ../../xwindow/keyboard $(opfad)xkbd.o
+
+	make -C ../../cc/screen $(opfad)vscr.o
 	make -C ../../xwindow/screen $(opfad)xscr.o
+
 	make $(ppfad)symmetriegruppen
 
-$(ppfad)symmetriegruppen: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)ray.o $(opfad)game.o $(opfad)vkbd.o $(opfad)libscr.a $(opfad)vektorcon.o $(opfad)gruppecon.o $(opfad)xkbd.o $(opfad)xscr.o $(opfad)symmetriegruppen.o 
-	$(comp) $+ $(lopts) -o $@
-
-$(opfad)symmetriegruppen.o: symmetriegruppen.cc
+# Abhängigkeitsbaum der h-Dateien noch nicht durchtraversiert
+$(opfad)symmetriegruppen.o: symmetriegruppen.cc ../../cc/class/game.h ../../cc/class/ray.h ../../cc/screen/vscr.h ../../cc/keyboard/vkbd.h ../../cc/screen/allscr.h ../../xwindow/keyboard/xkbd.h
 	$(comp) $< -c $(copts) -o $@
+
+$(ppfad)symmetriegruppen: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)ray.o $(opfad)game.o $(opfad)vektorcon.o $(opfad)gruppecon.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)vscr.o $(opfad)xscr.o $(opfad)symmetriegruppen.o
+	$(comp) $+ $(lopts) -o $@
 

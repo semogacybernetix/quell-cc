@@ -39,7 +39,7 @@ struct cxmemoryscreen : public clscreen8
   integer        rshift, gshift, bshift;
   integer        rdepth, gdepth, bdepth;
   integer        ypix1;
-  
+
   integer*       bildspeicher;
   };
 

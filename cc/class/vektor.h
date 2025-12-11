@@ -2,7 +2,7 @@
 #define vektor_h
 
 #include <cmath>                                // M_PIl, cosl, sinl
-//#include <quadmath.h>                           // M_PIq, cosq, sinq  quadmath_snprintf %Q    -lquadmath      // fehlt auf Arm-Architektur AARCH64
+//#include <quadmath.h>                           // M_PIq, cosq, sinq  quadmath_snprintf %Q    -lquadmath      // fehlt auf ARM64
 
 // ------------------------------------------------------------------------  Datentypen -----------------------------------------------------
 
