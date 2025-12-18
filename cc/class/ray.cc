@@ -57,7 +57,7 @@ void cszylinder::berechne (const cvektor3 &prv, cschnittpunkte &psp)
     psp.add (s2);
   }
 
-// ---------------------------- Kugel -----------------------------------------------
+// ---------------------------- Kugel ----------------------------------------------------------------------------------------------------
 
 cskugel::cskugel ()
   {
@@ -72,10 +72,8 @@ void cskugel::init (const cvektor3 &pov)
 
 void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
-  //real a= prv%prv;
-  //real b= -(prv%ov);
-  real a= prv.x*prv.x + prv.y*prv.y + prv.z*prv.z;
-  real b= -prv.x*ov.x - prv.y*ov.y - prv.z*ov.z;
+  real a= prv%prv;
+  real b= -(prv%ov);
 
   real d= b*b - a*c;
   if (d < 0)
@@ -90,23 +88,6 @@ void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   if (s2 > 0)
     psp.add (s2);
   }
-
-/*
-void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
-  {
-  ckomplexk x1, x2;
-
-  real a= prv%prv;
-  real b= prv%ov;
-
-  quadratisch (2*b/a, c/a, x1, x2);
-
-  if (ag (x1) < 1e-8)
-    psp.add (x1.x);
-  if (ag (x2) < 1e-8)
-    psp.add (x2.x);
-  }
-*/
 
 // ---------------------------- zweischaliges Hyperboloid, Kegel, einschaliges Hyperboloid -----------------------------------------------
 
@@ -126,6 +107,7 @@ void cshyper::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
   real a= prv.x*prv.x + prv.y*prv.y - prv.z*prv.z;
   real b= -prv.x*ov.x - prv.y*ov.y + prv.z*ov.z;
+
   if (a == 0)
     {
     if (b == 0)
@@ -199,6 +181,7 @@ void cshpara::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
   real a= prv.x*prv.x - prv.y*prv.y;
   real b= -prv.x*ov.x + prv.y*ov.y + prv.z/2;
+
   if (a == 0)
     {
     if (b == 0)
@@ -321,7 +304,7 @@ cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
-//----------- Zylinder winkeltreu-------------------------------
+//----------- Zylinder winkeltreu------------------------
 
 cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
   {
@@ -390,10 +373,11 @@ cvektor2 cparatoruss::berechne (const cvektor3 &pv)
   {
   cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));
   real ky= winkelb (mitte, pv - mitte);
-  if (pv.z >= 0)
-    return cvektor2 (atan2r (pv.y, pv.x), ky);
-    else
-    return cvektor2 (atan2r (pv.y, pv.x), -ky);
+
+  if (pv.z < 0)
+    ky= -ky;
+
+  return cvektor2 (atan2r (pv.y, pv.x), ky);
   }
 
 //----------- Torus unsigned ----------------------------
@@ -408,6 +392,7 @@ cvektor2 cparatorusu::berechne (const cvektor3 &pv)
     ky= PI2 - ky;
   if (kx < 0)
     kx= PI2 + kx;
+
   return cvektor2 (kx, ky);
   }
 
@@ -421,7 +406,7 @@ integer cbegrkeine::sichtbar (const cvektor2 &pv)
   while (!(pv == pv));        // Variable benutzen, damit Compiler nicht meckert unused variable
   }
 
-// -------------------- Rechteck ------------------------------------
+// -------------------- Rechteck --------------------------------------------
 
 cbegrrechteck::cbegrrechteck (const real plinks, const real prechts, const real punten, const real poben)
   {
@@ -444,7 +429,7 @@ integer cbegrrechteck::sichtbar (const cvektor2 &pv)
   return 1;
   }
 
-// -------------------- Kreis ------------------------------------
+// -------------------- Kreis -----------------------------------------------
 
 cbegrkreis::cbegrkreis (const real plinks, const real prechts, const real pinnen, const real paussen)
   {
@@ -469,7 +454,7 @@ integer cbegrkreis::sichtbar (const cvektor2 &pv)
   return 1;
   }
 
-// -------------------- Ellipse ------------------------------------
+// -------------------- Ellipse ---------------------------------------------
 
 cbegrellipse::cbegrellipse (const real pha, const real phb)
   {

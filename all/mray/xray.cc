@@ -274,16 +274,16 @@ void fliege ()
   //addkoord (*welt);
   //addebenen90 (*welt);
   //addzylinder (*welt);
-  addkugel (*welt);
-  //addtorus (*welt);
+  //addkugel (*welt);
+  addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 320);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 512, 256), 512);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 750, 500), 750);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1500, 1000), 1500);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 750, 500), 750);
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1500, 1000), 1500);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080), 1920);
 
   //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 512, 256), 512);

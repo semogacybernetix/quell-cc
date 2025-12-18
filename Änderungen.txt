@@ -319,6 +319,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2025.12.09 Di  11:30, Konsistenz Typen und Funktionen gemacht, neuen Wahltyp _Float8x erstellt: _Float8x = {float80 hardware bei AMD64, float128 software bei ARM64}, Funktionen homogenisiert mit r am Ende, 14:56
 2025.12.11 Mi   0:10, Torus Parametrisierung unsigned korrigiert, Szenen durchkorrigiert, 2:54
 2025.12.13 Do  22:27, symmetriegruppen, symflip Compilefehler beseitigt, 23:38
+
+2024.12.18 Do  13 Uhr, Torusparametrisierung geändert, Benchmarkeinstellung xray, 14:06
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
