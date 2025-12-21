@@ -35,6 +35,18 @@ $(opfad)single.o: single.cc single.h ../class/vektor.h
 #-------------------------- Programme ---------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------------
+makemercator:
+	make -C ../../cc/class $(opfad)vektor.o
+	make -C ../../cc/screen $(opfad)vscr.o
+	make -C ../../cc/screen $(opfad)jpegscr.o
+	make -C ../../cc/screen $(opfad)bmpscr.o
+	make $(ppfad)$@
+
+$(ppfad)makemercator: makemercator.cc
+	$(comp) $(opfad)vektor.o $(opfad)vscr.o $(opfad)jpegscr.o $(opfad)bmpscr.o -ljpeg $< $(copts) -o $@
+#----------------------------------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------------------------------------
 tastatur: $(ppfad)tastatur
 	
 

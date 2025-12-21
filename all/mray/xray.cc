@@ -160,9 +160,11 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator84.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator bunt.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator bunt2.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator symmetrisch.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator symmetrisch.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator 2006.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Karten/Mercator 2020 lrou.jpg"), real (1)/PI, real (1)/PI), kstobj, klobj); // zu schmal
+
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreenmannigz (new cbmpdatei ("/root/mercator.bmp"), real (1)/PI, real (1)/PI), kstobj, klobj);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
@@ -274,8 +276,8 @@ void fliege ()
   //addkoord (*welt);
   //addebenen90 (*welt);
   //addzylinder (*welt);
-  //addkugel (*welt);
-  addtorus (*welt);
+  addkugel (*welt);
+  //addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
 

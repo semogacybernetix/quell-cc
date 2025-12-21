@@ -1,5 +1,5 @@
 #include "nckbd.h"
-#include <curses.h>
+#include <curses.h>   // apt install libncurses-dev
 
 cnckeyboard::cnckeyboard ()
   {

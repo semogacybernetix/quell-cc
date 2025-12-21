@@ -44,14 +44,15 @@ xray:
 	make -C ../../xwindow/screen $(opfad)xscr.o
 	make -C ../../framebuffer/screen $(opfad)fbscr.o
 	make -C ../../cc/screen/ $(opfad)jpegscr.o
+	make -C ../../cc/screen/ $(opfad)bmpscr.o
 
 	make $(ppfad)xray
 
-# Abhängigkeitsbaum der h-Dateien noch nicht durchtraversiert
-$(opfad)xray.o: xray.cc ../../cc/class/game.h ../../cc/class/ray.h ../../cc/screen/vscr.h ../../cc/keyboard/vkbd.h ../../cc/screen/allscr.h ../../xwindow/keyboard/xkbd.h ../../framebuffer/keyboard/nckbd.h
+# Abhängigkeitsbaum der h-Dateien voll durchtraversiert
+$(opfad)xray.o: xray.cc ../../cc/class/game.h ../../cc/class/ray.h ../../cc/class/vektor.h ../../cc/screen/vscr.h ../../cc/keyboard/vkbd.h ../../cc/screen/allscr.h ../../xwindow/keyboard/xkbd.h ../../framebuffer/keyboard/nckbd.h ../../cc/screen/memscr.h ../../cc/screen/bmpscr.h ../../cc/screen/jpegscr.h ../../cc/screen/psscr.h ../../framebuffer/screen/fbscr.h ../../xwindow/screen/xscr.h
 	$(comp) $< -c $(copts) -o $@
 
-$(ppfad)xray: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)ray.o $(opfad)game.o $(opfad)vektorcon.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)nckbd.o $(opfad)vscr.o $(opfad)xscr.o $(opfad)fbscr.o $(opfad)jpegscr.o $(opfad)xray.o
+$(ppfad)xray: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)ray.o $(opfad)game.o $(opfad)vektorcon.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)nckbd.o $(opfad)vscr.o $(opfad)xscr.o $(opfad)fbscr.o $(opfad)jpegscr.o $(opfad)bmpscr.o $(opfad)xray.o
 	$(comp) $+ $(lopts) -o $@
 
 symmetriegruppen:
