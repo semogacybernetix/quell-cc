@@ -322,11 +322,12 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2025.12.18 Do  13 Uhr, Torusparametrisierung geändert, Benchmarkeinstellung xray, 14:06
 2025.12.20 Sa  1 Uhr (So), Makefile xray durchtraversiert, cc/single/makemercator erstellt, Nullmeridian, 180°Meridian, Äquator programmiert, 3:39
+2024.12.21 So  7:47, makemercator Breitengrade erstellt: fehlerhaft, screenmannigz: Entzerrung: quadratische Pixel, hochauflösende Weltkarte jetzt entzerrt, 10:49
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 framerate sauber implementieren
-mauszeiger implementieren um Daten quartische Gleichung für Fehlerpixel zu bekommen
+Mauszeiger implementieren um Daten von der quartische Gleichung für Fehlerpixel zu bekommen
 xray framebuffer, keyboardbuffer
 Zeitauflösung auf mehr als 1/100 s erhöhen
 

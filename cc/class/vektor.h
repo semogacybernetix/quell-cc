@@ -229,6 +229,7 @@ _Float32 powr (const _Float32& a, const _Float32& b);
 _Float64 powr (const _Float64& a, const _Float64& b);
 _Float8x powr (const _Float8x& a, const _Float8x& b);
 
+// --------------------------------------------------------------------- Winkelfunktionen ------------------------------------------------------------
 _Float32 sinr (const _Float32& a);
 _Float64 sinr (const _Float64& a);
 _Float8x sinr (const _Float8x& a);
@@ -237,6 +238,12 @@ _Float32 cosr (const _Float32& a);
 _Float64 cosr (const _Float64& a);
 _Float8x cosr (const _Float8x& a);
 
+// --------------------------------------------------------------------- Hyperbelfunktionen ------------------------------------------------------------
+_Float32 tanhr (const _Float32& a);
+_Float64 tanhr (const _Float64& a);
+_Float8x tanhr (const _Float8x& a);
+
+// --------------------------------------------------------------------- Arcusfunktionen ------------------------------------------------------------
 _Float32 asinr (const _Float32& a);
 _Float64 asinr (const _Float64& a);
 _Float8x asinr (const _Float8x& a);
@@ -253,6 +260,7 @@ _Float32 atan2r (const _Float32& a, const _Float32& b);
 _Float64 atan2r (const _Float64& a, const _Float64& b);
 _Float8x atan2r (const _Float8x& a, const _Float8x& b);
 
+// --------------------------------------------------------------------- Areafunktionen ------------------------------------------------------------
 _Float32 asinhr (const _Float32& a);
 _Float64 asinhr (const _Float64& a);
 _Float8x asinhr (const _Float8x& a);

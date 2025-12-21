@@ -556,7 +556,7 @@ cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
 
 // zentriertes Bild, nicht gezoomt, nicht periodisch
 cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real pky)
-  : screen (pscreen), kx (pkx), ky (pky), xmax (real (screen->xanz) - 1), ymax (real (screen->yanz) - 1)
+  : screen (pscreen), xmax (screen->xanz - 1), ymax (screen->yanz - 1), kx (pkx), ky (pky)
   {
   xz= real (screen->xanz)/2;
   yz= real (screen->yanz)/2;
@@ -564,8 +564,11 @@ cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real p
 
 cvektor3 cscreenmannigz::getpunkt (const cvektor2 &pv)
   {
-  integer x= integer (pv.x*kx*xz + xz);
-  integer y= integer (pv.y*ky*yz + yz);
+  integer x= integer (xz + pv.x*kx*xz);
+  integer y= integer (yz + pv.y*kx*xz);
+
+  if ((y < 0) || (y > ymax))
+    return cvektor3 (150, 150, 150);
 
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);

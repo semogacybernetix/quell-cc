@@ -249,7 +249,8 @@ struct cscreenmannigz : public clmannig     // Zum Texturieren mit Bildern zentr
 
   private:
   clscreen8* screen;
-  real kx, ky, xmax, ymax, xz, yz;
+  integer xmax, ymax;
+  real kx, ky, xz, yz;
   };
 
 // ------------------------------------------------------------------------------- Geometrische Gebilde -----------------------------------------------------------------------------------------------------------------------------------
