@@ -322,7 +322,9 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2025.12.18 Do  13 Uhr, Torusparametrisierung geändert, Benchmarkeinstellung xray, 14:06
 2025.12.20 Sa  1 Uhr (So), Makefile xray durchtraversiert, cc/single/makemercator erstellt, Nullmeridian, 180°Meridian, Äquator programmiert, 3:39
-2024.12.21 So  7:47, makemercator Breitengrade erstellt: fehlerhaft, screenmannigz: Entzerrung: quadratische Pixel, hochauflösende Weltkarte jetzt entzerrt, 10:49
+2025.12.21 So  7:47, makemercator Breitengrade erstellt: fehlerhaft, screenmannigz: Entzerrung: quadratische Pixel, hochauflösende Weltkarte jetzt entzerrt, 10:49
+
+2025.12.28 So  15:00, Mercatorkarten mit Paintshop zugeschnitten, in media eingepflegt, Dateinamen systematisiert, 19:25
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
