@@ -9,67 +9,80 @@ void makemercator (char* p_name)
   bmpdatei.putscreen (jpgdatei, 0, 0);
 
   // bmp-Datei bearbeiten (Linien ziehen)
-  integer r, g, b;
-
-  // Nullmeridian zeichnen
-  for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
-    {
-    //bmpdatei.getpixel (bmpdatei.xanz/2, laufy, 0,0,b);
-    bmpdatei.putpixel (bmpdatei.xanz/2, laufy, 0, 0, 0);
-    //bmpdatei.getpixel (bmpdatei.xanz/2-1, laufy, r,g,b);
-    bmpdatei.putpixel (bmpdatei.xanz/2-1, laufy, 0,0,0);
-    }
-
-  // 180°meridian zeichnen
-  for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
-    {
-    //bmpdatei.getpixel (0, laufy, r,g,b);
-    bmpdatei.putpixel (0, laufy, 255, 255, 255);
-    //bmpdatei.getpixel (bmpdatei.xanz-1, laufy, r,g,b);
-    bmpdatei.putpixel (bmpdatei.xanz-1, laufy, 255,255,255);
-    }
-
-  // Äquator zeichnen
-  for (integer laufx= 0; laufx < bmpdatei.xanz; laufx++)
-    {
-    bmpdatei.getpixel (laufx, bmpdatei.yanz/2, r,g,b);
-    bmpdatei.putpixel (laufx, bmpdatei.yanz/2, 255-r, 255-g, 255-b);
-    bmpdatei.getpixel (laufx, bmpdatei.yanz/2-1, r,g,b);
-    bmpdatei.putpixel (laufx, bmpdatei.yanz/2-1, 255-r,255-g,255-b);
-    }
+  real farbe1;
 
   // Längengrade zeichnen
-  for (integer laufx= 1; laufx < 36; laufx++)
+  real lmitte= real (bmpdatei.xanz-1)/2;
+  for (integer laufx= -36; laufx <= 36; laufx++)
     {
-    real lm= real (bmpdatei.xanz-1)/2;
     real lg= real (bmpdatei.xanz*laufx)/72;
+    real putx= lmitte + lg;
+    farbe1= (putx - floorr (putx))*255;
+    integer putxi= integer (floorr (putx));
 
     for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
+      bmpdatei.putpixel (putxi, laufy, integer (farbe1), integer (farbe1), integer (farbe1));
+    if (farbe1 != 0)
+      for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
+        bmpdatei.putpixel (putxi+1,laufy, 255-integer (farbe1), 255-integer (farbe1), 255-integer (farbe1));
+
+    // Nullmeridian zeichnen
+    if (laufx == 0)
       {
-      bmpdatei.getpixel (integer (lm + lg), laufy, r,g,b);
-      bmpdatei.putpixel (integer (lm + lg), laufy, 255-r, 255-g, 255-b);
-      bmpdatei.getpixel (integer (lm - lg), laufy, r,g,b);
-      bmpdatei.putpixel (integer (lm - lg), laufy, 255-r, 255-g, 255-b);
+      for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
+        bmpdatei.putpixel (putxi, laufy, integer (255-farbe1), 0, 0);
+      if (farbe1 != 0)
+        for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
+          bmpdatei.putpixel (putxi+1,laufy, integer (farbe1), 0, 0);
+      }
+
+    // -180° Meridian zeichnen
+    if (laufx == -36)
+      {
+      for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
+        bmpdatei.putpixel (putxi, laufy, 0, integer (255-farbe1), 0);
+      if (farbe1 != 0)
+        for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
+          bmpdatei.putpixel (putxi+1,laufy, 0, integer (farbe1), 0);
+      }
+
+    // 180° Meridian zeichnen
+    if (laufx == 36)
+      {
+      for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
+        bmpdatei.putpixel (putxi, laufy, 0, 0, integer (255-farbe1));
+      if (farbe1 != 0)
+        for (integer laufy= 0; laufy < bmpdatei.yanz; laufy++)
+          bmpdatei.putpixel (putxi+1,laufy, 0, 0, integer (farbe1));
       }
     }
 
   // Breitengrade zeichnen
-  //real pxrad= PI2/real (bmpdatei.xanz);
-  for (integer laufy= 1; laufy < 36; laufy++)
+  real pxrad= PI2/real (bmpdatei.xanz);
+  real bmitte= real (bmpdatei.yanz-1)/2;
+  for (integer laufy= -17; laufy < 18; laufy++)
     {
-    real bm= real (bmpdatei.yanz-1)/2;
-    //real bg= tanhr (laufy*5/180*PI)/PI*180/360*bmpdatei.xanz;
-    real bg= atanhr (PI*real (laufy)/36)/PI*real (bmpdatei.xanz)/2;
+    real bg= atanhr (sinr (real (laufy)/36*PI))/pxrad;
+    real puty= bmitte + bg;
+    farbe1= (puty - floorr (puty))*255;
+    integer putyi= integer (floorr (puty));
 
     for (integer laufx= 0; laufx < bmpdatei.xanz; laufx++)
+      bmpdatei.putpixel (laufx, putyi, integer (farbe1), integer (farbe1), integer (farbe1));
+    if (farbe1 != 0)
+      for (integer laufx= 0; laufx < bmpdatei.xanz; laufx++)
+        bmpdatei.putpixel (laufx, putyi+1, 255 - integer (farbe1), 255-integer (farbe1), 255-integer (farbe1));
+
+    // Äquator zeichnen
+    if (laufy == 0)
       {
-      bmpdatei.getpixel (laufx, integer (bm + bg), r,g,b);
-      bmpdatei.putpixel (laufx, integer (bm + bg), 255-r, 255-g, 255-b);
-      bmpdatei.getpixel (laufx, integer (bm - bg), r,g,b);
-      bmpdatei.putpixel (laufx, integer (bm - bg), 255-r, 255-g, 255-b);
+      for (integer laufx= 0; laufx < bmpdatei.xanz; laufx++)
+        bmpdatei.putpixel (laufx, putyi, 255 - integer (farbe1), 0, 0);
+      if (farbe1 != 0)
+        for (integer laufx= 0; laufx < bmpdatei.xanz; laufx++)
+          bmpdatei.putpixel (laufx, putyi+1, integer (farbe1), 0, 0);
       }
     }
-
   }
 
 int main (int argc, char** argv)

@@ -326,8 +326,12 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2025.12.28 So  15:00, Mercatorkarten mit Paintshop zugeschnitten, in media eingepflegt, Dateinamen systematisiert, 19:25
 
+2026.01.01 Do  21:14, 0266 Mercatorkarte schwarzen Pixelrand entfernt, 22 Uhr
+2026.01.02 Fr  13 Uhr, Mercatorkarten entzerrt, makemercator verbessert, präzisiert, Mercatorkarten weiter entzerrt (verschoben, canvas size, y-skaliert, gedreht 0.05°), 22:26
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Kartenprojektionen (stereografisch, gnomonisch, flächentreu, zentralabstandstreu, kegel) implementieren
 framerate sauber implementieren
 Mauszeiger implementieren um Daten von der quartische Gleichung für Fehlerpixel zu bekommen
 xray framebuffer, keyboardbuffer
