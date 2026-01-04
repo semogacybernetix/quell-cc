@@ -328,6 +328,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2026.01.01 Do  21:14, 0266 Mercatorkarte schwarzen Pixelrand entfernt, 22 Uhr
 2026.01.02 Fr  13 Uhr, Mercatorkarten entzerrt, makemercator verbessert, präzisiert, Mercatorkarten weiter entzerrt (verschoben, canvas size, y-skaliert, gedreht 0.05°), 22:26
+2026.01.03 Sa  22:30, 3821 politisch und 2768 braun entzerrt, 1:27
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

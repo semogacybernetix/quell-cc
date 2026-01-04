@@ -3,7 +3,7 @@
 # source ~/.bashrc.quell           # Diese Zeile in .bashrc anfügen
 
 export PLATFORM=linux
-export CCSTANDARD=c++17
+export CCSTANDARD=c++23
 export PATH=$PATH:$HOME/bin/$PLATFORM/sbin
 #export DISPLAY=pc-haupt:0
 
