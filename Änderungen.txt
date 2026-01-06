@@ -330,6 +330,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.01.02 Fr  13 Uhr, Mercatorkarten entzerrt, makemercator verbessert, präzisiert, Mercatorkarten weiter entzerrt (verschoben, canvas size, y-skaliert, gedreht 0.05°), 22:26
 2026.01.03 Sa  22:30, 3821 politisch und 2768 braun entzerrt, 1:27
 2026.01.04 So  11:49, makemercator -> gradnetz, 2058 platt physisch, 1200 platt politisch zugeschnitten, auf Torus projeziert, 13:36, 18:30 zweiblättrige Überlagerungskarte der Erde für den Torus erstellt und auf Torus abgebildet, 20:55
+2026.01.05 Mo  02:01 Di, 1200 platt, 1200 platt schief richtig skaliert und bearbeitet, 4:13
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

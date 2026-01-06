@@ -171,9 +171,9 @@ void addkugel (cwelt& pwelt)
   // Plattkarten
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/0400 platt hellblau.jpg"), real (1)/PI, 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/1000 platt dunkelblau.jpg"), real (1)/PI, 0), kstobj, klobj);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/1200 platt schief.jpg"), real (1)/PI, 0), kstobj, klobj);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/1200 platt politisch.jpg"), real (1)/PI, 0), kstobj, klobj);
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/2044 platt-z physisch.jpg"), real (1)/PI, 0), kstobj, klobj);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/1466 platt schief.jpg"), real (1)/PI, 0), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/1436 platt-z politisch.jpg"), real (1)/PI, 0), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/2044 platt-z physisch.jpg"), real (1)/PI, 0), kstobj, klobj);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
@@ -218,6 +218,7 @@ void addtorus (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorus, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinmauer.jpg"), real (16/PI), real (2/PI)), kstobj, kl1);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreenmannig (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (0.5/PI), real (0.5/PI)), kstobj, klobj);
+
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.5)), new cparatoruss, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/2044 platt-z physisch.jpg"), real (1/PI), real (0)), kstobj, klobj);
   ckoerper* koerper1= new ckoerper (new cstorus (real (0.5)), new cparatoruss, new cbegrkeine, new cscreenmannigz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/2044 platt-zts physisch.jpg"), real (1/PI), real (0)), kstobj, klobj);
 
@@ -286,17 +287,16 @@ void fliege ()
   //addkoord (*welt);
   //addebenen90 (*welt);
   //addzylinder (*welt);
-  //addkugel (*welt);
-  addtorus (*welt);
+  addkugel (*welt);
+  //addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 320);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 512, 256), 512);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 750, 500), 750);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 675, 500), 750);
   cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1350, 1000), 1350);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1500, 1000), 1500);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080), 1920);
 
   //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 512, 256), 512);
