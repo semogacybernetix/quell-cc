@@ -241,8 +241,8 @@ void printreal (_Float32 pr)
   {
   float pl= float (pr);
   FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%15.9f", pl);
-  fprintf (datei, "%15.9f", pl);
+  printf ("%28.8f", pl);
+  fprintf (datei, "%28.8f", pl);
   fclose (datei);
   }
 
@@ -250,16 +250,16 @@ void printreal (_Float64 pr)
   {
   double pl= double (pr);
   FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%15.9lf", pl);
-  fprintf (datei, "%15.9lf", pl);
+  printf ("%28.8lf", pl);
+  fprintf (datei, "%28.8lf", pl);
   fclose (datei);
   }
 
 void printreal (_Float8x pr)
   {
   FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%15.9Lf", pr);
-  fprintf (datei, "%15.9Lf", pr);
+  printf ("%28.8Lf", pr);
+  fprintf (datei, "%28.8Lf", pr);
   fclose (datei);
   }
 

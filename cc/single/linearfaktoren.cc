@@ -2156,12 +2156,14 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
 */
   }
 
+// Bestimmung x1-x5 aus c, d, z (bikubische Resolvente)
 void quintischnacktresolvente (real c, real d, real z, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4, ckomplexk& x5, real& pr)
   {
   real m, n, p, q, tv, tw, y, r, v, w;
   ckomplexk v1, v2, v3, v4;
   ckomplexk e51, e52, zp1, zp2, zp3, zp4, zp5, zp6, dp, pr1, pr2, pr3, pr4, pr5;
 
+  
   y= sqrtr (z)/5;
   r= y*d/(y*y*25 - c);
   v= (y*y*y*3 - y*c - r*r)/(y*2);
@@ -2170,6 +2172,7 @@ void quintischnacktresolvente (real c, real d, real z, ckomplexk& x1, ckomplexk&
   tv= (y*y + v)*r/(y*2);
   tw= (y*y + w)*r/(y*2);
 
+  // 1. und 2. fünfte Einheitswurzeln
   e51= ckomplexk (cosr (PI*2/5), sinr (PI*2/5));
   e52= ckomplexk (cosr (PI*4/5), sinr (PI*4/5));
 
@@ -2181,21 +2184,20 @@ void quintischnacktresolvente (real c, real d, real z, ckomplexk& x1, ckomplexk&
   // Bedingungsgleichung v= m³p + n³q muss erfüllt sein  (m,n) bzw. (p,q) permutieren
   v1= m*m*m*p + n*n*n*q;
   v2= n*n*n*p + m*m*m*q;
-  v3= m*m*m*q + n*n*n*p;
-  v4= n*n*n*q + m*m*m*p;
   if (absr (v - v1) > 0.1)
     {
-    printvektor2komplex ("v          ", v, 1);
+    printvektor2komplex ("v  ", v, 1);
+//*
     printtext ("\n");
-    printvektor2komplex ("v1         ", v1, 1);
-    printvektor2komplex ("v2         ", v2, 1);
-    printvektor2komplex ("v3         ", v3, 1);
-    printvektor2komplex ("v4         ", v4, 1);
+    printvektor2komplex ("v1 ", v1, 1);
+    printvektor2komplex ("v2 ", v2, 1);
     printtext ("\n");
-    printvektor2komplex ("m          ", m, 1);
-    printvektor2komplex ("n          ", n, 1);
-    printvektor2komplex ("p          ", p, 1);
-    printvektor2komplex ("q          ", q, 1);
+    printvektor2komplex ("m  ", m, 1);
+    printvektor2komplex ("n  ", n, 1);
+    printvektor2komplex ("p  ", p, 1);
+    printvektor2komplex ("q  ", q, 1);
+    printtext ("\n");
+//*/
     }
 
   x1= -(m + p + q + n);
@@ -2235,11 +2237,12 @@ void quintischnacktresolvente (real c, real d, real z, ckomplexk& x1, ckomplexk&
   printtext ("\n");
   printtext ("-------------------------------- 2. Zwischenwert bikubische Resolvente --------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("(x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1)", zp1, 0);
-  printvektor2komplex ("(x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1)", zp2, 0);
-  printvektor2komplex ("(x1*x2 + x2*x3 + x3*x4 + x4*x5 + x5*x1)", zp3, 0);
+  printvektor2komplex ("(x2*x1 + x1*x3 + x3*x4 + x4*x5 + x5*x2)", zp2, 0);
+  printvektor2komplex ("(x1*x3 + x3*x2 + x2*x4 + x4*x5 + x5*x1)", zp3, 0);
   printtext ("\n");
-  printvektor2komplex ("z           ", z, 0);
   printvektor2komplex ("5z          ", z*5, 0);
+  printvektor2komplex ("z           ", z, 0);
+  printvektor2komplex ("25y²        ", y*y*25, 0);
   printtext ("\n");
 
   printvektor2komplex ("y           ", y, 0);
@@ -2269,24 +2272,33 @@ void quintischparameter ()
   //vektor2eingabek (c);
   //vektor2eingabek (d);
 
-  c= -525;
-  d= -61500;
-  //z= 5625;
-  z= 5625;
-
 /*
   for (real lauf3= 0; lauf3 <= 6; lauf3+= 2)
   for (real lauf5= 2; lauf5 <= 14; lauf5+= 2)
   for (real lauf7= 0; lauf7 <= 6; lauf7+= 2)
     {
     z= powr (3, lauf3)*powr (5, lauf5)*powr (7, lauf7);
-    //printf ("z= %20.10Lf\n", z);
     quintischnacktresolvente (c, d, z, x1, x2, x3, x4, x5, pr);
-    printf ("z= %20.0Lf  pr= %20.10Lf\n", z, pr);
+    //printf ("z= %24.2Lf  pr= %20.10Lf\n", z, pr);
+    printtext ("  l3  ");
+    printreal (lauf3);
+    printtext ("  l5  ");
+    printreal (lauf5);
+    printtext ("  l6  ");
+    printreal (lauf7);
+    printtext ("  z=  ");
+    printreal (z);
+    printtext ("  pr=  ");
+    printreal (pr);
+    printtext ("\n");
     }
 
   return;
 //*/
+
+  c= -525;
+  d= -61500;
+  z= 5625;
 
   quintischnacktresolvente (c, d, z, x1, x2, x3, x4, x5, pr);
 
