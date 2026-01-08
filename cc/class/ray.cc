@@ -283,7 +283,7 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************
 
-//----------- Ebene winkeltreu -------------------------
+//----------- Ebene winkeltreu ---------------------------------------------------------------------------------------------------------
 
 cvektor2 cparaebenew::berechne (const cvektor3 &pv)
   {
@@ -304,42 +304,59 @@ cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
-//----------- Zylinder winkeltreu------------------------
+//----------- Zylinder winkeltreu--------------------------------------------------------------------------------------------------------
 
 cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), pv.z);
   }
 
-//----------- Kugel normal ------------------------------------------------------------------------------------------------------------
+//----------- Kugel normal --------------------------------------------------------------------------------------------------------------
 
 cvektor2 cparakugel::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), asinr (pv.z));
   }
 
-//----------- Kugel winkeltreu ------------------------
+//----------- Kugel winkeltreu -----------------------------------------
 
 cvektor2 cparakugelw::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
   }
 
-//----------- Kugel stereografisch vom Südpol ------------------------
-
-cvektor2 cparakugels::berechne (const cvektor3 &pv)
-  {
-  return cvektor2 (pv.x/(1 + pv.z), pv.y/(1 + pv.z));
-  }
-
-//----------- Kugel gnomonisch vom Südpol ------------------------
+//----------- Kugel polar gnomonisch ------------------------------------
 
 cvektor2 cparakugelg::berechne (const cvektor3 &pv)
   {
   return cvektor2 (pv.x/pv.z, pv.y/pv.z);
   }
 
-//----------- Hyperboloid normal -----------------------
+//----------- Kugel polar winkeltreu ------------------------------------
+
+cvektor2 cparakugels::berechne (const cvektor3 &pv)
+  {
+  real k= 2/(pv.z + 1);
+  return cvektor2 (pv.x*k, pv.y*k);
+  }
+
+//----------- Kugel polar flächentreu -----------------------------------
+
+cvektor2 cparakugelf::berechne (const cvektor3 &pv)
+  {
+  real k= sqrtr (2/(pv.z + 1));
+  return cvektor2 (pv.x*k, pv.y*k);
+  }
+
+//----------- Kugel polar mittenabstandstreu ----------------------------
+
+cvektor2 cparakugelm::berechne (const cvektor3 &pv)
+  {
+  real k= acosr (pv.z)/cosr (asinr (pv.z));
+  return cvektor2 (pv.x*k, pv.y*k);
+  }
+
+//----------- Hyperboloid normal -----------------------------------------------------------------------------------------------------------
 
 cvektor2 cparahypere::berechne (const cvektor3 &pv)
   {
@@ -353,14 +370,14 @@ cvektor2 cparahyperz::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), acoshr (absr (pv.z)));
   }
 
-//------------------ Kegel ------------------------------------
+//------------------ Kegel winkeltreu ------------------------------------------------------------------------------------------------------
 
 cvektor2 cparakegelw::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), logr (absr (pv.z)));
   }
 
-//----------- Rotationsparaboloid ----------------------
+//----------- Rotationsparaboloid ----------------------------------------------------------------------------------------------------------
 
 cvektor2 cpararpara::berechne (const cvektor3 &pv)
   {
@@ -429,7 +446,7 @@ integer cbegrrechteck::sichtbar (const cvektor2 &pv)
   return 1;
   }
 
-// -------------------- Kreis -----------------------------------------------
+// -------------------- Kreis -------------------------------------------------------------------------
 
 cbegrkreis::cbegrkreis (const real plinks, const real prechts, const real pinnen, const real paussen)
   {
@@ -454,7 +471,7 @@ integer cbegrkreis::sichtbar (const cvektor2 &pv)
   return 1;
   }
 
-// -------------------- Ellipse ---------------------------------------------
+// -------------------- Ellipse ----------------------------------------------------------------------
 
 cbegrellipse::cbegrellipse (const real pha, const real phb)
   {
@@ -556,20 +573,22 @@ cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
 
 // zentriertes Bild, nicht gezoomt, nicht periodisch
 cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real pky)
-  : screen (pscreen), xmax (screen->xanz - 1), ymax (screen->yanz - 1), kx (pkx), ky (pky)
+  : screen (pscreen), xmax (screen->xanz - 1), ymax (screen->yanz - 1)
   {
   xz= real (screen->xanz)/2;
   yz= real (screen->yanz)/2;
+  kx= pkx*xz;
+  ky= pky*yz;
   }
 
 cvektor3 cscreenmannigz::getpunkt (const cvektor2 &pv)
   {
-  integer x= integer (xz + pv.x*kx*xz);
-  integer y= integer (yz + pv.y*kx*xz);
-
+  integer x= integer (xz + pv.x*kx);
+  integer y= integer (yz + pv.y*kx);
+/*
   if ((y < 0) || (y > ymax))
     return cvektor3 (150, 150, 150);
-
+*/
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);
   return cvektor3 (real (r), real (g), real (b));
