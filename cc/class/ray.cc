@@ -356,6 +356,18 @@ cvektor2 cparakugelm::berechne (const cvektor3 &pv)
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
+//----------- Kugel polar mittenabstandstreu 2 Kappen -------------------
+
+cvektor2 cparakugelm2::berechne (const cvektor3 &pv)
+  {
+  real k;
+  if (pv.z >= 0)
+    k= acosr (pv.z)/cosr (asinr (pv.z));
+    else
+    k= acosr (-pv.z)/cosr (asinr (-pv.z));
+  return cvektor2 (pv.x*k, pv.y*k);
+  }
+
 //----------- Hyperboloid normal -----------------------------------------------------------------------------------------------------------
 
 cvektor2 cparahypere::berechne (const cvektor3 &pv)
@@ -555,12 +567,12 @@ cvektor3 cschachfeld::getpunkt (const cvektor2 &pv)
 
 //------------------------- Texturierung aus einem Screen (bmpdatei, jpegdatei) ---------------------------------
 
+// ------------------------------------------ nicht zentriertes Bild, gezoomt, periodisch -------------------------------------------
 cscreenmannig::cscreenmannig (clscreen8* pscreen, const real pkx, const real pky)
   : screen (pscreen), kx (pkx), ky (pky), xmax (real (screen->xanz) - 1), ymax (real (screen->yanz) - 1)
   {
   }
 
-// nicht zentriertes Bild, gezoomt, periodisch
 cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
   {
   integer x= integer (modr (absr (pv.x*kx*ymax), xmax));
@@ -571,7 +583,7 @@ cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
   return cvektor3 (real (r), real (g), real (b));
   }
 
-// zentriertes Bild, nicht gezoomt, nicht periodisch
+// ------------------------------------------ zentriertes Bild, nicht gezoomt, nicht periodisch -------------------------------------
 cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real pky)
   : screen (pscreen), xmax (screen->xanz - 1), ymax (screen->yanz - 1)
   {
@@ -585,12 +597,42 @@ cvektor3 cscreenmannigz::getpunkt (const cvektor2 &pv)
   {
   integer x= integer (xz + pv.x*kx);
   integer y= integer (yz + pv.y*kx);
-/*
-  if ((y < 0) || (y > ymax))
-    return cvektor3 (150, 150, 150);
-*/
+
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);
+  return cvektor3 (real (r), real (g), real (b));
+  }
+
+// ------------------------------------------ Polkappen von beiden Seiten -------------------------------------
+cscreenmannig2::cscreenmannig2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
+  : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
+  {
+  xz1= real (screen1->xanz)/2;
+  yz1= real (screen1->yanz)/2;
+  kx1= pkx1*xz1;
+  ky1= pky1*yz1;
+
+  xz2= real (screen2->xanz)/2;
+  yz2= real (screen2->yanz)/2;
+  kx2= pkx2*xz2;
+  ky2= pky2*yz2;
+  }
+
+cvektor3 cscreenmannig2::getpunkt (const cvektor2 &pv)
+  {
+  integer r, g, b;
+  if (pv.x >= 0)
+    {
+    integer x1= integer (xz1 + pv.x*kx1);
+    integer y1= integer (yz1 + pv.y*kx1);
+    screen1->getpixel (x1, y1, r, g, b);
+    }
+    else
+    {
+    integer x2= integer (xz2 + pv.x*kx2);
+    integer y2= integer (yz2 + pv.y*kx2);
+    screen2->getpixel (x2, y2, r, g, b);
+    }
   return cvektor3 (real (r), real (g), real (b));
   }
 

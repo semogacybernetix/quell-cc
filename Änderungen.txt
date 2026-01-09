@@ -332,6 +332,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.01.04 So  11:49, makemercator -> gradnetz, 2058 platt physisch, 1200 platt politisch zugeschnitten, auf Torus projeziert, 13:36, 18:30 zweiblättrige Überlagerungskarte der Erde für den Torus erstellt und auf Torus abgebildet, 20:55
 2026.01.05 Mo  02:01 Di, 1200 platt, 1200 platt schief richtig skaliert und bearbeitet, 4:13, 13 Uhr, 2048 Plattkarte dunkelblau eingefügt, linearfaktoren quintische Gleichung wieder angefangen, Kosmetik, 16:06
 2026.01.08 Do  11:47, Polarkarten runtergeladen (gnomonisch, stereographisch, flächentreu, mittenabstandstreu), 18 Uhr, 20 Uhr, Karten umbenannt, in xray.cc eingebunden, richtige Skalierungsfaktoren ermittelt, 0:14
+2026.01.09 Fr  3:42, Doppelkarte aus Polkappen angefangen, 5:38
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

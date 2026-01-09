@@ -125,6 +125,16 @@ struct cparakugelw : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+struct cparakugelg : clpara
+  {
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+struct cparakugels : clpara
+  {
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
 struct cparakugelf : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
@@ -135,12 +145,7 @@ struct cparakugelm : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugels : clpara
-  {
-  cvektor2 berechne (const cvektor3 &pv);
-  };
-
-struct cparakugelg : clpara
+struct cparakugelm2 : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
@@ -261,6 +266,21 @@ struct cscreenmannigz : public clmannig     // Zum Texturieren mit Bildern zentr
   clscreen8* screen;
   integer xmax, ymax;
   real kx, ky, xz, yz;
+  };
+
+struct cscreenmannig2 : public clmannig     // Zum Texturieren mit Bildern zentriert
+  {
+  cscreenmannig2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
+  cvektor3 getpunkt (const cvektor2 &pv);
+
+  private:
+  clscreen8* screen1;
+  integer xmax1, ymax1;
+
+  clscreen8* screen2;
+  integer xmax2, ymax2;
+
+  real kx1, ky1, xz1, yz1, kx2, ky2, xz2, yz2;
   };
 
 // ------------------------------------------------------------------------------- Geometrische Gebilde -----------------------------------------------------------------------------------------------------------------------------------
