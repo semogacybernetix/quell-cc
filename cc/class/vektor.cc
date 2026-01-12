@@ -490,7 +490,7 @@ cvektor2 senk (const cvektor2 &pv)
 //---------- cvektor2 Vektor Operatoren ----------------------------------------------------------------------------------------------
 
 // Vektorvergleich
-integer operator == (const cvektor2 &pv1, const cvektor2 &pv2)
+bool operator == (const cvektor2 &pv1, const cvektor2 &pv2)
   {
   return (pv1.x == pv2.x) && (pv1.y == pv2.y);
   }
@@ -1123,7 +1123,7 @@ real winkelg (const cvektor3 &pv1, const cvektor3 &pv2)           // Betrag des 
 //---------- cvektor3 Operatoren ------------------------------------------------------------------------------------------
 
 // Vektoren vergleichen
-integer operator == (const cvektor3 &pv1, const cvektor3 &pv2)
+bool operator == (const cvektor3 &pv1, const cvektor3 &pv2)
   {
   return (pv1.x == pv2.x) && (pv1.y == pv2.y) && (pv1.z == pv2.z);
   }
@@ -1418,7 +1418,7 @@ cvektor3 getachse (const cvektor4 &pv)
 //---------- cvektor4 Vektor Operatoren ------------------------------------------------------------------------------------------------
 
 // Vergleich
-integer operator == (const cvektor4 &pv1, const cvektor4 &pv2)
+bool operator == (const cvektor4 &pv1, const cvektor4 &pv2)
   {
   return (pv1.r == pv2.r) && (pv1.i == pv2.i) && (pv1.j == pv2.j) && (pv1.ij == pv2.ij);
   }

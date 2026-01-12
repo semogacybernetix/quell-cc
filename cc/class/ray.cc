@@ -283,7 +283,9 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************
 
-//----------- Ebene winkeltreu ---------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------- Ebene --------------------------------------------------------------------
+
+//----------- Ebene winkeltreu -------------------------
 
 cvektor2 cparaebenew::berechne (const cvektor3 &pv)
   {
@@ -304,21 +306,25 @@ cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
-//----------- Zylinder winkeltreu--------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------- Zylinder --------------------------------------------------------------------
+
+//----------- Zylinder winkeltreu-----------------------
 
 cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), pv.z);
   }
 
-//----------- Kugel normal --------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------- Kugel --------------------------------------------------------------------
+
+//----------- Kugel zylinder platt -------------------------------------
 
 cvektor2 cparakugel::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), asinr (pv.z));
   }
 
-//----------- Kugel winkeltreu -----------------------------------------
+//----------- Kugel zylinder winkeltreu --------------------------------
 
 cvektor2 cparakugelw::berechne (const cvektor3 &pv)
   {
@@ -356,19 +362,9 @@ cvektor2 cparakugelm::berechne (const cvektor3 &pv)
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
-//----------- Kugel polar mittenabstandstreu 2 Kappen -------------------
+//---------------------------------------------------------------------- Hyperboloid --------------------------------------------------------------------
 
-cvektor2 cparakugelm2::berechne (const cvektor3 &pv)
-  {
-  real k;
-  if (pv.z >= 0)
-    k= acosr (pv.z)/cosr (asinr (pv.z));
-    else
-    k= acosr (-pv.z)/cosr (asinr (-pv.z));
-  return cvektor2 (pv.x*k, pv.y*k);
-  }
-
-//----------- Hyperboloid normal -----------------------------------------------------------------------------------------------------------
+//----------- Hyperboloid normal -----------------------------
 
 cvektor2 cparahypere::berechne (const cvektor3 &pv)
   {
@@ -382,19 +378,25 @@ cvektor2 cparahyperz::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), acoshr (absr (pv.z)));
   }
 
-//------------------ Kegel winkeltreu ------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------- Kegel --------------------------------------------------------------------
+
+//------------------ Kegel winkeltreu ------------------------
 
 cvektor2 cparakegelw::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), logr (absr (pv.z)));
   }
 
-//----------- Rotationsparaboloid ----------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------- Rotationsparaboloid ------------------------------------------------------
+
+//----------- Rotationsparaboloid --------------------
 
 cvektor2 cpararpara::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), sqrtr (pv.z));
   }
+
+//---------------------------------------------------------------------- Torus --------------------------------------------------------------------
 
 //----------- Torus signed ----------------------------
 
@@ -432,7 +434,7 @@ cvektor2 cparatorusu::berechne (const cvektor3 &pv)
 integer cbegrkeine::sichtbar (const cvektor2 &pv)
   {
   return 1;
-  while (!(pv == pv));        // Variable benutzen, damit Compiler nicht meckert unused variable
+  while (pv != pv);        // Variable benutzen, damit Compiler nicht meckert unused variable
   }
 
 // -------------------- Rechteck --------------------------------------------
@@ -510,7 +512,7 @@ cvektor3 clmannig::getpixel (const cvektor2 &pv)
   {
   //return getpunkt (pv);
   return cvektor3 (255,255,0);
-  while (pv.x != pv.x);                                           // pv benutzen
+  while (pv != pv);                                           // pv benutzen
   }
 
 cvektor3 clmannig::getpixel16 (const cvektor2 &pv)
@@ -544,7 +546,7 @@ cmonochrom::cmonochrom (const cvektor3 &pfarbe)
 cvektor3 cmonochrom::getpunkt (const cvektor2 &pv)
   {
   return farbe;
-  while (pv.x != pv.x);                                           // pv benutzen, weil sonst der Compiler meckert
+  while (pv != pv);                                           // pv benutzen, weil sonst der Compiler meckert
   }
 
 //------------------------- Schachfeld ---------------------------------
@@ -565,7 +567,7 @@ cvektor3 cschachfeld::getpunkt (const cvektor2 &pv)
     return fb1;
   }
 
-//------------------------- Texturierung aus einem Screen (bmpdatei, jpegdatei) ---------------------------------
+//------------------------- Texturierung aus einem Screen (bmpdatei, jpgdatei) ---------------------------------
 
 // ------------------------------------------ nicht zentriertes Bild, gezoomt, periodisch -------------------------------------------
 cscreenmannig::cscreenmannig (clscreen8* pscreen, const real pkx, const real pky)
@@ -621,7 +623,8 @@ cscreenmannig2::cscreenmannig2 (clscreen8* pscreen1, const real pkx1, const real
 cvektor3 cscreenmannig2::getpunkt (const cvektor2 &pv)
   {
   integer r, g, b;
-  if (pv.x >= 0)
+  real l= absr (pv);
+  if (l < PI/2)
     {
     integer x1= integer (xz1 + pv.x*kx1);
     integer y1= integer (yz1 + pv.y*kx1);
@@ -629,8 +632,9 @@ cvektor3 cscreenmannig2::getpunkt (const cvektor2 &pv)
     }
     else
     {
-    integer x2= integer (xz2 + pv.x*kx2);
-    integer y2= integer (yz2 + pv.y*kx2);
+    real xa= (PI/l - 1)*kx2;
+    integer x2= integer (xz2 + pv.x*xa);
+    integer y2= integer (yz2 - pv.y*xa);
     screen2->getpixel (x2, y2, r, g, b);
     }
   return cvektor3 (real (r), real (g), real (b));

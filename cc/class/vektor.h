@@ -280,7 +280,7 @@ cvektor2 senk    (const cvektor2 &pv);                                          
 
 // ---------- cvektor2 Vektor Operatoren ----------------------------------------------------------------------------------------------
 
-integer  operator == (const cvektor2 &pv1, const cvektor2 &pv2);                // Vergleich
+bool     operator == (const cvektor2 &pv1, const cvektor2 &pv2);                // Vergleich
 cvektor2 operator -  (const cvektor2 &pv);                                      // Vorzeichen
 cvektor2 operator +  (const cvektor2 &pv1, const cvektor2 &pv2);                // Addition
 cvektor2 operator -  (const cvektor2 &pv1, const cvektor2 &pv2);                // Subtraktion
@@ -485,7 +485,7 @@ real winkelg (const cvektor3 &pv1, const cvektor3 &pv2);
 //---------- cvektor3 Operatoren ------------------------------------------------------------------------------------------
 
 // Vektoren vergleichen
-integer operator == (const cvektor3 &pv1, const cvektor3 &pv2);
+bool operator == (const cvektor3 &pv1, const cvektor3 &pv2);
 
 // Vorzeichen des Vektors ändern
 cvektor3 operator - (const cvektor3 &pv);
@@ -568,7 +568,7 @@ integer  aehnlich (const cvektor4 &pv1, const cvektor4 &pv2);
 //---------- cvektor4 Vektor Operatoren ------------------------------------------------------------------------------------------------
 
 // Vergleich
-integer operator == (const cvektor4 &pv1, const cvektor4 &pv2);
+bool operator == (const cvektor4 &pv1, const cvektor4 &pv2);
 
 // Vorzeichen ändern
 cvektor4 operator - (const cvektor4 &pv);

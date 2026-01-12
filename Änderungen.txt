@@ -333,6 +333,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.01.05 Mo  02:01 Di, 1200 platt, 1200 platt schief richtig skaliert und bearbeitet, 4:13, 13 Uhr, 2048 Plattkarte dunkelblau eingefügt, linearfaktoren quintische Gleichung wieder angefangen, Kosmetik, 16:06
 2026.01.08 Do  11:47, Polarkarten runtergeladen (gnomonisch, stereographisch, flächentreu, mittenabstandstreu), 18 Uhr, 20 Uhr, Karten umbenannt, in xray.cc eingebunden, richtige Skalierungsfaktoren ermittelt, 0:14
 2026.01.09 Fr  3:42, Doppelkarte aus Polkappen angefangen, 5:38
+2026.01.12 Mo  4:05, 2 Kappenkarte korrekt implementiert, Südhalbkugel ungenauer, weil keine zweite Skalierung, 6:57
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
