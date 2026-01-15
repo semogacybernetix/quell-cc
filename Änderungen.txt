@@ -335,6 +335,9 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.01.09 Fr  3:42, Doppelkarte aus Polkappen angefangen, 5:38
 2026.01.12 Mo  4:05, 2 Kappenkarte korrekt implementiert, Südhalbkugel ungenauer, weil keine zweite Skalierung, 6:57
 
+2026.01.14 Mi  17:30 alle Karten durchgegangen, Aufrufe korrigiert, Polkarten 90° nach links gedreht, screenmannigz, screenmannig2, screenmannigp, 1:15
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Kartenprojektionen (stereografisch, gnomonisch, flächentreu, zentralabstandstreu, kegel) implementieren

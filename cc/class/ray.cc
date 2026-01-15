@@ -605,7 +605,27 @@ cvektor3 cscreenmannigz::getpunkt (const cvektor2 &pv)
   return cvektor3 (real (r), real (g), real (b));
   }
 
-// ------------------------------------------ Polkappen von beiden Seiten -------------------------------------
+// ------------------------------------------ zentriertes Bild, nicht gezoomt, nicht periodisch für Polkarten 90° nach rechts gedreht -------------------
+cscreenmannigp::cscreenmannigp (clscreen8* pscreen, const real pkx, const real pky)
+  : screen (pscreen), xmax (screen->xanz - 1), ymax (screen->yanz - 1)
+  {
+  xz= real (screen->xanz)/2;
+  yz= real (screen->yanz)/2;
+  kx= pkx*xz;
+  ky= pky*yz;
+  }
+
+cvektor3 cscreenmannigp::getpunkt (const cvektor2 &pv)
+  {
+  integer x= integer (xz + pv.y*kx);
+  integer y= integer (yz - pv.x*kx);
+
+  integer r, g, b;
+  screen->getpixel (x, y, r, g, b);
+  return cvektor3 (real (r), real (g), real (b));
+  }
+
+// ------------------------------------------ Polkappen von beiden Seiten beide Karten 90° nach rechts gedreht -------------------------------------
 cscreenmannig2::cscreenmannig2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
   : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
@@ -626,15 +646,15 @@ cvektor3 cscreenmannig2::getpunkt (const cvektor2 &pv)
   real l= absr (pv);
   if (l < PI/2)
     {
-    integer x1= integer (xz1 + pv.x*kx1);
-    integer y1= integer (yz1 + pv.y*kx1);
+    integer x1= integer (xz1 + pv.y*kx1);
+    integer y1= integer (yz1 - pv.x*kx1);
     screen1->getpixel (x1, y1, r, g, b);
     }
     else
     {
     real xa= (PI/l - 1)*kx2;
-    integer x2= integer (xz2 + pv.x*xa);
-    integer y2= integer (yz2 - pv.y*xa);
+    integer x2= integer (xz2 + pv.y*xa);
+    integer y2= integer (yz2 + pv.x*xa);
     screen2->getpixel (x2, y2, r, g, b);
     }
   return cvektor3 (real (r), real (g), real (b));

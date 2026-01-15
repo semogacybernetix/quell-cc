@@ -263,6 +263,17 @@ struct cscreenmannigz : public clmannig     // Zum Texturieren mit Bildern zentr
   real kx, ky, xz, yz;
   };
 
+struct cscreenmannigp : public clmannig     // Zum Texturieren mit Bildern zentriert um 90° nach rechts gedreht für Polkarten
+  {
+  cscreenmannigp (clscreen8* pscreen, const real pkx, const real pky);
+  cvektor3 getpunkt (const cvektor2 &pv);
+
+  private:
+  clscreen8* screen;
+  integer xmax, ymax;
+  real kx, ky, xz, yz;
+  };
+
 struct cscreenmannig2 : public clmannig     // Zum Texturieren mit Bildern zentriert
   {
   cscreenmannig2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
