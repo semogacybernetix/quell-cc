@@ -12,6 +12,8 @@ winkelachse von 180° Drehungen: welche der beiden Achsen soll zurückgegeben we
 */
 
 #include "vektor.h"
+#include <cstdio>
+#include "../../conio/vektorcon.h"
 
 //------------------------------------------- Schnittpunkte Klasse ---------------------------------------------------------
 cschnittpunkte::cschnittpunkte ()
@@ -1204,7 +1206,7 @@ cvektor3 operator / (const cvektor3 &pv, const cbasis3 &pb)
 
 real norm (cbasis3 pb)
   {
-  return pb.x%pb.x + pb.y%pb.y + pb.z%pb.z;
+  return (pb.x%pb.x) + (pb.y%pb.y) + (pb.z%pb.z);
   }
 
 real absr (cbasis3 pb)
@@ -1300,6 +1302,12 @@ cvektor3 getspiegachse (const cbasis3 &pb)
 integer aehnlich (const cbasis3 &pb1, const cbasis3 &pb2)
   {
   real dif= absr (pb1 - pb2);
+  /*
+  printbasis3dreh (pb1, 0, 0, 0);
+  printbasis3dreh (pb2, 0, 0, 0);
+  printf ("dif: %Lf\n", dif);
+  getchar ();
+  */
   if (dif <= quantg)
     return 1;
   return 0;

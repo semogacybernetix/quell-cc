@@ -62,6 +62,7 @@ void printbasis3dreh (cbasis3 pb, integer pord, integer pzykel, integer ppaar);
 //------------------------ cvektor4 ------------------------------------------------------------------
 void quaternioneneingabe (cvektor4& pv);
 cvektor4 winkelachseeingabe ();
+cvektor4 winkelachseeingaberoh ();
 
 void printvektor4quat (cvektor4 pv, integer pord, integer pzykel);
 void printvektor4dreh (cvektor4 pv, integer pord, integer pzykel, integer ppaar);

@@ -51,7 +51,7 @@ real kubischegleichung (real pa, real pb, real pc)
   redq= 2*pa*pa*pa/27 - pa*pb/3 + pc;
 
   disk= redq*redq/4 + redp*redp*redp/27;
-  
+
   retz= cbrtl (-redq/2 + sqrtl (disk)) + cbrtl (-redq/2 - sqrtl (disk));
   retx= retz - pa/3;
   return retx;
@@ -115,7 +115,7 @@ void zeigewinkel (const cbasis3& pdreibein)
   pwi.x*= 180/PI;
   pwi.y*= 180/PI;
   pwi.z*= 180/PI;
-  
+
   printtext ("Winkel zwischen den Achsen:\n");
   printvektor3ord (pwi, 0);
   real det3b= det (pdreibein);
@@ -389,8 +389,8 @@ void dreh2 ()
   ccluster cluster (1000);
   cvektor3liste vliste (lmax);
 
-  el1= winkelachseeingabe ();
-  el2= winkelachseeingabe ();
+  el1= winkelachseeingaberoh ();
+  el2= winkelachseeingaberoh ();
 
   // negative Winkel bedeuten positiver Winkel + Inversion (Drehspiegelung)
 
@@ -627,8 +627,8 @@ void dreh2efk ()
   ccluster cluster (1000);
   cvektor3liste vliste (lmax);
 
-  el1= winkelachseeingabe ();
-  el2= winkelachseeingabe ();
+  el1= winkelachseeingaberoh ();
+  el2= winkelachseeingaberoh ();
 
   // negative Winkel bedeuten positiver Winkel + Inversion (Drehspiegelung)
 
@@ -673,7 +673,7 @@ void dreh2efk ()
 
   qliste.schliesseab ();
   bliste.schliesseab ();
-  
+
   if (!qliste.uebergelaufen)
     {
     qliste.ermittleordnung ();
@@ -886,7 +886,7 @@ void ermittleefkvektor (cvektor3& pefkvektor, cvektor4 pdreh1, cvektor4 pdreh2, 
     }
 
   bliste.schliesseab ();
-  
+
   if (!bliste.uebergelaufen)
     {
     bliste.ermittleordnung ();
@@ -946,7 +946,7 @@ void generiere1polyederobj (const char* pdateiname, cvektor4 pdreh1, cvektor4 pd
     }
 
   bliste.schliesseab ();
-  
+
   if (!bliste.uebergelaufen)
     {
     bliste.ermittleordnung ();
@@ -1619,7 +1619,7 @@ void ebenenwinkel3 ()  // Gruppe aus 3 Ebenenspiegelungen aufbauen
   el1= cvektor4 (PI, sachsen.x);
   el2= cvektor4 (PI, sachsen.y);
   el3= cvektor4 (PI, sachsen.z);
-  
+
   qliste.winkelachsehinzu (-el1);
   qliste.winkelachsehinzu (-el2);
   qliste.winkelachsehinzu (-el3);
@@ -1679,7 +1679,7 @@ void ebenenwinkel3 ()  // Gruppe aus 3 Ebenenspiegelungen aufbauen
   printb3liste (*cluster.spieg);
   }
 
-void ebenenwinkel180 ()                               // 3 180° Drehungen 
+void ebenenwinkel180 ()                               // 3 180° Drehungen
   {
   cvektor4 el1, el2, el3;
   cvektor4liste qliste (lmax);
@@ -1701,15 +1701,15 @@ void ebenenwinkel180 ()                               // 3 180° Drehungen
   el1= cvektor4 (PI, sachsen.x);
   el2= cvektor4 (PI, sachsen.y);
   el3= cvektor4 (PI, sachsen.z);
-  
+
   qliste.winkelachsehinzu (el1);
   qliste.winkelachsehinzu (el2);
   qliste.winkelachsehinzu (el3);
-  
+
   bliste.winkelachsehinzu (el1);
   bliste.winkelachsehinzu (el2);
   bliste.winkelachsehinzu (el3);
-  
+
   qliste.schliesseab ();
   bliste.schliesseab ();
   if (!qliste.uebergelaufen)
@@ -2309,4 +2309,3 @@ int main ()
   printtext ("");
   return 0;
   }
-

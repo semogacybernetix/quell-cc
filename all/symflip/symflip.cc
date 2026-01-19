@@ -37,9 +37,9 @@ void addebenen90 (cwelt& pwelt)
   cbegrellipse* ell1= new cbegrellipse (10, 10);
 
   // Texturen
-  cschachfeld* textur1= new cschachfeld (cvektor3 (1,0,0), cvektor3 (1,.5,.5), 1, 1);
-  cschachfeld* textur2= new cschachfeld (cvektor3 (0,1,0), cvektor3 (.5,1,.5), 1, 1);
-  cschachfeld* textur3= new cschachfeld (cvektor3 (0,0,1), cvektor3 (.5,.5,1), 1, 1);
+  cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (255,127,127), 1, 1);
+  cschachfeld* textur2= new cschachfeld (cvektor3 (0,255,0), cvektor3 (127,255,127), 1, 1);
+  cschachfeld* textur3= new cschachfeld (cvektor3 (0,0,255), cvektor3 (127,127,255), 1, 1);
 
   // Körper addieren
   pwelt.addkoerper (new ckoerper (new csebene, new cparaebenew, ell1, textur1, kst1, kl1));
@@ -61,9 +61,9 @@ void addkoordinatensystem (cwelt& pwelt)
   cbegrrechteck* begrkoord= new cbegrrechteck (-4, 4, -1000, 1000);
 
   // Texturen
-  cschachfeld* textur1= new cschachfeld (cvektor3 (1,0,0), cvektor3 (1,.5,.5), 2/PI, 1);
-  cschachfeld* textur2= new cschachfeld (cvektor3 (0,1,0), cvektor3 (.5,1,.5), 2/PI, 1);
-  cschachfeld* textur3= new cschachfeld (cvektor3 (0,0,1), cvektor3 (.5,.5,1), 2/PI, 1);
+  cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (255,127,127), 2/PI, 1);
+  cschachfeld* textur2= new cschachfeld (cvektor3 (0,255,0), cvektor3 (127,255,127), 2/PI, 1);
+  cschachfeld* textur3= new cschachfeld (cvektor3 (0,0,255), cvektor3 (127,127,255), 2/PI, 1);
 
   // Körper addieren
   pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrkoord, textur1, kst1, kl1));
@@ -115,16 +115,16 @@ void visualisiereebenen (const cbasis3 pspiegelbasis)
   cbegrkreis* begrkreis= new cbegrkreis (-4, 4, 0, 1);               // Schachbrettebene
 
   // Ebenentexturen
-  cschachfeld* textursp1= new cschachfeld (cvektor3 (0,1,1), cvektor3 (.2,.8,.8), 16/PI, 16/PI);
-  cschachfeld* textursp2= new cschachfeld (cvektor3 (1,0,1), cvektor3 (1,.5,1), 16/PI, 16/PI);
-  cschachfeld* textursp3= new cschachfeld (cvektor3 (1,1,0), cvektor3 (.8,.8,.2), 16/PI, 16/PI);
+  cschachfeld* textursp1= new cschachfeld (cvektor3 (0,255,255), cvektor3 (51,204,204), 16/PI, 16/PI);
+  cschachfeld* textursp2= new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,127,255), 16/PI, 16/PI);
+  cschachfeld* textursp3= new cschachfeld (cvektor3 (255,255,0), cvektor3 (204,204,51), 16/PI, 16/PI);
 
   //cvektor3 zentrivektor= -kzoom*normiere (pspiegelbasis.x + pspiegelbasis.y + pspiegelbasis.z);
   cvektor3 zentrivektor= -kzoom*cvektor3 (1, 1, 1);
   
   // Welt erschaffen
   cwelt welt (5*zentrivektor, einsb3);  // Bildschirmentfernung, Standpunkt, Lage
-  welt.himmelfarbe= cvektor3 (.2, .2, .2);
+  welt.himmelfarbe= cvektor3 (51, 51, 51);
 
   //addebenen90 (welt);
   addkoordinatensystem (welt);
@@ -213,14 +213,14 @@ void visualisiereexakt (cbasis3liste& pbliste, const cbasis3 pspiegelbasis)
   cbegrrechteck* begrrecht= new cbegrrechteck (-4, 4, -zbegrenzung, zbegrenzung);        // Länge der Kanten einstellen
 
   // Texturen anlegen
-  cschachfeld* textur2= new cschachfeld (cvektor3 (1,0,1), cvektor3 (1,1,0), 10/PI, 10/PI);
+  cschachfeld* textur2= new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,255,0), 10/PI, 10/PI);
 
   // Körper addieren
   real kzoom= 100;
 
   // Welt erschaffen
   cwelt welt (cvektor3 (100, 100, -1920), einsb3);  // Bildschirmentfernung, Standpunkt, Lage
-  welt.himmelfarbe= cvektor3 (.2, .2, .2);
+  welt.himmelfarbe= cvektor3 (51, 51, 51);
 
   //addebenen90 (welt);
   addkoordinatensystem (welt);
@@ -514,10 +514,10 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, const cbasis3 pspie
   //cbegrrechteck* begrrecht= new cbegrrechteck (-4, 4, -zbegrenzung, zbegrenzung);        // Länge der Kanten einstellen
 
   // Texturen anlegen
-  cmonochrom* textur1= new cmonochrom (cvektor3 (.5, .5, .5));
-  cschachfeld* textur2= new cschachfeld (cvektor3 (1,0,1), cvektor3 (1,1,0), PI/60, PI/15);
-  cschachfeld* textur4= new cschachfeld (cvektor3 (0,1,0), cvektor3 (0,1,1), PI/60, PI/15);
-  //cmonochrom* textur3= new cmonochrom (cvektor3 (.5, 1, 0));
+  cmonochrom* textur1= new cmonochrom (cvektor3 (127, 127, 127));
+  cschachfeld* textur2= new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,255,0), PI/60, PI/15);
+  cschachfeld* textur4= new cschachfeld (cvektor3 (0,255,0), cvektor3 (0,255,255), PI/60, PI/15);
+  //cmonochrom* textur3= new cmonochrom (cvektor3 (127, 255, 0));
 
   // Körper addieren
   real kzoom= 100;
