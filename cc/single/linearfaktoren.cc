@@ -1637,7 +1637,7 @@ void quartischwegz3kurz (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk&
   printtext ("\n");
   }
 
-void quartischzurück (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, ckomplexk& aq, ckomplexk& bq, ckomplexk& cq, ckomplexk& dq)
+void quartischzurueck (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, ckomplexk& aq, ckomplexk& bq, ckomplexk& cq, ckomplexk& dq)
   {
   ckomplexk y1, y2, y3, y4, dpy, z1, z2, z3;
 
@@ -1900,7 +1900,7 @@ void quartischloesungen ()
   vektor2eingabek (x3);
   vektor2eingabek (x4);
 
-  quartischzurück (x1, x2, x3, x4, a, b, c, d);
+  quartischzurueck (x1, x2, x3, x4, a, b, c, d);
 
   quartischdiffpuintrc (a.x, b.x, c.x, d.x, x1, x2, x3, x4);
 

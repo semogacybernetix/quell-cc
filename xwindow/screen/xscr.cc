@@ -75,8 +75,8 @@ cxscreen::cxscreen (const char* pname, integer px, integer py)
         {
         defs[cn].pixel= cn;
         defs[cn].red= short (65535*(cn >> 3));
-        defs[cn].green= 21845*((cn >> 1) & 3);
-        defs[cn].blue= 65535*(cn & 1);
+        defs[cn].green= short (21845*((cn >> 1) & 3));
+        defs[cn].blue= short (65535*(cn & 1));
         defs[cn].flags= DoRed | DoGreen | DoBlue;
         }
       XStoreColors (mydisplay, cmap, defs, 16);
@@ -98,8 +98,8 @@ cxscreen::cxscreen (const char* pname, integer px, integer py)
         {
         defs[cn].pixel= cn;
         defs[cn].red= short (9362*(cn >> 5));
-        defs[cn].green= 9362*((cn >> 2) & 7);
-        defs[cn].blue= 21845*(cn & 3);
+        defs[cn].green= short (9362*((cn >> 2) & 7));
+        defs[cn].blue= short (21845*(cn & 3));
         defs[cn].flags= DoRed | DoGreen | DoBlue;
         }
       XStoreColors (mydisplay, cmap, defs, 256);
@@ -315,8 +315,8 @@ cxmemoryscreen::cxmemoryscreen (const char* pname, integer px, integer py)
         {
         defs[cn].pixel= cn;
         defs[cn].red= short (65535*(cn >> 3));
-        defs[cn].green= 21845*((cn >> 1) & 3);
-        defs[cn].blue= 65535*(cn & 1);
+        defs[cn].green= short (21845*((cn >> 1) & 3));
+        defs[cn].blue= short (65535*(cn & 1));
         defs[cn].flags= DoRed | DoGreen | DoBlue;
         }
       XStoreColors (mydisplay, cmap, defs, 16);
@@ -338,8 +338,8 @@ cxmemoryscreen::cxmemoryscreen (const char* pname, integer px, integer py)
         {
         defs[cn].pixel= cn;
         defs[cn].red= short (9362*(cn >> 5));
-        defs[cn].green= 9362*((cn >> 2) & 7);
-        defs[cn].blue= 21845*(cn & 3);
+        defs[cn].green= short (9362*((cn >> 2) & 7));
+        defs[cn].blue= short (21845*(cn & 3));
         defs[cn].flags= DoRed | DoGreen | DoBlue;
         }
       XStoreColors (mydisplay, cmap, defs, 256);
@@ -567,8 +567,8 @@ cximagescreen::cximagescreen (const char* pname, integer px, integer py)
         {
         defs[cn].pixel= cn;
         defs[cn].red= short (65535*(cn >> 3));
-        defs[cn].green= 21845*((cn >> 1) & 3);
-        defs[cn].blue= 65535*(cn & 1);
+        defs[cn].green= short (21845*((cn >> 1) & 3));
+        defs[cn].blue= short (65535*(cn & 1));
         defs[cn].flags= DoRed | DoGreen | DoBlue;
         }
       XStoreColors (mydisplay, cmap, defs, 16);
@@ -590,8 +590,8 @@ cximagescreen::cximagescreen (const char* pname, integer px, integer py)
         {
         defs[cn].pixel= cn;
         defs[cn].red= short (9362*(cn >> 5));
-        defs[cn].green= 9362*((cn >> 2) & 7);
-        defs[cn].blue= 21845*(cn & 3);
+        defs[cn].green= short (9362*((cn >> 2) & 7));
+        defs[cn].blue= short (21845*(cn & 3));
         defs[cn].flags= DoRed | DoGreen | DoBlue;
         }
       XStoreColors (mydisplay, cmap, defs, 256);

@@ -339,7 +339,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2026.01.18 So  22 Uhr, quaternionentest und symflip Fehler korrigiert und wieder am laufen, 1:06
 
-2026.01.22 Do  1:00, Zahlenausgabetest mit cout in fließkomma.cc implementiert, 1:51
+2026.01.22 Do  1:00, Zahlenausgabetest mit cout in fließkomma.cc implementiert, 1:51, 13 Uhr, Compilerfehler bei ub22/gcc 9.4.0 (xray, komplextest, linearfaktoren, quaternionentest) behoben, 14:48
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

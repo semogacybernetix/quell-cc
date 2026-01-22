@@ -9,7 +9,6 @@ using namespace std;
 void dateneingabe (real& p1r, real& p1i, real& p2r, real& p2i)
   {
   integer ret;
-/*
   printf ("\n");
   printf ("Z1 real:         ");
   ret= scanf ("%Lf", &p1r);
@@ -21,7 +20,6 @@ void dateneingabe (real& p1r, real& p1i, real& p2r, real& p2i)
   printf ("Z2 imaginär      ");
   ret= scanf ("%Lf", &p2i);
   printf ("\n");
-*/
   ret*= 1;          //ret benutzen, damit Compiler nicht meckert unbenutzte Variable
   }
 
@@ -34,7 +32,7 @@ void testekomplex ()
   v11= v1^integer (v2.x);
   v12= v1^v2.x;
   v13= v1^v2;
-  v31= potenz (v1, v2);
+  v31= powr (v1, v2);
 
   v11= 7/v1;
   v12= v11*v1;
@@ -42,18 +40,18 @@ void testekomplex ()
 
   v41= v13^(1/v2);
   v42= v31^(1/v2);
-  v43= potenz (v13, 1/v2);
-  v44= potenz (v31, 1/v2);
+  v43= powr (v13, 1/v2);
+  v44= powr (v31, 1/v2);
 
-  v51= logv (v13)/logv (v1);
-  v52= logv (v31)/logv (v1);
+  v51= logr (v13)/logr (v1);
+  v52= logr (v31)/logr (v1);
 
-  v6= expv  (v1);
-  v7= logv  (v6);
-  v8= logv  (v1);
-  v9= expv  (v8);
+  v6= expr  (v1);
+  v7= logr  (v6);
+  v8= logr  (v1);
+  v9= expr  (v8);
   luc= ckomplexk (0.5 + sqrtl (1.25), 0);
-  v10= potenz (luc, v1) + potenz (-luc, -v1);
+  v10= powr (luc, v1) + powr (-luc, -v1);
 
 /*
   printf ("p1                        %40.20Lf %40.20Lf\n", v1.x, v1.y);
@@ -62,7 +60,7 @@ void testekomplex ()
   printf ("p1^integer (p2.x)         %40.20Lf %40.20Lf\n", v11.x, v11.y);
   printf ("p1^p2.x                   %40.20Lf %40.20Lf\n", v12.x, v12.y);
   printf ("p1^p2                     %40.20Lf %40.20Lf\n", v13.x, v13.y);
-  printf ("potenz (p1, p2)           %40.20Lf %40.20Lf\n", v31.x, v31.y);
+  printf ("powr (p1, p2)           %40.20Lf %40.20Lf\n", v31.x, v31.y);
   printf ("\n");
   printf ("p2√p3               = p1  %40.20Lf %40.20Lf\n", v41.x, v41.y);
   printf ("p2√p3               = p1  %40.20Lf %40.20Lf\n", v42.x, v41.y);

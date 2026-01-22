@@ -540,10 +540,10 @@ void printbasis3dreh (cbasis3 pb, integer pord, integer pzykel, integer ppaar)
     aw= winkelachsefrommatrix (pb);
     else
     aw= winkelachsefrommatrix (-pb);  // Inversion aus der Drehspiegelungsmatrix rausholen und die übrigbleibende Drehmatrix weiterverarbeiten
-  real wi= aw.r*180/PI;
+  //real wi= aw.r*180/PI;
   FILE* datei= fopen ("screenoutput.txt", "ab");
-          printf ("    %12.9Lf %12.9Lf %12.9Lf %10.3Lf  %4.1Lf%6lld%6lld%24lld\n", aw.i, aw.j, aw.ij, wi, det (pb), ppaar, pord, pzykel);
-  fprintf (datei, "    %12.9Lf %12.9Lf %12.9Lf %10.3Lf  %4.1Lf%6lld%6lld%24lld\n", aw.i, aw.j, aw.ij, wi, det (pb), ppaar, pord, pzykel);
+          //printf ("    %12.9Lf %12.9Lf %12.9Lf %10.3Lf  %4.1Lf%6lld%6lld%24lld\n", aw.i, aw.j, aw.ij, wi, det (pb), ppaar, pord, pzykel);
+  //fprintf (datei, "    %12.9Lf %12.9Lf %12.9Lf %10.3Lf  %4.1Lf%6lld%6lld%24lld\n", aw.i, aw.j, aw.ij, wi, det (pb), ppaar, pord, pzykel);
   fclose (datei);
   }
 

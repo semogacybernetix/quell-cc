@@ -497,6 +497,11 @@ bool operator == (const cvektor2 &pv1, const cvektor2 &pv2)
   return (pv1.x == pv2.x) && (pv1.y == pv2.y);
   }
 
+bool operator != (const cvektor2 &pv1, const cvektor2 &pv2)
+  {
+  return (pv1.x != pv2.x) || (pv1.y != pv2.y);
+  }
+
 // Vorzeichen des Vektors ändern
 cvektor2 operator - (const cvektor2 &pv)
   {
@@ -585,7 +590,7 @@ void cbrtr (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   x3= kartes (ckomplexp (vpol.b, vpol.w - PI23));
   }
 
-ckomplexk qnrtv (const ckomplexk pv)
+ckomplexk qnrtr (const ckomplexk pv)
   {
   ckomplexp vpol= polar180 (pv);
   vpol.b= cbrtr (vpol.b);
@@ -602,7 +607,7 @@ ckomplexk pown (const ckomplexk a, const integer n)
   return ret;
   }
 
-ckomplexk potenz (const ckomplexk pv1, const ckomplexk pv2)
+ckomplexk powr (const ckomplexk pv1, const ckomplexk pv2)
   {
   ckomplexk ret, retx, rety;
 
@@ -611,7 +616,7 @@ ckomplexk potenz (const ckomplexk pv1, const ckomplexk pv2)
   return retx*rety;
   }
 
-ckomplexk expv (const ckomplexk pv)
+ckomplexk expr (const ckomplexk pv)
   {
   return kartes (ckomplexp (expr (pv.x), (pv.y)));                // keine Einschränkung Bijektivitätsbereich
   }
@@ -626,24 +631,24 @@ ckomplexk logr (const ckomplexk pv)                               // Rückgabe e
   return ckomplexk (lv.b, lv.w);
   }
 
-ckomplexk coshv (const ckomplexk pv)
+ckomplexk coshr (const ckomplexk pv)
   {
-  return (expv (pv) + expv (-pv))/2;
+  return (expr (pv) + expr (-pv))/2;
   }
 
-ckomplexk sinhv (const ckomplexk pv)
+ckomplexk sinhr (const ckomplexk pv)
   {
-  return (expv (pv) - expv (-pv))/2;
+  return (expr (pv) - expr (-pv))/2;
   }
 
 ckomplexk cosr (const ckomplexk pv)
   {
-  return (expv (pv*ik) + expv (-pv*ik))/2;
+  return (expr (pv*ik) + expr (-pv*ik))/2;
   }
 
 ckomplexk sinr (const ckomplexk pv)
   {
-  return ik*(expv (pv*ik) - expv (-pv*ik))/-2;
+  return ik*(expr (pv*ik) - expr (-pv*ik))/-2;
   }
 
 // ------------- ckomplexk Operatoren für kartesischkomplexe Zahlen ---------------------------------------------------------
@@ -727,7 +732,7 @@ ckomplexk operator ^ (const ckomplexk &pv, const real &pr)
 // kartesischkomplexe Potenz von kartesischkomplexer Zahl
 ckomplexk operator ^ (const ckomplexk &pv1, const ckomplexk &pv2)
   {
-  return expv (pv2*logr (pv1));                                   // Bijektivitätsbereich: waagerechter ]-pi,pi] Streifen in der rechten Halbebene ohne y-Achse
+  return expr (pv2*logr (pv1));                                   // Bijektivitätsbereich: waagerechter ]-pi,pi] Streifen in der rechten Halbebene ohne y-Achse
   }
 
 //--------------------- ckomplexp Funktionen für polarkomplexe Zahlen -----------------------------------------------------------------
@@ -748,7 +753,7 @@ ckomplexp cbrtr (const ckomplexp pv)
   return ckomplexp (cbrtr (pv.b), pv.w/3);
   }
 
-ckomplexp expv (const ckomplexp pv)
+ckomplexp expr (const ckomplexp pv)
   {
   return ckomplexp (expr (pv.b), (pv.w));
   }
@@ -766,22 +771,22 @@ ckomplexp logr (const ckomplexp pv)
 
 ckomplexp coshv (const ckomplexp pv)
   {
-  return (expv (pv) + expv (ew2*pv))/2;
+  return (expr (pv) + expr (ew2*pv))/2;
   }
 
-ckomplexp sinhv (const ckomplexp pv)
+ckomplexp sinhr (const ckomplexp pv)
   {
-  return (expv (pv) - expv (ew2*pv))/2;
+  return (expr (pv) - expr (ew2*pv))/2;
   }
 
 ckomplexp cosr (const ckomplexp pv)
   {
-  return (expv (pv*ew4) + expv (pv/ew4))/2;
+  return (expr (pv*ew4) + expr (pv/ew4))/2;
   }
 
 ckomplexp sinr (const ckomplexp pv)
   {
-  return (expv (pv*ew4) - expv (pv/ew4))/ew4/2;
+  return (expr (pv*ew4) - expr (pv/ew4))/ew4/2;
   }
 
 // ------------------------------------------------- ckomplexp Operatoren für polarkomplexe Zahlen ----------------------------------
@@ -858,7 +863,7 @@ ckomplexp operator ^ (const ckomplexp &pv, const real &pr)
 
 ckomplexp operator ^ (const ckomplexp &pv1, const ckomplexp &pv2)
   {
-  return expv (pv2*logr (pv1));                                   // problematisch wegen Periodizität der exp, log Funktion
+  return expr (pv2*logr (pv1));                                   // problematisch wegen Periodizität der exp, log Funktion
 
 /*                                                                // zerlegte Berechung um bijektiven Bereich zu erweitern
   ckomplexp ret, retx, rety;
