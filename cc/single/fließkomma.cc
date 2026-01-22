@@ -4,6 +4,10 @@
 #include <cfloat>
 #include <climits>
 #include <cmath>
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
 
 typedef signed long long integer;
 
@@ -557,10 +561,26 @@ void genauigkeitsausgabe ()
   return;
   }
 
+void printreal ()
+  {
+  _Float32 bla32= _Float32 (32423.34234324);
+  _Float64 bla64= _Float64 (323.34234324);
+  __float80 bla80= __float80 (94532423.34234324);
+  signed short pre= 2;
+  signed short we= 12;
+
+  cout << fixed;
+  cout << setprecision (pre);
+  cout << "Float32  " << setw (we) << bla32 << endl;
+  cout << "Float64  " << setw (we) << bla64 << endl;
+  cout << "Float80  " << setw (we) << bla80 << "\n";
+  }
+
 int main ()
   {
-  genauigkeit ();
-//  genauigkeitsausgabe ();
-  printkonstanten ();
+  //genauigkeit ();
+  //genauigkeitsausgabe ();
+  //printkonstanten ();
+  printreal ();
   return 0;
   }

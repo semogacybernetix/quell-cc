@@ -339,6 +339,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2026.01.18 So  22 Uhr, quaternionentest und symflip Fehler korrigiert und wieder am laufen, 1:06
 
+2026.01.22 Do  1:00, Zahlenausgabetest mit cout in fließkomma.cc implementiert, 1:51
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Kartenprojektionen (stereografisch, gnomonisch, flächentreu, zentralabstandstreu, kegel) implementieren

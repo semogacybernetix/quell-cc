@@ -257,6 +257,6 @@ int main (int argc, char** argv)
   fwrite (puffer, 1, dlaenge, dout);
   fclose (dout);
   cout << endl;
-  delete (puffer);
+  delete [](puffer);
   return 0;
   }
