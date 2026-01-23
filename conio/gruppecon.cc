@@ -187,7 +187,7 @@ void printv4liste (cvektor4liste& pqliste)
   fclose (datei);
   }
 
-void printkreis (const char* pdateiname, cbasis3 pkreisbasis, integer ppunkte)
+void printkreis (const char* pdateiname, cbasis3 pkreisbasis, real ppunkte)
   {
   FILE* datei= fopen (pdateiname, "ab");
   real winkel;
@@ -196,9 +196,9 @@ void printkreis (const char* pdateiname, cbasis3 pkreisbasis, integer ppunkte)
   printtextobj (pdateiname, "-------------------------------------------------------------------------------------------\n# Kreis");
   printzahlobj (pdateiname, ppunkte, 0, 0);
   printtextobj (pdateiname, "\n\n");
-  for (integer lauf= 0; lauf < ppunkte; lauf++)
+  for (real lauf= 0; lauf < ppunkte; lauf++)
     {
-    winkel= lauf*2*PI/ppunkte;
+    winkel= PI2*lauf/ppunkte;
     kreispunkt.x= cosr (winkel);
     kreispunkt.y= sinr (winkel);
     kreispunkt.z= 0;
@@ -206,9 +206,9 @@ void printkreis (const char* pdateiname, cbasis3 pkreisbasis, integer ppunkte)
     printvektor3obj (pdateiname, kreispunkt);
     }
   printtextobj (pdateiname, "\nl");
-  for (integer lauf= 0; lauf < ppunkte; lauf++)
+  for (real lauf= 0; lauf < ppunkte; lauf++)
     printzahlobj (pdateiname, lauf+1, 0, 0);
-  printzahlobj (pdateiname, 1, 0, 0);
+  printzahlobj (pdateiname, r1, 0, 0);
   printtextobj (pdateiname, "\n");
   fclose (datei);
   }
@@ -232,7 +232,7 @@ void printkreiskante (const char* pdateiname, cvektor3liste pvliste, integer p1,
   kreisx= pvliste.v[p1 - 1];                    // wavefront nummeriert die Punkte ab 1 statt ab 0
   kreisy= pvliste.v[p2 - 1];
   kreiswinkel= winkelb (kreisx, kreisy);
-  kreisschritt= kreiswinkel/pkreisanz;
+  kreisschritt= kreiswinkel/real (pkreisanz);
   kreisz= normiere (kreisx^kreisy);
   kreisy= kreisz^kreisx;
   kreisz= kreisx^normiere (kreisy);
@@ -240,7 +240,7 @@ void printkreiskante (const char* pdateiname, cvektor3liste pvliste, integer p1,
 
   for (integer lauf= 0; lauf < pkreisanz + 1; lauf++)                 // einen mehr, weil sonst der Endpunkt nicht geschlossen ist. Endpunkt ist neuer Anfangspunkt. Anfangspunkt und Endpunkt überlappen sich
     {
-    kreislauf= cosr (kreisschritt*lauf)*kreisx + sinr (kreisschritt*lauf)*kreisy;
+    kreislauf= cosr (kreisschritt*real (lauf))*kreisx + sinr (kreisschritt*real (lauf))*kreisy;
     kantenliste.elementhinzu (kreislauf, 0);
     }
 
@@ -253,4 +253,3 @@ void printkreiskante (const char* pdateiname, cvektor3liste pvliste, integer p1,
     }
   printtextobj (pdateiname, "\n\n");
   }
-

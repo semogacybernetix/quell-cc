@@ -296,10 +296,24 @@ void printzahlobj (const char* pdateiname, real pr, integer pst)
   zahl.printobj (pdateiname, pst);
   }
 
+void printzahlobj (const char* pdateiname, integer pi, integer pst)
+  {
+  zahl1010 zahl;
+  zahl.erstelle (real (pi));
+  zahl.printobj (pdateiname, pst);
+  }
+
 void printzahlobj (const char* pdateiname, real pr, integer vst, integer pst)
   {
   zahl1010 zahl;
   zahl.erstelle (pr);
+  zahl.printobj (pdateiname, vst, pst);
+  }
+
+void printzahlobj (const char* pdateiname, integer pi, integer vst, integer pst)
+  {
+  zahl1010 zahl;
+  zahl.erstelle (real (pi));
   zahl.printobj (pdateiname, vst, pst);
   }
 
@@ -424,8 +438,8 @@ void printvektor3obj (const char* pdateiname, cvektor3 pv)
   {
   pv= pv;
   FILE* datei= fopen (pdateiname, "ab");
-  ////      printf ("v %13.9Lf %13.9Lf %13.9Lf\n", pv.x, pv.y, pv.z);
-//  fprintf (datei, "v %14.9Lf %14.9Lf %14.9Lf\n", pv.x, pv.y, pv.z);
+  //        printf ("v %13.9Lf %13.9Lf %13.9Lf\n", pv.x, pv.y, pv.z);
+  //fprintf (datei, "v %14.9Lf %14.9Lf %14.9Lf\n", pv.x, pv.y, pv.z);
   fclose (datei);
   }
 

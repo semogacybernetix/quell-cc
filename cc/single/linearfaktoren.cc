@@ -1720,8 +1720,8 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
     l= sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
     phi3= acosr (qk/(pk*-l))/3;
     yrk= l*cosr (phi3)*2;                         // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
-    yk2= l*cosr (phi3 - PI23)*2;
-    yk3= l*cosr (phi3 + PI23)*2;
+    yk2= l*cosr (phi3 - PI2d)*2;
+    yk3= l*cosr (phi3 + PI2d)*2;
     }
 
   // das Differenzenprodukt der Lösungen der reduzierten kubischen Gleichung

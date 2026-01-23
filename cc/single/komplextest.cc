@@ -8,6 +8,7 @@ using namespace std;
 
 void dateneingabe (real& p1r, real& p1i, real& p2r, real& p2i)
   {
+  /*
   integer ret;
   printf ("\n");
   printf ("Z1 real:         ");
@@ -21,6 +22,9 @@ void dateneingabe (real& p1r, real& p1i, real& p2r, real& p2i)
   ret= scanf ("%Lf", &p2i);
   printf ("\n");
   ret*= 1;          //ret benutzen, damit Compiler nicht meckert unbenutzte Variable
+  */
+
+  p1r= p1i= p2r= p2i= 0;
   }
 
 void testekomplex ()
@@ -50,7 +54,7 @@ void testekomplex ()
   v7= logr  (v6);
   v8= logr  (v1);
   v9= expr  (v8);
-  luc= ckomplexk (0.5 + sqrtl (1.25), 0);
+  luc= ckomplexk (real (0.5 + sqrtl (1.25)), 0);
   v10= powr (luc, v1) + powr (-luc, -v1);
 
 /*
@@ -80,7 +84,7 @@ void testekomplex ()
   printf ("\n");
 */
   }
-  
+
 int main ()
   {
   testekomplex ();

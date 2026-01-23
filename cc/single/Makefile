@@ -129,7 +129,7 @@ quaternionentest:
 	make -C ../../conio $(opfad)gruppecon.o
 	make $(ppfad)$@
 
-$(opfad)quaternionentest.o: quaternionentest.cc
+$(opfad)quaternionentest.o: quaternionentest.cc ../../conio/vektorcon.h ../../conio/gruppecon.h ../class/gruppe.h ../class/vektor.h
 	$(comp) $< -c $(copts) -o $@
 
 $(ppfad)quaternionentest: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)vektorcon.o $(opfad)gruppecon.o $(opfad)quaternionentest.o

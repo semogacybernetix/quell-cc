@@ -142,15 +142,28 @@ struct coktonion : public cvektor8
 //--------------------------------------------------------------------------------------- Konstanten --------------------------------------------------------------------------------------------------
 
 // reelle Konstanten
-const real quantr= real (powl (0.1, sizeof (real)));
-const real quantg= real (1e-8);
+const real quantr= real (powl (0.1, sizeof (real)));                                  // Ähnlichkeitseinheit abhängig von der Genauigkeit des real Typs
+const real quantg= real (1e-8);                                                       // Ähnlichkeitseinheit absolut
+
+const real r1 (real (1));                                                             // die Zahl 1 vom Typ real
+const real r2 (real (2));                                                             // die Zahl 2 vom Typ real
+const real r3 (real (3));                                                             // die Zahl 3 vom Typ real
+const real r5 (real (5));                                                             // die Zahl 5 vom Typ real
+const real r8 (real (8));                                                             // die Zahl 8 vom Typ real
+
+const real rh (real (0.5));                                                           // die Zahl 1/2 vom Typ real
+const real rd (real (1/_Float8x (3)));                                                // die Zahl 1/3 vom Typ real
+const real r2d (real (2/_Float8x (3)));                                               // die Zahl 2/3 vom Typ real
+const real rv (real (0.25));                                                          // die Zahl 1/4 vom Typ real
+const real r3v (real (0.75));                                                         // die Zahl 3/4 vom Typ real
+
 const real PI (real (M_PIl));                                                         // die Konstante pi vom Typ real
 const real PIh (real (M_PIl/2));                                                      // pi/2
 const real PI2 (real (M_PIl*2));                                                      // 2pi
-const real PI23 (real (M_PIl*2/3));                                                   // die Konstante 2/3*pi vom Typ real
-const real PI34 (real (M_PIl*3/4));                                                   // die Konstante 3/4*pi vom Typ real
-const real gk (real (0.5 + sqrtl (1.25)));                                            // goldene Schnitt g= (1 + √5)/2 = 2*cos 36°                        = 1.61803398...         x² - x - 1 = 0
-const real tk (real ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3));   // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1,2= ∛(19 ± 3√33)   = 1.83928675...    x³ - x² - x - 1 = 0
+const real PI2d (real (M_PIl*2/3));                                                   // die Konstante 2/3*pi vom Typ real
+const real PI3v (real (M_PIl*3/4));                                                   // die Konstante 3/4*pi vom Typ real
+const real rg (real (0.5 + sqrtl (1.25)));                                            // goldene Schnitt       g= (1 + √5)/2 = 2cos 36° = 2sin 54°        = 1.61803398...         x² - x - 1 = 0
+const real rt (real ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3));   // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1,2= ∛(19 ± 3√33)   = 1.83928675...    x³ - x² - x - 1 = 0
 
 // kartesischkomplexe Konstanten
 const ckomplexk nullk (0, 0);

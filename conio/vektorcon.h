@@ -37,7 +37,9 @@ void printrealobj (const char* pdateiname, _Float64 pr);
 void printrealobj (const char* pdateiname, _Float8x pr);
 
 void printzahlobj (const char* pdateiname, real pr, integer pst);
+void printzahlobj (const char* pdateiname, integer pi, integer pst);
 void printzahlobj (const char* pdateiname, real pr, integer vst, integer pst);
+void printzahlobj (const char* pdateiname, integer pi, integer vst, integer pst);
 
 //------------------------ cvektor2 ------------------------------------------------------------------
 void vektor2eingabek (cvektor2& pp);

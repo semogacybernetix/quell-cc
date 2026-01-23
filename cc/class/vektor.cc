@@ -586,8 +586,8 @@ void cbrtr (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   vpol.w= vpol.w/3;
 
   x1= kartes (vpol);
-  x2= kartes (ckomplexp (vpol.b, vpol.w + PI23));
-  x3= kartes (ckomplexp (vpol.b, vpol.w - PI23));
+  x2= kartes (ckomplexp (vpol.b, vpol.w + PI2d));
+  x3= kartes (ckomplexp (vpol.b, vpol.w - PI2d));
   }
 
 ckomplexk qnrtr (const ckomplexk pv)
@@ -889,8 +889,8 @@ ckomplexp polar225 (const ckomplexk pv)                           // Winkelrück
   {
   ckomplexp ret= polar180 (pv);
 
-  if (ret.w < -PI34)
-    ret.w= ret.w + PI*2;
+  if (ret.w < -PI3v)
+    ret.w= ret.w + PI2;
   return ret;
   }
 
@@ -2614,8 +2614,8 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     l= sqrtr (-pk);                                               // -pk nie unter 0 wegen xl
     phi3= acosr (qk/(pk*-l))/3;
     ykr1= l*cosr (phi3)*2;                                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
-    ykr2= l*cosr (phi3 + PI23)*2;
-    ykr3= l*cosr (phi3 - PI23)*2;
+    ykr2= l*cosr (phi3 + PI2d)*2;
+    ykr3= l*cosr (phi3 - PI2d)*2;
 
     if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0)) // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
@@ -2724,8 +2724,8 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     l= sqrtr (-pk);                                               // -pk nie unter 0 wegen xl
     phi3= acosr (qk/(pk*-l))/3;
     ykr1= l*cosr (phi3)*2;                                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
-    ykr2= l*cosr (phi3 + PI23)*2;
-    ykr3= l*cosr (phi3 - PI23)*2;
+    ykr2= l*cosr (phi3 + PI2d)*2;
+    ykr3= l*cosr (phi3 - PI2d)*2;
 
     if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0)) // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
