@@ -504,18 +504,18 @@ integer cbegrellipse::sichtbar (const cvektor2 &pv)
 
 //*********************************************************************** Texturen ********************************************************************************************************************************************
 
-ctextur::ctextur ()
+cltextur::cltextur ()
   {
   }
 
-cvektor3 ctextur::getpixel (const cvektor2 &pv)
+cvektor3 cltextur::getpixel (const cvektor2 &pv)
   {
   //return getpunkt (pv);
   return cvektor3 (255,255,0);
   while (pv != pv);                                           // pv benutzen
   }
 
-cvektor3 ctextur::getpixel16 (const cvektor2 &pv)
+cvektor3 cltextur::getpixel16 (const cvektor2 &pv)
   {
   cvektor3 sum (0, 0, 0);
   real xm (pv.x - 1);
@@ -538,12 +538,12 @@ cvektor3 ctextur::getpixel16 (const cvektor2 &pv)
 
 //------------------------- einfarbige Texturierung ---------------------------------
 
-cmonochrom::cmonochrom (const cvektor3 &pfarbe)
+ctexmonochrom::ctexmonochrom (const cvektor3 &pfarbe)
   {
   farbe= pfarbe;
   }
 
-cvektor3 cmonochrom::getpunkt (const cvektor2 &pv)
+cvektor3 ctexmonochrom::getpunkt (const cvektor2 &pv)
   {
   return farbe;
   while (pv != pv);                                           // pv benutzen, weil sonst der Compiler meckert
@@ -662,10 +662,66 @@ cvektor3 cscreentextur2::getpunkt (const cvektor2 &pv)
 
 // ***************************************************************** Geometrische Gebilde ***********************************************************************************
 
+// ------------------------ cmannig --------------------------------------------------------------------------
+
+clmannig::clmannig ()
+  {
+  }
+
+// ------------------------ cscreenmannigmonochrom --------------------------------------------------------------------------
+
+cmannigmonochrom::cmannigmonochrom (const cvektor3& pfarbe)
+  {
+  farbe= pfarbe;
+  }
+
+cvektor3 cmannigmonochrom::getpunkt (const cvektor3 &pv3)
+  {
+  return farbe;
+  while (pv3 != pv3);                                           // pv3 benutzen, weil sonst unused variable
+  }
+
+// ------------------------ cscreenmannigpol2 --------------------------------------------------------------------------
+
+cscreenmannigpol2::cscreenmannigpol2 (clpara* ppara, clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
+  : kugelpara (ppara), screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
+  {
+  xz1= real (screen1->xanz)/2;
+  yz1= real (screen1->yanz)/2;
+  kx1= pkx1*xz1;
+  ky1= pky1*yz1;
+
+  xz2= real (screen2->xanz)/2;
+  yz2= real (screen2->yanz)/2;
+  kx2= pkx2*xz2;
+  ky2= pky2*yz2;
+  }
+
+cvektor3 cscreenmannigpol2::getpunkt (const cvektor3 &pv3)
+  {
+  cvektor2 pv;
+  integer r, g, b;
+
+  pv= kugelpara->berechne (pv3);
+  if (pv3.z >= 0)
+    {
+    integer x1= integer (xz1 + pv.y*kx1);
+    integer y1= integer (yz1 - pv.x*kx1);
+    screen1->getpixel (x1, y1, r, g, b);
+    }
+    else
+    {
+    integer x2= integer (xz2 + pv.y*kx2);
+    integer y2= integer (yz2 - pv.x*kx2);
+    screen2->getpixel (x2, y2, r, g, b);
+    }
+  return cvektor3 (real (r), real (g), real (b));
+  }
+
 // ------------------------ ckörper --------------------------------------------------------------------------
 
-ckoerper::ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, ctextur* ptextur, const cvektor3 &ppos, const cbasis3 &pbasis)
-  : koerperpos (ppos), schnitt (pschnitt), para (ppara), begr (pbegr), textur (ptextur), koerperbasis (pbasis),
+ckoerper::ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, cltextur* ptextur, clmannig* pmannig, const cvektor3 &ppos, const cbasis3 &pbasis)
+  : koerperpos (ppos), schnitt (pschnitt), para (ppara), begr (pbegr), textur (ptextur), mannig (pmannig), koerperbasis (pbasis),
     drehbasis (cvektor3 (1, 0, 0), cvektor3 (0, 1, 0), cvektor3 (0, 0, 1)),
     augpos (0, 0, 0),
     augbasis (cvektor3 (1, 0, 0), cvektor3 (0, 1, 0), cvektor3 (0, 0, 1)),
@@ -949,7 +1005,7 @@ cpunktscreen::~cpunktscreen ()
   delete (vbild);
   }
 
-void cpunktscreen::fuelle (ctextur &ptextur)
+void cpunktscreen::fuelle (cltextur &ptextur)
   {
   const real xoff (real (-xanz)/2);
   const real yoff (real (-yanz)/2);

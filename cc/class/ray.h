@@ -215,24 +215,24 @@ struct cbegrellipse : clbegr
 
 //------------------------------- Texturen -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-struct ctextur     // abstrakte Textur, von der die konkreten Texturen abgeleitet sind
+struct cltextur     // abstrakte Textur, von der die konkreten Texturen abgeleitet sind
   {
-  ctextur ();
+  cltextur ();
   virtual cvektor3 getpunkt (const cvektor2 &pv)= 0;        // Färbung eines Punktes berechnen
-  cvektor3 getpixel (const cvektor2 &pv);                   // Färbung einer Pixelfläche berechnen, benutzt getpunkt, allgemein für ctextur, unabhängig vom abgeleitetem Objekt
+  cvektor3 getpixel (const cvektor2 &pv);                   // Färbung einer Pixelfläche berechnen, benutzt getpunkt, allgemein für cltextur, unabhängig vom abgeleitetem Objekt
   cvektor3 getpixel16 (const cvektor2 &pv);                 // Färbung einer Pixelfläche aus 16 Punkten berechnen
   };
 
-struct cmonochrom : public ctextur
+struct ctexmonochrom : public cltextur
   {
-  cmonochrom (const cvektor3 &pfarbe);
+  ctexmonochrom (const cvektor3 &pfarbe);
   cvektor3 getpunkt (const cvektor2 &pv);
 
   private:
   cvektor3 farbe;
   };
 
-struct cschachfeld : public ctextur
+struct cschachfeld : public cltextur
   {
   cschachfeld (const cvektor3 &pfb1, const cvektor3 &pfb2, const real &pkx, const real &pky);
   cvektor3 getpunkt (const cvektor2 &pv);
@@ -242,7 +242,7 @@ struct cschachfeld : public ctextur
   real kx, ky;              // Skalierung des Schachfelds (Größe)
   };
 
-struct cscreentextur : public ctextur     // Zum Texturieren mit Bildern
+struct cscreentextur : public cltextur     // Zum Texturieren mit Bildern
   {
   cscreentextur (clscreen8* pscreen, const real pkx, const real pky);
   cvektor3 getpunkt (const cvektor2 &pv);
@@ -252,7 +252,7 @@ struct cscreentextur : public ctextur     // Zum Texturieren mit Bildern
   real kx, ky, xmax, ymax;
   };
 
-struct cscreentexturz : public ctextur     // Zum Texturieren mit Bildern zentriert
+struct cscreentexturz : public cltextur     // Zum Texturieren mit Bildern zentriert
   {
   cscreentexturz (clscreen8* pscreen, const real pkx, const real pky);
   cvektor3 getpunkt (const cvektor2 &pv);
@@ -263,7 +263,7 @@ struct cscreentexturz : public ctextur     // Zum Texturieren mit Bildern zentri
   real kx, ky, xz, yz;
   };
 
-struct cscreentexturp : public ctextur     // Zum Texturieren mit Bildern zentriert um 90° nach rechts gedreht für Polkarten
+struct cscreentexturp : public cltextur     // Zum Texturieren mit Bildern zentriert um 90° nach rechts gedreht für Polkarten
   {
   cscreentexturp (clscreen8* pscreen, const real pkx, const real pky);
   cvektor3 getpunkt (const cvektor2 &pv);
@@ -274,7 +274,7 @@ struct cscreentexturp : public ctextur     // Zum Texturieren mit Bildern zentri
   real kx, ky, xz, yz;
   };
 
-struct cscreentextur2 : public ctextur     // Zum Texturieren mit Bildern zentriert
+struct cscreentextur2 : public cltextur     // Zum Texturieren mit Bildern zentriert
   {
   cscreentextur2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
   cvektor3 getpunkt (const cvektor2 &pv);
@@ -291,9 +291,51 @@ struct cscreentextur2 : public ctextur     // Zum Texturieren mit Bildern zentri
 
 // ------------------------------------------------------------------------------- Geometrische Gebilde -----------------------------------------------------------------------------------------------------------------------------------
 
+//-------------------------------------------------------------------- Mannigfaltigkeiten ---------------------------------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------ clmannig ---------------------------------------------------------------------------------
+
+struct clmannig     // abstrakte Mannigfaltigkeit
+  {
+  clmannig ();
+  virtual cvektor3 getpunkt (const cvektor3 &pv)= 0;          // Färbung eines Punktes der dreidimensionalen Fläche berechnen
+  //cvektor3 getpixel (const cvektor2 &pv);                   // Färbung einer Pixelfläche berechnen, benutzt getpunkt, allgemein für cltextur, unabhängig vom abgeleitetem Objekt
+  //cvektor3 getpixel16 (const cvektor2 &pv);                 // Färbung einer Pixelfläche aus 16 Punkten berechnen
+  };
+
+//------------------------------------------------------------------ cmannigmonochrom ---------------------------------------------------------------------------------
+
+struct cmannigmonochrom : public clmannig
+  {
+  cmannigmonochrom (const cvektor3& pfarbe);
+  cvektor3 getpunkt (const cvektor3& pv3);
+
+  private:
+  cvektor3 farbe;
+  };
+
+struct cscreenmannigpol2 : public clmannig     // Kugel aus 2 Polflächen färben
+  {
+  cscreenmannigpol2 (clpara* ppara, clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
+  cvektor3 getpunkt (const cvektor3 &pv);
+
+  private:
+  clpara* kugelpara;
+
+  clscreen8* screen1;
+  integer xmax1, ymax1;
+
+  clscreen8* screen2;
+  integer xmax2, ymax2;
+
+  real kx1, ky1, xz1, yz1, kx2, ky2, xz2, yz2;
+  };
+
+//-------------------------------------------------------------------- Körper ---------------------------------------------------------------------------------------------------------------
+
 struct ckoerper
   {
-  ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, ctextur* ptextur, const cvektor3 &ppos, const cbasis3 &pbasis);
+  ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, cltextur* ptextur, clmannig* pmannig, const cvektor3 &ppos, const cbasis3 &pbasis);
   void setzeauge (const cvektor3 &paugpos, const cbasis3 &paugbasis);
   void drehe (const cbasis3 &pdrehbasis);
   void dreheein ();                                  // auf Einheitsposition setzen
@@ -314,7 +356,8 @@ struct ckoerper
   private:
   clpara*     para;
   clbegr*     begr;
-  ctextur*    textur;
+  cltextur*   textur;
+  clmannig*   mannig;
 
   cbasis3     koerperbasis;
   cbasis3     drehbasis;
@@ -338,7 +381,7 @@ struct ckoerperliste
   void setzeauge (const cvektor3 &paugpos, const cbasis3 &paugbasis);
   };
 
-struct cwelt : public ctextur
+struct cwelt : public cltextur
   {
   cwelt (const cvektor3 &paugpos, const cbasis3 &paugbasis);
   cwelt (const char* pname);
@@ -382,7 +425,7 @@ struct cpunktscreen
 
   cpunktscreen (integer px, integer py);
   ~cpunktscreen ();
-  void fuelle (ctextur &ptextur);
+  void fuelle (cltextur &ptextur);
   void plotte (clscreen8 &plscreen);
 
   private:
