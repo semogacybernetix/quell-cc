@@ -332,7 +332,7 @@ struct cschnittpunkte
   integer        koerpernr[1000];
   integer        sichtbar[1000];
   real           abstand[1000];
-  cvektor2       mannigpos[1000];
+  cvektor2       texturpos[1000];
 
   cschnittpunkte ();
   void add (const real &pf);

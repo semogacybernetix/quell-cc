@@ -213,17 +213,17 @@ struct cbegrellipse : clbegr
   real ha, hb;
   };
 
-//------------------------------- Mannigfaltigkeiten (Texturen) -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------- Texturen -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-struct clmannig     // abstrakte Textur, von der die konkreten Texturen abgeleitet sind
+struct ctextur     // abstrakte Textur, von der die konkreten Texturen abgeleitet sind
   {
-  clmannig ();
+  ctextur ();
   virtual cvektor3 getpunkt (const cvektor2 &pv)= 0;        // Färbung eines Punktes berechnen
-  cvektor3 getpixel (const cvektor2 &pv);                   // Färbung einer Pixelfläche berechnen, benutzt getpunkt, allgemein für clmannig, unabhängig vom abgeleitetem Objekt
+  cvektor3 getpixel (const cvektor2 &pv);                   // Färbung einer Pixelfläche berechnen, benutzt getpunkt, allgemein für ctextur, unabhängig vom abgeleitetem Objekt
   cvektor3 getpixel16 (const cvektor2 &pv);                 // Färbung einer Pixelfläche aus 16 Punkten berechnen
   };
 
-struct cmonochrom : public clmannig
+struct cmonochrom : public ctextur
   {
   cmonochrom (const cvektor3 &pfarbe);
   cvektor3 getpunkt (const cvektor2 &pv);
@@ -232,7 +232,7 @@ struct cmonochrom : public clmannig
   cvektor3 farbe;
   };
 
-struct cschachfeld : public clmannig
+struct cschachfeld : public ctextur
   {
   cschachfeld (const cvektor3 &pfb1, const cvektor3 &pfb2, const real &pkx, const real &pky);
   cvektor3 getpunkt (const cvektor2 &pv);
@@ -242,9 +242,9 @@ struct cschachfeld : public clmannig
   real kx, ky;              // Skalierung des Schachfelds (Größe)
   };
 
-struct cscreenmannig : public clmannig     // Zum Texturieren mit Bildern
+struct cscreentextur : public ctextur     // Zum Texturieren mit Bildern
   {
-  cscreenmannig (clscreen8* pscreen, const real pkx, const real pky);
+  cscreentextur (clscreen8* pscreen, const real pkx, const real pky);
   cvektor3 getpunkt (const cvektor2 &pv);
 
   private:
@@ -252,9 +252,9 @@ struct cscreenmannig : public clmannig     // Zum Texturieren mit Bildern
   real kx, ky, xmax, ymax;
   };
 
-struct cscreenmannigz : public clmannig     // Zum Texturieren mit Bildern zentriert
+struct cscreentexturz : public ctextur     // Zum Texturieren mit Bildern zentriert
   {
-  cscreenmannigz (clscreen8* pscreen, const real pkx, const real pky);
+  cscreentexturz (clscreen8* pscreen, const real pkx, const real pky);
   cvektor3 getpunkt (const cvektor2 &pv);
 
   private:
@@ -263,9 +263,9 @@ struct cscreenmannigz : public clmannig     // Zum Texturieren mit Bildern zentr
   real kx, ky, xz, yz;
   };
 
-struct cscreenmannigp : public clmannig     // Zum Texturieren mit Bildern zentriert um 90° nach rechts gedreht für Polkarten
+struct cscreentexturp : public ctextur     // Zum Texturieren mit Bildern zentriert um 90° nach rechts gedreht für Polkarten
   {
-  cscreenmannigp (clscreen8* pscreen, const real pkx, const real pky);
+  cscreentexturp (clscreen8* pscreen, const real pkx, const real pky);
   cvektor3 getpunkt (const cvektor2 &pv);
 
   private:
@@ -274,9 +274,9 @@ struct cscreenmannigp : public clmannig     // Zum Texturieren mit Bildern zentr
   real kx, ky, xz, yz;
   };
 
-struct cscreenmannig2 : public clmannig     // Zum Texturieren mit Bildern zentriert
+struct cscreentextur2 : public ctextur     // Zum Texturieren mit Bildern zentriert
   {
-  cscreenmannig2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
+  cscreentextur2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
   cvektor3 getpunkt (const cvektor2 &pv);
 
   private:
@@ -293,7 +293,7 @@ struct cscreenmannig2 : public clmannig     // Zum Texturieren mit Bildern zentr
 
 struct ckoerper
   {
-  ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, clmannig* pmannig, const cvektor3 &ppos, const cbasis3 &pbasis);
+  ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, ctextur* ptextur, const cvektor3 &ppos, const cbasis3 &pbasis);
   void setzeauge (const cvektor3 &paugpos, const cbasis3 &paugbasis);
   void drehe (const cbasis3 &pdrehbasis);
   void dreheein ();                                  // auf Einheitsposition setzen
@@ -314,7 +314,7 @@ struct ckoerper
   private:
   clpara*     para;
   clbegr*     begr;
-  clmannig*   mannig;
+  ctextur*    textur;
 
   cbasis3     koerperbasis;
   cbasis3     drehbasis;
@@ -338,7 +338,7 @@ struct ckoerperliste
   void setzeauge (const cvektor3 &paugpos, const cbasis3 &paugbasis);
   };
 
-struct cwelt : public clmannig
+struct cwelt : public ctextur
   {
   cwelt (const cvektor3 &paugpos, const cbasis3 &paugbasis);
   cwelt (const char* pname);
@@ -382,7 +382,7 @@ struct cpunktscreen
 
   cpunktscreen (integer px, integer py);
   ~cpunktscreen ();
-  void fuelle (clmannig &pmannig);
+  void fuelle (ctextur &ptextur);
   void plotte (clscreen8 &plscreen);
 
   private:

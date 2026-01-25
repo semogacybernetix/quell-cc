@@ -340,7 +340,9 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.01.18 So  22 Uhr, quaternionentest und symflip Fehler korrigiert und wieder am laufen, 1:06
 
 2026.01.22 Do  1:00, Zahlenausgabetest mit cout in fließkomma.cc implementiert, 1:51, 13 Uhr, Compilerfehler bei ub22/gcc 9.4.0 (xray, komplextest, linearfaktoren, quaternionentest) behoben, 14:48
-2026.02.23 Fr  9 Uhr, printfehler bei _Float32, _Float64 bei quaternionentest.cc, linearfaktoren.cc, komplextest.cc beseitigt, 11:05
+2026.01.23 Fr  9 Uhr, printfehler bei _Float32, _Float64 bei quaternionentest.cc, linearfaktoren.cc, komplextest.cc beseitigt, 11:05
+
+2026.01.25 So  10 Uhr, Mannigfaltigkeit nach Textur umbenannt, xray geht, 10:37
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -502,20 +502,20 @@ integer cbegrellipse::sichtbar (const cvektor2 &pv)
   return 1;
   }
 
-//*********************************************************************** Mannigfaltigkeiten ********************************************************************************************************************************************
+//*********************************************************************** Texturen ********************************************************************************************************************************************
 
-clmannig::clmannig ()
+ctextur::ctextur ()
   {
   }
 
-cvektor3 clmannig::getpixel (const cvektor2 &pv)
+cvektor3 ctextur::getpixel (const cvektor2 &pv)
   {
   //return getpunkt (pv);
   return cvektor3 (255,255,0);
   while (pv != pv);                                           // pv benutzen
   }
 
-cvektor3 clmannig::getpixel16 (const cvektor2 &pv)
+cvektor3 ctextur::getpixel16 (const cvektor2 &pv)
   {
   cvektor3 sum (0, 0, 0);
   real xm (pv.x - 1);
@@ -570,12 +570,12 @@ cvektor3 cschachfeld::getpunkt (const cvektor2 &pv)
 //------------------------- Texturierung aus einem Screen (bmpdatei, jpgdatei) ---------------------------------
 
 // ------------------------------------------ nicht zentriertes Bild, gezoomt, periodisch -------------------------------------------
-cscreenmannig::cscreenmannig (clscreen8* pscreen, const real pkx, const real pky)
+cscreentextur::cscreentextur (clscreen8* pscreen, const real pkx, const real pky)
   : screen (pscreen), kx (pkx), ky (pky), xmax (real (screen->xanz) - 1), ymax (real (screen->yanz) - 1)
   {
   }
 
-cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
+cvektor3 cscreentextur::getpunkt (const cvektor2 &pv)
   {
   integer x= integer (modr (absr (pv.x*kx*ymax), xmax));
   integer y= integer (modr (absr (pv.y*ky*ymax), ymax));
@@ -586,7 +586,7 @@ cvektor3 cscreenmannig::getpunkt (const cvektor2 &pv)
   }
 
 // ------------------------------------------ zentriertes Bild, nicht gezoomt, nicht periodisch -------------------------------------
-cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real pky)
+cscreentexturz::cscreentexturz (clscreen8* pscreen, const real pkx, const real pky)
   : screen (pscreen), xmax (screen->xanz - 1), ymax (screen->yanz - 1)
   {
   xz= real (screen->xanz)/2;
@@ -595,7 +595,7 @@ cscreenmannigz::cscreenmannigz (clscreen8* pscreen, const real pkx, const real p
   ky= pky*yz;
   }
 
-cvektor3 cscreenmannigz::getpunkt (const cvektor2 &pv)
+cvektor3 cscreentexturz::getpunkt (const cvektor2 &pv)
   {
   integer x= integer (xz + pv.x*kx);
   integer y= integer (yz + pv.y*kx);
@@ -606,7 +606,7 @@ cvektor3 cscreenmannigz::getpunkt (const cvektor2 &pv)
   }
 
 // ------------------------------------------ zentriertes Bild, nicht gezoomt, nicht periodisch für Polkarten 90° nach rechts gedreht -------------------
-cscreenmannigp::cscreenmannigp (clscreen8* pscreen, const real pkx, const real pky)
+cscreentexturp::cscreentexturp (clscreen8* pscreen, const real pkx, const real pky)
   : screen (pscreen), xmax (screen->xanz - 1), ymax (screen->yanz - 1)
   {
   xz= real (screen->xanz)/2;
@@ -615,7 +615,7 @@ cscreenmannigp::cscreenmannigp (clscreen8* pscreen, const real pkx, const real p
   ky= pky*yz;
   }
 
-cvektor3 cscreenmannigp::getpunkt (const cvektor2 &pv)
+cvektor3 cscreentexturp::getpunkt (const cvektor2 &pv)
   {
   integer x= integer (xz + pv.y*kx);
   integer y= integer (yz - pv.x*kx);
@@ -626,7 +626,7 @@ cvektor3 cscreenmannigp::getpunkt (const cvektor2 &pv)
   }
 
 // ------------------------------------------ Polkappen von beiden Seiten beide Karten 90° nach rechts gedreht -------------------------------------
-cscreenmannig2::cscreenmannig2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
+cscreentextur2::cscreentextur2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
   : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
   xz1= real (screen1->xanz)/2;
@@ -640,7 +640,7 @@ cscreenmannig2::cscreenmannig2 (clscreen8* pscreen1, const real pkx1, const real
   ky2= pky2*yz2;
   }
 
-cvektor3 cscreenmannig2::getpunkt (const cvektor2 &pv)
+cvektor3 cscreentextur2::getpunkt (const cvektor2 &pv)
   {
   integer r, g, b;
   real l= absr (pv);
@@ -664,8 +664,8 @@ cvektor3 cscreenmannig2::getpunkt (const cvektor2 &pv)
 
 // ------------------------ ckörper --------------------------------------------------------------------------
 
-ckoerper::ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, clmannig* pmannig, const cvektor3 &ppos, const cbasis3 &pbasis)
-  : koerperpos (ppos), schnitt (pschnitt), para (ppara), begr (pbegr), mannig (pmannig), koerperbasis (pbasis),
+ckoerper::ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, ctextur* ptextur, const cvektor3 &ppos, const cbasis3 &pbasis)
+  : koerperpos (ppos), schnitt (pschnitt), para (ppara), begr (pbegr), textur (ptextur), koerperbasis (pbasis),
     drehbasis (cvektor3 (1, 0, 0), cvektor3 (0, 1, 0), cvektor3 (0, 0, 1)),
     augpos (0, 0, 0),
     augbasis (cvektor3 (1, 0, 0), cvektor3 (0, 1, 0), cvektor3 (0, 0, 1)),
@@ -724,13 +724,13 @@ void ckoerper::setzepos (const cvektor3 &pv)
 
 void ckoerper::begrenze (const cvektor3 &ptransrich, const integer pnr, cschnittpunkte &psp)              // parametrisiert und begrenzt den Körper
   {
-  psp.mannigpos[pnr]= para->berechne (transpos + psp.abstand[pnr]*ptransrich);
-  psp.sichtbar[pnr]= begr->sichtbar (psp.mannigpos[pnr]);
+  psp.texturpos[pnr]= para->berechne (transpos + psp.abstand[pnr]*ptransrich);
+  psp.sichtbar[pnr]= begr->sichtbar (psp.texturpos[pnr]);
   }
 
 cvektor3 ckoerper::faerbe (const integer pnr, cschnittpunkte &psp)
   {
-  return mannig->getpunkt (psp.mannigpos[pnr]);
+  return textur->getpunkt (psp.texturpos[pnr]);
   }
 
 void ckoerper::aktualisiere ()
@@ -812,7 +812,7 @@ cvektor3 cwelt::getpunkt (const cvektor2 &pv)
     // Die Schnittpunktroutine darf den Schnittpunkt nur eintragen, wenn er vor dem Auge liegt (schnittpunkte.abstand > 0)
     koerperliste.koerper[klauf]->schnitt->berechne (transrich, schnittpunkte);
 
-    // Mannigfaltigkeit begrenzen (Schnittpunkte ausserhalb der Grenzen als nicht sichtbar markieren)
+    // Textur begrenzen (Schnittpunkte ausserhalb der Grenzen als nicht sichtbar markieren)
     for (integer knrlauf= lschnittanz; knrlauf < schnittpunkte.anz; knrlauf++)
       {
       schnittpunkte.koerpernr[knrlauf]= klauf;
@@ -949,7 +949,7 @@ cpunktscreen::~cpunktscreen ()
   delete (vbild);
   }
 
-void cpunktscreen::fuelle (clmannig &pmannig)
+void cpunktscreen::fuelle (ctextur &ptextur)
   {
   const real xoff (real (-xanz)/2);
   const real yoff (real (-yanz)/2);
@@ -960,7 +960,7 @@ void cpunktscreen::fuelle (clmannig &pmannig)
       //vbild[ny*xanz + nx].pos.y= real (real (ny) + yoff + drand48 ());
       vbild[ny*xanz + nx].pos.x= real (real (nx) + xoff);
       vbild[ny*xanz + nx].pos.y= real (real (ny) + yoff);
-      vbild[ny*xanz + nx].farbe= pmannig.getpunkt (vbild[ny*xanz + nx].pos);
+      vbild[ny*xanz + nx].farbe= ptextur.getpunkt (vbild[ny*xanz + nx].pos);
       }
   }
 
