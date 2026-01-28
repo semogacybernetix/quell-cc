@@ -643,7 +643,9 @@ cscreentextur2::cscreentextur2 (clscreen8* pscreen1, const real pkx1, const real
 cvektor3 cscreentextur2::getpunkt (const cvektor2 &pv)
   {
   integer r, g, b;
-  real l= absr (pv);
+  real l;
+
+  l= absr (pv);
   if (l < PI/2)
     {
     integer x1= integer (xz1 + pv.y*kx1);
@@ -660,31 +662,9 @@ cvektor3 cscreentextur2::getpunkt (const cvektor2 &pv)
   return cvektor3 (real (r), real (g), real (b));
   }
 
-// ***************************************************************** Geometrische Gebilde ***********************************************************************************
-
-// ------------------------ cmannig --------------------------------------------------------------------------
-
-clmannig::clmannig ()
-  {
-  }
-
-// ------------------------ cscreenmannigmonochrom --------------------------------------------------------------------------
-
-cmannigmonochrom::cmannigmonochrom (const cvektor3& pfarbe)
-  {
-  farbe= pfarbe;
-  }
-
-cvektor3 cmannigmonochrom::getpunkt (const cvektor3 &pv3)
-  {
-  return farbe;
-  while (pv3 != pv3);                                           // pv3 benutzen, weil sonst unused variable
-  }
-
-// ------------------------ cscreenmannigpol2 --------------------------------------------------------------------------
-
-cscreenmannigpol2::cscreenmannigpol2 (clpara* ppara, clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
-  : kugelpara (ppara), screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
+// ------------------------------------------ Polkappen von beiden Seiten beide Karten 90° nach rechts gedreht -------------------------------------
+cscreentextur22::cscreentextur22 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
+  : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
   xz1= real (screen1->xanz)/2;
   yz1= real (screen1->yanz)/2;
@@ -697,31 +677,38 @@ cscreenmannigpol2::cscreenmannigpol2 (clpara* ppara, clscreen8* pscreen1, const 
   ky2= pky2*yz2;
   }
 
-cvektor3 cscreenmannigpol2::getpunkt (const cvektor3 &pv3)
+cvektor3 cscreentextur22::getpunkt (const cvektor2 &pv)
   {
-  cvektor2 pv;
   integer r, g, b;
+  real l, x, y;
 
-  pv= kugelpara->berechne (pv3);
-  if (pv3.z >= 0)
+  if (pv.y >= 0)
     {
-    integer x1= integer (xz1 + pv.y*kx1);
-    integer y1= integer (yz1 - pv.x*kx1);
+    l= PIh - pv.y;
+    x= sin (pv.x)*l;
+    y= cos (pv.x)*l;
+    integer x1= integer (xz1 + x*kx1);
+    integer y1= integer (yz1 - y*kx1);
     screen1->getpixel (x1, y1, r, g, b);
     }
     else
     {
-    integer x2= integer (xz2 + pv.y*kx2);
-    integer y2= integer (yz2 - pv.x*kx2);
-    screen2->getpixel (x2, y2, r, g, b);
+    l= PIh + pv.y;
+    x= sin (pv.x)*l;
+    y= cos (pv.x)*l;
+    integer x1= integer (xz1 + x*kx1);
+    integer y1= integer (yz1 + y*kx1);
+    screen2->getpixel (x1, y1, r, g, b);
     }
   return cvektor3 (real (r), real (g), real (b));
   }
 
+// ***************************************************************** Geometrische Gebilde ***********************************************************************************
+
 // ------------------------ ckörper --------------------------------------------------------------------------
 
-ckoerper::ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, cltextur* ptextur, clmannig* pmannig, const cvektor3 &ppos, const cbasis3 &pbasis)
-  : koerperpos (ppos), schnitt (pschnitt), para (ppara), begr (pbegr), textur (ptextur), mannig (pmannig), koerperbasis (pbasis),
+ckoerper::ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, cltextur* ptextur, const cvektor3 &ppos, const cbasis3 &pbasis)
+  : koerperpos (ppos), schnitt (pschnitt), para (ppara), begr (pbegr), textur (ptextur), koerperbasis (pbasis),
     drehbasis (cvektor3 (1, 0, 0), cvektor3 (0, 1, 0), cvektor3 (0, 0, 1)),
     augpos (0, 0, 0),
     augbasis (cvektor3 (1, 0, 0), cvektor3 (0, 1, 0), cvektor3 (0, 0, 1)),

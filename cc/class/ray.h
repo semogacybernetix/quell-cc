@@ -289,39 +289,12 @@ struct cscreentextur2 : public cltextur     // Zum Texturieren mit Bildern zentr
   real kx1, ky1, xz1, yz1, kx2, ky2, xz2, yz2;
   };
 
-// ------------------------------------------------------------------------------- Geometrische Gebilde -----------------------------------------------------------------------------------------------------------------------------------
-
-//-------------------------------------------------------------------- Mannigfaltigkeiten ---------------------------------------------------------------------------------------------------------------
-
-//------------------------------------------------------------------ clmannig ---------------------------------------------------------------------------------
-
-struct clmannig     // abstrakte Mannigfaltigkeit
+struct cscreentextur22 : public cltextur     // Zum Texturieren mit Bildern zentriert
   {
-  clmannig ();
-  virtual cvektor3 getpunkt (const cvektor3 &pv)= 0;          // Färbung eines Punktes der dreidimensionalen Fläche berechnen
-  //cvektor3 getpixel (const cvektor2 &pv);                   // Färbung einer Pixelfläche berechnen, benutzt getpunkt, allgemein für cltextur, unabhängig vom abgeleitetem Objekt
-  //cvektor3 getpixel16 (const cvektor2 &pv);                 // Färbung einer Pixelfläche aus 16 Punkten berechnen
-  };
-
-//------------------------------------------------------------------ cmannigmonochrom ---------------------------------------------------------------------------------
-
-struct cmannigmonochrom : public clmannig
-  {
-  cmannigmonochrom (const cvektor3& pfarbe);
-  cvektor3 getpunkt (const cvektor3& pv3);
+  cscreentextur22 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
+  cvektor3 getpunkt (const cvektor2 &pv);
 
   private:
-  cvektor3 farbe;
-  };
-
-struct cscreenmannigpol2 : public clmannig     // Kugel aus 2 Polflächen färben
-  {
-  cscreenmannigpol2 (clpara* ppara, clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
-  cvektor3 getpunkt (const cvektor3 &pv);
-
-  private:
-  clpara* kugelpara;
-
   clscreen8* screen1;
   integer xmax1, ymax1;
 
@@ -331,11 +304,13 @@ struct cscreenmannigpol2 : public clmannig     // Kugel aus 2 Polflächen färbe
   real kx1, ky1, xz1, yz1, kx2, ky2, xz2, yz2;
   };
 
+// ------------------------------------------------------------------------------- Geometrische Gebilde -----------------------------------------------------------------------------------------------------------------------------------
+
 //-------------------------------------------------------------------- Körper ---------------------------------------------------------------------------------------------------------------
 
 struct ckoerper
   {
-  ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, cltextur* ptextur, clmannig* pmannig, const cvektor3 &ppos, const cbasis3 &pbasis);
+  ckoerper (clschnitt* pschnitt, clpara* ppara, clbegr* pbegr, cltextur* ptextur, const cvektor3 &ppos, const cbasis3 &pbasis);
   void setzeauge (const cvektor3 &paugpos, const cbasis3 &paugbasis);
   void drehe (const cbasis3 &pdrehbasis);
   void dreheein ();                                  // auf Einheitsposition setzen
@@ -357,7 +332,6 @@ struct ckoerper
   clpara*     para;
   clbegr*     begr;
   cltextur*   textur;
-  clmannig*   mannig;
 
   cbasis3     koerperbasis;
   cbasis3     drehbasis;
