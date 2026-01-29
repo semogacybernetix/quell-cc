@@ -142,59 +142,60 @@ struct coktonion : public cvektor8
 //--------------------------------------------------------------------------------------- Konstanten --------------------------------------------------------------------------------------------------
 
 // reelle Konstanten
-const real quantr= real (powl (0.1, sizeof (real)));                                  // Ähnlichkeitseinheit abhängig von der Genauigkeit des real Typs
+//const real quantr= real (powl (0.1, sizeof (real)));                                  // Ähnlichkeitseinheit abhängig von der Genauigkeit des real Typs
 const real quantg= real (1e-8);                                                       // Ähnlichkeitseinheit absolut
 
-const real r1 (real (1));                                                             // die Zahl 1 vom Typ real
-const real r2 (real (2));                                                             // die Zahl 2 vom Typ real
-const real r3 (real (3));                                                             // die Zahl 3 vom Typ real
-const real r5 (real (5));                                                             // die Zahl 5 vom Typ real
-const real r8 (real (8));                                                             // die Zahl 8 vom Typ real
+//const real r1 (real (1));                                                             // die Zahl 1 vom Typ real
+//const real r2 (real (2));                                                             // die Zahl 2 vom Typ real
+//const real r3 (real (3));                                                             // die Zahl 3 vom Typ real
+//const real r5 (real (5));                                                             // die Zahl 5 vom Typ real
+//const real r8 (real (8));                                                             // die Zahl 8 vom Typ real
 
-const real rh (real (0.5));                                                           // die Zahl 1/2 vom Typ real
-const real rd (real (1/_Float8x (3)));                                                // die Zahl 1/3 vom Typ real
-const real r2d (real (2/_Float8x (3)));                                               // die Zahl 2/3 vom Typ real
-const real rv (real (0.25));                                                          // die Zahl 1/4 vom Typ real
-const real r3v (real (0.75));                                                         // die Zahl 3/4 vom Typ real
+//const real rh (real (0.5));                                                           // die Zahl 1/2 vom Typ real
+//const real rd (real (1/_Float8x (3)));                                                // die Zahl 1/3 vom Typ real
+//const real r2d (real (2/_Float8x (3)));                                               // die Zahl 2/3 vom Typ real
+//const real rv (real (0.25));                                                          // die Zahl 1/4 vom Typ real
+//const real r3v (real (0.75));                                                         // die Zahl 3/4 vom Typ real
 
 const real PI (real (M_PIl));                                                         // die Konstante pi vom Typ real
 const real PIh (real (M_PIl/2));                                                      // pi/2
+const real PIv (real (M_PIl/4));                                                      // pi/2
 const real PI2 (real (M_PIl*2));                                                      // 2pi
 const real PI2d (real (M_PIl*2/3));                                                   // die Konstante 2/3*pi vom Typ real
 const real PI3v (real (M_PIl*3/4));                                                   // die Konstante 3/4*pi vom Typ real
-const real rg (real (0.5 + sqrtl (1.25)));                                            // goldene Schnitt       g= (1 + √5)/2 = 2cos 36° = 2sin 54°        = 1.61803398...         x² - x - 1 = 0
-const real rt (real ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3));   // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1,2= ∛(19 ± 3√33)   = 1.83928675...    x³ - x² - x - 1 = 0
+//const real rg (real (0.5 + sqrtl (1.25)));                                            // goldene Schnitt       g= (1 + √5)/2 = 2cos 36° = 2sin 54°        = 1.61803398...         x² - x - 1 = 0
+//const real rt (real ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3));   // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1,2= ∛(19 ± 3√33)   = 1.83928675...    x³ - x² - x - 1 = 0
 
 // kartesischkomplexe Konstanten
-const ckomplexk nullk (0, 0);
+//const ckomplexk nullk (0, 0);
 const ckomplexk einsk (1, 0);
 const ckomplexk ik (0, 1);
 const ckomplexk e31 (real (-0.5),  real (sqrtl (0.75)));
 const ckomplexk e32 (real (-0.5), -real (sqrtl (0.75)));
 
 // polarkomplexe Konstanten
-const ckomplexp nullp (0);
-const ckomplexp einsp (1);
+//const ckomplexp nullp (0);
+//const ckomplexp einsp (1);
 const ckomplexp ew2 (-1);
-const ckomplexp ew3 (1, PI*2/3);
+//const ckomplexp ew3 (1, PI*2/3);
 const ckomplexp ew4 (1, PI/2);
-const ckomplexp ew5 (1, PI*2/5);
+//const ckomplexp ew5 (1, PI*2/5);
 
 // cvektor3 Konstanten
 const cvektor3 nullv3 (0);
-const cvektor3 xvektor3 (1, 0, 0);
-const cvektor3 yvektor3 (0, 1, 0);
-const cvektor3 zvektor3 (0, 0, 1);
+//const cvektor3 xvektor3 (1, 0, 0);
+//const cvektor3 yvektor3 (0, 1, 0);
+//const cvektor3 zvektor3 (0, 0, 1);
 
 // quaternionische Konstanten
-const cquaternion nullq (0, 0, 0, 0);
+//const cquaternion nullq (0, 0, 0, 0);
 const cquaternion einsq (1, 0, 0, 0);
-const cquaternion iq    (0, 1, 0, 0);
-const cquaternion jq    (0, 0, 1, 0);
-const cquaternion ijq   (0, 0, 0, 1);
+//const cquaternion iq    (0, 1, 0, 0);
+//const cquaternion jq    (0, 0, 1, 0);
+//const cquaternion ijq   (0, 0, 0, 1);
 
 // Basiskonstanten
-const cbasis2 einsb2 (1);
+//const cbasis2 einsb2 (1);
 const cbasis3 einsb3 (1);
 
 //--------------------------------------------------------------------------------------- Funktionen und Operatoren -----------------------------------------------------------------------------------
@@ -250,6 +251,10 @@ _Float8x sinr (const _Float8x& a);
 _Float32 cosr (const _Float32& a);
 _Float64 cosr (const _Float64& a);
 _Float8x cosr (const _Float8x& a);
+
+_Float32 tanr (const _Float32& a);
+_Float64 tanr (const _Float64& a);
+_Float8x tanr (const _Float8x& a);
 
 // --------------------------------------------------------------------- Hyperbelfunktionen ------------------------------------------------------------
 _Float32 tanhr (const _Float32& a);
