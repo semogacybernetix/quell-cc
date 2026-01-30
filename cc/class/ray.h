@@ -278,9 +278,9 @@ struct cscreentexturz : public cltextur     // Zum Texturieren mit Bildern zentr
   real kx, ky, xz, yz;
   };
 
-struct cscreentexturp : public cltextur     // Zum Texturieren mit Bildern zentriert um 90° nach rechts gedreht für Polkarten
+struct cscreentexturpol : public cltextur     // Zum Texturieren mit Bildern zentriert um 90° nach rechts gedreht für Polkarten
   {
-  cscreentexturp (clscreen8* pscreen, const real pkx, const real pky);
+  cscreentexturpol (clscreen8* pscreen, const real pkx, const real pky);
   cvektor3 getpunkt (const cvektor2 &pv);
 
   private:
@@ -307,6 +307,21 @@ struct cscreentextur2 : public cltextur     // Zum Texturieren mit Bildern zentr
 struct cscreentextur22 : public cltextur     // Zum Texturieren mit Bildern zentriert
   {
   cscreentextur22 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
+  cvektor3 getpunkt (const cvektor2 &pv);
+
+  private:
+  clscreen8* screen1;
+  integer xmax1, ymax1;
+
+  clscreen8* screen2;
+  integer xmax2, ymax2;
+
+  real kx1, ky1, xz1, yz1, kx2, ky2, xz2, yz2;
+  };
+
+struct cscreentextur22s : public cltextur     // Zum Texturieren mit Bildern zentriert
+  {
+  cscreentextur22s (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2);
   cvektor3 getpunkt (const cvektor2 &pv);
 
   private:

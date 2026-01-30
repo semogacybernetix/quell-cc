@@ -12,18 +12,22 @@ using namespace std;
 typedef signed long long integer;
 
 //typedef _Float16 real;                          //
+
 //typedef _Float32 real;                          //  6/8 Stellen (unterscheidbar/verlässlich)
 //typedef float real;                             //  6/8 Stellen (unterscheidbar/verlässlich)
+
 //typedef _Float64 real;                          // 15/16 Stellen (unterscheidbar/verlässlich)
 //typedef double real;                            // 15/16 Stellen (unterscheidbar/verlässlich)
-//typedef __float80 real;                         // 20/18 Stellen (unterscheidbar/verlässlich)
-typedef long double real;                       // 20/18 Stellen (unterscheidbar/verlässlich)
+
+typedef __float80 real;                         // 20/18 Stellen (unterscheidbar/verlässlich)
+//typedef long double real;                       // 20/18 Stellen (unterscheidbar/verlässlich)
+
 //typedef __float128 real;                        // 35/33 Stellen   100 mal langsamer wegen Softwareimplementierung statt Hardwareimplementierung
 //typedef _Float128 real;                         // 35/33 Stellen
 
 const real zwei (2);                                                                  // der doofe Computer weiß nicht mit welcher Genauigkeit er 2/3 ausrechnen soll. zwei/3 ist eindeutig
-const real g (0.5 + sqrtl (1.25));                                                    // goldene Schnitt g= (1+V5)/2  g= 2*cos 36°
-const real t ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3);           // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1/2= 3V(19+-3V33)
+//const real g (0.5 + sqrtl (1.25));                                                    // goldene Schnitt g= (1+V5)/2  g= 2*cos 36°
+//const real t ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3);           // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1/2= 3V(19+-3V33)
 
 //---------------------------------- Hilfsfunktionen ------------------------------------------------------------
 
@@ -308,13 +312,13 @@ void genauigkeit ()
 void genauigkeit80 ()
   {
   real wert, bit;
-  bit= 0.1;
+  bit= real (0.1);
 
   for (integer lauf= 1; lauf < 100; lauf++)
     {
     wert= 1;
     wert= wert + bit;
-    printf ("%5lld  %50.40Lf %50.40Lf\n", lauf, wert, bit);
+    //printf ("%5lld  %50.40Lf %50.40Lf\n", lauf, wert, bit);
     if (wert == 1)
       break;
     bit= bit/10;
@@ -563,17 +567,22 @@ void genauigkeitsausgabe ()
 
 void printreal ()
   {
-  _Float32 bla32= _Float32 (32423.34234324);
-  _Float64 bla64= _Float64 (323.34234324);
-  __float80 bla80= __float80 (94532423.34234324);
-  signed short pre= 2;
-  signed short we= 12;
+  float blar= 1.25;
+
+  //real oprf= sqrtf (blar);
+  //real oprd= sqrt (blar);
+  //real oprl= sqrtl (blar);
+  real opr= sqrt (blar);
+
+  signed short pre= 40;
+  signed short we= 40;
 
   cout << fixed;
   cout << setprecision (pre);
-  cout << "Float32  " << setw (we) << bla32 << endl;
-  cout << "Float64  " << setw (we) << bla64 << endl;
-  cout << "Float80  " << setw (we) << bla80 << "\n";
+  //cout << "oprf  " << setw (we) << oprf << endl;
+  //cout << "oprd  " << setw (we) << oprd << endl;
+  //cout << "oprl  " << setw (we) << oprl << endl;
+  cout << "opr   " << setw (we) << opr << endl;
   }
 
 int main ()

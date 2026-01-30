@@ -348,7 +348,7 @@ cvektor2 cparakugelw3::berechne (const cvektor3 &pv)                            
 
 //----------- Kugel polar mittenabstandstreu ----------------------------
 
-cvektor2 cparakugelm::berechne (const cvektor3 &pv)
+cvektor2 cparakugelm::berechne (const cvektor3 &pv)                                                        // hohe Genauigkeit
   {
   real b= sqrtr (pv.x*pv.x + pv.y*pv.y);
   real k= atan2 (b, pv.z)/b;
@@ -366,7 +366,14 @@ cvektor2 cparakugelg::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugels::berechne (const cvektor3 &pv)
   {
-  real k= 2/(pv.z + 1);
+  real k= 2/(pv.z + 1);                                            // Spitzenkrizzel
+
+/*
+  real x= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Quadratkrizzel
+  real v= sqrtr (x*x + 1);
+  real k= 2*v/(v + x);
+*/
+
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
@@ -374,8 +381,24 @@ cvektor2 cparakugels::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugelf::berechne (const cvektor3 &pv)
   {
-  //real l= atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y));
-  real k= sqrtr (2/(pv.z + 1));
+  //real k= sqrtr (2/(pv.z + 1));                                  // ungenau fluktuierend
+
+/*
+  real z= sqrtr (1 - pv.x*pv.x - pv.y*pv.y);                       // schwarzes Quadrat im Gegenpol
+  if (pv.z < 0)
+    z= -z;
+  real k= sqrtr (2/(z + 1));
+*/
+
+/*
+  real l= atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y));            // schwarzer Kreis im Gegenpol
+  real k= sqrtr (2/(sin (l) + 1));
+*/
+
+  real x= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Krizzelkreis mit Hyperbol
+  real v= sqrtr (x*x + 1);
+  real k= sqrtr (2*v/(v + x));
+
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
@@ -623,7 +646,7 @@ cvektor3 cscreentexturz::getpunkt (const cvektor2 &pv)
   }
 
 // ------------------------------------------ zentriertes Bild, nicht gezoomt, nicht periodisch für Polkarten 90° nach rechts gedreht -------------------
-cscreentexturp::cscreentexturp (clscreen8* pscreen, const real pkx, const real pky)
+cscreentexturpol::cscreentexturpol (clscreen8* pscreen, const real pkx, const real pky)
   : screen (pscreen), xmax (screen->xanz - 1), ymax (screen->yanz - 1)
   {
   xz= real (screen->xanz)/2;
@@ -632,7 +655,7 @@ cscreentexturp::cscreentexturp (clscreen8* pscreen, const real pkx, const real p
   ky= pky*yz;
   }
 
-cvektor3 cscreentexturp::getpunkt (const cvektor2 &pv)
+cvektor3 cscreentexturpol::getpunkt (const cvektor2 &pv)
   {
   integer x= integer (xz + pv.y*kx);
   integer y= integer (yz - pv.x*kx);
@@ -679,7 +702,7 @@ cvektor3 cscreentextur2::getpunkt (const cvektor2 &pv)
   return cvektor3 (real (r), real (g), real (b));
   }
 
-// ------------------------------------------ Polkappen von beiden Seiten beide Karten 90° nach rechts gedreht -------------------------------------
+// ------------------------------------------ Polkappen von beiden Seiten mittenabstandstreu beide Karten 90° nach rechts gedreht -------------------------------------
 cscreentextur22::cscreentextur22 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
   : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
@@ -702,8 +725,8 @@ cvektor3 cscreentextur22::getpunkt (const cvektor2 &pv)
   if (pv.y >= 0)
     {
     l= PIh - pv.y;
-    x= sin (pv.x)*l;
-    y= cos (pv.x)*l;
+    x= sinr (pv.x)*l;
+    y= cosr (pv.x)*l;
     integer x1= integer (xz1 + x*kx1);
     integer y1= integer (yz1 - y*kx1);
     screen1->getpixel (x1, y1, r, g, b);
@@ -711,10 +734,53 @@ cvektor3 cscreentextur22::getpunkt (const cvektor2 &pv)
     else
     {
     l= PIh + pv.y;
-    x= sin (pv.x)*l;
-    y= cos (pv.x)*l;
+    x= sinr (pv.x)*l;
+    y= cosr (pv.x)*l;
     integer x1= integer (xz1 + x*kx1);
     integer y1= integer (yz1 + y*kx1);
+    screen2->getpixel (x1, y1, r, g, b);
+    }
+  return cvektor3 (real (r), real (g), real (b));
+  }
+
+// ------------------------------------------ Polkappen von beiden Seiten stereografisch beide Karten 90° nach rechts gedreht -------------------------------------
+cscreentextur22s::cscreentextur22s (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
+  : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
+  {
+  xz1= real (screen1->xanz)/2;
+  yz1= real (screen1->yanz)/2;
+  kx1= pkx1*xz1;
+  ky1= pky1*yz1;
+
+  xz2= real (screen2->xanz)/2;
+  yz2= real (screen2->yanz)/2;
+  kx2= pkx2*xz2;
+  ky2= pky2*yz2;
+  }
+
+cvektor3 cscreentextur22s::getpunkt (const cvektor2 &pv)               // Schrott, Bullshit
+  {
+  integer r, g, b;
+  real l, x, y, k;
+
+  if (pv.y >= 0)
+    {
+    l= PIh - pv.y;
+    k= real (.85)/(cosr (l) + 1);
+    x= sinr (pv.x)*sin (l)*k;
+    y= cosr (pv.x)*sin (l)*k;
+    integer x1= integer (xz1 + x*kx1);
+    integer y1= integer (yz1 - y*kx1);
+    screen1->getpixel (x1, y1, r, g, b);
+    }
+    else
+    {
+    l= PIh + pv.y;
+    k= real (.85)/(cosr (l) + 1);
+    x= sinr (pv.x)*sin (l)*k;
+    y= cosr (pv.x)*sin (l)*k;
+    integer x1= integer (xz1 - x*kx1);
+    integer y1= integer (yz1 - y*kx1);
     screen2->getpixel (x1, y1, r, g, b);
     }
   return cvektor3 (real (r), real (g), real (b));
@@ -857,7 +923,7 @@ cwelt::cwelt (const char* pname)
 cvektor3 cwelt::getpunkt (const cvektor2 &pv)
   {
   cvektor3 sv (pv.x, pv.y, abstand);                                                        // Ebenenprojektion
-  //cvektor3 sv (sin(pv.x/abstand*2*PI), pv.y/abstand*2*PI, cos (pv.x/abstand*2*PI));         // Zylinderprojektion
+  //cvektor3 sv (sinr (pv.x/abstand*2*PI), pv.y/abstand*2*PI, cosr (pv.x/abstand*2*PI));         // Zylinderprojektion
 
   // Schnittpunkte erstellen, Schnittpunkte parametrisieren, Objekt begrenzen
   cschnittpunkte schnittpunkte;

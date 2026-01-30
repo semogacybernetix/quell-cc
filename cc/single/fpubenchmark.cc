@@ -158,7 +158,7 @@ void apfel ()
 
   // Apfelmännchenberechnung beginnen
   ckomplexk bilddiag= pixelgr/2 * ckomplexk (xanz - 1, yanz - 1);
-  ckomplexk bildecke= bildmitte - bilddiag; 
+  ckomplexk bildecke= bildmitte - bilddiag;
   ckomplexk poslauf;
   for (integer ylauf= 0; ylauf < yanz; ylauf++)
     for (integer xlauf= 0; xlauf < xanz; xlauf++)
