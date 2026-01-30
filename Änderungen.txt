@@ -346,6 +346,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2025.01.28 Mi  21:38, Mannigfaltigkeit entfernt, 2polar Textur symmetrisch berechnet, 0:50
 2025.01.29 Do  7:56, neue Parametrisierungen erstellt, getestet, Problem: Ungenauigkeiten wegen flachem Diffquotienten, neue Mercatorformel, Polarparametrisierungen, 12:03
+2025.01.30 Fr  2:58, Mercatorkarte 3 Parametrisierungen, mittenabstandstreue Polkarte genaue Berechung erstellt, 5:59
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

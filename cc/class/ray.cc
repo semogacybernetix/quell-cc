@@ -326,8 +326,7 @@ cvektor2 cparakugel::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugel2::berechne (const cvektor3 &pv)                                                        // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet
   {
-  //return cvektor2 (atan2r (pv.y, pv.x), atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y)));
-  return cvektor2 (atan2r (pv.y, pv.x), acosr (sqrtr (pv.x*pv.x + pv.y*pv.y)));                            // Äquatorungenauigkeit
+  return cvektor2 (atan2r (pv.y, pv.x), atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
 //----------- Kugel zylinder winkeltreu --------------------------------
@@ -339,17 +338,20 @@ cvektor2 cparakugelw::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugelw2::berechne (const cvektor3 &pv)                                                       // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet
   {
-  real l= atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y));
-  return cvektor2 (atan2r (pv.y, pv.x), logr (tanr (PIv + l/2)));
+  return cvektor2 (atan2r (pv.y, pv.x), atanhr (sinr (atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y)))));
+  }
+
+cvektor2 cparakugelw3::berechne (const cvektor3 &pv)                                                       // noch genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet
+  {
+  return cvektor2 (atan2r (pv.y, pv.x), logr (tanr (atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y))/2 + PIv)));
   }
 
 //----------- Kugel polar mittenabstandstreu ----------------------------
 
 cvektor2 cparakugelm::berechne (const cvektor3 &pv)
   {
-//  real k= acosr (pv.z)/cosr (asinr (pv.z));
-  real k= acosr (pv.z)/sqrtr (1 - pv.z*pv.z);
-//  real k= acosr (pv.z)/sqrtr (pv.x*pv.x + pv.y*pv.y);
+  real b= sqrtr (pv.x*pv.x + pv.y*pv.y);
+  real k= atan2 (b, pv.z)/b;
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
@@ -357,11 +359,10 @@ cvektor2 cparakugelm::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugelg::berechne (const cvektor3 &pv)
   {
-  real k= 1/pv.z;
-  return cvektor2 (pv.x*k, pv.y*k);
+  return cvektor2 (pv.x/pv.z, pv.y/pv.z);
   }
 
-//----------- Kugel polar winkeltreu ------------------------------------
+//----------- Kugel polar stereografisch ------------------------------------
 
 cvektor2 cparakugels::berechne (const cvektor3 &pv)
   {
