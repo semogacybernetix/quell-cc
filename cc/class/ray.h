@@ -135,11 +135,6 @@ struct cparakugelw2 : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugelw3 : clpara
-  {
-  cvektor2 berechne (const cvektor3 &pv);
-  };
-
 struct cparakugelg : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
@@ -150,7 +145,17 @@ struct cparakugels : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+struct cparakugels2 : clpara
+  {
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
 struct cparakugelf : clpara
+  {
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+struct cparakugelf2 : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };

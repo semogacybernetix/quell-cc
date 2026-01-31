@@ -306,7 +306,7 @@ cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
-//---------------------------------------------------------------------- Zylinder --------------------------------------------------------------------
+//---------------------------------------------------------------------- Zylinder ---------------------------------------------------------------------------------------------------------------------------------
 
 //----------- Zylinder winkeltreu-----------------------
 
@@ -315,9 +315,9 @@ cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), pv.z);
   }
 
-//---------------------------------------------------------------------- Kugel --------------------------------------------------------------------
+//---------------------------------------------------------------------- Kugel ------------------------------------------------------------------------------------------------------------------------------------
 
-//----------- Kugel zylinder platt -------------------------------------
+//----------- Kugel zylinder mittenabstandstreu (Plattkarte) -------------------------------------
 
 cvektor2 cparakugel::berechne (const cvektor3 &pv)
   {
@@ -326,53 +326,41 @@ cvektor2 cparakugel::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugel2::berechne (const cvektor3 &pv)                                                        // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet
   {
-  return cvektor2 (atan2r (pv.y, pv.x), atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y)));
+  return cvektor2 (atan2r (pv.y, pv.x), atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
-//----------- Kugel zylinder winkeltreu --------------------------------
+//----------- Kugel zylinder winkeltreu (Mercatorkarte) --------------------------------
 
 cvektor2 cparakugelw::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
   }
 
-cvektor2 cparakugelw2::berechne (const cvektor3 &pv)                                                       // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet
+cvektor2 cparakugelw2::berechne (const cvektor3 &pv)                                                       // genauere und langsamere Berechnung Polstellen verbessert, da nicht mehr nur von z abhängig
   {
-  return cvektor2 (atan2r (pv.y, pv.x), atanhr (sinr (atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y)))));
+  return cvektor2 (atan2r (pv.y, pv.x), asinhr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
-cvektor2 cparakugelw3::berechne (const cvektor3 &pv)                                                       // noch genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet
-  {
-  return cvektor2 (atan2r (pv.y, pv.x), logr (tanr (atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y))/2 + PIv)));
-  }
-
-//----------- Kugel polar mittenabstandstreu ----------------------------
-
-cvektor2 cparakugelm::berechne (const cvektor3 &pv)                                                        // hohe Genauigkeit
-  {
-  real b= sqrtr (pv.x*pv.x + pv.y*pv.y);
-  real k= atan2 (b, pv.z)/b;
-  return cvektor2 (pv.x*k, pv.y*k);
-  }
-
-//----------- Kugel polar gnomonisch ------------------------------------
+//----------- Kugel polar geradentreu (gnomonisch) ------------------------------------
 
 cvektor2 cparakugelg::berechne (const cvektor3 &pv)
   {
   return cvektor2 (pv.x/pv.z, pv.y/pv.z);
   }
 
-//----------- Kugel polar stereografisch ------------------------------------
+//----------- Kugel polar winkeltreu (stereografisch) ------------------------------------
 
 cvektor2 cparakugels::berechne (const cvektor3 &pv)
   {
   real k= 2/(pv.z + 1);                                            // Spitzenkrizzel
+  return cvektor2 (pv.x*k, pv.y*k);
+  }
 
-/*
+cvektor2 cparakugels2::berechne (const cvektor3 &pv)
+  {
   real x= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Quadratkrizzel
   real v= sqrtr (x*x + 1);
   real k= 2*v/(v + x);
-*/
 
   return cvektor2 (pv.x*k, pv.y*k);
   }
@@ -381,8 +369,12 @@ cvektor2 cparakugels::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugelf::berechne (const cvektor3 &pv)
   {
-  //real k= sqrtr (2/(pv.z + 1));                                  // ungenau fluktuierend
+  real k= sqrtr (2/(pv.z + 1));                                  // ungenau fluktuierend
+  return cvektor2 (pv.x*k, pv.y*k);
+  }
 
+cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
+  {
 /*
   real z= sqrtr (1 - pv.x*pv.x - pv.y*pv.y);                       // schwarzes Quadrat im Gegenpol
   if (pv.z < 0)
@@ -390,15 +382,26 @@ cvektor2 cparakugelf::berechne (const cvektor3 &pv)
   real k= sqrtr (2/(z + 1));
 */
 
-/*
-  real l= atan2r (pv.z, sqrtr (pv.x*pv.x + pv.y*pv.y));            // schwarzer Kreis im Gegenpol
+//*
+  real l= atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y));            // schwarzer Kreis im Gegenpol
   real k= sqrtr (2/(sin (l) + 1));
-*/
+//*/
 
+/*
   real x= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Krizzelkreis mit Hyperbol
   real v= sqrtr (x*x + 1);
   real k= sqrtr (2*v/(v + x));
+*/
 
+  return cvektor2 (pv.x*k, pv.y*k);
+  }
+
+//----------- Kugel polar mittenabstandstreu ----------------------------
+
+cvektor2 cparakugelm::berechne (const cvektor3 &pv)                                                        // hohe Genauigkeit
+  {
+  real b= sqrtr (pv.x*pv.x + pv.y*pv.y);
+  real k= (PIh - atanr (pv.z/b))/b;
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
@@ -455,14 +458,25 @@ cvektor2 cparatoruss::berechne (const cvektor3 &pv)
 
 cvektor2 cparatorusu::berechne (const cvektor3 &pv)
   {
-  cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));
-  real ky= winkelb (mitte, pv - mitte);
-  real kx= atan2r (pv.y, pv.x);
-
-  if (pv.z < 0)
+  // Längengrad bestimmen
+  real kx= atan2r (pv.y, pv.x);                            // Längengrad bestimmen
+  //real kx= atanr (pv.y/pv.x);                               // Periodizität [0, pi]
+  if (kx < 0)                                              // Periode verschieben, atan2r von [-pi, pi] -> [0, 2pi] umrechnen
+    kx= kx + PI2;                                          // bei negativem Wert eine volle Periode addieren
+/*
+  //Breitengrad bestimmen
+  cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));     // Projektion auf xy-Ebene, Spitze auf Kreislinie
+  real ky= winkelb (mitte, pv - mitte);                    // Winkel und an xy-Ebene gespiegelter Winkel sind gleich (Vorzeichen wird eliminiert)
+  if (pv.z < 0)                                            // falls der Winkel der an der xy-Ebene gespiegelte ist, eine volle Periode dazuaddieren und das weggefallene Vorzeichen wieder hinzufügen
     ky= PI2 - ky;
-  if (kx < 0)
-    kx= PI2 + kx;
+*/
+  //Breitengrad bestimmen
+  cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));     // Projektion auf xy-Ebene, Spitze auf Kreislinie
+  cvektor3 rot= normiere (pv - mitte);
+  real b= mitte%rot;
+  real ky= atan2 (rot.z, b);
+  if (ky < 0)                                              // Periode in den positiven Bereich verschieben
+    ky= ky + PI2;
 
   return cvektor2 (kx, ky);
   }
