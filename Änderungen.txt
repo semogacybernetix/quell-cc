@@ -348,7 +348,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.01.29 Do  7:56, neue Parametrisierungen erstellt, getestet, Problem: Ungenauigkeiten wegen flachem Diffquotienten, neue Mercatorformel, Polarparametrisierungen, 12:03
 2026.01.30 Fr  2:58, Mercatorkarte 3 Parametrisierungen, mittenabstandstreue Polkarte genaue Berechung erstellt, 5:59, 9 Uhr, flächentreu polar, stereografisch polar Formeln neu erstellt, umgestellt, 13:56
 2026.01.31 Sa  9:08, tolle neue Formel entdeckt: atanh (sin (atan (x))) = asinh (x), neue Mercatorformel mit asinh erstellt, arctan2 wo möglich durch arctan ersetzt, Parametrisierungsformeln verbessert,
-                     neue Formel in Torusparametrisierung eingepflegt, 13:27
+                     neue Formel in Torusparametrisierung eingepflegt, 13:27, 0:59, alle Karten nochmal durchgegangen, Formeln Kosmetik, 1:55
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

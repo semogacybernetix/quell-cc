@@ -356,7 +356,7 @@ cvektor2 cparakugels::berechne (const cvektor3 &pv)
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
-cvektor2 cparakugels2::berechne (const cvektor3 &pv)
+cvektor2 cparakugels2::berechne (const cvektor3 &pv)               // fast keine Verbesserung, scharfe Treppen statt Krizzel
   {
   real x= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Quadratkrizzel
   real v= sqrtr (x*x + 1);
@@ -369,7 +369,7 @@ cvektor2 cparakugels2::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugelf::berechne (const cvektor3 &pv)
   {
-  real k= sqrtr (2/(pv.z + 1));                                  // ungenau fluktuierend
+  real k= sqrtr (2/(pv.z + 1));                                    // ungenau fluktuierend
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
@@ -383,7 +383,7 @@ cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
 */
 
 //*
-  real l= atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y));            // schwarzer Kreis im Gegenpol
+  real l= atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y));              // schwarzer Kreis im Gegenpol
   real k= sqrtr (2/(sin (l) + 1));
 //*/
 
