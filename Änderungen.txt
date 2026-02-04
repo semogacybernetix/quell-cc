@@ -350,10 +350,10 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.01.31 Sa  9:08, tolle neue Formel entdeckt: atanh (sin (atan (x))) = asinh (x), neue Mercatorformel mit asinh erstellt, arctan2 wo möglich durch arctan ersetzt, Parametrisierungsformeln verbessert,
                      neue Formel in Torusparametrisierung eingepflegt, 13:27, 0:59, alle Karten nochmal durchgegangen, Formeln Kosmetik, 1:55
 2026.02.03 Di 23:29, Parametrisierungen getestet, Formeln abschlossen, Texturen 2Pol stehen noch aus, 2:02
+2026.02.04 Mi  8:26, stereografische 2Pol-Textur Fehler korrigiert (0.133/PI, xy*cos z), 10:40, stereografische Karten heruntergeladen, editiert, getestet, 12:35
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Kartenprojektionen (stereografisch, gnomonisch, flächentreu, zentralabstandstreu, kegel) implementieren
 framerate sauber implementieren
 Mauszeiger implementieren um Daten von der quartische Gleichung für Fehlerpixel zu bekommen
 xray framebuffer, keyboardbuffer

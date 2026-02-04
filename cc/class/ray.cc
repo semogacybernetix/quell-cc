@@ -687,7 +687,7 @@ cvektor3 cscreentexturpol::getpunkt (const cvektor2 &pv)
   return cvektor3 (real (r), real (g), real (b));
   }
 
-// ------------------------------------------ Polkappen von beiden Seiten beide Karten 90° nach rechts gedreht -------------------------------------
+// ------------------------------------------ Polkappen von beiden Seiten mittenabstandstreu, polar parametrisiert, beide Karten 90° nach rechts gedreht -------------------------------------
 cscreentextur2::cscreentextur2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
   : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
@@ -724,7 +724,7 @@ cvektor3 cscreentextur2::getpunkt (const cvektor2 &pv)
   return cvektor3 (real (r), real (g), real (b));
   }
 
-// ------------------------------------------ Polkappen von beiden Seiten mittenabstandstreu beide Karten 90° nach rechts gedreht -------------------------------------
+// ------------------------------------------ Polkappen von beiden Seiten mittenabstandstreu, zylindrisch parametrisiert, beide Karten 90° nach rechts gedreht -------------------------------------
 cscreentextur22::cscreentextur22 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
   : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
@@ -746,7 +746,7 @@ cvektor3 cscreentextur22::getpunkt (const cvektor2 &pv)
 
   if (pv.y >= 0)
     {
-    l= PIh - pv.y;
+    l= PIh - pv.y;                                     // Einfache Subtraktion statt k-Faktorbestimmung, weil pv.y schon im Bogenmaß ist
     x= sinr (pv.x)*l;
     y= cosr (pv.x)*l;
     integer x1= integer (xz1 + x*kx1);
@@ -765,7 +765,7 @@ cvektor3 cscreentextur22::getpunkt (const cvektor2 &pv)
   return cvektor3 (real (r), real (g), real (b));
   }
 
-// ------------------------------------------ Polkappen von beiden Seiten stereografisch beide Karten 90° nach rechts gedreht -------------------------------------
+// ------------------------------------------ Polkappen von beiden Seiten stereografisch, zylindrisch parametrisiert, beide Karten 90° nach rechts gedreht -------------------------------------
 cscreentextur22s::cscreentextur22s (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
   : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
@@ -780,27 +780,31 @@ cscreentextur22s::cscreentextur22s (clscreen8* pscreen1, const real pkx1, const 
   ky2= pky2*yz2;
   }
 
-cvektor3 cscreentextur22s::getpunkt (const cvektor2 &pv)               // Schrott, Bullshit
+cvektor3 cscreentextur22s::getpunkt (const cvektor2 &pv)
   {
   integer r, g, b;
-  real l, x, y;
+  real z, l, k, x, y;
 
   if (pv.y >= 0)
     {
-    l= PIh - pv.y;
-    x= sinr (pv.x)*l;
-    y= cosr (pv.x)*l;
-    integer x1= integer (xz1 + x*kx1);
-    integer y1= integer (yz1 - y*kx1);
+    z= sinr (pv.y);
+    k= 2/(1 + z);
+    l= cosr (pv.y);
+    x= cosr (pv.x)*l*k;
+    y= sinr (pv.x)*l*k;
+    integer x1= integer (xz1 + y*kx1);
+    integer y1= integer (yz1 - x*kx1);
     screen1->getpixel (x1, y1, r, g, b);
     }
     else
     {
-    l= PIh + pv.y;
-    x= sinr (pv.x)*l;
-    y= cosr (pv.x)*l;
-    integer x1= integer (xz1 + x*kx1);
-    integer y1= integer (yz1 + y*kx1);
+    z= sinr (pv.y);
+    k= 2/(1 - z);
+    l= cosr (pv.y);
+    x= cosr (pv.x)*l*k;
+    y= sinr (pv.x)*l*k;
+    integer x1= integer (xz2 + y*kx2);
+    integer y1= integer (yz2 + x*kx2);
     screen2->getpixel (x1, y1, r, g, b);
     }
   return cvektor3 (real (r), real (g), real (b));
