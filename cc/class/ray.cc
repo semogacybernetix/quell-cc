@@ -317,14 +317,14 @@ cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
 
 //---------------------------------------------------------------------- Kugel ------------------------------------------------------------------------------------------------------------------------------------
 
-//----------- Kugel zylinder mittenabstandstreu (Plattkarte) -------------------------------------
+//----------- Kugel zylinder mittenabstandstreu (Plattkarte) ---------------------------
 
-cvektor2 cparakugel::berechne (const cvektor3 &pv)
+cvektor2 cparakugel::berechne (const cvektor3 &pv)                                                         // Krizzelkreis in den Polen bei der Plattkarte und 2Pol-mittenabstandstreu-Karte
   {
   return cvektor2 (atan2r (pv.y, pv.x), asinr (pv.z));
   }
 
-cvektor2 cparakugel2::berechne (const cvektor3 &pv)                                                        // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet
+cvektor2 cparakugel2::berechne (const cvektor3 &pv)                                                        // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet, keine Krizzelkreise mehr
   {
   return cvektor2 (atan2r (pv.y, pv.x), atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
@@ -341,7 +341,7 @@ cvektor2 cparakugelw2::berechne (const cvektor3 &pv)                            
   return cvektor2 (atan2r (pv.y, pv.x), asinhr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
-//----------- Kugel polar geradentreu (gnomonisch) ------------------------------------
+//----------- Kugel polar geradentreu (gnomonisch) -------------------------------------
 
 cvektor2 cparakugelg::berechne (const cvektor3 &pv)
   {
@@ -358,9 +358,9 @@ cvektor2 cparakugels::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugels2::berechne (const cvektor3 &pv)               // fast keine Verbesserung, scharfe Treppen statt Krizzel
   {
-  real x= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Quadratkrizzel
-  real v= sqrtr (x*x + 1);
-  real k= 2*v/(v + x);
+  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Quadratkrizzel
+  real v= sqrtr (t*t + 1);
+  real k= 2*v/(v + t);
 
   return cvektor2 (pv.x*k, pv.y*k);
   }
@@ -369,36 +369,44 @@ cvektor2 cparakugels2::berechne (const cvektor3 &pv)               // fast keine
 
 cvektor2 cparakugelf::berechne (const cvektor3 &pv)
   {
-  real k= sqrtr (2/(pv.z + 1));                                    // ungenau fluktuierend
+  real k= sqrtr (2/(pv.z + 1));                                    // ungenau, fluktuierender Gegenpol
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
 cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
   {
 /*
-  real z= sqrtr (1 - pv.x*pv.x - pv.y*pv.y);                       // schwarzes Quadrat im Gegenpol
-  if (pv.z < 0)
-    z= -z;
-  real k= sqrtr (2/(z + 1));
-*/
-
-//*
-  real l= atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y));              // schwarzer Kreis im Gegenpol
-  real k= sqrtr (2/(sin (l) + 1));
+  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Wurzel stereografisch, Krizzelkreis mit Hyperbol
+  real v= sqrtr (t*t + 1);
+  real k= sqrtr (2*v/(v + t));
 //*/
 
 /*
-  real x= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Krizzelkreis mit Hyperbol
-  real v= sqrtr (x*x + 1);
-  real k= sqrtr (2*v/(v + x));
-*/
+  real z;
+  if (pv.z >= 0)                                                   // xy-Radiusmethode, schwarzes Quadrat im Gegenpol
+    z= sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
+    else
+    z= -sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
+  real k= sqrtr (2/(z + 1));
+//*/
+
+//*
+  real z= sinr (atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));       // Bogenmethode, schwarzer Kreis im Gegenpol
+  real k= sqrtr (2/(z + 1));
+//*/
 
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
 //----------- Kugel polar mittenabstandstreu ----------------------------
 
-cvektor2 cparakugelm::berechne (const cvektor3 &pv)                                                        // hohe Genauigkeit
+cvektor2 cparakugelm::berechne (const cvektor3 &pv)                // Krizzelkreis im Nullpunkt
+  {
+  real k= acosr (pv.z)/cosr (asinr (pv.z));
+  return cvektor2 (pv.x*k, pv.y*k);
+  }
+
+cvektor2 cparakugelm2::berechne (const cvektor3 &pv)               // hohe Genauigkeit, kein Krizzelkreis mehr
   {
   real b= sqrtr (pv.x*pv.x + pv.y*pv.y);
   real k= (PIh - atanr (pv.z/b))/b;
@@ -775,14 +783,13 @@ cscreentextur22s::cscreentextur22s (clscreen8* pscreen1, const real pkx1, const 
 cvektor3 cscreentextur22s::getpunkt (const cvektor2 &pv)               // Schrott, Bullshit
   {
   integer r, g, b;
-  real l, x, y, k;
+  real l, x, y;
 
   if (pv.y >= 0)
     {
     l= PIh - pv.y;
-    k= real (.85)/(cosr (l) + 1);
-    x= sinr (pv.x)*sin (l)*k;
-    y= cosr (pv.x)*sin (l)*k;
+    x= sinr (pv.x)*l;
+    y= cosr (pv.x)*l;
     integer x1= integer (xz1 + x*kx1);
     integer y1= integer (yz1 - y*kx1);
     screen1->getpixel (x1, y1, r, g, b);
@@ -790,11 +797,10 @@ cvektor3 cscreentextur22s::getpunkt (const cvektor2 &pv)               // Schrot
     else
     {
     l= PIh + pv.y;
-    k= real (.85)/(cosr (l) + 1);
-    x= sinr (pv.x)*sin (l)*k;
-    y= cosr (pv.x)*sin (l)*k;
-    integer x1= integer (xz1 - x*kx1);
-    integer y1= integer (yz1 - y*kx1);
+    x= sinr (pv.x)*l;
+    y= cosr (pv.x)*l;
+    integer x1= integer (xz1 + x*kx1);
+    integer y1= integer (yz1 + y*kx1);
     screen2->getpixel (x1, y1, r, g, b);
     }
   return cvektor3 (real (r), real (g), real (b));
