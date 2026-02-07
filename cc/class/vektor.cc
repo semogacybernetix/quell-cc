@@ -725,7 +725,7 @@ ckomplexk operator / (const ckomplexk &pv1, const ckomplexk &pv2)
 // kartesischkomplexe Potenz von ganzer Zahl
 ckomplexk operator ^ (const ckomplexk &pv, const integer &pn)
   {
-  ckomplexk ret= einsk;
+  ckomplexk ret= 1;
   integer bpn= llabs (pn);
 
   for (integer lauf= 0; lauf < bpn; lauf++)

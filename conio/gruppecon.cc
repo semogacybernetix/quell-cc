@@ -208,7 +208,7 @@ void printkreis (const char* pdateiname, cbasis3 pkreisbasis, real ppunkte)
   printtextobj (pdateiname, "\nl");
   for (real lauf= 0; lauf < ppunkte; lauf++)
     printzahlobj (pdateiname, lauf+1, 0, 0);
-  printzahlobj (pdateiname, r1, 0, 0);
+  printzahlobj (pdateiname, real (1), 0, 0);
   printtextobj (pdateiname, "\n");
   fclose (datei);
   }

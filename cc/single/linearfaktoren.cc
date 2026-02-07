@@ -93,7 +93,7 @@ void quadratischweg1 (ckomplexk ad, ckomplexk bd)
   al= pd;
 
   // Lösungen der reduzierten linearen Gleichung (die reduzierte lineare Gleichung hat keine Parameter somit ist deren Lösung immer Null)
-  yl= nullk;
+  yl= 0;
 
   // Rücktransformation der Lösungen der reduzierten linearen Gleichung in die Lösungen der normalen linearen Gleichung
   xl= yl - al;
@@ -179,7 +179,7 @@ void quadratischeingabezw ()
 
 //--------------------------------------------------------------------------- kubische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
 
-void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);
+void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);       // Nur Deklaration, Implementation später
 
 void kubischparameter ()
   {
@@ -471,7 +471,7 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   uh3_21p= -kqp*sqrtr (real (27))*ik - sqrtr (D21_l);
   vh3_21p= -kqp*sqrtr (real (27))*ik + sqrtr (D21_l);
   d_21p= uh3_21p - vh3_21p;
-  bed= -kpp*cbrtr (-einsk*4);
+  bed= -kpp*cbrtr (-ckomplexk (4));
   uvaddition (uh3_21p, vh3_21p, bed, L1_21p, L2_21p, L3_21p);
   L1_21p= L1_21p/cbrtr (ik*sqrtr (real (108)));
   L2_21p= L2_21p/cbrtr (ik*sqrtr (real (108)));
@@ -480,10 +480,10 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   // Lösungen Faktor 1.73i  D = d²/4
   D17_l= dq/4;
   D17_p= -(kqp*kqp)*27/4 - kpp*kpp*kpp;
-  uh3_17p= -kqp/2*sqrtr (-27*einsk) + sqrtr (D17_l);
-  vh3_17p= -kqp/2*sqrtr (-27*einsk) - sqrtr (D17_l);
+  uh3_17p= -kqp/2*sqrtr (-ckomplexk (27)) + sqrtr (D17_l);
+  vh3_17p= -kqp/2*sqrtr (-ckomplexk (27)) - sqrtr (D17_l);
   d_17p= uh3_17p - vh3_17p;
-  bed= kpp*-cbrtr (-einsk);
+  bed= kpp*-cbrtr (-ckomplexk (1));
   uvaddition (uh3_17p, vh3_17p, bed, L1_17p, L2_17p, L3_17p);
   L1_17p= L1_17p/cbrtr (ik*sqrtr (real (27)));
   L2_17p= L2_17p/cbrtr (ik*sqrtr (real (27)));

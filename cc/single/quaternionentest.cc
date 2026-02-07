@@ -286,11 +286,11 @@ void testedivision ()
 void testegoldenematrix ()
   {
   cvektor4 v1, v2, v3, v4, ein1, ass1, ass2, ass3;
-  real re1= rv*(sqrtr(r5) + 1);
-  real im1= rv*(sqrtr(10 - 2*sqrtr(r5)));
-  real re2= rv*(sqrtr(r5) - 1);
-  real im2= rv*(sqrtr(10 + 2*sqrtr(r5)));
-  real v3h= sqrtr(r3)/2;
+  real re1= (sqrtr(real (5)) + 1)/4;
+  real im1= (sqrtr(10 - 2*sqrtr(real (5))))/4;
+  real re2= (sqrtr(real (5)) - 1)/4;
+  real im2= (sqrtr(10 + 2*sqrtr(real (5))))/4;
+  real v3h= sqrtr(real (3))/2;
   v1= cvektor4 (re1, im1, 0, 0);
   v2= cvektor4 (re2, im2, 0, 0);
   v3= cvektor4 (re1, -im1, 0, 0);
@@ -301,10 +301,10 @@ void testegoldenematrix ()
   v3= cvektor4 (im1, -re1, 0, 0);
   v4= cvektor4 (im2, -re2, 0, 0);
 
-  v1= cvektor4 (v3h, -rh, 0, 0);
-  v2= cvektor4 (-v3h, -rh, 0, 0);
-  v3= cvektor4 (v3h, rh, 0, 0);
-  v4= cvektor4 (-v3h, rh, 0, 0);
+  v1= cvektor4 (v3h, -real (0.5), 0, 0);
+  v2= cvektor4 (-v3h, -real (0.5), 0, 0);
+  v3= cvektor4 (v3h, real (0.5), 0, 0);
+  v4= cvektor4 (-v3h, real (0.5), 0, 0);
   }
 
 //--------------------------------------- Testedrehungen mit Schrittweite ---------------------
@@ -1103,8 +1103,8 @@ void generierepolyederobj ()
 //------------------------  T, Td -----------------------------------------------------------------------
 
   dreh1= cvektor4 (120, 0, 0, -1);
-  dreh2= cvektor4 (120, sqrtr (r8), 0, 1);
-  dreh3= cvektor4 (-180, 1, 0, sqrtr (r2));  // Spiegelkante funktioniert nicht als Drehkante
+  dreh2= cvektor4 (120, sqrtr (real (8)), 0, 1);
+  dreh3= cvektor4 (-180, 1, 0, sqrtr (real (2)));  // Spiegelkante funktioniert nicht als Drehkante
 
   // Tetraeder E
   objdatei= "Polyeder/11  T  E     Tetraeder.obj";
@@ -1123,12 +1123,12 @@ void generierepolyederobj ()
 
   // Tetraeder E+K (Tetraederstumpf)
   objdatei= "Polyeder/14  T  E+K   Tetraederstumpf.obj";
-  vefk= cvektor3 (0, 1, 2/sqrtr (r3));
+  vefk= cvektor3 (0, 1, 2/sqrtr (real (3)));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Tetraeder F+K (Tetraederstumpf dual)
   objdatei= "Polyeder/15  T  F+K   Tetraederstumpf dual.obj";
-  vefk= cvektor3 (1, 0, 2/sqrtr (r3));
+  vefk= cvektor3 (1, 0, 2/sqrtr (real (3)));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Tetraeder E+F (Kuboktaeder)
@@ -1137,7 +1137,7 @@ void generierepolyederobj ()
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Tetraeder E+F+K (Ikosaeder)
-  vefk= cvektor3 (1, 1, (sqrtr (r5) - 1)/sqrtr (r3));
+  vefk= cvektor3 (1, 1, (sqrtr (real (5)) - 1)/sqrtr (real (3)));
 
   // Tetraeder E+F+K (Ikosaeder) FEK+
   objdatei= "Polyeder/17  T  E+F+K Ikosaeder FEK+.obj";
@@ -1149,7 +1149,7 @@ void generierepolyederobj ()
 
   // Tetraeder E+F+K (Oktaederstumpf)
   objdatei= "Polyeder/18  Td E+F+K Oktaederstumpf.obj";
-  vefk= cvektor3 (1, 1, 2/sqrtr (r3));
+  vefk= cvektor3 (1, 1, 2/sqrtr (real (3)));
   generiere1polyederobj (objdatei, dreh1, dreh3, vefk, 1, 1);
 
 //----------------------------------------------- O, Oh -------------------------------------------------
@@ -1175,21 +1175,21 @@ void generierepolyederobj ()
 
   // Würfelstumpf E+K
   objdatei= "Polyeder/24  O  E+K   Würfelstumpf.obj";
-  vefk= cvektor3 (1, 0, 2/sqrtr (r3));
+  vefk= cvektor3 (1, 0, 2/sqrtr (real (3)));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Oktaederstumpf F+K
   objdatei= "Polyeder/25  O  F+K   Oktaederstumpf.obj";
-  vefk= cvektor3 (0, 1, sqrtr (r2));
+  vefk= cvektor3 (0, 1, sqrtr (real (2)));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Rhombenkuboktaeder E+F
   objdatei= "Polyeder/26  O  E+F   Rhombenkuboktaeder.obj";
-  vefk= cvektor3 (1, sqrtr (r2d), 0);
+  vefk= cvektor3 (1, sqrtr (real (2)/3), 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Cubus Simus E+F+K
-  koerperv= cvektor3 (rt, 1, 1/rt);
+  koerperv= cvektor3 (trib, 1, 1/trib);
   ermittleefkvektor (vefk, dreh1, dreh2, koerperv);
 
   // Cubus Simus E+F+K FEK+
@@ -1202,19 +1202,19 @@ void generierepolyederobj ()
 
   // großes Rhombenkuboktaeder E+F+K
   objdatei= "Polyeder/28  Oh E+F+K großes Rhombenkuboktaeder.obj";
-  vefk= cvektor3 (1, sqrtr (r2d), 2/sqrtr (r3));
+  vefk= cvektor3 (1, sqrtr (real (2)/3), 2/sqrtr (real (3)));
   generiere1polyederobj (objdatei, dreh1, dreh3, vefk, 1, 1);
 
 //----------------------------------------------- I, Ih -------------------------------------------------
 
   dreh1= cvektor4 (72, 0, 0, 1);
-  dreh2= cvektor4 (180, -1, 0, rg);
-  dreh3= cvektor4 (-180, -1, 0, rg);
+  dreh2= cvektor4 (180, -1, 0, gold);
+  dreh3= cvektor4 (-180, -1, 0, gold);
 
   // Dodecaedron simum
   cvektor4 dreh1kart, dreh2kart;
   dreh1kart= cvektor4 (120, 1, 1, 1);
-  dreh2kart= cvektor4 (72, 0, 1, rg);
+  dreh2kart= cvektor4 (72, 0, 1, gold);
   real x;
 
   // Dodekaeder E
@@ -1234,22 +1234,22 @@ void generierepolyederobj ()
 
   // Dodekaederstumpf E+K
   objdatei= "Polyeder/34  I  E+K   Dodekaederstumpf.obj";
-  vefk= cvektor3 (1, 0, 2/sqrtr (r3));
+  vefk= cvektor3 (1, 0, 2/sqrtr (real (3)));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Ikosaederstumpf F+K
   objdatei= "Polyeder/35  I  F+K   Ikosaederstumpf.obj";
-  vefk= cvektor3 (0, 1, sqrtr (8/(5 - sqrtr(r5))));
+  vefk= cvektor3 (0, 1, sqrtr (8/(5 - sqrtr(real (5)))));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Rhombenikosidodekaeder E+F
   objdatei= "Polyeder/36  I  E+F   Rhombenikosidodekaeder.obj";
-  vefk= cvektor3 (1, sqrtr ((5 - sqrtr(r5))/6), 0);
+  vefk= cvektor3 (1, sqrtr ((5 - sqrtr(real (5)))/6), 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
   // Dodecaedron simum E+F+K
-  x= kubischegleichung (2, 0, -rg*rg);
-  koerperv= cvektor3 (x, (1 - x)*rg*rg, ((2*x + 1)*x - rg*rg)*rg);
+  x= kubischegleichung (2, 0, -gold*gold);
+  koerperv= cvektor3 (x, (1 - x)*gold*gold, ((2*x + 1)*x - gold*gold)*gold);
   ermittleefkvektor (vefk, dreh1kart, dreh2kart, koerperv);
 
   // Dodecaedron simum E+F+K  FEK+
@@ -1262,7 +1262,7 @@ void generierepolyederobj ()
 
   // großes Rhombenkikosidodekaeder E+F+K
   objdatei= "Polyeder/38  Ih E+F+K großes Rhombenikosidodekaeder.obj";
-  vefk= cvektor3 (1, sqrtr ((5 - sqrtr(r5))/6), 2/sqrtr (r3));
+  vefk= cvektor3 (1, sqrtr ((5 - sqrtr(real (5)))/6), 2/sqrtr (real (3)));
   generiere1polyederobj (objdatei, dreh1, dreh3, vefk, 1, 1);
 
 //----------------------------------------------- Th -------------------------------------------------------
@@ -1292,21 +1292,21 @@ void generierepolyederobj ()
   objdatei= "Polyeder/44  Th E+K   Würfelstumpf.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
-  vefk= cvektor3 (1, 1, sqrtr (r2) - 1);
+  vefk= cvektor3 (1, 1, sqrtr (real (2)) - 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th F+K (Ikosaeder)
   objdatei= "Polyeder/45  Th F+K   Ikosaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
-  vefk= cvektor3 (rg, 1, 0);
+  vefk= cvektor3 (gold, 1, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E+F (Rhombenkuboktaeder)
   objdatei= "Polyeder/46  Th E+F   Rhombenkuboktaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
-  vefk= cvektor3 (1 + sqrtr (r2), 1, 1);
+  vefk= cvektor3 (1 + sqrtr (real (2)), 1, 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E (Trapezkörper Würfel FK)
@@ -1376,28 +1376,28 @@ void generierepolyederobj ()
   objdatei= "Polyeder/474 Th E+f+K Trapezkörper Würfelstumpf.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
-  vefk= cvektor3 (real (1.1), 1, sqrtr (r2) - 1);
+  vefk= cvektor3 (real (1.1), 1, sqrtr (real (2)) - 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th F+K (Trapezkörper Ikosaeder E)
   objdatei= "Polyeder/475 Th e+F+K Trapezkörper Ikosaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
-  vefk= cvektor3 (rg + real (0.1), real (1.1), real (0.1));
+  vefk= cvektor3 (gold + real (0.1), real (1.1), real (0.1));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E+F (Trapezkörper Rhombenkuboktaeder K)
   objdatei= "Polyeder/476 Th E+F+k Trapezkörper Rhombenkuboktaeder.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
-  vefk= cvektor3 (real (1.1) + sqrtr (r2), real (1.1), 1);
+  vefk= cvektor3 (real (1.1) + sqrtr (real (2)), real (1.1), 1);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
   // Th E+F+K (Trapezkörper Trapezkörper)
   objdatei= "Polyeder/477 Th E+F+K Trapezkörper Trapezkörper.obj";
   dreh1= cvektor4 (120, 1, 1, 1);
   dreh2= cvektor4 (-180, 1, 0, 0);
-  vefk= cvektor3 (1/sqrtr (r3) + sqrtr (rh) + 1, 1/sqrtr (r3) + sqrtr (rh), 1/sqrtr (r3));
+  vefk= cvektor3 (1/sqrtr (real (3)) + sqrtr (real (0.5)) + 1, 1/sqrtr (real (3)) + sqrtr (real (0.5)), 1/sqrtr (real (3)));
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 0);
 
 //----- Sonderkörper ---------------------------------------------------------------------------------------
@@ -1405,7 +1405,7 @@ void generierepolyederobj ()
   // Würfel auf Spitze mit Sechseck
   objdatei= "Polyeder/51  O  E     Würfel Spitze.obj";
   dreh1= cvektor4 (120, 0, 0, 1);
-  dreh2= cvektor4 (180, 1, 0, sqrtr (r2));
+  dreh2= cvektor4 (180, 1, 0, sqrtr (real (2)));
   vefk= cvektor3 (1, 0, 0);
   generiere1polyederobj (objdatei, dreh1, dreh2, vefk, 1, 1);
 
