@@ -26,15 +26,15 @@ void printinteger (integer pn);
 //------------------------ cvektor3 ------------------------------------------------------------------
 void realeingabe (_Float32& pv);
 void realeingabe (_Float64& pv);
-void realeingabe (_Float8x& pv);
+void realeingabe (_Float80& pv);
 
 void printreal (_Float32 pr);
 void printreal (_Float64 pr);
-void printreal (_Float8x pr);
+void printreal (_Float80 pr);
 
 void printrealobj (const char* pdateiname, _Float32 pr);
 void printrealobj (const char* pdateiname, _Float64 pr);
-void printrealobj (const char* pdateiname, _Float8x pr);
+void printrealobj (const char* pdateiname, _Float80 pr);
 
 void printzahlobj (const char* pdateiname, real pr, integer pst);
 void printzahlobj (const char* pdateiname, integer pi, integer pst);

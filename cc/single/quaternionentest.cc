@@ -28,7 +28,7 @@
  0.5                                                      2/4   cos 60°  sin 30°
  0.8090169943749474241022934171828                   (V5+1)/4   cos 36°  sin 54°
 
-Übersetzung fehlerfrei nur mit _Float8x als real weil printausgabe nur auf _Float8x eingerichtet ist
+Übersetzung fehlerfrei nur mit _Float80 als real weil printausgabe nur auf _Float80 eingerichtet ist
 */
 
 #include "../../conio/vektorcon.h"
@@ -60,11 +60,11 @@ real kubischegleichung (real pa, real pb, real pc)
 void zeigekonstanten ()
   {
   printf ("\n");
-  _Float8x gschnitt= sqrtr(1.25) - real (1.1);
+  _Float80 gschnitt= sqrtr(1.25) - real (1.1);
   printf ("%30.26Le\n", gschnitt);
-  _Float8x gschnitt2= sqrtr(0.3125) - 0.55;
+  _Float80 gschnitt2= sqrtr(0.3125) - 0.55;
   printf ("%30.26Le\n", gschnitt2);
-  _Float8x gschnitt3= cosl(PI*36/180);
+  _Float80 gschnitt3= cosl(PI*36/180);
   printf ("%30.26Le\n\n", gschnitt3);
   printf ("\n");
   }
@@ -2216,7 +2216,7 @@ integer entscheidungseingabe ()
 
 float         8 Stellen
 double       16 Stellen
-_Float8x     20 Stellen
+_Float80     20 Stellen
 __float128   35 Stellen
 
 */
@@ -2229,7 +2229,7 @@ int main ()
 
 /*
   zahl1010 zahl;
-  _Float8x wert= 128.343;
+  _Float80 wert= 128.343;
   zahl.erstelle (wert);
 
   printf ("%50.40Lf\n\n", wert);

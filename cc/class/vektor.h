@@ -7,14 +7,14 @@
 // ------------------------------------------------------------------------  Datentypen -----------------------------------------------------
 
 typedef signed long long integer;
-typedef long double _Float8x;
+typedef long double _Float80;
 
 //                                                                                                                                           xray N97  raspi5  Apfel N97  Apfel raspi5                     orangepi5
 // ------------------------- 16 Bit -------------------------------------------------------------------------------------------------------------
 //typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen      gibts nicht auf raspi5                                     5.00              3.96
 
 // ------------------------- 32 Bit -------------------------------------------------------------------------------------------------------------
-typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
+//typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
-//typedef _Float8x real;        // AMD64: 80 Bit hw, ARM64: 128 Bit sw                                                                       6.90      4.34    0.53         10.84                               5.55
+typedef _Float80 real;        // AMD64: 80 Bit hw, ARM64: 128 Bit sw                                                                       6.90      4.34    0.53         10.84                               5.55
 //typedef long double real;     // AMD64: 80 Bit hw, ARM64: 128 Bit sw
 
 // ------------------------- 80 Bit -------------------------------------------------------------------------------------------------------------
@@ -195,87 +195,87 @@ void     savemax    (integer& pmax, integer pr);
 
 _Float32 modr (const _Float32& a, const _Float32& b);
 _Float64 modr (const _Float64& a, const _Float64& b);
-_Float8x modr (const _Float8x& a, const _Float8x& b);
+_Float80 modr (const _Float80& a, const _Float80& b);
 
 _Float32 floorr (const _Float32& a);
 _Float64 floorr (const _Float64& a);
-_Float8x floorr (const _Float8x& a);
+_Float80 floorr (const _Float80& a);
 
 _Float32 absr (const _Float32& a);
 _Float64 absr (const _Float64& a);
-_Float8x absr (const _Float8x& a);
+_Float80 absr (const _Float80& a);
 
 _Float32 sqrtr (const _Float32& a);
 _Float64 sqrtr (const _Float64& a);
-_Float8x sqrtr (const _Float8x& a);
+_Float80 sqrtr (const _Float80& a);
 
 _Float32 cbrtr (const _Float32& a);
 _Float64 cbrtr (const _Float64& a);
-_Float8x cbrtr (const _Float8x& a);
+_Float80 cbrtr (const _Float80& a);
 
 _Float32 qnrtr (const _Float32& a);
 _Float64 qnrtr (const _Float64& a);
-_Float8x qnrtr (const _Float8x& a);
+_Float80 qnrtr (const _Float80& a);
 
 _Float32 expr (const _Float32& a);
 _Float64 expr (const _Float64& a);
-_Float8x expr (const _Float8x& a);
+_Float80 expr (const _Float80& a);
 
 _Float32 logr (const _Float32& a);
 _Float64 logr (const _Float64& a);
-_Float8x logr (const _Float8x& a);
+_Float80 logr (const _Float80& a);
 
 _Float32 powr (const _Float32& a, const _Float32& b);
 _Float64 powr (const _Float64& a, const _Float64& b);
-_Float8x powr (const _Float8x& a, const _Float8x& b);
+_Float80 powr (const _Float80& a, const _Float80& b);
 
 // --------------------------------------------------------------------- Winkelfunktionen ------------------------------------------------------------
 _Float32 sinr (const _Float32& a);
 _Float64 sinr (const _Float64& a);
-_Float8x sinr (const _Float8x& a);
+_Float80 sinr (const _Float80& a);
 
 _Float32 cosr (const _Float32& a);
 _Float64 cosr (const _Float64& a);
-_Float8x cosr (const _Float8x& a);
+_Float80 cosr (const _Float80& a);
 
 _Float32 tanr (const _Float32& a);
 _Float64 tanr (const _Float64& a);
-_Float8x tanr (const _Float8x& a);
+_Float80 tanr (const _Float80& a);
 
 // --------------------------------------------------------------------- Hyperbelfunktionen ------------------------------------------------------------
 _Float32 tanhr (const _Float32& a);
 _Float64 tanhr (const _Float64& a);
-_Float8x tanhr (const _Float8x& a);
+_Float80 tanhr (const _Float80& a);
 
 // --------------------------------------------------------------------- Arcusfunktionen ------------------------------------------------------------
 _Float32 asinr (const _Float32& a);
 _Float64 asinr (const _Float64& a);
-_Float8x asinr (const _Float8x& a);
+_Float80 asinr (const _Float80& a);
 
 _Float32 acosr (const _Float32& a);
 _Float64 acosr (const _Float64& a);
-_Float8x acosr (const _Float8x& a);
+_Float80 acosr (const _Float80& a);
 
 _Float32 atanr (const _Float32& a);
 _Float64 atanr (const _Float64& a);
-_Float8x atanr (const _Float8x& a);
+_Float80 atanr (const _Float80& a);
 
 _Float32 atan2r (const _Float32& a, const _Float32& b);
 _Float64 atan2r (const _Float64& a, const _Float64& b);
-_Float8x atan2r (const _Float8x& a, const _Float8x& b);
+_Float80 atan2r (const _Float80& a, const _Float80& b);
 
 // --------------------------------------------------------------------- Areafunktionen ------------------------------------------------------------
 _Float32 asinhr (const _Float32& a);
 _Float64 asinhr (const _Float64& a);
-_Float8x asinhr (const _Float8x& a);
+_Float80 asinhr (const _Float80& a);
 
 _Float32 acoshr (const _Float32& a);
 _Float64 acoshr (const _Float64& a);
-_Float8x acoshr (const _Float8x& a);
+_Float80 acoshr (const _Float80& a);
 
 _Float32 atanhr (const _Float32& a);
 _Float64 atanhr (const _Float64& a);
-_Float8x atanhr (const _Float8x& a);
+_Float80 atanhr (const _Float80& a);
 
 //--------------------- cvektor2 Vektor Funktionen ------------------------------------------------------------------------------
 

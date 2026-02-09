@@ -174,7 +174,7 @@ _Float64 modr (const _Float64& a, const _Float64& b)
   return fmod (a, b);
   }
 
-_Float8x modr (const _Float8x& a, const _Float8x& b)
+_Float80 modr (const _Float80& a, const _Float80& b)
   {
   return fmodl (a, b);
   }
@@ -190,7 +190,7 @@ _Float64 floorr (const _Float64& a)
   return floor (a);
   }
 
-_Float8x floorr (const _Float8x& a)
+_Float80 floorr (const _Float80& a)
   {
   return floorl (a);
   }
@@ -206,7 +206,7 @@ _Float64 absr (const _Float64& a)
   return fabs (a);
   }
 
-_Float8x absr (const _Float8x& a)
+_Float80 absr (const _Float80& a)
   {
   return fabsl (a);
   }
@@ -222,7 +222,7 @@ _Float64 sqrtr (const _Float64& a)
   return sqrt (a);
   }
 
-_Float8x sqrtr (const _Float8x& a)
+_Float80 sqrtr (const _Float80& a)
   {
   return sqrtl (a);
   }
@@ -238,7 +238,7 @@ _Float64 cbrtr (const _Float64& a)
   return cbrt (a);
   }
 
-_Float8x cbrtr (const _Float8x& a)
+_Float80 cbrtr (const _Float80& a)
   {
   return cbrtl (a);
   }
@@ -260,12 +260,12 @@ _Float64 qnrtr (const _Float64& a)
     return -pow (-a, _Float64 (0.2));
   }
 
-_Float8x qnrtr (const _Float8x& a)
+_Float80 qnrtr (const _Float80& a)
   {
   if (a >= 0)
-    return powl (a, (_Float8x) (0.2));
+    return powl (a, (_Float80) (0.2));
     else
-    return -powl (-a, (_Float8x) (0.2));
+    return -powl (-a, (_Float80) (0.2));
   }
 
 //------------------------------------------------------------------------------------ expr ------------------------------------------------------------------------
@@ -279,7 +279,7 @@ _Float64 expr (const _Float64& a)
   return exp (a);
   }
 
-_Float8x expr (const _Float8x& a)
+_Float80 expr (const _Float80& a)
   {
   return expl (a);
   }
@@ -295,7 +295,7 @@ _Float64 logr (const _Float64& a)
   return log (a);
   }
 
-_Float8x logr (const _Float8x& a)
+_Float80 logr (const _Float80& a)
   {
   return logl (a);
   }
@@ -311,7 +311,7 @@ _Float64 powr (const _Float64& a, const _Float64& b)
   return pow (a, b);
   }
 
-_Float8x powr (const _Float8x& a, const _Float8x& b)
+_Float80 powr (const _Float80& a, const _Float80& b)
   {
   return powl (a, b);
   }
@@ -327,7 +327,7 @@ _Float64 sinr (const _Float64& a)
   return sin (a);
   }
 
-_Float8x sinr (const _Float8x& a)
+_Float80 sinr (const _Float80& a)
   {
   return sinl (a);
   }
@@ -343,7 +343,7 @@ _Float64 cosr (const _Float64& a)
   return cos (a);
   }
 
-_Float8x cosr (const _Float8x& a)
+_Float80 cosr (const _Float80& a)
   {
   return cosl (a);
   }
@@ -359,7 +359,7 @@ _Float64 tanr (const _Float64& a)
   return tan (a);
   }
 
-_Float8x tanr (const _Float8x& a)
+_Float80 tanr (const _Float80& a)
   {
   return tanl (a);
   }
@@ -375,7 +375,7 @@ _Float64 tanhr (const _Float64& a)
   return tanh (a);
   }
 
-_Float8x tanhr (const _Float8x& a)
+_Float80 tanhr (const _Float80& a)
   {
   return tanhl (a);
   }
@@ -391,7 +391,7 @@ _Float64 asinr (const _Float64& a)
   return asin (a);
   }
 
-_Float8x asinr (const _Float8x& a)
+_Float80 asinr (const _Float80& a)
   {
   return asinl (a);
   }
@@ -407,7 +407,7 @@ _Float64 acosr (const _Float64& a)
   return acos (a);
   }
 
-_Float8x acosr (const _Float8x& a)
+_Float80 acosr (const _Float80& a)
   {
   return acosl (a);
   }
@@ -423,7 +423,7 @@ _Float64 atanr (const _Float64& a)
   return atan (a);
   }
 
-_Float8x atanr (const _Float8x& a)
+_Float80 atanr (const _Float80& a)
   {
   return atanl (a);
   }
@@ -439,7 +439,7 @@ _Float64 atan2r (const _Float64& a, const _Float64& b)
   return atan2 (a, b);
   }
 
-_Float8x atan2r (const _Float8x& a, const _Float8x& b)
+_Float80 atan2r (const _Float80& a, const _Float80& b)
   {
   return atan2l (a, b);
   }
@@ -455,7 +455,7 @@ _Float64 asinhr (const _Float64& a)
   return asinh (a);
   }
 
-_Float8x asinhr (const _Float8x& a)
+_Float80 asinhr (const _Float80& a)
   {
   return asinhl (a);
   }
@@ -471,7 +471,7 @@ _Float64 acoshr (const _Float64& a)
   return acosh (a);
   }
 
-_Float8x acoshr (const _Float8x& a)
+_Float80 acoshr (const _Float80& a)
   {
   return acoshl (a);
   }
@@ -487,7 +487,7 @@ _Float64 atanhr (const _Float64& a)
   return atanh (a);
   }
 
-_Float8x atanhr (const _Float8x& a)
+_Float80 atanhr (const _Float80& a)
   {
   return atanhl (a);
   }

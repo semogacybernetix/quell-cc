@@ -205,7 +205,7 @@ void realeingabe (_Float64& pr)
   pr= _Float64 (pf);
   }
 
-void realeingabe (_Float8x& pr)
+void realeingabe (_Float80& pr)
   {
   integer scanret;
   scanret= scanf ("%Lf", &pr);
@@ -255,7 +255,7 @@ void printreal (_Float64 pr)
   fclose (datei);
   }
 
-void printreal (_Float8x pr)
+void printreal (_Float80 pr)
   {
   FILE* datei= fopen ("screenoutput.txt", "ab");
   printf ("%28.8Lf", pr);
@@ -281,7 +281,7 @@ void printrealobj (const char* pdateiname, _Float64 pr)
   fclose (datei);
   }
 
-void printrealobj (const char* pdateiname, _Float8x pr)
+void printrealobj (const char* pdateiname, _Float80 pr)
   {
   FILE* datei= fopen (pdateiname, "ab");
   //printf ("%0.10Lg", pr);
