@@ -405,8 +405,8 @@ cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugelm::berechne (const cvektor3 &pv)                // Krizzelkreis im Nullpunkt
   {
-  //real k= acosr (pv.z)/cosr (asinr (pv.z));
-  real k= acosr (pv.z)/sqrt (1 - pv.z*pv.z);
+  real k= acosr (pv.z)/sqrt (1 - pv.z*pv.z);                       // fluktuierender Pol,Gegenpol
+  //real k= acosr (pv.z)/cosr (asinr (pv.z));                      // fluktuierender Pol,Gegenpol, gleichschnell
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
@@ -712,7 +712,7 @@ cvektor3 cscreentextur2pm::getpunkt (const cvektor2 &pv)
   real l;
 
   l= absr (pv);
-  if (l < PI/2)
+  if (l <= PI/2)
     {
     integer x1= integer (xz1 + pv.y*kx1);
     integer y1= integer (yz1 - pv.x*kx1);

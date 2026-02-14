@@ -91,7 +91,7 @@ void gradbplatt (clscreen8* pscreen)
   // Breitengrade zeichnen
   real pxrad= PI2/real (pscreen->xanz);
   real bmitte= real (pscreen->yanz-1)/2;
-  for (integer laufy= -17; laufy < 18; laufy++)
+  for (integer laufy= -36; laufy < 36; laufy++)
     {
     real bg= real (laufy)/36*PI/pxrad;
     real puty= bmitte + bg;
@@ -99,10 +99,10 @@ void gradbplatt (clscreen8* pscreen)
     integer putyi= integer (floorr (puty));
 
     for (integer laufx= 0; laufx < pscreen->xanz; laufx++)
-      pscreen->putpixel (laufx, putyi, integer (farbe), integer (farbe), integer (farbe));
+      pscreen->putpixel (laufx, putyi, 0, 255-integer (farbe), 0);
     if (farbe != 0)
       for (integer laufx= 0; laufx < pscreen->xanz; laufx++)
-        pscreen->putpixel (laufx, putyi+1, 255 - integer (farbe), 255-integer (farbe), 255-integer (farbe));
+        pscreen->putpixel (laufx, putyi+1, 0, 255-integer (farbe), 0);
 
     // Äquator zeichnen
     if (laufy == 0)
@@ -124,9 +124,12 @@ void zeichnegradnetz (char* p_name)
   bmpdatei.putscreen (jpgdatei, 0, 0);
 
   // Gradnetz in bmp-Datei zeichnen
-  gradl (&bmpdatei);
-  //gradbmercator (&bmpdatei);
+  // Längengrade
+  //gradl (&bmpdatei);
+
+  // Breitengrade
   gradbplatt (&bmpdatei);
+  //gradbmercator (&bmpdatei);
   }
 
 int main (int argc, char** argv)

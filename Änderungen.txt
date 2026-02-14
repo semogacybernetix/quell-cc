@@ -354,7 +354,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.02.06 Fr  21 Uhr, überflüssige reelle Konstanten entfernt, linearfaktoren, quaternionentest korrigiert, 23:15
 2026.02.07 Sa  _Float8x -> _Float80 korrigiert, Abhängigkeiten korrigiert
 2026.02.13 Fr  0 Uhr (Sa), stereografische Azimutalprojektion auf Ebene durch Mittelpunkt korrigiert, Parameter Karten angepasst -> flächentreue Azimutalprojektion korrigiert, Parameter Karten angepasst, 2:33
-2026.02.14 Sa  4:52, 2 Texturen Abbildung korrigiert, 5:39
+2026.02.14 Sa  4:52, 2 Texturen Abbildung korrigiert, 5:39, 10 Uhr, quadrat-, linientextur erstellt, Kugel mit Igelsatzvisualisierung erstellt, 11:50
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
