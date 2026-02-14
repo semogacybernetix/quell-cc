@@ -672,7 +672,7 @@ cvektor3 cscreentexturz::getpunkt (const cvektor2 &pv)
   }
 
 // ------------------------------------------ zentriertes Bild, nicht gezoomt, nicht periodisch für Polkarten 90° nach rechts gedreht -------------------
-cscreentexturpol::cscreentexturpol (clscreen8* pscreen, const real pkx, const real pky)
+cscreentexturp::cscreentexturp (clscreen8* pscreen, const real pkx, const real pky)
   : screen (pscreen), xmax (screen->xanz - 1), ymax (screen->yanz - 1)
   {
   xz= real (screen->xanz)/2;
@@ -681,7 +681,7 @@ cscreentexturpol::cscreentexturpol (clscreen8* pscreen, const real pkx, const re
   ky= pky*yz;
   }
 
-cvektor3 cscreentexturpol::getpunkt (const cvektor2 &pv)
+cvektor3 cscreentexturp::getpunkt (const cvektor2 &pv)
   {
   integer x= integer (xz + pv.y*kx);
   integer y= integer (yz - pv.x*kx);
@@ -692,7 +692,7 @@ cvektor3 cscreentexturpol::getpunkt (const cvektor2 &pv)
   }
 
 // ------------------------------------------ Polkappen von beiden Seiten mittenabstandstreu, polar parametrisiert, beide Karten 90° nach rechts gedreht -------------------------------------
-cscreentextur2::cscreentextur2 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
+cscreentextur2pm::cscreentextur2pm (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
   : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
   xz1= real (screen1->xanz)/2;
@@ -706,7 +706,7 @@ cscreentextur2::cscreentextur2 (clscreen8* pscreen1, const real pkx1, const real
   ky2= pky2*yz2;
   }
 
-cvektor3 cscreentextur2::getpunkt (const cvektor2 &pv)
+cvektor3 cscreentextur2pm::getpunkt (const cvektor2 &pv)
   {
   integer r, g, b;
   real l;
@@ -729,7 +729,7 @@ cvektor3 cscreentextur2::getpunkt (const cvektor2 &pv)
   }
 
 // ------------------------------------------ Polkappen von beiden Seiten mittenabstandstreu, zylindrisch parametrisiert, beide Karten 90° nach rechts gedreht -------------------------------------
-cscreentextur22::cscreentextur22 (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
+cscreentextur2zm::cscreentextur2zm (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
   : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
   xz1= real (screen1->xanz)/2;
@@ -743,7 +743,7 @@ cscreentextur22::cscreentextur22 (clscreen8* pscreen1, const real pkx1, const re
   ky2= pky2*yz2;
   }
 
-cvektor3 cscreentextur22::getpunkt (const cvektor2 &pv)
+cvektor3 cscreentextur2zm::getpunkt (const cvektor2 &pv)
   {
   integer r, g, b;
   real l, x, y;
@@ -770,7 +770,7 @@ cvektor3 cscreentextur22::getpunkt (const cvektor2 &pv)
   }
 
 // ------------------------------------------ Polkappen von beiden Seiten stereografisch, zylindrisch parametrisiert, beide Karten 90° nach rechts gedreht -------------------------------------
-cscreentextur22s::cscreentextur22s (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
+cscreentextur2zs::cscreentextur2zs (clscreen8* pscreen1, const real pkx1, const real pky1, clscreen8* pscreen2, const real pkx2, const real pky2)
   : screen1 (pscreen1), xmax1 (screen1->xanz - 1), ymax1 (screen1->yanz - 1), screen2 (pscreen2), xmax2 (screen2->xanz - 1), ymax2 (screen2->yanz - 1)
   {
   xz1= real (screen1->xanz)/2;
@@ -784,7 +784,7 @@ cscreentextur22s::cscreentextur22s (clscreen8* pscreen1, const real pkx1, const 
   ky2= pky2*yz2;
   }
 
-cvektor3 cscreentextur22s::getpunkt (const cvektor2 &pv)
+cvektor3 cscreentextur2zs::getpunkt (const cvektor2 &pv)
   {
   integer r, g, b;
   real z, l, k, x, y;
@@ -792,10 +792,10 @@ cvektor3 cscreentextur22s::getpunkt (const cvektor2 &pv)
   if (pv.y >= 0)
     {
     z= sinr (pv.y);
-    k= 2/(1 + z);
+    k= z + 1;
     l= cosr (pv.y);
-    x= cosr (pv.x)*l*k;
-    y= sinr (pv.x)*l*k;
+    x= cosr (pv.x)*l/k;
+    y= sinr (pv.x)*l/k;
     integer x1= integer (xz1 + y*kx1);
     integer y1= integer (yz1 - x*kx1);
     screen1->getpixel (x1, y1, r, g, b);
@@ -803,10 +803,10 @@ cvektor3 cscreentextur22s::getpunkt (const cvektor2 &pv)
     else
     {
     z= sinr (pv.y);
-    k= 2/(1 - z);
+    k= 1 - z;
     l= cosr (pv.y);
-    x= cosr (pv.x)*l*k;
-    y= sinr (pv.x)*l*k;
+    x= cosr (pv.x)*l/k;
+    y= sinr (pv.x)*l/k;
     integer x1= integer (xz2 + y*kx2);
     integer y1= integer (yz2 + x*kx2);
     screen2->getpixel (x1, y1, r, g, b);
