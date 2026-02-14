@@ -352,57 +352,61 @@ cvektor2 cparakugelg::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugels::berechne (const cvektor3 &pv)
   {
-  real k= 2/(pv.z + 1);                                            // Spitzenkrizzel
-  return cvektor2 (pv.x*k, pv.y*k);
+  real k= pv.z + 1;                                                // Spitzenkrizzel, zittriges ranzoomen
+  return cvektor2 (pv.x/k, pv.y/k);
   }
 
 cvektor2 cparakugels2::berechne (const cvektor3 &pv)               // fast keine Verbesserung, scharfe Treppen statt Krizzel
   {
-  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Quadratkrizzel
+  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Quadratkrizzel, aalglattes ranzoomen
   real v= sqrtr (t*t + 1);
-  real k= 2*v/(v + t);
+  real k= (t + v)/v;
+  //real k= t/v + 1;                                               // instabiler, krizzliger
 
-  return cvektor2 (pv.x*k, pv.y*k);
+  return cvektor2 (pv.x/k, pv.y/k);
   }
 
 //----------- Kugel polar flächentreu -----------------------------------
 
 cvektor2 cparakugelf::berechne (const cvektor3 &pv)
   {
-  real k= sqrtr (2/(pv.z + 1));                                    // ungenau, fluktuierender Gegenpol
-  return cvektor2 (pv.x*k, pv.y*k);
+  real k= sqrtr (pv.z + 1);                                        // ungenau, fluktuierender Gegenpol
+  return cvektor2 (pv.x/k, pv.y/k);
   }
 
 cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
   {
+
+//*
+  real z= sinr (atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));       // Bogenmethode, sauberer schwarzer Kreis im Gegenpol, stabiler Gegenpol
+  real k= sqrtr (z + 1);
+//*/
+
 /*
-  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Wurzel stereografisch, Krizzelkreis mit Hyperbol
+  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Krizzelkreis
   real v= sqrtr (t*t + 1);
-  real k= sqrtr (2*v/(v + t));
+  real k= sqrtr ((t + v)/v);
+  //real k= sqrtr (t/v + 1);                                       // ungenauer, inkonsistenterer Gegenpol
 //*/
 
 /*
   real z;
-  if (pv.z >= 0)                                                   // xy-Radiusmethode, schwarzes Quadrat im Gegenpol
+  if (pv.z >= 0)                                                   // xy-Radiusmethode, schwarzes Quadrat im Gegenpol, Äquatornaht, Äquatorfluktuationen
     z= sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
     else
     z= -sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
-  real k= sqrtr (2/(z + 1));
+  real k= sqrtr (z + 1);
 //*/
 
-//*
-  real z= sinr (atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));       // Bogenmethode, schwarzer Kreis im Gegenpol
-  real k= sqrtr (2/(z + 1));
-//*/
-
-  return cvektor2 (pv.x*k, pv.y*k);
+  return cvektor2 (pv.x/k, pv.y/k);
   }
 
 //----------- Kugel polar mittenabstandstreu ----------------------------
 
 cvektor2 cparakugelm::berechne (const cvektor3 &pv)                // Krizzelkreis im Nullpunkt
   {
-  real k= acosr (pv.z)/cosr (asinr (pv.z));
+  //real k= acosr (pv.z)/cosr (asinr (pv.z));
+  real k= acosr (pv.z)/sqrt (1 - pv.z*pv.z);
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
