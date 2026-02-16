@@ -356,6 +356,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.02.13 Fr  0 Uhr (Sa), stereografische Azimutalprojektion auf Ebene durch Mittelpunkt korrigiert, Parameter Karten angepasst -> flächentreue Azimutalprojektion korrigiert, Parameter Karten angepasst, 2:33
 2026.02.14 Sa  4:52, 2 Texturen Abbildung korrigiert, 5:39, 10 Uhr, quadrat-, linientextur erstellt, Kugel mit Igelsatzvisualisierung erstellt, 11:50
 
+2026.02.16 Sa  13:30, quartischdiffpfintrd (fixierte Doublegenauigkeit) erstellt, 13:38
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 framerate sauber implementieren

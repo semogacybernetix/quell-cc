@@ -260,7 +260,8 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
-  quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
+  quartischdiffpfintrd (B/A, C/A, D/A, E/A, psp);         // Variante mit festgelegter _Float64 Genauigkeit
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);

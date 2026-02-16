@@ -372,6 +372,7 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ck
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischdiffpfintrd (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);

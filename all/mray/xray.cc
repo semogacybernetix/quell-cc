@@ -253,13 +253,13 @@ void addtorus (cwelt& pwelt)
   //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,400), cvektor3 (0,25,0));          // flacher Ellipsentorus
 
   // Texturen
-  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 80/PI, 10/PI);
+  cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 80/PI, 10/PI);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 800/PI, 10/PI);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/15);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
 
   // Körper
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, textur1, kstobj, klobj);
+  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, textur1, kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.0125)), new cparatorusu, new cbegrkeine, textur1, kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorusu, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/sechseck1024.jpg"), real (8/PI), real (1/PI)), kstobj, klobj);
@@ -270,7 +270,7 @@ void addtorus (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Palmen.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Steine.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinmauer.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
-  ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
 
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.5)), new cparatoruss, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/2044 platt-z physisch.jpg"), real (1/PI), real (0)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.5)), new cparatoruss, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/2044 platt-zts physisch.jpg"), real (1/PI), real (0)), kstobj, klobj);
@@ -283,7 +283,7 @@ void addtorus (cwelt& pwelt)
   pwelt.setzelage (klauge);
 
   // Hintergrundfarbe setzen
-  pwelt.himmelfarbe= cvektor3 (30, 75, 90);
+  //pwelt.himmelfarbe= cvektor3 (30, 75, 90);
   }
 
 void addtorusoktaeder (cwelt& pwelt)
@@ -340,8 +340,8 @@ void fliege ()
   //addkoord (*welt);
   //addebenen90 (*welt);
   //addzylinder (*welt);
-  addkugel (*welt);
-  //addtorus (*welt);
+  //addkugel (*welt);
+  addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
 
@@ -358,7 +358,7 @@ void fliege ()
   //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1920, 1080), 1920);
 
   flugsimu.setframerate (50);
-  flugsimu.threadanz= 12;
+  flugsimu.threadanz= 20;
   flugsimu.bewstep= real (2);
   flugsimu.drehstep= real (0.0125);
 

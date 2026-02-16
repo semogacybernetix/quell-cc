@@ -2488,6 +2488,85 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     }
   }
 
+void quartischdiffpfintrd (real aq, real bq, real cq, real dq, cschnittpunkte& psp)           // Version mit double Genauigkeit zur Überprüfung
+  {
+  _Float64 aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2, x3, x4;
+
+  // Parameter reduzierte quartische Gleichung
+  aqq= aq*aq/8;
+  pq= aqq*-3 + bq;
+  qq= aq*(aqq + bq/-2) + cq;
+  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
+
+  // Parameter reduzierte kubische Gleichung
+  pqq= pq*pq;
+  rq4= rq/real (-0.75);
+  pk= pqq/-9 + rq4;
+  qk= pq*(pqq/27 + rq4) + qq*qq/2;
+
+  // reelle Lösung der kubischen Resolvente
+  xl= pk*pk*pk + qk*qk;
+  if (xl >= 0)                                                    // 2 oder 0 Schnittpunkte mit dem Torus
+    {
+    //vxl= sqrt (xl);                                              // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
+    //yk= (cbrt (qk + vxl) + cbrt (qk - vxl))/2;                  // außerdem zusätzliche Stern-Artefakte beim Torus
+    if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ytk= cbrt (qk + sqrt (xl));
+      else
+      ytk= cbrt (qk - sqrt (xl));                               // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+    yk= (ytk - pk/ytk)/2;                                         // ytk = 0 ausgeschlossen, da Auslöschung verhindert
+    }
+    else                                                          // 4 Schnittpunkte mit dem Torus
+    {
+    l= sqrt (-pk);
+    yk= l*cos (acos (qk/(pk*-l))/3);                            // pk*l = 0 garnicht, qk/(pk*l) > 1 sehr selten, qk/(pk*l) < -1 garnicht
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
+  pq6= pq/6;
+  z= yk + pq6;
+
+  uq= yk/2 - pq6;
+  u= sqrt (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
+  v= sqrt (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
+
+  // Bedingung -2uv = qq
+  bed= u*v*-2;
+  if (fabs (bed + qq) < fabs (bed - qq))
+    {
+    b1= z - v;
+    b2= z + v;
+    }
+    else
+    {
+    b1= z + v;
+    b2= z - v;
+    }
+
+  // Lösungen normale quartische Gleichung
+  aq4= aq/-4;
+  if (uq >= b1)
+    {
+    D= sqrtr (uq - b1);
+    x1= aq4 - u - D;
+    x2= aq4 - u + D;
+    if (x1 > 0)
+      psp.add (real (x1));
+    if (x2 > 0)
+      psp.add (real (x2));
+    }
+  if (uq >= b2)
+    {
+    D= sqrtr (uq - b2);
+    x3= aq4 + u - D;
+    x4= aq4 + u + D;
+    if (x3 > 0)
+      psp.add (real (x3));
+    if (x4 > 0)
+      psp.add (real (x4));
+    }
+  }
+
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
   real aqq, pq, qq, rq, pqq, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2, x3, x4;
