@@ -1,9 +1,11 @@
 #include "ray.h"
 
-#include <iostream>        // die Weltdaten aus einer Datei lesen
-#include <sys/times.h>     // tms, times
+#include <iostream>                     // getchar, fopen, die Weltdaten aus einer Datei lesen
+#include <sys/times.h>                  // tms, times
 
-using namespace std;       // cout
+#include "../../conio/vektorcon.h"      // zum Debuggen (printtext, printinteger, printreal)
+
+//using namespace std;                  // auskommentiert lassen, weil sonst sqrt sqrtr Fehler nicht gefunden werden (greater conversion rank)
 
 //********************************************************* Schnittpunktberechnungsobjekte ************************************************************************************************************************************************
 
@@ -260,8 +262,27 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
-  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
-  quartischdiffpfintrd (B/A, C/A, D/A, E/A, psp);         // Variante mit festgelegter _Float64 Genauigkeit
+
+  integer fanz= psp.anz;
+  quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
+  fanz= psp.anz - fanz;
+  if (fanz == 0)
+    {
+    integer danz= psp.anz;
+    quartischdiffpfintrd (B/A, C/A, D/A, E/A, psp);         // Variante mit festgelegter _Float64 Genauigkeit
+    danz= psp.anz - danz;
+    if (danz > 0)
+      {
+      printtext ("danz: ");
+      printinteger (danz);
+      printtext (" ---------------------------------\n");
+      quartischdiffpfintrdprint (B/A, C/A, D/A, E/A, psp);
+      printtext ("------------- 64/32 ---------------------\n");
+      quartischdiffpfintrprint (B/A, C/A, D/A, E/A, psp);
+      printtext ("\n");
+      getchar ();
+      }
+    }
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);
@@ -406,7 +427,7 @@ cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugelm::berechne (const cvektor3 &pv)                // Krizzelkreis im Nullpunkt
   {
-  real k= acosr (pv.z)/sqrt (1 - pv.z*pv.z);                       // fluktuierender Pol,Gegenpol
+  real k= acosr (pv.z)/sqrtr (1 - pv.z*pv.z);                      // fluktuierender Pol,Gegenpol
   //real k= acosr (pv.z)/cosr (asinr (pv.z));                      // fluktuierender Pol,Gegenpol, gleichschnell
   return cvektor2 (pv.x*k, pv.y*k);
   }
@@ -487,7 +508,7 @@ cvektor2 cparatorusu::berechne (const cvektor3 &pv)
   cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));     // Projektion auf xy-Ebene, Spitze auf Kreislinie
   cvektor3 rot= normiere (pv - mitte);
   real b= mitte%rot;
-  real ky= atan2 (rot.z, b);
+  real ky= atan2r (rot.z, b);
   if (ky < 0)                                              // Periode in den positiven Bereich verschieben
     ky= ky + PI2;
 

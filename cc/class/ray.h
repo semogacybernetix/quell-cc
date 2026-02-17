@@ -1,7 +1,7 @@
 #ifndef ray_h
 #define ray_h
 
-#include "../screen/vscr.h"  // für die screen-Textur aus einem Screen (z.B. jpeg-Datei) texturieren zu können
+#include "../screen/vscr.h"  // für die screen-Textur, um aus einem Screen (z.B. jpeg-Datei) texturieren zu können
 
 //-------------- Schnittobjekte ------------------------------------------------------
 

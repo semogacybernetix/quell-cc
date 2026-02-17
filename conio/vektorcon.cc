@@ -250,8 +250,8 @@ void printreal (_Float64 pr)
   {
   double pl= double (pr);
   FILE* datei= fopen ("screenoutput.txt", "ab");
-  printf ("%28.8lf", pl);
-  fprintf (datei, "%28.8lf", pl);
+  printf ("%36.16lf", pl);
+  fprintf (datei, "%36.16lf", pl);
   fclose (datei);
   }
 
