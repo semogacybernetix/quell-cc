@@ -2410,7 +2410,7 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2, x3, x4;
+  real aqq, pq, qq, rq, pqq, rq4, pk, qk, xl, ytk, yk, l, pq6, z, uq, vq, u, v, bed, b1, b2, aq4, D, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
   aqq= aq*aq/8;
@@ -2447,8 +2447,19 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   z= yk + pq6;
 
   uq= yk/2 - pq6;
-  u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
-  v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
+  if (uq > 0)
+    u= sqrtr (uq);                                                // uq < 0 wegen Ungenauigkeit, durch Abfangen Pseudolösungen
+    else
+    {
+    uq= 0;
+    u= 0;
+    }
+
+  vq= z*z - rq;
+  if (vq > 0)
+    v= sqrtr (vq);                                                // vq < 0 wegen Ungenauigkeit, durch Abfangen Pseudolösungen
+    else
+    v= 0;
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
@@ -2467,7 +2478,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   aq4= aq/-4;
   if (uq >= b1)
     {
-    D= sqrtr (uq - b1);
+    D= sqrtr (uq - b1);                                              // Randbereich, Pixelfehler wegen D knapp unter 0
     x1= aq4 - u - D;
     x2= aq4 - u + D;
     if (x1 > 0)
@@ -2477,7 +2488,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     }
   if (uq >= b2)
     {
-    D= sqrtr (uq - b2);
+    D= sqrtr (uq - b2);                                              // Randbereich, Pixelfehler wegen D knapp unter 0
     x3= aq4 + u - D;
     x4= aq4 + u + D;
     if (x3 > 0)
@@ -2526,8 +2537,8 @@ void quartischdiffpfintrprint (real aq, real bq, real cq, real dq, cschnittpunkt
   z= yk + pq6;
 
   uq= yk/2 - pq6;
-  u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
-  v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
+  u= sqrtr (absr (uq));                                           // uq < 0 wegen Ungenauigkeit
+  v= sqrtr (absr (z*z - rq));                                     // zzrq < 0 wegen Ungenauigkeit
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
@@ -2542,8 +2553,8 @@ void quartischdiffpfintrprint (real aq, real bq, real cq, real dq, cschnittpunkt
     b2= z - v;
     }
 
-  real D1= uq - b1;
-  real D2= uq - b2;
+  real D12= uq - b1;                                              // Randbereich, Pixelfehler wegen D12 knapp unter 0
+  real D34= uq - b2;                                              // Randbereich, Pixelfehler wegen D12 knapp unter 0
   real vq= z*z - rq;
 
   printtext ("32   yk: ");
@@ -2552,24 +2563,21 @@ void quartischdiffpfintrprint (real aq, real bq, real cq, real dq, cschnittpunkt
   printtext ("32   uq: ");
   printreal (uq);
   printtext ("\n");
-  printtext ("32    u: ");
-  printreal (u);
-  printtext ("\n");
   printtext ("32   vq: ");
   printreal (vq);
-  printtext ("\n");
+  printtext ("\n\n");
   printtext ("32  D12: ");
-  printreal (D1);
+  printreal (D12);
   printtext ("\n");
   printtext ("32  D34: ");
-  printreal (D2);
+  printreal (D34);
   printtext ("\n");
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
   if (uq >= b1)
     {
-    D= sqrtr (D1);
+    D= sqrtr (D12);
     x1= aq4 - u - D;
     x2= aq4 - u + D;
 
@@ -2588,7 +2596,7 @@ void quartischdiffpfintrprint (real aq, real bq, real cq, real dq, cschnittpunkt
     }
   if (uq >= b2)
     {
-    D= sqrtr (D2);
+    D= sqrtr (D34);
     x3= aq4 + u - D;
     x4= aq4 + u + D;
 
@@ -2740,8 +2748,8 @@ void quartischdiffpfintrdprint (real aq, real bq, real cq, real dq, cschnittpunk
     b2= z - v;
     }
 
-  _Float64 D1= uq - b1;
-  _Float64 D2= uq - b2;
+  _Float64 D12= uq - b1;
+  _Float64 D34= uq - b2;
   _Float64 vq= z*z - rq;
 
   printtext ("64   yk: ");
@@ -2750,24 +2758,21 @@ void quartischdiffpfintrdprint (real aq, real bq, real cq, real dq, cschnittpunk
   printtext ("64   uq: ");
   printreal (uq);
   printtext ("\n");
-  printtext ("64    u: ");
-  printreal (u);
-  printtext ("\n");
   printtext ("64   vq: ");
   printreal (vq);
-  printtext ("\n");
+  printtext ("\n\n");
   printtext ("64  D12: ");
-  printreal (D1);
+  printreal (D12);
   printtext ("\n");
   printtext ("64  D34: ");
-  printreal (D2);
+  printreal (D34);
   printtext ("\n");
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
   if (uq >= b1)
     {
-    D= sqrtr (D1);
+    D= sqrtr (D12);
     x1= aq4 - u - D;
     x2= aq4 - u + D;
 
@@ -2786,7 +2791,7 @@ void quartischdiffpfintrdprint (real aq, real bq, real cq, real dq, cschnittpunk
     }
   if (uq >= b2)
     {
-    D= sqrtr (D2);
+    D= sqrtr (D34);
     x3= aq4 + u - D;
     x4= aq4 + u + D;
 
