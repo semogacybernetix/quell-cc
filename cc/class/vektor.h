@@ -368,13 +368,10 @@ void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ck
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
 // quartische Formeln für reelle Koeffizienten  (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
-void quartischdiffpuintrc (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
+void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischdiffpfintrprint (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischdiffpfintrd (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischdiffpfintrdprint (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);

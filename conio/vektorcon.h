@@ -18,15 +18,18 @@ struct zahl1010
   void printobj (const char* pdateiname, integer vst, integer pst);
   };
 
+//------------------------ cvektor0 ------------------------------------------------------------------
+void eingabe ();
+
 void printtext (const char* ptext);
 void printtextobj (const char* pdateiname, const char* ptext);
 
-void printinteger (integer pn);
-
-//------------------------ cvektor3 ------------------------------------------------------------------
+//------------------------ cvektor1 ------------------------------------------------------------------
 void realeingabe (_Float32& pv);
 void realeingabe (_Float64& pv);
 void realeingabe (_Float80& pv);
+
+void printinteger (integer pn);
 
 void printreal (_Float32 pr);
 void printreal (_Float64 pr);

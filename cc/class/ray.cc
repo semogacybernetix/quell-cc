@@ -1,11 +1,11 @@
 #include "ray.h"
 
-#include <iostream>                     // getchar, fopen, die Weltdaten aus einer Datei lesen
-#include <sys/times.h>                  // tms, times
+#include <iostream>                     // fopen, cwelt (): die Weltdaten aus einer Datei lesen
+#include <sys/times.h>                  // tms, times, ckoerper::aktualisiere ()
 
 #include "../../conio/vektorcon.h"      // zum Debuggen (printtext, printinteger, printreal)
 
-//using namespace std;                  // auskommentiert lassen, weil sonst sqrt sqrtr Fehler nicht gefunden werden (greater conversion rank)
+//using namespace std;                  // auskommentiert lassen, weil sonst sqrt-sqrtr Fehler nicht gefunden werden (greater conversion rank)
 
 //********************************************************* Schnittpunktberechnungsobjekte ************************************************************************************************************************************************
 
@@ -260,29 +260,10 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
+  //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
-
-  integer fanz= psp.anz;
   quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
-  fanz= psp.anz - fanz;
-  if (fanz == 0)
-    {
-    integer danz= psp.anz;
-    quartischdiffpfintrd (B/A, C/A, D/A, E/A, psp);         // Variante mit festgelegter _Float64 Genauigkeit
-    danz= psp.anz - danz;
-    if (danz > 0)
-      {
-      printtext ("danz: ");
-      printinteger (danz);
-      printtext (" ---------------------------------\n");
-      quartischdiffpfintrdprint (B/A, C/A, D/A, E/A, psp);
-      printtext ("------------- 64/32 ---------------------\n");
-      quartischdiffpfintrprint (B/A, C/A, D/A, E/A, psp);
-      printtext ("\n");
-      getchar ();
-      }
-    }
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);
