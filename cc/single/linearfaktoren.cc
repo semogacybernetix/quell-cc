@@ -1902,7 +1902,7 @@ void quartischloesungen ()
 
   quartischzurueck (x1, x2, x3, x4, a, b, c, d);
 
-  quartischdiffpuintrc (a.x, b.x, c.x, d.x, x1, x2, x3, x4);
+  //quartischdiffpuintrc (a.x, b.x, c.x, d.x, x1, x2, x3, x4);
 
   printtext ("-------------------------------- quartischdiffpuintrc Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
