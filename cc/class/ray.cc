@@ -264,9 +264,9 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
-  quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
 
-/*
+//*
   std::complex<real>* solutions= solve_quartic (B/A, C/A, D/A, E/A);
   real x1= solutions[0].real ();
   real x2= solutions[1].real ();
