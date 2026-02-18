@@ -4,6 +4,7 @@
 #include <sys/times.h>                  // tms, times, ckoerper::aktualisiere ()
 
 #include "../../conio/vektorcon.h"      // zum Debuggen (printtext, printinteger, printreal)
+#include "quartic.h"
 
 //using namespace std;                  // auskommentiert lassen, weil sonst sqrt-sqrtr Fehler nicht gefunden werden (greater conversion rank)
 
@@ -264,6 +265,24 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
   quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
+
+/*
+  std::complex<real>* solutions= solve_quartic (B/A, C/A, D/A, E/A);
+  real x1= solutions[0].real ();
+  real x2= solutions[1].real ();
+  real x3= solutions[2].real ();
+  real x4= solutions[3].real ();
+  if ((solutions[0].imag () == 0) && ( x1 > 0))
+    psp.add (x1);
+  if ((solutions[1].imag () == 0) && ( x2 > 0))
+    psp.add (x2);
+  if ((solutions[2].imag () == 0) && ( x3 > 0))
+    psp.add (x3);
+  if ((solutions[3].imag () == 0) && ( x4 > 0))
+    psp.add (x4);
+  delete [] solutions;
+//*/
+
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);
