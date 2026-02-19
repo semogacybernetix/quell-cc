@@ -261,11 +261,12 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
-  //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);                 // langsam, Ausfälle bei 4 Lösungen
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
-  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
-  quartischmalin (B/A, C/A, D/A, E/A, psp);
+  quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpfintr3 (B/A, C/A, D/A, E/A, psp);
+  //quartischmalin (B/A, C/A, D/A, E/A, psp);                       // tolle Linsenartefakte
 
 /*
   std::complex<real>* solutions= solve_quartic (B/A, C/A, D/A, E/A);
@@ -285,8 +286,8 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 //*/
 
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
-  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);
-  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);
+  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);               // gleiches Bild wie diffpf
+  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);               // zusätzliche Artefakte
 
 /*
   ckomplexk x1, x2, x3, x4;
