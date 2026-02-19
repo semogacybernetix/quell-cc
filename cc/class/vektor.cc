@@ -2539,6 +2539,143 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   eingabe ();
   }
 
+void quartischmalin (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+  {
+  real ak, bk, ck, pk, qk, xl, ytk, yk, l, zk, Dq, a1, a2, b1, b2, D12, D34, x1, x2, x3, x4;
+
+  // Parameter reduzierte quartische Gleichung
+  ak= -bq;
+  bk= aq*cq - dq*4;
+  ck= bq*dq*4 - aq*aq*dq - cq*cq;
+
+  //p= a*a/-3 + b;
+  //q= a*(a*a/real (4.5) - b)/3 + c;
+
+  pk= ak*ak/3 - bk;
+  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
+
+  // reelle Lösung der kubischen Resolvente
+  xl= qk*qk/4 - pk*pk*pk/27;
+  if (xl >= 0)                                                    // 2 oder 0 Schnittpunkte mit dem Torus
+    {
+    //vxl= sqrtr (xl);                                              // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
+    //yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                  // außerdem zusätzliche Stern-Artefakte beim Torus
+    if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ytk= cbrtr (qk + sqrtr (xl));
+      else
+      ytk= cbrtr (qk - sqrtr (xl));                               // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+    yk= (ytk + pk/ytk)/2;                                         // ytk = 0 ausgeschlossen, da Auslöschung verhindert
+    }
+    else                                                          // 4 Schnittpunkte mit dem Torus
+    {
+    l= sqrtr (pk/3);                                              // pk > 0 immer, l > 0 immer, wegen Division
+    yk= cosr (acosr (qk*3/pk/l/-2)/3)*l*2;                        // 1. Fehlerquelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F
+    //yk2= cosr (acosr (qk*3/pk/l/-2)/3 + PI2d)*l*2;              // die größte Lösung raussuchen
+    //yk3= cosr (acosr (qk*3/pk/l/-2)/3 - PI2d)*l*2;
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
+  zk= yk - ak/3;
+  Dq= zk*zk - dq*4;
+  real quant= real (1e-12);
+
+  if (absr (Dq) > quant)
+    {
+    b1= (zk + sqrtr (Dq))/2;
+    b2= (zk - sqrtr (Dq))/2;
+    a1= (aq*b1 - cq)/(b1 - b2);
+    a2= (cq - aq*b2)/(b1 - b2);
+    }
+    else
+    {
+    b1= zk/2;
+    b2= zk/2;
+    Dq= aq*aq - (bq - zk)*4;
+    if (absr (Dq) > quant)
+      {
+      a1= (aq - sqrtr (Dq))/2;
+      a2= (aq + sqrtr (Dq))/2;
+      }
+      else
+      {
+      a1= aq/2;
+      a2= aq/2;
+      }
+
+    }
+
+  // Lösungen normale quartische Gleichung
+  D12= sqrtr (a1*a1/4 - b1);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+  D34= sqrtr (a2*a2/4 - b2);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+
+  if (D12 >= 0)
+    {
+    x1= -a1/2 - D12;
+    x2= -a1/2 + D12;
+    if (x1 > 0)
+      psp.add (real (x1));
+    if (x2 > 0)
+      psp.add (real (x2));
+    }
+
+  if (D34 >= 0)
+    {
+    x3= -a2/2 - D34;
+    x4= -a2/2 + D34;
+    if (x3 > 0)
+      psp.add (real (x3));
+    if (x4 > 0)
+      psp.add (real (x4));
+    }
+  return;
+
+  // Printausgabe Variablen
+  printtext ("ak: ");
+  printreal (ak);
+  printtext ("\n");
+  printtext ("bk: ");
+  printreal (bk);
+  printtext ("\n");
+  printtext ("ck: ");
+  printreal (ck);
+  printtext ("\n");
+  printtext ("pk: ");
+  printreal (pk);
+  printtext ("\n");
+  printtext ("qk: ");
+  printreal (qk);
+  printtext ("\n\n");
+  printtext ("yk: ");
+  printreal (yk);
+  printtext ("\n");
+  printtext ("zk: ");
+  printreal (zk);
+  printtext ("\n");
+  printtext ("Dq: ");
+  printreal (Dq);
+  printtext ("\n");
+  printtext ("a1: ");
+  printreal (a1);
+  printtext ("\n");
+  printtext ("b1: ");
+  printreal (b1);
+  printtext ("\n");
+  printtext ("a2: ");
+  printreal (a2);
+  printtext ("\n");
+  printtext ("b2: ");
+  printreal (b2);
+  printtext ("\n");
+  printtext ("D12: ");
+  printreal (D12);
+  printtext ("\n");
+  printtext ("D34: ");
+  printreal (D34);
+  printtext ("\n");
+  printtext ("---------------------------------------\n");
+
+  }
+
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
   real aqq, pq, qq, rq, pqq, pk, qk, xl, ytk, yk, l, pq6, z, uq, u, v, bed, b1, b2, aq4, D, x1, x2, x3, x4;

@@ -19,7 +19,10 @@
  ***************************************************************************/
 
 #include <cmath>
+#include <iostream>
 #include "quartic.h"
+
+using namespace std;
 
 //---------------------------------------------------------------------------
 // solve cubic equation x^3 + a*x^2 + b*x + c
@@ -71,6 +74,11 @@ DComplex* solve_quartic(double a, double b, double c, double d)
 	double b3 =  a*c -4.*d;
 	double c3 = -a*a*d - c*c + 4.*b*d;
 
+cout << "a3: " << a3 << endl;
+cout << "b3: " << b3 << endl;
+cout << "c3: " << c3 << endl;
+cout << endl;
+
 	// cubic resolvent
 	// y^3 − b*y^2 + (ac−4d)*y − a^2*d−c^2+4*b*d = 0
 
@@ -78,6 +86,11 @@ DComplex* solve_quartic(double a, double b, double c, double d)
 	unsigned int iZeroes = solveP3(x3, a3, b3, c3);
 
 	double q1, q2, p1, p2, D, sqD, y;
+
+cout << "y1: " << x3[0] << endl;
+cout << "y2: " << x3[1] << endl;
+cout << "y3: " << x3[2] << endl;
+cout << endl;
 
 	y = x3[0];
 	// THE ESSENCE - choosing Y with maximal absolute value !
@@ -90,6 +103,8 @@ DComplex* solve_quartic(double a, double b, double c, double d)
 	// h1+h2 = y && h1*h2 = d  <=>  h^2 -y*h + d = 0    (h === q)
 
 	D = y*y - 4*d;
+cout << "D: " << D << endl;
+cout << endl;
 	if(fabs(D) < eps) //in other words - D==0
 	{
 		q1 = q2 = y * 0.5;
@@ -114,6 +129,12 @@ DComplex* solve_quartic(double a, double b, double c, double d)
 		p1 = (a*q1-c)/(q1-q2);
 		p2 = (c-a*q2)/(q1-q2);
 	}
+
+cout << "p1: " << p1 << endl;
+cout << "q1: " << q1 << endl;
+cout << "p2: " << p2 << endl;
+cout << "q2: " << q2 << endl;
+
 
     DComplex* retval = new DComplex[4];
 
@@ -147,6 +168,7 @@ DComplex* solve_quartic(double a, double b, double c, double d)
 		retval[3].real( (-p2 - sqD) * 0.5 );
 	}
 
+cout << endl;
     return retval;
 }
 

@@ -375,6 +375,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischmalin (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 
 // --------------------- ckomplexk Operatoren ---------------------------------------------------------
 
