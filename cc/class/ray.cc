@@ -262,10 +262,11 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
   //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);                 // langsam, Ausfälle bei 4 Lösungen
-  //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);
-  //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);
-  quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);
-  //quartischdiffpfintr3 (B/A, C/A, D/A, E/A, psp);
+  //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);                  // Innenwand sauber, Sprühen außerhalb des Torusses
+  //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);                  // Außenwand sauber, Feuer weit außerhalb des Torusses
+  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                  // Innenwand und Außenwand leichte Artefakte, kein Außerhalbsprühen
+  quartischdiffpuvintr (B/A, C/A, D/A, E/A, psp);                 // Innenwand sauber, Außenwand leichte Artefakte, leichtes Sprühen weit außerhalb
+  //quartischdiffpfintr3 (B/A, C/A, D/A, E/A, psp);                   // Innenwand verquierkst, Feuer weit außerhalb
   //quartischmalin (B/A, C/A, D/A, E/A, psp);                       // tolle Linsenartefakte
 
 /*

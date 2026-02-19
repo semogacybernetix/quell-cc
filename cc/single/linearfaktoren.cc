@@ -1944,6 +1944,17 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
+  quartischdiffpuvintr (a.x, b.x, c.x, d.x, psp);
+
+  printtext ("-------------------------------- quartischdiffpuvintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("anz         ", real (psp.anz), 0);
+  printvektor2komplex ("x1          ", psp.abstand[0], 0);
+  printvektor2komplex ("x2          ", psp.abstand[1], 0);
+  printvektor2komplex ("x3          ", psp.abstand[2], 0);
+  printvektor2komplex ("x4          ", psp.abstand[3], 0);
+  printtext ("\n");
+
+  psp.anz= 0;
   quartischmalin (a.x, b.x, c.x, d.x, psp);
 
   printtext ("-------------------------------- quartischmalin Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
