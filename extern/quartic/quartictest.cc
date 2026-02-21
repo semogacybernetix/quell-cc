@@ -2,26 +2,26 @@
 #include <iostream>
 #include <iomanip>
 
-#include "quartic.h"
+#include "../../cc/class/quartic.h"
+
+//using namespace std;
 
 //---------------------------------------------------------------------------
 int main()
 {
 	std::cout << std::fixed << std::setprecision(8);
-	double a, b, c, d;
+	real a, b, c, d;
 
-	while(true)
-	{
 		// read coefficients of an algebric equation of 4th order (-1000 for exiting the application)
 		std::cout << "--------------------------------------------"  << std::endl << std::endl;
-		std::cout << "A = "; std::cin >> a;  if(-1000.0==a) break;
-		std::cout << "B = "; std::cin >> b;  if(-1000.0==b) break;
-		std::cout << "C = "; std::cin >> c;  if(-1000.0==c) break;
-		std::cout << "D = "; std::cin >> d;  if(-1000.0==d) break;
+		std::cout << "A = "; std::cin >> a;
+		std::cout << "B = "; std::cin >> b;
+		std::cout << "C = "; std::cin >> c;
+		std::cout << "D = "; std::cin >> d;
 		std::cout << std::endl;
 
         // solve the algebric equation of 4th order and print the results
-        std::complex<double>* solutions = solve_quartic(a, b, c, d);
+        std::complex<real>* solutions = solve_quartic(a, b, c, d);
 
         // print the results
 		std::cout << "x1 = " << (solutions[0].real()>=0. ? " " : "") << solutions[0].real(); if(solutions[0].imag()!=0.0) std::cout << "   +   i * " <<  solutions[0].imag(); std::cout << std::endl;
@@ -37,20 +37,16 @@ int main()
 		std::cout << polinom_4(solutions[3], a, b, c, d) << std::endl;
 
         delete[] solutions;
+cschnittpunkte sp;
+quartischmalin (a, b, c, d, sp);
+
+        // print the results
+		std::cout << std::endl;
+		std::cout << "anz = " << sp.anz << std::endl;
+		std::cout << "x1 = " << sp.abstand[0] << std::endl;
+		std::cout << "x2 = " << sp.abstand[1] << std::endl;
+		std::cout << "x3 = " << sp.abstand[2] << std::endl;
+		std::cout << "x4 = " << sp.abstand[3] << std::endl;
 
 		std::cout << std::endl;
-		std::cout << "Do you want to continue? (y/n)" << std::endl;
-		char answer;
-		std::cin >> answer;
-		if(answer != 'y' && answer != 'Y')
-            break;
-		std::cout << std::endl;
-	}
-
-	return 0;
 }
-
-
-
-
-

@@ -1,39 +1,39 @@
-# ------------ Makefile class -------------------------------------------
+# ------------ Makefile mray -------------------------------------------
 
-# --------------------------- Umgebung testen  ------------------------------
+# --------------------------- Umgebungsvariablen ------------------------------
 
 ifndef PLATFORM
 $(error you must set PLATFORM variable (linux))
 endif
 
 ifndef CCSTANDARD
-$(error you must set CCSTANDARD variable (c++17))
+$(error you must set CCSTANDARD variable (c++11))
 endif
 
 opfad=$(HOME)/bin/$(PLATFORM)/o/
 ppfad=$(HOME)/bin/$(PLATFORM)/sbin/
 
 comp=g++
+
+# -------------------------- Makeoptionen ------------------------------------
+
 copts=-std=$(CCSTANDARD) -Wall -Wextra -Wconversion -pedantic-errors -O2
 
-# -------------------------- Ziele ------------------------------------------
+# -------------------------- Ziele -------------------------------------------
 
 allclean:
 	rm -f $(opfad)*
 	rm -f $(ppfad)*
 
-#----------------------------------------------------------------------------------------------------------
 quartictest:
-	make $(ppfad)$@
+	make -C ../../cc/class $(opfad)quartic.o
+	make -C ../../cc/class $(opfad)vektor.o
+	make -C ../../conio $(opfad)vektorcon.o
+	make $(ppfad)quartictest
 
-$(opfad)quartic.o: quartic.cc quartic.h
+# Abhängigkeitsbaum der h-Dateien voll durchtraversiert
+$(opfad)quartictest.o: quartictest.cc ../../cc/class/quartic.h ../../cc/class/vektor.h ../../conio/vektorcon.h
 	$(comp) $< -c $(copts) -o $@
 
-$(opfad)quartictest.o: quartictest.cc quartic.h
-	$(comp) $< -c $(copts) -o $@
-
-$(ppfad)quartictest: $(opfad)quartic.o $(opfad)quartictest.o
-	$(comp) $(opfad)quartictest.o $(opfad)quartic.o -o $@
-
-#----------------------------------------------------------------------------------------------------------
-
+$(ppfad)quartictest: $(opfad)quartictest.o $(opfad)quartic.o $(opfad)vektor.o $(opfad)vektorcon.o
+	$(comp) $+ -o $@

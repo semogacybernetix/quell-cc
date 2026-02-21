@@ -261,16 +261,20 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
-  //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);                 // langsam, Ausfälle bei 4 Lösungen
-  //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);                  // Innenwand sauber, Sprühen außerhalb des Torusses
-  //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);                  // Außenwand sauber, Feuer weit außerhalb des Torusses
-  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                  // Innenwand und Außenwand leichte Artefakte, kein Außerhalbsprühen
-  quartischdiffpuvintr (B/A, C/A, D/A, E/A, psp);                 // Innenwand sauber, Außenwand leichte Artefakte, leichtes Sprühen weit außerhalb
+  //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);                   // langsam, starke Ausfälle bei 4 Lösungen, einige Fehlerpixel außerhalb
+  //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand sauber, Sprühen außerhalb des Torusses
+  //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);                    // Außenwand sauber, Feuer weit außerhalb des Torusses
+  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
+  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // gleiches Fehlerverhalten wie quartischdiffpfintr
+  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr
+
+  //quartischdiffpuvintr (B/A, C/A, D/A, E/A, psp);                   // Innenwand sauber, Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   //quartischdiffpfintr3 (B/A, C/A, D/A, E/A, psp);                   // Innenwand verquierkst, Feuer weit außerhalb
-  //quartischmalin (B/A, C/A, D/A, E/A, psp);                       // tolle Linsenartefakte
+  quartischmalin (B/A, C/A, D/A, E/A, psp);                         // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
 
 /*
-  std::complex<real>* solutions= solve_quartic (B/A, C/A, D/A, E/A);
+  std::complex<real>* solutions= solve_quartic (B/A, C/A, D/A, E/A);  // etwas langsam, Außenröhren zerfetzt, Torus geteilt, Linseneffekt beim Überklappen
   real x1= solutions[0].real ();
   real x2= solutions[1].real ();
   real x3= solutions[2].real ();
@@ -284,25 +288,6 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   if ((solutions[3].imag () == 0) && ( x4 > 0))
     psp.add (x4);
   delete [] solutions;
-//*/
-
-  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);
-  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);               // gleiches Bild wie diffpf
-  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);               // zusätzliche Artefakte
-
-/*
-  ckomplexk x1, x2, x3, x4;
-  //quartisch (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
-  quartischdiffpuintrc (B/A, C/A, D/A, E/A, x1, x2, x3, x4);
-
-  if (arg (x1) < quantr)
-    psp.add (x1.x);
-  if (arg (x2) < quantr)
-    psp.add (x2.x);
-  if (arg (x3) < quantr)
-    psp.add (x3.x);
-  if (arg (x4) < quantr)
-    psp.add (x4.x);
 //*/
   }
 

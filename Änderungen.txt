@@ -360,7 +360,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2026.02.17 Di   0:00, quartischdiffpfintr verbessert, -d, -print erstellt, Fehlerausgabe programmiert, 6:52, 10:30, Fehlerbearbeitung bei real= _Float32 fortgesetzt, 12:18
 2026.02.18 Mi   7:57, quartischdiffpfintr Pixelfehler Ursachen ermittelt, 13:08, 18 Uhr quartic Routine Lösungsformel für die quartische Gleichung in xray integriert, 19:58, 21 Uhr, quartic weiter verbessert, 1:26
-2026.02.19 Do   17:52, Ungenauigkeitsfehler in quartischdiffpfintr gefunden: uq und vq sehr nahe bei 0 bei Fehlerpixel, 18:45, 21 Uhr, quartischdiffpuvintr kreiert, Artefakte Mitte Torus beseitigt, 0:43
+2026.02.19 Do  17:52, Ungenauigkeitsfehler in quartischdiffpfintr gefunden: uq und vq sehr nahe bei 0 bei Fehlerpixel, 18:45, 21 Uhr, quartischdiffpuvintr kreiert, Artefakte Mitte Torus beseitigt, 0:43
+2026.02.21 Fr   7:15, quartischroutinen aufgeräumt, quartischtest, quartischmalin bearbeitet, 13:57
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
