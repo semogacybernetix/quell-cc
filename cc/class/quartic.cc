@@ -1,1 +1,1 @@
-quarticprint.cc
+quarticorig.cc
