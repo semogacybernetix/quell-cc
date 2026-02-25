@@ -349,6 +349,7 @@ void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
 void kubischeresolventebuch (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventepdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventelagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
+void kubischeresolventemalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventez (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 
@@ -375,7 +376,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
 void quartischdiffpuvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpfintrprint (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpfintr3 (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischmalin (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);

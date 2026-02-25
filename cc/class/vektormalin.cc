@@ -2457,6 +2457,11 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   // reelle Lösung der kubischen Resolvente
   if (qk2 >= pk3)                                                     // 2 oder 0 Schnittpunkte mit dem Torus
     {
+/*
+    real vxl= sqrtr (qk2 - pk3);                                      // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
+    yk= (cbrtr (qk + vxl) + cbrtr (qk - vxl))/2;                      // außerdem zusätzliches Kreuz beim Torus
+//*/
+//*
     if (qk > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytk= cbrtr (qk + sqrtr (qk2 - pk3));
@@ -2469,6 +2474,18 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
       }
       else
       yk= 0;
+//*/
+/*
+    if (qk > 0)
+    ytk= cbrtr (absr (qk) + sqrtr (qk2 - pk3));
+    else
+    ytk= -cbrtr (absr (qk) + sqrtr (qk2 - pk3));
+    real B;
+    if (ytk == 0)
+      B= 0;
+      else B= pk/ytk;
+    yk= (ytk + B)/2;
+//*/
     }
     else                                                          // 4 Schnittpunkte mit dem Torus
     {
@@ -2521,7 +2538,6 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     if (x4 > 0)
       psp.add (real (x4));
     }
-
   if (finite (zk)) return;
   eingabe ();
   }
@@ -2985,6 +3001,11 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   // reelle Lösung der kubischen Resolvente
   if (qk2 >= pk3)
     {
+/*
+    real vxl= sqrtr (qk2 - pk3);                                      // Cardano-Berechnung langsamer, weil 2 Kubikwurzeln berechnet werden müssen
+    zk= cbrtr (qk + vxl) + cbrtr (qk - vxl) + ak3;                    // außerdem zusätzliches Kreuz beim Torus
+//*/
+//*
     if (qk > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ztk= cbrtr (qk + sqrtr (qk2 - pk3));
@@ -2997,10 +3018,22 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
       }
       else
       zk= ak3;
+//*/
+/*
+    ztk= cbrtr (absr (qk) + sqrtr (qk2 - pk3));
+    if (qk >= 0)
+      ztk= -ztk;
+    real B;
+    if (ztk == 0)
+      B= 0;
+      else B= pk/ztk;
+    zk= -ztk - B + ak3;
+//*/
     }
     else
     zk= cosr (acosr (-qk/sqrtr (pk3))/3)*sqrtr (pk)*-2 + ak3;         // 1. Fehlerquelle: pk3 <= 0
 
+//*
   // Lösungen der beiden quadratischen Gleichungen
   Dq= zk*zk - dq*4;                                                   // Dq wird deutlich kleiner als 0 (nicht wegen Ungenauigkeit)
   D= sqrtr (Dq);
@@ -3008,6 +3041,37 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   b2= (zk - D)/2;
   a1h= (aq*b1 - cq)/D/-2;
   a2h= (aq*b2 - cq)/D/2;
+//*/
+
+//*
+  // Lösungen der beiden quadratischen Gleichungen
+  Dq= zk*zk - dq*4;                                                   // Dq wird deutlich kleiner als 0 (nicht wegen Ungenauigkeit)
+  D= sqrtr (Dq);
+  real quant= real (1e-12);
+  if (absr (Dq) > quant)
+    {
+    b1= (zk + D)/2;
+    b2= (zk - D)/2;
+    a1h= (aq*b1 - cq)/D/-2;
+    a2h= (aq*b2 - cq)/D/2;
+    }
+    else
+    {
+    b1= zk/2;
+    b2= zk/2;
+    Dq= aq*aq - (bq - zk)*4;
+    if (absr (Dq) > quant)
+      {
+      a1h= (aq - D)/-4;
+      a2h= (aq + D)/-4;
+      }
+      else
+      {
+      a1h= aq/-4;
+      a2h= aq/-4;
+      }
+    }
+//*/
 
   // Lösungen normale quartische Gleichung
   a1q= a1h*a1h;

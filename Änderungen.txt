@@ -366,6 +366,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2026.02.23 Mo  20:12, Riesenbrass gehabt mit quartischdiffp, quartischmalin, jeweils 3 Resolventenmethoden implementiert, stundenlang probiert, lauter Fehler, nicht richtig weitergekommen, aufgeregt (Alzheimer), 4:27
 
+2026.02.25 Mi  21:28, quartischmalinintr optimiert (D), alle 3 integrierten Resolventenberechnungen bei quartischdiffpfintr und quartischmalinintr auf Konsistenz gebracht, überflüssige Resolventenberechnungen entfernt, 0:02
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 framerate sauber implementieren

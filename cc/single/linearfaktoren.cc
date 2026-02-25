@@ -1955,7 +1955,7 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
-  quartischmalin (a.x, b.x, c.x, d.x, psp);
+  quartischmalinintr (a.x, b.x, c.x, d.x, psp);
 
   printtext ("-------------------------------- quartischmalin Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);

@@ -271,7 +271,7 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
   //quartischdiffpuvintr (B/A, C/A, D/A, E/A, psp);                   // Innenwand sauber, Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   //quartischdiffpfintr3 (B/A, C/A, D/A, E/A, psp);                   // Innenwand verquierkst, Feuer weit außerhalb
-  quartischmalin (B/A, C/A, D/A, E/A, psp);                         // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
+  quartischmalinintr (B/A, C/A, D/A, E/A, psp);                         // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
 
 /*
   std::complex<real>* solutions= solve_quartic (B/A, C/A, D/A, E/A);  // etwas langsam, Außenröhren zerfetzt, Torus geteilt, Linseneffekt beim Überklappen
