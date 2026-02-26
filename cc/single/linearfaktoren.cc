@@ -1932,6 +1932,15 @@ void quartischloesungen ()
   printvektor2komplex ("x4          ", psp.abstand[3], 0);
   printtext ("\n");
 
+  quartisch (a, b, c, d, x1, x2, x3, x4);
+
+  printtext ("-------------------------------- quartisch Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", x1, 0);
+  printvektor2komplex ("x2          ", x2, 0);
+  printvektor2komplex ("x3          ", x3, 0);
+  printvektor2komplex ("x4          ", x4, 0);
+  printtext ("\n");
+
   psp.anz= 0;
   quartischdiffpfintr (a.x, b.x, c.x, d.x, psp);
 

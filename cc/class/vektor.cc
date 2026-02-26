@@ -2235,12 +2235,12 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
   //quartischreduziertdiffpu (p, q, r, y1, y2, y3, y4);
   //quartischreduziertbuchu (p, q, r, y1, y2, y3, y4);
   //quartischreduziertbuchv (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertbuchf (p, q, r, y1, y2, y3, y4);
+  quartischreduziertbuchf (p, q, r, y1, y2, y3, y4);
   //quartischreduziertpdfw2 (p, q, r, y1, y2, y3, y4);
   //quartischreduziertlagrange (p, q, r, y1, y2, y3, y4);
   //quartischreduziertbuchf3 (p, q, r, y1, y2, y3, y4);
   //quartischreduziertpdfw23 (p, q, r, y1, y2, y3, y4);
-  quartischreduziertlagrange3 (p, q, r, y1, y2, y3, y4);
+  //quartischreduziertlagrange3 (p, q, r, y1, y2, y3, y4);
 
   a4= a/4;
   x1= y1 - a4;
@@ -2505,9 +2505,9 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     a1= aq4 - u;
     x1= a1 - D12;
     x2= a1 + D12;
-    if (x1 > 0)
+    if (x1 > -10)
       psp.add (real (x1));
-    if (x2 > 0)
+    if (x2 > -10)
       psp.add (real (x2));
     }
   if (uq >= b2)
@@ -2516,13 +2516,59 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     a2= aq4 + u;
     x3= a2 - D34;
     x4= a2 + D34;
-    if (x3 > 0)
+    if (x3 > -10)
       psp.add (real (x3));
-    if (x4 > 0)
+    if (x4 > -10)
       psp.add (real (x4));
     }
 
-  if (finite (zk)) return;
+  //if (finite (zk)) return;
+
+  // Printausgabe Variablen quartischdiffpf
+  printtext ("\n");
+  printtext ("pk3:");
+  printreal (pk3);
+  printtext ("\n");
+  printtext ("qk2:");
+  printreal (qk2);
+  printtext ("\n");
+  printtext ("\n");
+  printtext ("pk: ");
+  printreal (pk);
+  printtext ("\n");
+  printtext ("qk: ");
+  printreal (qk);
+  printtext ("\n");
+  printtext ("\n");
+  printtext ("yk: ");
+  printreal (yk);
+  printtext ("\n");
+  printtext ("zk: ");
+  printreal (zk);
+  printtext ("\n");
+  real gl= zk*zk*zk - zk*zk*pq - zk*rq*4 + rq*pq*4 - qq*qq;
+  printtext ("gl: ");
+  printreal (gl);
+  printtext ("\n");
+  printtext ("\n");
+  printtext ("uq: ");
+  printreal (uq);
+  printtext ("\n");
+  printtext ("\n");
+  printtext ("a1: ");
+  printreal (a1);
+  printtext ("\n");
+  printtext ("b1: ");
+  printreal (b1);
+  printtext ("\n");
+  printtext ("a2: ");
+  printreal (a2);
+  printtext ("\n");
+  printtext ("b2: ");
+  printreal (b2);
+  printtext ("\n");
+  printtext ("---------------------------------------\n");
+  eingabe ();
   eingabe ();
   }
 
@@ -3006,7 +3052,7 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   D= sqrtr (Dq);
   b1= (zk + D)/2;
   b2= (zk - D)/2;
-  a1h= (aq*b1 - cq)/D/-2;
+  a1h= (aq*b1 - cq)/D/-2;                                             // 2. Fehlerquelle D= 0
   a2h= (aq*b2 - cq)/D/2;
 
   // Lösungen normale quartische Gleichung
@@ -3034,10 +3080,10 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
 
   //return;
-  if (finite (zk)) return;
+  //if (finite (zk)) return;
   //if (finite (zk) && finite (D)) return;
 
-  // Printausgabe Variablen
+  // Printausgabe Variablen quartischmalin
   printtext ("\n");
   printtext ("ak: ");
   printreal (ak);
@@ -3049,10 +3095,10 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   printreal (ck);
   printtext ("\n");
   printtext ("\n");
-  printtext ("pk3: ");
+  printtext ("pk3:");
   printreal (pk3);
   printtext ("\n");
-  printtext ("qk2: ");
+  printtext ("qk2:");
   printreal (qk2);
   printtext ("\n");
   printtext ("\n");
@@ -3075,13 +3121,13 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   printreal (Dq);
   printtext ("\n");
   printtext ("\n");
-  printtext ("a1h: ");
+  printtext ("a1h:");
   printreal (a1h);
   printtext ("\n");
   printtext ("b1: ");
   printreal (b1);
   printtext ("\n");
-  printtext ("a2h: ");
+  printtext ("a2h:");
   printreal (a2h);
   printtext ("\n");
   printtext ("b2: ");
@@ -3089,6 +3135,7 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   printtext ("\n");
   printtext ("\n");
   printtext ("---------------------------------------\n");
+  eingabe ();
   eingabe ();
   }
 
