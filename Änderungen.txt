@@ -368,7 +368,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2026.02.25 Mi  21:28, quartischmalinintr optimiert (D), alle 3 integrierten Resolventenberechnungen bei quartischdiffpfintr und quartischmalinintr auf Konsistenz gebracht, überflüssige Resolventenberechnungen entfernt, 0:02
 2026.02.26 Do   7:04, Probe yk, zk bei quartischdiffpfintr geht nicht, volle Inkonsistenz, Widerspruch z +- v statt +-v wie im Buch, 10:08
-2026.02.27 Fr  22:04, quartischelementar auf Konsistenz gebracht, versucht Fehler im Realteil zu eliminieren, 1:09
+2026.02.27 Fr  22:04, quartischelementar auf Konsistenz gebracht, versucht Fehler im Realteil zu eliminieren, 1:09, 1:09 kubischeresolventereellelementar neue Berechnung kubische Gleichung aus Sultanskript, 4:40
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

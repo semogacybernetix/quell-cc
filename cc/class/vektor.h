@@ -153,6 +153,7 @@ const real PI2d (real (M_PIl*2/3));                                             
 const real PI3v (real (M_PIl*3/4));                                                   // die Konstante 3/4*pi vom Typ real
 const real gold (real (0.5 + sqrtl (1.25)));                                          // goldene Schnitt       g= (1 + √5)/2 = 2cos 36° = 2sin 54°        = 1.61803398...         x² - x - 1 = 0
 const real trib (real ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3)); // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1,2= ∛(19 ± 3√33)   = 1.83928675...    x³ - x² - x - 1 = 0
+const real wu675 (real (sqrtl (6.75)));
 
 // kartesischkomplexe Konstanten
 const ckomplexk ik (0, 1);
@@ -341,6 +342,7 @@ void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, 
 void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertreellc (real p, real q, real& y);
 void kubischreduziertreellu (real p, real q, real& y);
+void kubischreduziertreellelementar (real p, real q, real& y);
 void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, ckomplexk& q);
 void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);
 

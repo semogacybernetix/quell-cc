@@ -272,12 +272,19 @@ void kubischloesungen ()
   printvektor2komplex ("x3", (y3*3 - a)/3, 0);
   printtext ("\n");
 
+  kubischreduziertreellelementar (p.x, q.x, y);
+  printtext ("---------------------- kubischreduziertelementar --------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x", y - a.x/3, 0);
+  printtext ("\n");
+
+/*
   kubischelementar (a, b, c, x1, x2, x3);
   printtext ("---------------------- kubisch elementar --------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1", x1, 0);
   printvektor2komplex ("x2", x2, 0);
   printvektor2komplex ("x3", x3, 0);
   printtext ("\n");
+*/
 
   kubischreduziertreellc (p.x, q.x, y);
   printtext ("---------------------- kubisch reell c -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -2032,6 +2039,43 @@ void quartischeingabezw ()
 //--------------------------------------------------------------------------- Formeln mit Bezug zur quintischen Gleichung ----------------------------------------------------------------------------------------------------------
 
 void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
+  {
+  real br, cr, dw;
+  ckomplexk f1, f2, r1, r2;
+
+  br= b.x;
+  cr= c.x;
+
+  dw= sqrtr (br*br*br*-4 + cr*cr*-27);
+
+  // die f's aus den Koeffizienten real und imaginär getrennt berechnet
+  f1= ckomplexk (cr*27/-2, dw*sqrtr (real (6.75)));
+  f2= ckomplexk (cr*27/-2, dw*-sqrtr (real (6.75)));
+
+  // die Kubikwurzeln der f's
+  r1= cbrtr (f1);
+  r2= cbrtr (f2);
+
+  // die Lösungen aus den Koeffizienten
+  x1= (r1 + r2)/3;
+  x2= (r1*e32 + r2*e31)/3;
+  x3= (r1*e31 + r2*e32)/3;
+
+  printvektor2komplex ("f1", f1, 0);
+  printvektor2komplex ("f2", f2, 0);
+  printtext ("\n");
+
+  printvektor2komplex ("r1", r1, 0);
+  printvektor2komplex ("r2", r2, 0);
+  printtext ("\n");
+
+  printvektor2komplex ("x1", x1, 0);
+  printvektor2komplex ("x2", x2, 0);
+  printvektor2komplex ("x3", x3, 0);
+  printtext ("\n");
+  }
+
+void kubischelementaralt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   {
   ckomplexk d, r1, r2, r3, rperm1, rperm2, rperm3, f1, f2, f3, fperm1, fperm2, fperm3, fsum1, fsum2, fsum3, fdif1, fdif2, fdif3, fdif1q, fdif2q, fdif3q, fges1, fges2, fges3, dp;
   ckomplexk fr1, fr2, fr3, rr1, rr2, rr3, k;
