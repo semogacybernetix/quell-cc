@@ -263,10 +263,10 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
   //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);                   // langsam, starke Ausfälle bei 4 Lösungen, einige Fehlerpixel außerhalb
 
-  quartischtestintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand sauber, Sprühen außerhalb des Torusses
+  //quartischtestintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand sauber, Sprühen außerhalb des Torusses
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand sauber, Sprühen außerhalb des Torusses
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);                    // Außenwand sauber, Feuer weit außerhalb des Torusses
-  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+  quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr

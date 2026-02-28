@@ -1886,21 +1886,12 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
 
 void kubischreduziertelementar (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)            // funktioniert nicht mit komplexen p und r
   {
-  real pr, qr;
-  //real dw;
-  ckomplexk dw;
-  ckomplexk f1, f2, r1, r2;
+  ckomplexk d, f1, f2, r1, r2;
 
-  pr= p.x;
-  qr= q.x;
+  d= p*p*p*-27 + q*q*real (-182.25);
+  f1= q*real (-13.5) + ik*sqrtr (ckomplexk (d));
+  f2= q*real (-13.5) - ik*sqrtr (ckomplexk (d));
 
-  //dw= sqrtr (pr*pr*pr*-4 + qr*qr*-27);
-  dw= sqrtr (ckomplexk (pr*pr*pr*-4 + qr*qr*-27));
-
-  //f1= ckomplexk (qr*real (-13.5), dw*wu675);
-  //f2= ckomplexk (qr*real (-13.5), dw*-wu675);
-  f1= qr*real (-13.5) + ik*dw*wu675;
-  f2= qr*real (-13.5) - ik*dw*wu675;
   r1= cbrtr (f1);
   r2= cbrtr (f2);
 
@@ -1911,7 +1902,7 @@ void kubischreduziertelementar (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomple
   return;
 
   printtext ("-------------------------- kubischreduziert elementar debug ------------------------------------\n");
-  printvektor2komplex ("dw", dw, 0);
+  printvektor2komplex ("d", d, 0);
   printtext ("\n");
   printvektor2komplex ("f1", f1, 0);
   printvektor2komplex ("f2", f2, 0);
@@ -1974,35 +1965,29 @@ void kubischreduziertreellu (real p, real q, real& y)
     }
   }
 
-void kubischreduziertreellelementar (real p, real q, real& y)            // funktioniert nicht wenn p und q aus komplexen p und q abgeleitet wird
+void kubischreduziertreellelementar (real p, real q, real& y)            // fehlerhaft beim Torus
   {
-  //real d;
-  ckomplexk d;
-  ckomplexk f, r;
+  ckomplexk d, f1, f2, r1, r2, y1, y2, y3;
 
-  d= sqrtr (ckomplexk (p*p*p*-27 + q*q*real (-182.25)));
-  //d= (p*p*p*-27 + q*q*real (-182.25));
+  d= p*p*p*-27 + q*q*real (-182.25);
+  f1= q*real (-13.5) + ik*sqrtr (ckomplexk (d));
+  f2= q*real (-13.5) - ik*sqrtr (ckomplexk (d));
 
-  //f= ckomplexk (q*real (-13.5), d);
-  f= q*real (-13.5) + ik*d;
-  r= cbrtr (f);
-  y= r.x*k2d;
+  r1= cbrtr (f1);
+  r2= cbrtr (f2);
 
-  return;
+  y1= (r1 + r2)/3;
+  y2= (r1*e32 + r2*e31)/3;
+  y3= (r1*e31 + r2*e32)/3;
 
-  printtext ("-------------------------- kubischreduziert reell elementar debug ------------------------------------\n");
-  printtext ("p: ");
-  printreal (p);
-  printtext ("\n");
-  printtext ("q: ");
-  printreal (q);
-  printtext ("\n");
-  printvektor2komplex ("d", d, 0);
-  printvektor2komplex ("f", f, 0);
-  printvektor2komplex ("r", r, 0);
-  printtext ("---------------------------------------------------------------------------------------------------\n");
-  printtext ("\n");
-
+  y= real (1e-35);
+  real quant= real (1e-6);
+  if (absr (y1.y) < quant)
+    y= y1.x;
+  if ((absr (y2.y) < quant) && (y2.x > y))
+    y= y2.x;
+  if ((absr (y3.y) < quant) && (y3.x > y))
+    y= y3.x;
   }
 
 void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, ckomplexk& q)
@@ -2383,75 +2368,51 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& p
 
 void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real pq, qq, rq, ak, bk, ck, pk, qk, yk, zk, uq, vq, u, v, bed, b1, b2, aq4, a1, a2, D12, D34, x1, x2, x3, x4;
-  ckomplexk y1, y2, y3;
+  real aq4, pq, qq, rq, ak, bk, ck, pk, qk, yk, zk;
+  real uq, vq, u, v, bed, a1, a2, b1, b2;
+  real D12, D34, x1, x2, x3, x4;
 
+  // Parameter der reduzierten quartischen Gleichung
   pq= aq*aq*3/-8 + bq;
-  qq= aq*(aq*aq - bq*4)/8 + cq;
-  rq= aq*((aq*bq - cq*4)*16 - aq*aq*aq*3)/256 + dq;
+  qq= aq*(aq*aq/8 + bq/-2) + cq;
+  rq= aq*(aq*aq*aq*3/-256 + aq*bq/16 + cq/-4) + dq;
 
-  ckomplexk xx1, xx2, xx3, xx4, yy1, yy2, yy3, yy4;
-
-  //quartisch (aq, bq, cq, dq, xx1, xx2, xx3, xx4);
-  quartischreduziertbuchf (pq, qq, rq, yy1, yy2, yy3, yy4);
-
-  xx1= yy1 - pq/4;
-  xx2= yy2 - pq/4;
-  xx3= yy3 - pq/4;
-  xx4= yy4 - pq/4;
-
-  real quant= real (1e-4);
-  if ((xx1.x > 0) && (absr (xx1.y) < quant))
-   psp.add (xx1.x);
-  if ((xx2.x > 0) && (absr (xx2.y) < quant))
-   psp.add (xx1.x);
-  if ((xx3.x > 0) && (absr (xx3.y) < quant))
-   psp.add (xx1.x);
-  if ((xx4.x > 0) && (absr (xx4.y) < quant))
-   psp.add (xx1.x);
-
-  return;
-
+  //kubische Resolvente Buch
   ak= pq/-2;
   bk= -rq;
   ck= rq*pq/2 - qq*qq/8;
 
+  // Parameter der reduzierten kubischen Gleichung
   pk= ak*ak/-3 + bk;
   qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
 
-  //kubischreduziertelementar (pk, qk, y1, y2, y3);
-  //kubischreduziertcardano (pk, qk, y1, y2, y3);
-
-
-  yk= y1.x;
+  // kubische Resolvente
+  kubischreduziertreellelementar (pk, qk, yk);
   zk= yk - ak/3;
+
+  // Lösungen der beiden quadratischen Gleichungen
   uq= zk*2 - pq;
   vq= zk*zk - rq;
+  u= sqrtr (uq);
+  v= sqrtr (vq);
 
-  u= sqrtr (uq);                                                  // 2. Fehlerquelle u, uq < 0 wegen Ungenauigkeit, durch Abfangen entsteht Außenfeuer
-  v= sqrtr (vq);                                          // 3. Fehlerquelle v, vq < 0 wegen Ungenauigkeit, durch Abfangen entsteht Außenfeuer
-
-  // Bedingung -2uv = qq
+  // Bedingung -2uv = q
   bed= u*v*-2;
-  if (absr (bed + qq) < absr (bed - qq))                          // komplizierte Abfrage, weil die Gleichung wegen Ungenauigkeiten nicht immer stimmt
-    {
-    b1= zk - v;
-    b2= zk + v;
-    }
-    else
-    {
-    b1= zk + v;
-    b2= zk - v;
-    }
+  if (absr (bed + qq) < absr (bed - qq))
+    v= -v;
+
+  a1=  u;
+  a2= -u;
+  b1= zk + v;
+  b2= zk - v;
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
   if (uq >= b1)
     {
-    D12= sqrtr (uq - b1);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a1= aq4 - u;
-    x1= a1 - D12;
-    x2= a1 + D12;
+    D12= sqrtr (a1*a1/4 - b1);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    x1= aq4 - a1/2 + D12;
+    x2= aq4 - a1/2 - D12;
     if (x1 > 0)
       psp.add (real (x1));
     if (x2 > 0)
@@ -2459,10 +2420,9 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
     }
   if (uq >= b2)
     {
-    D34= sqrtr (uq - b2);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a2= aq4 + u;
-    x3= a2 - D34;
-    x4= a2 + D34;
+    D34= sqrtr (a2*a2/4 - b2);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    x3= aq4 - a2/2 + D34;
+    x4= aq4 - a2/2 - D34;
     if (x3 > 0)
       psp.add (real (x3));
     if (x4 > 0)
@@ -2645,6 +2605,10 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     {
     l= sqrtr (pk);                                                // pk > 0 immer, l = 0 bei pk= 0
     yk= cosr (acosr (qk/pk/l)/3)*l;                               // 1. Fehlerquelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    real yk2= cosr (acosr (qk/pk/l)/3 + PI2d)*l;                               // 1. Fehlerquelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    real yk3= cosr (acosr (qk/pk/l)/3 - PI2d)*l;                               // 1. Fehlerquelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    if (yk2 > yk) yk= yk2;
+    if (yk3 > yk) yk= yk3;
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
