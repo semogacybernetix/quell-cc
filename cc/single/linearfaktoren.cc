@@ -179,7 +179,7 @@ void quadratischeingabezw ()
 
 //--------------------------------------------------------------------------- kubische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
 
-void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);       // Nur Deklaration, Implementation später
+void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);       // Nur Deklaration, Implementation steht weiter unten im Quelltext
 
 void kubischparameter ()
   {
@@ -2033,68 +2033,79 @@ void quartischeingabezw ()
 
 void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   {
-  ckomplexk d, f1, f2, f3, r1, r2, r3, f_1, f_2, f_3, r_1, r_2, r_3, ff1, ff2, ff3, f_f1, f_f2, f_f3, dp;
+  ckomplexk d, r1, r2, r3, rperm1, rperm2, rperm3, f1, f2, f3, fperm1, fperm2, fperm3, fsum1, fsum2, fsum3, fdif1, fdif2, fdif3, fdif1q, fdif2q, fdif3q, fges1, fges2, fges3, dp;
   ckomplexk fr1, fr2, fr3, rr1, rr2, rr3, k;
-  real ar, br, cr, dr;
+  ckomplexk delta, deltaw;
+  real ar, br, cr, deltar, deltarw;
 
   kubisch (a, b, c, x1, x2, x3);
 
   printtext ("-------------------------------------------- Berechnung der Zwischenwerte aus den Lösungen ------------------------------------------------------------------\n");
+  // Die Lösungen
   printvektor2komplex ("x1", x1, 0);
   printvektor2komplex ("x2", x2, 0);
   printvektor2komplex ("x3", x3, 0);
   printtext ("\n");
 
+  // die Resolventen
   r1= x1 + x2*e31 + x3*e32;
   r2= x1 + x2*e32 + x3*e31;
   r3= x1 + x2 + x3;
 
-  r_1= x2 + x1*e31 + x3*e32;
-  r_2= x2 + x1*e32 + x3*e31;
-  r_3= x2 + x1 + x3;
+  // die Resolventen mit einer ungeraden (nicht zyklischen) Permutation
+  rperm1= x2 + x1*e31 + x3*e32;
+  rperm2= x2 + x1*e32 + x3*e31;
+  rperm3= x2 + x1 + x3;
 
   printvektor2komplex ("r1", r1, 0);
   printvektor2komplex ("r2", r2, 0);
   printvektor2komplex ("r3", r3, 0);
-  printvektor2komplex ("r_1", r_1, 0);
-  printvektor2komplex ("r_2", r_2, 0);
-  printvektor2komplex ("r_3", r_3, 0);
+  printvektor2komplex ("rperm1", rperm1, 0);
+  printvektor2komplex ("rperm2", rperm2, 0);
+  printvektor2komplex ("rperm3", rperm3, 0);
   printtext ("\n");
 
+  // die Kuben der Resolventen
   f1= r1*r1*r1;
   f2= r2*r2*r2;
   f3= r3*r3*r3;
 
-  f_1= r_1*r_1*r_1;
-  f_2= r_2*r_2*r_2;
-  f_3= r_3*r_3*r_3;
+  // die Kuben der (Resolventen mit einer ungeraden Permutation)
+  fperm1= rperm1*rperm1*rperm1;
+  fperm2= rperm2*rperm2*rperm2;
+  fperm3= rperm3*rperm3*rperm3;
 
   printvektor2komplex ("f1", f1, 0);
   printvektor2komplex ("f2", f2, 0);
   printvektor2komplex ("f3", f3, 0);
-  printvektor2komplex ("f_1", f_1, 0);
-  printvektor2komplex ("f_2", f_2, 0);
-  printvektor2komplex ("f_3", f_3, 0);
+  printvektor2komplex ("fperm1", fperm1, 0);
+  printvektor2komplex ("fperm2", fperm2, 0);
+  printvektor2komplex ("fperm3", fperm3, 0);
   printtext ("\n");
 
-  ff1= f1 + f_1;
-  ff2= f2 + f_2;
-  ff3= f3 + f_3;
+  // die Summe aus f und fperm
+  fsum1= f1 + fperm1;
+  fsum2= f2 + fperm2;
+  fsum3= f3 + fperm3;
 
-  f_f1= f1 - f_1;
-  f_f2= f2 - f_2;
-  f_f3= f3 - f_3;
+  // die Differenz aus f und fperm
+  fdif1= f1 - fperm1;
+  fdif2= f2 - fperm2;
+  fdif3= f3 - fperm3;
 
-  f_f1= f_f1*f_f1;
-  f_f2= f_f2*f_f2;
-  f_f3= f_f3*f_f3;
+  // die Quadrate der Differenz
+  fdif1q= fdif1*fdif1;
+  fdif2q= fdif2*fdif2;
+  fdif3q= fdif3*fdif3;
 
-  printvektor2komplex ("ff1", ff1, 0);
-  printvektor2komplex ("ff2", ff2, 0);
-  printvektor2komplex ("ff3", ff3, 0);
-  printvektor2komplex ("f_f1", f_f1, 0);
-  printvektor2komplex ("f_f2", f_f2, 0);
-  printvektor2komplex ("f_f3", f_f3, 0);
+  // Die Gesamtsumme und damit die f's symmetrisch berechnet
+  fges1= fsum1/2 - sqrtr (fdif1q)/2;
+  fges2= fsum2/2 - sqrtr (fdif2q)/2;
+  fges3= fsum3/2 - sqrtr (fdif3q)/2;
+
+  printvektor2komplex ("fges1", fges1, 0);
+  printvektor2komplex ("fges2", fges2, 0);
+  printvektor2komplex ("fges3", fges3, 0);
   printtext ("\n");
 
   dp= (x1-x2)*(x2-x3)*(x3-x1);
@@ -2112,13 +2123,14 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   br= b.x;
   cr= c.x;
 
-  d= a*a*b*b + a*a*a*c*-4 + b*b*b*-4 + a*b*c*18 + c*c*-27;
-  dr= ar*ar*br*br + ar*ar*ar*cr*-4 + br*br*br*-4 + ar*br*cr*18 + cr*cr*-27;
-  dr= sqrtr (dr);
-  d= sqrtr (d);
+  delta= a*a*b*b + a*a*a*c*-4 + b*b*b*-4 + a*b*c*18 + c*c*-27;
+  deltar= ar*ar*br*br + ar*ar*ar*cr*-4 + br*br*br*-4 + ar*br*cr*18 + cr*cr*-27;
+  deltaw= sqrtr (delta);
+  deltarw= sqrtr (deltar);
 
-//  f1= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*sqrtr (real (6.75));
-//  f2= -a*a*a + a*b*9/-2 + c*27/-2 + ik*d*-sqrtr (real (6.75));
+  // die f's aus den Koeffizienten komplex berechnet
+  f1= -(a*a*a) + a*b*9/-2 + c*27/-2 + ik*deltaw*sqrtr (real (6.75));                 // leider fehlerhafte Realteilberechung
+  f2= -(a*a*a) + a*b*9/-2 + c*27/-2 + ik*deltaw*-sqrtr (real (6.75));                // leider fehlerhafte Realteilberechung
   f3= -(a*a*a);
 
   printvektor2komplex ("f1", f1, 0);
@@ -2126,19 +2138,22 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   printvektor2komplex ("f3", f3, 0);
   printtext ("\n");
 
-  fr1= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*sqrtr (real (6.75));
-  fr2= -ar*ar*ar + ar*br*9/-2 + cr*27/-2 + ik*d*-sqrtr (real (6.75));
-  fr3= -(ar*ar*ar);
+  // die f's aus den Koeffizienten real und imaginär getrennt berechnet
+  fr1= ckomplexk (-ar*ar*ar + ar*br*9/-2 + cr*27/-2, deltarw*sqrtr (real (6.75)));                 // leider fehlerhafte Realteilberechung
+  fr2= ckomplexk (-ar*ar*ar + ar*br*9/-2 + cr*27/-2, deltarw*-sqrtr (real (6.75)));                // leider fehlerhafte Realteilberechung
+  fr3= ckomplexk (-(ar*ar*ar), 0);
 
   printvektor2komplex ("fr1", fr1, 0);
   printvektor2komplex ("fr2", fr2, 0);
   printvektor2komplex ("fr3", fr3, 0);
   printtext ("\n");
 
+  // die Kubikwurzeln der f's
   r1= cbrtr (f1);
   r2= cbrtr (f2);
   r3= cbrtr (f3);
 
+  // die Kubikwurzeln der aus reellen Koeffizienten berechneten f's
   rr1= cbrtr (fr1);
   rr2= cbrtr (fr2);
   rr3= cbrtr (fr3);
@@ -2153,13 +2168,14 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   printvektor2komplex ("rr3", rr3, 0);
   printtext ("\n");
 
+  // die Lösungen aus den Koeffizienten
   x1= (r1 + r2 + r3)/3;
   x2= (r1*e32 + r2*e31 + r3)/3;
   x3= (r1*e31 + r2*e32 + r3)/3;
 
-  printvektor2komplex ("x1 a", x1, 0);
-  printvektor2komplex ("x2 a", x2, 0);
-  printvektor2komplex ("x3 a", x3, 0);
+  printvektor2komplex ("x1", x1, 0);
+  printvektor2komplex ("x2", x2, 0);
+  printvektor2komplex ("x3", x3, 0);
   printtext ("\n");
 /*
   for (integer lauf1= 0; lauf1 < 3; lauf1++)
