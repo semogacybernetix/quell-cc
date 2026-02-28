@@ -144,6 +144,8 @@ struct coktonion : public cvektor8
 // reelle Konstanten
 //const real quantr= real (powl (0.1, sizeof (real)));                                  // Ähnlichkeitseinheit abhängig von der Genauigkeit des real Typs
 const real quantg= real (1e-8);                                                       // Ähnlichkeitseinheit absolut
+const real k2d= real (_Float80 (2)/3);                                                // 2/3;
+const real wu675 (real (sqrtl (6.75)));
 
 const real PI (real (M_PIl));                                                         // die Konstante pi vom Typ real
 const real PIh (real (M_PIl/2));                                                      // pi/2
@@ -153,7 +155,6 @@ const real PI2d (real (M_PIl*2/3));                                             
 const real PI3v (real (M_PIl*3/4));                                                   // die Konstante 3/4*pi vom Typ real
 const real gold (real (0.5 + sqrtl (1.25)));                                          // goldene Schnitt       g= (1 + √5)/2 = 2cos 36° = 2sin 54°        = 1.61803398...         x² - x - 1 = 0
 const real trib (real ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))/3)); // Tribonacci Konstante  t= (1 + t1 + t2)/3    t1,2= ∛(19 ± 3√33)   = 1.83928675...    x³ - x² - x - 1 = 0
-const real wu675 (real (sqrtl (6.75)));
 
 // kartesischkomplexe Konstanten
 const ckomplexk ik (0, 1);
@@ -340,6 +341,7 @@ void kubischreduziertcardano (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk
 void kubischreduziertcardano3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
+void kubischreduziertelementar (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertreellc (real p, real q, real& y);
 void kubischreduziertreellu (real p, real q, real& y);
 void kubischreduziertreellelementar (real p, real q, real& y);
@@ -351,9 +353,9 @@ void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
 void kubischeresolventebuch (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventepdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventelagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
-void kubischeresolventemalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventez (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
+void kubischeresolventemalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 
 // quartische Formeln komplex
 void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
@@ -372,6 +374,7 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 
 // quartische Formeln für reelle Koeffizienten  (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
 void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
