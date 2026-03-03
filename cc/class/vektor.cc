@@ -162,6 +162,22 @@ void savemax (integer& pmax, integer pr)
   }
 
 //--------------------- real Funktionen -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------ finiter ---------------------------------------------------------------------------
+integer finiter (const _Float32& a)
+  {
+  return finitef (a);
+  }
+
+integer finiter (const _Float64& a)
+  {
+  return finite (a);
+  }
+
+integer finiter (const _Float80& a)
+  {
+  return finitel (a);
+  }
+
 //------------------------------------------------------------------------------------ fmodr ------------------------------------------------------------------------
 _Float32 modr (const _Float32& a, const _Float32& b)
   {
@@ -1888,9 +1904,9 @@ void kubischreduziertelementar (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomple
   {
   ckomplexk d, f1, f2, r1, r2;
 
-  d= p*p*p*-27 + q*q*real (-182.25);
-  f1= q*real (-13.5) + ik*sqrtr (ckomplexk (d));
-  f2= q*real (-13.5) - ik*sqrtr (ckomplexk (d));
+  d= q*q*182.25 + p*p*p*27;
+  f1= q*-13.5 - sqrtr (d);
+  f2= q*-13.5 + sqrtr (d);
 
   r1= cbrtr (f1);
   r2= cbrtr (f2);
@@ -1969,11 +1985,11 @@ void kubischreduziertreellelementar (real p, real q, real& y)            // fehl
   {
   ckomplexk d, f1, f2, r1, r2, y1, y2, y3;
 
-  d= p*p*p*-27 + q*q*real (-182.25);
-  f1= q*real (-13.5) + ik*sqrtr (ckomplexk (d));
-  f2= q*real (-13.5) - ik*sqrtr (ckomplexk (d));
+  d= q*q*182.25 + p*p*p*27;
+  f1= q*-13.5 - sqrtr (d);
+  f2= q*-13.5 + sqrtr (d);
 
-  r1= cbrtr (f1);
+  r1= cbrtr (f1);                                                        // uv-Addition wird unterschlagen
   r2= cbrtr (f2);
 
   y1= (r1 + r2)/3;
@@ -2004,9 +2020,10 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   kubischreduziertk (a, b, c, p, q);
 
   //kubischreduziertcardano (p, q, y1, y2, y3);
-  kubischreduziertcardano3 (p, q, y1, y2, y3);
+  //kubischreduziertcardano3 (p, q, y1, y2, y3);
   //kubischreduziertu (p, q, y1, y2, y3);
   //kubischreduziertu3 (p, q, y1, y2, y3);
+  kubischreduziertelementar (p, q, y1, y2, y3);
   //kubischreduziertreellu (p.x, q.x, yr);
   //kubischreduziertreellc (p.x, q.x, yr);
 
@@ -2658,7 +2675,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     }
 
   //return;
-  if (finite (zk)) return;
+  if (finiter (zk)) return;
 
   // Printausgabe Variablen quartischdiffpf
   printtext ("\n");
@@ -3112,7 +3129,7 @@ void quartischdiffpfintr3 (real aq, real bq, real cq, real dq, cschnittpunkte& p
     return;
 
   // Nachberechnung Debugging
-  _Float64 cyk= qk/pk/sqrtr (pk);
+  real cyk= qk/pk/sqrtr (pk);
   D12= sqrtr (uq - b1);
   D34= sqrtr (uq - b2);
 

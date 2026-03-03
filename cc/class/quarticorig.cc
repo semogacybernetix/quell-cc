@@ -56,7 +56,7 @@ unsigned int solveP3(real *x,real a,real b,real c) {
 		x[0] =(A+B)-a;
 		x[1] =-real (0.5)*(A+B)-a;
 		x[2] = real (0.5)*sqrtr(real (3))*(A-B);
-		if(fabs(x[2])<eps) { x[2]=x[1]; return 2; }
+		if(absr(x[2])<eps) { x[2]=x[1]; return 2; }
 
 		return 1;
         }
@@ -83,19 +83,19 @@ DComplex* solve_quartic(real a, real b, real c, real d)
 	// THE ESSENCE - choosing Y with maximal absolute value !
 	if(iZeroes != 1)
 	{
-		if(fabs(x3[1]) > fabs(y)) y = x3[1];
-		if(fabs(x3[2]) > fabs(y)) y = x3[2];
+		if(absr(x3[1]) > absr(y)) y = x3[1];
+		if(absr(x3[2]) > absr(y)) y = x3[2];
 	}
 
 	// h1+h2 = y && h1*h2 = d  <=>  h^2 -y*h + d = 0    (h === q)
 
 	D = y*y - 4*d;
-	if(fabs(D) < eps) //in other words - D==0
+	if(absr(D) < eps) //in other words - D==0
 	{
 		q1 = q2 = y * real (0.5);
 		// g1+g2 = a && g1+g2 = b-y   <=>   g^2 - a*g + b-y = 0    (p === g)
 		D = a*a - 4*(b-y);
-		if(fabs(D) < eps) //in other words - D==0
+		if(absr(D) < eps) //in other words - D==0
 			p1 = p2 = a * real (0.5);
 
 		else
@@ -111,7 +111,7 @@ DComplex* solve_quartic(real a, real b, real c, real d)
 		q1 = (y + sqD) * real (0.5);
 		q2 = (y - sqD) * real (0.5);
 		// g1+g2 = a && g1*h2 + g2*h1 = c       ( && g === p )  Krammer
-		p1 = (a*q1-c)/(q1-q2);
+  p1 = (a*q1-c)/(q1-q2);
 		p2 = (c-a*q2)/(q1-q2);
 	}
 

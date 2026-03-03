@@ -371,6 +371,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.02.27 Fr  22:04, quartischelementar auf Konsistenz gebracht, versucht Fehler im Realteil zu eliminieren, 1:09, 1:09 kubischeresolventereellelementar neue Berechnung kubische Gleichung aus Sultanskript, 4:40
 2026.02.28 Sa   9:15, kubischelementar, volle Inkonsistenzscheiße, maximale Fehlerkacke, 13:44, 20:30, quartischtestintr verbessert, kubischreduziertelementar, kubischreduziertreellelementar verbessert, 23:29
 
+2026.03.02 Mo  20:48, kubischelementar verbessert, quadratischweg2, kubischweg2, 1:15
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 framerate sauber implementieren

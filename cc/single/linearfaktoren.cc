@@ -4,8 +4,6 @@
 #include "../class/vektor.h"
 #include "../../conio/vektorcon.h"
 
-using namespace std;
-
 //--------------------------------------------------------------------------- quadratische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
 
 void quadratischreduziert (ckomplexk p, ckomplexk& y1, ckomplexk& y2)
@@ -125,28 +123,22 @@ void quadratischweg1 (ckomplexk ad, ckomplexk bd)
   printtext ("\n");
   }
 
-void quadratischweg2 (ckomplexk ad, ckomplexk bd)
+void quadratischweg2 (ckomplexk x1, ckomplexk x2)
   {
-  ckomplexk  xl, y1, y2, x1, x2;
+  ckomplexk  ad, bd, dpx, dpxq, dpkq;
 
-  // lineare Lösung
-  xl= ad*ad/4 - bd;
+  ad= -(x1 + x2);
+  bd= x1*x2;
 
-  // Lösungen reduzierte quadratische Gleichung
-  y1=  sqrtr (xl);
-  y2= -sqrtr (xl);
-
-  // Lösungen normale quadratische Gleichung
-  x1= y1 - ad/2;
-  x2= y2 - ad/2;
+  dpx= x1 - x2;
+  dpxq= dpx*dpx;
+  dpkq= ad*ad - bd*4;
 
   printvektor2komplex ("ad         ", ad, 1);
   printvektor2komplex ("bd         ", bd, 1);
   printtext ("\n");
-  printvektor2komplex ("xl         ", xl, 0);
-  printtext ("\n");
-  printvektor2komplex ("y1         ", y1, 0);
-  printvektor2komplex ("y2         ", y2, 0);
+  printvektor2komplex ("dpxq       ", dpxq, 0);
+  printvektor2komplex ("dpkq       ", dpkq, 0);
   printtext ("\n");
   printvektor2komplex ("x1         ", x1, 0);
   printvektor2komplex ("x2         ", x2, 0);
@@ -271,14 +263,14 @@ void kubischloesungen ()
   printvektor2komplex ("x2", (y2*3 - a)/3, 0);
   printvektor2komplex ("x3", (y3*3 - a)/3, 0);
   printtext ("\n");
-//*
+
   kubischreduziertelementar (p, q, y1, y2, y3);
   printtext ("---------------------- kubischreduziert elementar --------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1", y1 - a/3, 0);
   printvektor2komplex ("x2", y2 - a/3, 0);
   printvektor2komplex ("x3", y3 - a/3, 0);
   printtext ("\n");
-//*/
+
   kubischreduziertreellelementar (p.x, q.x, y);
   printtext ("---------------------- kubischreduziert reell elementar --------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x", y - a.x/3, 0);
@@ -448,7 +440,7 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   L2_27pm= L2_27pm/cbrtr (real (81));
   L3_27pm= L3_27pm/cbrtr (real (81));
 
-  // Lösungen Faktor 3    D= -6.75 d²
+  // Lösungen Faktor 3    D= -6.75 d²            Differenzenprodukt ist ohne Faktor
   D3_lm= -dq*real (6.75);
   D3_pm= kqp*kqp*real (182.25) + kpp*kpp*kpp*27;
   uh3_3pm= -kqp*real (13.5) + sqrtr (D3_lm);
@@ -715,6 +707,139 @@ void kubischweg1 (ckomplexk x1k, ckomplexk x2k, ckomplexk& x3k)
 
 void kubischweg2 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   {
+  ckomplexk xl, x1d, x2d, u1p, u2p, u3p, v1p, v2p, v3p, y1p, y2p, y3p, x1p, x2p, x3p, u1, u2, u3, v1, v2, v3;
+  ckomplexk ak, bk, ck, ak3, pk, qk, dpx, dpqx, dpqk, r1x, r2x, r3x, r1k, r2k, r3k, f1x, f2x, f3x, f1k, f2k, f3k, y1k, y2k, y3k;
+
+  // Parameter der normalen kubischen Gleichung, kubischer Offset
+  ak= -(x1 + x2 + x3);
+  bk= x1*x2 + x2*x3 + x3*x1;
+  ck= -(x1*x2*x3);
+  ak3= ak/3;
+
+  // Parameter der reduzierten kubischen Gleichung
+  pk= ak*ak/-3 + bk;
+  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
+
+  // Differenzenprodukt
+  dpx= (x1-x2)*(x2-x3)*(x3-x1);
+  dpqx= dpx*dpx;
+  dpqk= pk*pk*pk*-4 + qk*qk*-27;
+
+  // die 3 r's
+  r1x= (x1     + x2*e31 + x3*e32);
+  r2x= (x1     + x2*e32 + x3*e31);
+  r3x= (x1     + x2     + x3    );
+
+  // die 3 f's aus den Lösungen
+  f1x= r1x*r1x*r1x;
+  f2x= r2x*r2x*r2x;
+  f3x= r3x*r3x*r3x;
+
+  // die 3 f's aus den Koeffizienten
+  f1k= qk*-13.5 - sqrtr (pk*pk*pk*27 + qk*qk*182.25);
+  f2k= qk*-13.5 + sqrtr (pk*pk*pk*27 + qk*qk*182.25);
+  f3k= -ak*ak*ak - ak*bk*9/2 - ck*27/2;                             // fehlerhafter Realteil
+
+  // die 2 r's aus den Koeffizienten
+  r1k= cbrtr (f1k);
+  r2k= cbrtr (f2k);
+  r3k= 0;
+
+  // rk3 = 0
+  y1k= (r1k + r2k)/3;
+  y2k= (r1k*e32 + r2k*e31)/3;
+  y3k= (r1k*e31 + r2k*e32)/3;
+
+  //kubischreduziertelementar (pk, qk, y1k, y2k, y3k);
+
+  // Lösungen der eingebetteten quadratischen Gleichung
+  xl= pk*pk*pk/27 + qk*qk/4;
+  x1d= -qk/2 + sqrtr (xl);
+  x2d= -qk/2 - sqrtr (xl);
+
+  // Lösungen u v
+  cbrtr (x1d, u1p, u2p, u3p);
+  cbrtr (x2d, v1p, v2p, v3p);
+
+  // Rückübergabe der quadratischen Lösungen an die kubischen Lösungen
+  y1p= u1p - pk/(u1p*3);
+  y2p= u2p - pk/(u2p*3);
+  y3p= u3p - pk/(u3p*3);
+
+  // Rücktransformation der Lösungen der reduzierten kubischen Gleichung in die Lösungen der normalen kubischen Gleichung
+  x1p= y1p - ak3;
+  x2p= y2p - ak3;
+  x3p= y3p - ak3;
+
+  // die 3 Lösungen für u aus den Lösungen der normalen kubischen Gleichung
+  u1= (x1     + x2*e32 + x3*e31)/3;
+  u2= (x1*e31 + x2     + x3*e32)/3;
+  u3= (x1*e32 + x2*e31 + x3    )/3;
+
+  // die 3 Lösungen für v aus den Lösungen der normalen kubischen Gleichung
+  v1= (x1     + x2*e31 + x3*e32)/3;
+  v2= (x1*e32 + x2     + x3*e31)/3;
+  v3= (x1*e31 + x2*e32 + x3    )/3;
+
+  // Variablenausgabe
+  printvektor2komplex ("ak         ", ak, 1);
+  printvektor2komplex ("bk         ", bk, 1);
+  printvektor2komplex ("ck         ", ck, 1);
+  printtext ("\n");
+  printvektor2komplex ("pk         ", pk, 1);
+  printvektor2komplex ("qk         ", qk, 1);
+  printtext ("\n");
+  printvektor2komplex ("dpqx       ", dpqx, 0);
+  printvektor2komplex ("dpqk       ", dpqk, 0);
+  printtext ("\n");
+  printvektor2komplex ("f1x        ", f1x, 1);
+  printvektor2komplex ("f2x        ", f2x, 1);
+  printvektor2komplex ("f3x        ", f3x, 1);
+  printtext ("\n");
+  printvektor2komplex ("f1k        ", f1k, 1);
+  printvektor2komplex ("f2k        ", f2k, 1);
+  printvektor2komplex ("f3k        ", f3k, 1);
+  printtext ("\n");
+  printvektor2komplex ("r1x        ", r1x, 1);
+  printvektor2komplex ("r2x        ", r2x, 1);
+  printvektor2komplex ("r3x        ", r3x, 1);
+  printtext ("\n");
+  printvektor2komplex ("r1k        ", r1k, 1);
+  printvektor2komplex ("r2k        ", r2k, 1);
+  printvektor2komplex ("r3k        ", r3k, 1);
+  printtext ("\n");
+  printvektor2komplex ("x1k        ", y1k - ak3, 1);
+  printvektor2komplex ("x2k        ", y2k - ak3, 1);
+  printvektor2komplex ("x3k        ", y3k - ak3, 1);
+  printtext ("\n");
+  printvektor2komplex ("u1p        ", u1p, 1);
+  printvektor2komplex ("u2p        ", u2p, 1);
+  printvektor2komplex ("u3p        ", u3p, 1);
+  printtext ("\n");
+  printvektor2komplex ("v1p        ", v1p, 1);
+  printvektor2komplex ("v2p        ", v2p, 1);
+  printvektor2komplex ("v3p        ", v3p, 1);
+  printtext ("\n");
+  printvektor2komplex ("u1         ", u1, 1);
+  printvektor2komplex ("u2         ", u2, 1);
+  printvektor2komplex ("u3         ", u3, 1);
+  printtext ("\n");
+  printvektor2komplex ("v1         ", v1, 1);
+  printvektor2komplex ("v2         ", v2, 1);
+  printvektor2komplex ("v3         ", v3, 1);
+  printtext ("\n");
+  printvektor2komplex ("y1p        ", y1p, 0);
+  printvektor2komplex ("y2p        ", y2p, 0);
+  printvektor2komplex ("y3p        ", y3p, 0);
+  printtext ("\n");
+  printvektor2komplex ("x1p        ", x1p, 0);
+  printvektor2komplex ("x2p        ", x2p, 0);
+  printvektor2komplex ("x3p        ", x3p, 0);
+  printtext ("\n");
+  }
+
+void kubischweg3 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
+  {
   ckomplexk ak, bk, ck, ak3, pk, qk, xl, x1d, x2d, u1p, u2p, u3p, v1p, v2p, v3p, y1p, y2p, y3p, x1p, x2p, x3p, u1, u2, u3, v1, v2, v3;
 
   // Parameter der normalen kubischen Gleichung, kubischer Offset
@@ -804,7 +929,7 @@ void kubischeingabezw ()
   vektor2eingabek (x3);
 
 //  kubischzwischenwerte (x1, x2, x3);
-  kubischweg1 (x1, x2, x3);
+  kubischweg2 (x1, x2, x3);
   }
 
 //--------------------------------------------------------------------------- quartische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
@@ -2443,7 +2568,7 @@ integer entscheidungseingabe ()
   printtext ("\n");
   printtext (" [1] quadratisch  K   [2] kubisch  K     [3] quartisch  K\n");
   printtext (" [4] quadratisch  L   [5] kubisch  L     [6] quartisch  L\n");
-  printtext (" [7] quadratischw1 L  [8] kubischw1 L    [9] quartischw1 L\n");
+  printtext (" [7] quadratischw L   [8] kubischw L     [9] quartischw L\n");
   printtext (" [91] sqrttest        [92] quintisch K\n");
   printtext ("\n");
 
