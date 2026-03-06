@@ -1904,9 +1904,9 @@ void kubischreduziertelementar (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomple
   {
   ckomplexk d, f1, f2, r1, r2;
 
-  d= q*q*182.25 + p*p*p*27;
-  f1= q*-13.5 - sqrtr (d);
-  f2= q*-13.5 + sqrtr (d);
+  d= q*q*real (182.25) + p*p*p*27;
+  f1= q*real (-13.5) - sqrtr (d);
+  f2= q*real (-13.5) + sqrtr (d);
 
   r1= cbrtr (f1);
   r2= cbrtr (f2);
@@ -1985,9 +1985,9 @@ void kubischreduziertreellelementar (real p, real q, real& y)            // fehl
   {
   ckomplexk d, f1, f2, r1, r2, y1, y2, y3;
 
-  d= q*q*182.25 + p*p*p*27;
-  f1= q*-13.5 - sqrtr (d);
-  f2= q*-13.5 + sqrtr (d);
+  d= q*q*real (182.25) + p*p*p*27;
+  f1= q*real (-13.5) - sqrtr (d);
+  f2= q*real (-13.5) + sqrtr (d);
 
   r1= cbrtr (f1);                                                        // uv-Addition wird unterschlagen
   r2= cbrtr (f2);
@@ -2010,6 +2010,63 @@ void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, cko
   {
   p= a*a/-3 + b;
   q= a*(a*a/real (4.5) - b)/3 + c;
+  }
+
+void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
+  {
+  ckomplexk a3, dw, f, f1, f2, f3, r1, r2, r3;
+
+  dw= sqrtr (a*a*b*b*real (6.75) + a*a*a*c*-27 + b*b*b*-27 + a*b*c*real (121.5) + c*c*real (-182.25))*ik;
+
+  // die f's aus den Koeffizienten komplex berechnet
+  a3= -(a*a*a);
+  f= a3 + a*b*real (4.5) + c*real (-13.5);
+  f1= f - dw;
+  f2= f + dw;
+  f3= a3;
+
+  // die Kubikwurzeln der f's
+  r1= cbrtr (f1);
+  r2= cbrtr (f2);
+  r3= cbrtr (f3);
+
+  // die Lösungen aus den Koeffizienten
+  x1= (r1 + r2 + r3)/3;
+  x2= (r1*e32 + r2*e31 + r3)/3;
+  x3= (r1*e31 + r2*e32 + r3)/3;
+  }
+
+void kubischreellelementar (ckomplexk a, ckomplexk b, ckomplexk c, real& x)
+  {
+  ckomplexk a3, dw, f, f1, f2, f3, r1, r2, r3, x1, x2, x3;
+
+  dw= sqrtr (a*a*b*b*real (6.75) + a*a*a*c*-27 + b*b*b*-27 + a*b*c*real (121.5) + c*c*real (-182.25))*ik;
+
+  // die f's aus den Koeffizienten komplex berechnet
+  a3= -(a*a*a);
+  f= a3 + a*b*real (4.5) + c*real (-13.5);
+  f1= f - dw;
+  f2= f + dw;
+  f3= a3;
+
+  // die Kubikwurzeln der f's
+  r1= cbrtr (f1);
+  r2= cbrtr (f2);
+  r3= cbrtr (f3);
+
+  // die Lösungen aus den Koeffizienten
+  x1= (r1 + r2 + r3)/3;
+  x2= (r1*e32 + r2*e31 + r3)/3;
+  x3= (r1*e31 + r2*e32 + r3)/3;
+
+  x= real (1e-35);
+  real quant= real (1e-6);
+  if (absr (x1.y) < quant)
+    x= x1.x;
+  if ((absr (x2.y) < quant) && (x2.x > x))
+    x= x2.x;
+  if ((absr (x3.y) < quant) && (x3.x > x))
+    x= x3.x;
   }
 
 void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
@@ -2400,11 +2457,13 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   ck= rq*pq/2 - qq*qq/8;
 
   // Parameter der reduzierten kubischen Gleichung
-  pk= ak*ak/-3 + bk;
-  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
+  //pk= ak*ak/-3 + bk;
+  //qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
 
   // kubische Resolvente
-  kubischreduziertreellelementar (pk, qk, yk);
+  //kubischreduziertreellelementar (pk, qk, yk);
+  //kubischreellelementar (ak, bk, ck, yk);
+  kubischreellelementar (ak, bk, ck, yk);
   zk= yk - ak/3;
 
   // Lösungen der beiden quadratischen Gleichungen

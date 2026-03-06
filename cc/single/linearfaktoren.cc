@@ -1,5 +1,3 @@
-// Dieses Programm bestimmt die Linearfaktoren von Polynomen
-
 #include <cstdio>
 #include "../class/vektor.h"
 #include "../../conio/vektorcon.h"
@@ -171,15 +169,21 @@ void quadratischeingabezw ()
 
 //--------------------------------------------------------------------------- kubische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------
 
-void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);       // Nur Deklaration, Implementation steht weiter unten im Quelltext
-
 void kubischparameter ()
   {
   ckomplexk a, b, c, p, q, dp, y1, y2, y3;
+  real x;
 
   vektor2eingabek (a);
   vektor2eingabek (b);
   vektor2eingabek (c);
+
+  kubischreellelementar (a, b, c, x);
+
+  printtext ("x: ");
+  printreal (x);
+  printtext ("\n");
+  return;
 
   kubischreduziertk (a, b, c, p, q);
   dp= sqrtr (q*q/4 + p*p*p/27)*sqrtr (ckomplexk (-108));
@@ -269,6 +273,13 @@ void kubischloesungen ()
   printvektor2komplex ("x1", y1 - a/3, 0);
   printvektor2komplex ("x2", y2 - a/3, 0);
   printvektor2komplex ("x3", y3 - a/3, 0);
+  printtext ("\n");
+
+  kubischelementar (a, b, c, x1, x2, x3);
+  printtext ("---------------------- kubischreduziert elementar --------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1", x1, 0);
+  printvektor2komplex ("x2", x2, 0);
+  printvektor2komplex ("x3", x3, 0);
   printtext ("\n");
 
   kubischreduziertreellelementar (p.x, q.x, y);
@@ -736,12 +747,13 @@ void kubischweg2 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   f3x= r3x*r3x*r3x;
 
   // die 3 f's aus den Koeffizienten
-  f1k= qk*-13.5 - sqrtr (pk*pk*pk*27 + qk*qk*182.25);
-  f2k= qk*-13.5 + sqrtr (pk*pk*pk*27 + qk*qk*182.25);
-  f3k= -ak*ak*ak - ak*bk*9/2 - ck*27/2;                             // fehlerhafter Realteil
+  f1k= (-qk*sqrtr (real (27)) - dpx*ik)*sqrtr (ckomplexk (-108));
+  f2k= qk*real (-13.5) + dpx*sqrtr (ckomplexk (real (-6.75)));
+  //f3k= -ak*ak*ak - ak*bk*4.5 - ck*13.5;                             // fehlerhafter Realteil
+  f3k= ak*ak*ak - ak*bk*real (4.5) + ck*real (13.5);                             // fehlerhafter Realteil
 
   // die 2 r's aus den Koeffizienten
-  r1k= cbrtr (f1k);
+  r1k= cbrtr (f1k)*e32;
   r2k= cbrtr (f2k);
   r3k= 0;
 
@@ -2161,7 +2173,7 @@ void quartischeingabezw ()
 
 //--------------------------------------------------------------------------- Formeln mit Bezug zur quintischen Gleichung ----------------------------------------------------------------------------------------------------------
 
-void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
+void kubischbullshit (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   {
   ckomplexk d, r1, r2, r3, rperm1, rperm2, rperm3, f1, f2, f3, fperm1, fperm2, fperm3, fsum1, fsum2, fsum3, fdif1, fdif2, fdif3, fdif1q, fdif2q, fdif3q, fges1, fges2, fges3, dp;
   ckomplexk fr1, fr2, fr3, rr1, rr2, rr3, k;
@@ -2259,8 +2271,8 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   deltarw= sqrtr (deltar);
 
   // die f's aus den Koeffizienten komplex berechnet
-  f1= -(a*a*a) + a*b*9/-2 + c*27/-2 + ik*deltaw*sqrtr (real (6.75));                 // leider fehlerhafte Realteilberechung
-  f2= -(a*a*a) + a*b*9/-2 + c*27/-2 + ik*deltaw*-sqrtr (real (6.75));                // leider fehlerhafte Realteilberechung
+  f1= -(a*a*a) + a*b*9/2 + c*27/-2 + ik*deltaw*sqrtr (real (6.75));                 // leider fehlerhafte Realteilberechung
+  f2= -(a*a*a) + a*b*9/2 + c*27/-2 + ik*deltaw*-sqrtr (real (6.75));                // leider fehlerhafte Realteilberechung
   f3= -(a*a*a);
 
   printvektor2komplex ("f1", f1, 0);
@@ -2269,8 +2281,8 @@ void kubischelementar (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, cko
   printtext ("\n");
 
   // die f's aus den Koeffizienten real und imaginär getrennt berechnet
-  fr1= ckomplexk (-ar*ar*ar + ar*br*9/-2 + cr*27/-2, deltarw*sqrtr (real (6.75)));                 // leider fehlerhafte Realteilberechung
-  fr2= ckomplexk (-ar*ar*ar + ar*br*9/-2 + cr*27/-2, deltarw*-sqrtr (real (6.75)));                // leider fehlerhafte Realteilberechung
+  fr1= ckomplexk (-ar*ar*ar + ar*br*9/2 + cr*27/-2, deltarw*sqrtr (real (6.75)));                 // leider fehlerhafte Realteilberechung
+  fr2= ckomplexk (-ar*ar*ar + ar*br*9/2 + cr*27/-2, deltarw*-sqrtr (real (6.75)));                // leider fehlerhafte Realteilberechung
   fr3= ckomplexk (-(ar*ar*ar), 0);
 
   printvektor2komplex ("fr1", fr1, 0);

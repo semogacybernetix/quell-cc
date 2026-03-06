@@ -373,6 +373,8 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 
 2026.03.02 Mo  20:48, kubischelementar verbessert, quadratischweg2, kubischweg2, 1:15
 
+2026.03.05 Do  22:30, kubischelementar Realteilfehler beseitigt, kubischreellelementar, Routinen weiter getestet, 2:12
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 framerate sauber implementieren
