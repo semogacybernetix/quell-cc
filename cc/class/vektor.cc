@@ -2076,11 +2076,11 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
 
   kubischreduziertk (a, b, c, p, q);
 
-  //kubischreduziertcardano (p, q, y1, y2, y3);
+  kubischreduziertcardano (p, q, y1, y2, y3);
   //kubischreduziertcardano3 (p, q, y1, y2, y3);
   //kubischreduziertu (p, q, y1, y2, y3);
   //kubischreduziertu3 (p, q, y1, y2, y3);
-  kubischreduziertelementar (p, q, y1, y2, y3);
+  //kubischreduziertelementar (p, q, y1, y2, y3);
   //kubischreduziertreellu (p.x, q.x, yr);
   //kubischreduziertreellc (p.x, q.x, yr);
 
@@ -2445,6 +2445,7 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   real aq4, pq, qq, rq, ak, bk, ck, pk, qk, yk, zk;
   real uq, vq, u, v, bed, a1, a2, b1, b2;
   real D12, D34, x1, x2, x3, x4;
+  ckomplexk yk1, yk2, yk3, zkc, uqc, vqc, uc, vc;
 
   // Parameter der reduzierten quartischen Gleichung
   pq= aq*aq*3/-8 + bq;
@@ -2457,13 +2458,14 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   ck= rq*pq/2 - qq*qq/8;
 
   // Parameter der reduzierten kubischen Gleichung
-  //pk= ak*ak/-3 + bk;
-  //qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
+  pk= ak*ak/-3 + bk;
+  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
 
   // kubische Resolvente
-  //kubischreduziertreellelementar (pk, qk, yk);
+  //kubischreduziertreellu (pk, qk, yk);
+  kubischreduziertreellelementar (pk, qk, yk);
   //kubischreellelementar (ak, bk, ck, yk);
-  kubischreellelementar (ak, bk, ck, yk);
+  //kubisch (ak, bk, ck, yk1, yk2, yk3);
   zk= yk - ak/3;
 
   // Lösungen der beiden quadratischen Gleichungen
@@ -2471,6 +2473,9 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   vq= zk*zk - rq;
   u= sqrtr (uq);
   v= sqrtr (vq);
+
+  //u= uc.x;
+  //v= vc.x;
 
   // Bedingung -2uv = q
   bed= u*v*-2;
@@ -2768,13 +2773,13 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   printtext ("\n");
   printtext ("\n");
   printtext ("a1: ");
-  printreal (a1);
+  //printreal (a1);
   printtext ("\n");
   printtext ("b1: ");
   printreal (b1);
   printtext ("\n");
   printtext ("a2: ");
-  printreal (a2);
+  //printreal (a2);
   printtext ("\n");
   printtext ("b2: ");
   printreal (b2);
@@ -3291,7 +3296,7 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
       psp.add (real (x4));
     }
 
-  //return;
+  return;
   //if (finite (zk)) return;
   //if (finite (zk) && finite (D)) return;
 
