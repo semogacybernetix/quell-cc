@@ -262,18 +262,19 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
   //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);                   // langsam, starke Ausfälle bei 4 Lösungen, einige Fehlerpixel außerhalb
+  //quartischtestintr (B/A, C/A, D/A, E/A, psp);                      // Innenwand sauber, Sprühen außerhalb des Torusses
 
-  //quartischtestintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand sauber, Sprühen außerhalb des Torusses
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand sauber, Sprühen außerhalb des Torusses
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);                    // Außenwand sauber, Feuer weit außerhalb des Torusses
   //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // gleiches Fehlerverhalten wie quartischdiffpfintr
-  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr
+  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr
 
   //quartischdiffpuvintr (B/A, C/A, D/A, E/A, psp);                   // Innenwand sauber, Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   //quartischdiffpfintr3 (B/A, C/A, D/A, E/A, psp);                   // Innenwand verquierkst, Feuer weit außerhalb
-  quartischmalinintr (B/A, C/A, D/A, E/A, psp);                         // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
+  quartischmalinintr (B/A, C/A, D/A, E/A, psp);                     // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
 
 /*
   std::complex<real>* solutions= solve_quartic (B/A, C/A, D/A, E/A);  // etwas langsam, Außenröhren zerfetzt, Torus geteilt, Linseneffekt beim Überklappen

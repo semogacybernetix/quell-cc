@@ -2373,10 +2373,10 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 
   quartischreduziertk (a, b, c, d, p, q, r);
 
-  quartischreduziertdiffpu (p, q, r, y1, y2, y3, y4);
+  //quartischreduziertdiffpu (p, q, r, y1, y2, y3, y4);
   //quartischreduziertbuchu (p, q, r, y1, y2, y3, y4);
   //quartischreduziertbuchv (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertbuchf (p, q, r, y1, y2, y3, y4);
+  quartischreduziertbuchf (p, q, r, y1, y2, y3, y4);
   //quartischreduziertpdfw2 (p, q, r, y1, y2, y3, y4);
   //quartischreduziertlagrange (p, q, r, y1, y2, y3, y4);
   //quartischreduziertbuchf3 (p, q, r, y1, y2, y3, y4);
@@ -2462,8 +2462,8 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
 
   // kubische Resolvente
-  //kubischreduziertreellu (pk, qk, yk);
-  kubischreduziertreellelementar (pk, qk, yk);
+  kubischreduziertreellu (pk, qk, yk);
+  //kubischreduziertreellelementar (pk, qk, yk);
   //kubischreellelementar (ak, bk, ck, yk);
   //kubisch (ak, bk, ck, yk1, yk2, yk3);
   zk= yk - ak/3;
@@ -2661,6 +2661,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
   rq4= rq/real (-0.75);
+
   pk= pqq/9 - rq4;
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
   pk3= pk*pk*pk;
@@ -2686,10 +2687,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     {
     l= sqrtr (pk);                                                // pk > 0 immer, l = 0 bei pk= 0
     yk= cosr (acosr (qk/pk/l)/3)*l;                               // 1. Fehlerquelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
-    real yk2= cosr (acosr (qk/pk/l)/3 + PI2d)*l;                               // 1. Fehlerquelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
-    real yk3= cosr (acosr (qk/pk/l)/3 - PI2d)*l;                               // 1. Fehlerquelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
-    if (yk2 > yk) yk= yk2;
-    if (yk3 > yk) yk= yk3;
+    //yk= cosr (acosr (-qk/sqrtr (pk3))/3)*-l;                      // durchgehende Krizzel
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -3230,20 +3228,21 @@ void quartischdiffpfintr3 (real aq, real bq, real cq, real dq, cschnittpunkte& p
 
 void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real ak, bk, ck, ak2, pk, qk, pk3, qk2, ak3, ztk, zk, Dq, D, b1, b2, a1h, a2h, a1q, a2q, D12, D34, x1, x2, x3, x4;
+  real bk, ck, ak2, pk, qk, pk3, qk2, ak6, ztk, l, zk, Dq, D, b1, b2, a1h, a2h, a1q, a2q, D12, D34, x1, x2, x3, x4;
 
   // Parameter normale kubische Gleichung
-  ak= -bq;
   bk= aq*cq - dq*4;
   ck= bq*dq*4 - aq*aq*dq - cq*cq;
 
   // Parameter reduzierte kubische Gleichung malin
-  ak2= ak*ak;
+  ak6= bq/6;
+  ak2= bq*bq;
+
   pk= (ak2 + bk*-3)/9;
-  qk= (ak*(ak2*2 + bk*-9) + ck*27)/-54;
+  qk= (bq*(bk*real (4.5) - ak2) + ck*real (13.5))/-27;
+
   pk3= pk*pk*pk;
   qk2= qk*qk;
-  ak3= ak/-3;
 
   // reelle Lösung der kubischen Resolvente
   if (qk2 >= pk3)
@@ -3251,26 +3250,31 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     if (qk > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ztk= cbrtr (qk + sqrtr (qk2 - pk3));
-      zk= ztk + pk/ztk + ak3;                                         // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      zk= (ztk + pk/ztk)/2 + ak6;                                     // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
       else if (qk < 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ztk= cbrtr (qk - sqrtr (qk2 - pk3));                            // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      zk= ztk + pk/ztk + ak3;                                         // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      zk= (ztk + pk/ztk)/2 + ak6;                                     // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
       else
-      zk= ak3;
+      zk= ak6;
     }
     else
-    zk= cosr (acosr (-qk/sqrtr (pk3))/3)*sqrtr (pk)*-2 + ak3;         // 1. Fehlerquelle: pk3 <= 0
+    {
+    l= sqrtr (pk);                                                    // pk > 0 immer, l > 0 immer, wegen Division
+    zk= ak6 + cosr (acosr (qk/pk/l)/3 + PI2d)*l;                      // zerfetzte Außenröhren, Ausfaserung der Röhren, Fehlerpixel bei _Float64 bei keinem Offset
+    //zk= ak6 - cosr (acosr (-qk/sqrtr (pk3))/3)*l;                     // durchgehende Krizzel
+    }
 
   // Lösungen der beiden quadratischen Gleichungen
-  Dq= zk*zk - dq*4;                                                   // Dq wird deutlich kleiner als 0 (nicht wegen Ungenauigkeit)
+  Dq= zk*zk - dq;                                                     // Dq wird deutlich kleiner als 0 (nicht wegen Ungenauigkeit)
   D= sqrtr (Dq);
-  b1= (zk + D)/2;
-  b2= (zk - D)/2;
-  a1h= (aq*b1 - cq)/D/-2;                                             // 2. Fehlerquelle D= 0
-  a2h= (aq*b2 - cq)/D/2;
+
+  b1= zk + D;
+  b2= zk - D;
+  a1h= (cq - aq*b1)/D/4;                                              // 2. Fehlerquelle D = 0
+  a2h= (aq*b2 - cq)/D/4;
 
   // Lösungen normale quartische Gleichung
   a1q= a1h*a1h;
@@ -3296,14 +3300,14 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
       psp.add (real (x4));
     }
 
-  return;
-  //if (finite (zk)) return;
-  //if (finite (zk) && finite (D)) return;
+  //return;
+  if (finiter (zk)) return;
+  //if (finiter (zk) && finiter (D)) return;
 
   // Printausgabe Variablen quartischmalin
   printtext ("\n");
   printtext ("ak: ");
-  printreal (ak);
+  printreal (-bq);
   printtext ("\n");
   printtext ("bk: ");
   printreal (bk);
@@ -3329,7 +3333,7 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   printtext ("zk: ");
   printreal (zk);
   printtext ("\n");
-  real gl= zk*zk*zk + ak*zk*zk + bk*zk + ck;
+  real gl= zk*zk*zk - bq*zk*zk + bk*zk + ck;
   printtext ("gl: ");
   printreal (gl);
   printtext ("\n");
@@ -3652,4 +3656,3 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
       psp.add (xr4);
     }
   }
-
