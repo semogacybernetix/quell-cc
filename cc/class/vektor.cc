@@ -1895,9 +1895,9 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
     else
     cbrtr (u2, z1, z2, z3);
 
-  y1= z1/3 - p/z1;
-  y2= z2/3 - p/z2;
-  y3= z3/3 - p/z3;
+  y1= z1 - p*3/z1;
+  y2= z2 - p*3/z2;
+  y3= z3 - p*3/z3;
   }
 
 void kubischreduziertelementar (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)            // funktioniert nicht mit komplexen p und r
@@ -2076,10 +2076,10 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
 
   kubischreduziertk (a, b, c, p, q);
 
-  kubischreduziertcardano (p, q, y1, y2, y3);
+  //kubischreduziertcardano (p, q, y1, y2, y3);
   //kubischreduziertcardano3 (p, q, y1, y2, y3);
   //kubischreduziertu (p, q, y1, y2, y3);
-  //kubischreduziertu3 (p, q, y1, y2, y3);
+  kubischreduziertu3 (p, q, y1, y2, y3);
   //kubischreduziertelementar (p, q, y1, y2, y3);
   //kubischreduziertreellu (p.x, q.x, yr);
   //kubischreduziertreellc (p.x, q.x, yr);
@@ -2138,61 +2138,13 @@ void kubischeresolventelagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
 
 void kubischeresolventemalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
   {
-  //ckomplexk ak, bk, ck;
-  real aq, bq, cq, dq, bk, ck, ak2, pk, qk, pk3, qk2, ak6, ztk, l, zk;
-/*
-  ak= -b;
-  bk= a*c - d*4;
-  ck= b*d*4 - a*a*d - c*c;
+  ckomplexk ak, bk, ck;
+
+  ak= b/-2;
+  bk= a*c/4 - d;
+  ck= ((b*4 - a*a)*d - c*c)/8;
 
   kubisch (ak, bk, ck, z1, z2, z3);
-*/
-
-  aq= a.x;
-  bq= b.x;
-  cq= c.x;
-  dq= d.x;
-
-  // Parameter normale kubische Gleichung
-  bk= aq*cq - dq*4;
-  ck= bq*dq*4 - aq*aq*dq - cq*cq;
-
-  // Parameter reduzierte kubische Gleichung malin
-  ak6= bq/6;
-  ak2= bq*bq;
-
-  pk= (ak2 + bk*-3)/9;
-  qk= (bq*(bk*real (4.5) - ak2) + ck*real (13.5))/-27;
-
-  pk3= pk*pk*pk;
-  qk2= qk*qk;
-
-  // reelle Lösung der kubischen Resolvente
-  if (qk2 >= pk3)
-    {
-    if (qk > 0)
-      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ztk= cbrtr (qk + sqrtr (qk2 - pk3));
-      zk= (ztk + pk/ztk)/2 + ak6;                                     // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
-      }
-      else if (qk < 0)
-      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ztk= cbrtr (qk - sqrtr (qk2 - pk3));                            // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      zk= (ztk + pk/ztk)/2 + ak6;                                     // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
-      }
-      else
-      zk= ak6;
-    }
-    else
-    {
-    l= sqrtr (pk);                                                    // pk > 0 immer, l > 0 immer, wegen Division
-    zk= ak6 + cosr (acosr (qk/pk/l)/3 + PI2d)*l;                      // zerfetzte Außenröhren, Ausfaserung der Röhren, Fehlerpixel bei _Float64 bei keinem Offset
-    //zk= ak6 - cosr (acosr (-qk/sqrtr (pk3))/3)*l;                     // durchgehende Krizzel
-    }
-
-  z1= zk;
-  z2= zk;
-  z3= zk;
   }
 
 void kubischeresolventez (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
@@ -2444,8 +2396,8 @@ void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomple
 
   kubischeresolventemalin (a, b, c, d, z1, z2, z3);
 
-  // Lösungen der beiden quadratischen Gleichungen
-  z= z1;
+  // Parameter der beiden quadratischen Gleichungen
+  z= z3;
   D= sqrtr (z*z - d);
 
   b1= z + D;
@@ -2453,7 +2405,7 @@ void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomple
   a1h= (c - a*b1)/D/4;
   a2h= (a*b2 - c)/D/4;
 
-  // Lösungen normale quartische Gleichung
+  // Lösungen der beiden quadratischen Gleichungen
   D12= sqrtr (a1h*a1h - b1);
   D34= sqrtr (a2h*a2h - b2);
 
@@ -2461,9 +2413,6 @@ void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomple
   x2= a1h + D12;
   x3= a2h - D34;
   x4= a2h + D34;
-
-  printvektor2komplex ("z malin     ", z, 0);
-
   }
 
 //-------------------- quartisch integriert ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -3379,12 +3328,6 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   //return;
   if (finiter (zk)) return;
   //if (finiter (zk) && finiter (D)) return;
-
-  printtext ("zk malinintr:");
-  printreal (zk);
-  printtext ("\n");
-
-  return;
 
   // Printausgabe Variablen quartischmalin
   printtext ("\n");

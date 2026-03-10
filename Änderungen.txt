@@ -376,7 +376,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.03.05 Do  22:30, kubischelementar Realteilfehler beseitigt, kubischreellelementar, Routinen weiter getestet, 2:12
 2026.03.06 Fr  18:00, kubisch- quartischroutinen durchgesehen, kein nennenswerter Fortschritt, alles sehr unübersichtlich geworden, 19:21
 2026.03.08 So  20:55, quartischmalinintr optimiert, 0:21
-2026.03.09 Mo  15:57, quartischmalin erstellt, 17:30
+2026.03.09 Mo  15:57, quartischmalin erstellt, 17:30, 22:10, quartischmalin auf mit Resolvente geändert, 1:46
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

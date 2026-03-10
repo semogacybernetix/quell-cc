@@ -183,7 +183,7 @@ void kubischparameter ()
   printtext ("x: ");
   printreal (x);
   printtext ("\n");
-  return;
+  //return;
 
   kubischreduziertk (a, b, c, p, q);
   dp= sqrtr (q*q/4 + p*p*p/27)*sqrtr (ckomplexk (-108));
@@ -263,9 +263,9 @@ void kubischloesungen ()
 
   kubischreduziertu3 (p, q, y1, y2, y3);
   printtext ("---------------------- kubischreduziert u3 -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1", (y1*3 - a)/3, 0);
-  printvektor2komplex ("x2", (y2*3 - a)/3, 0);
-  printvektor2komplex ("x3", (y3*3 - a)/3, 0);
+  printvektor2komplex ("x1", (y1 - a)/3, 0);
+  printvektor2komplex ("x2", (y2 - a)/3, 0);
+  printvektor2komplex ("x3", (y3 - a)/3, 0);
   printtext ("\n");
 
   kubischreduziertelementar (p, q, y1, y2, y3);
@@ -276,7 +276,7 @@ void kubischloesungen ()
   printtext ("\n");
 
   kubischelementar (a, b, c, x1, x2, x3);
-  printtext ("---------------------- kubischreduziert elementar --------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("---------------------- kubisch elementar --------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1", x1, 0);
   printvektor2komplex ("x2", x2, 0);
   printvektor2komplex ("x3", x3, 0);
@@ -2044,6 +2044,7 @@ void quartischloesungen ()
 
   quartischzurueck (x1, x2, x3, x4, a, b, c, d);
 
+  psp.anz= 0;
   quartischdiffpuintrc (a.x, b.x, c.x, d.x, psp);
 
   printtext ("-------------------------------- quartischdiffpuintrc Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
@@ -2053,6 +2054,7 @@ void quartischloesungen ()
   printvektor2komplex ("x4          ", x4, 0);
   printtext ("\n");
 
+  psp.anz= 0;
   quartischdiffpuintr (a.x, b.x, c.x, d.x, psp);
 
   printtext ("-------------------------------- quartischdiffpuintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
@@ -2072,6 +2074,15 @@ void quartischloesungen ()
   printvektor2komplex ("x2          ", psp.abstand[1], 0);
   printvektor2komplex ("x3          ", psp.abstand[2], 0);
   printvektor2komplex ("x4          ", psp.abstand[3], 0);
+  printtext ("\n");
+
+  quartisch (a, b, c, d, x1, x2, x3, x4);
+
+  printtext ("-------------------------------- quartisch Lösungen -------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", x1, 0);
+  printvektor2komplex ("x2          ", x2, 0);
+  printvektor2komplex ("x3          ", x3, 0);
+  printvektor2komplex ("x4          ", x4, 0);
   printtext ("\n");
 
   quartischmalin (a, b, c, d, x1, x2, x3, x4);
