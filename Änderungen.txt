@@ -378,6 +378,7 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.03.08 So  20:55, quartischmalinintr optimiert, 0:21
 2026.03.09 Mo  15:57, quartischmalin erstellt, 17:30, 22:10, quartischmalin auf mit Resolvente geändert, 1:46
 2026.03.11 Mi  22:24, quartischmalin, kubischelementar entfernt, alle quartischroutinen gesäubert, verschiedene Winkel in quartischintr Routinen getestet, implementiert, 1:54
+2026.03.12 Do  23:35, quadratisch Routinen abgedichtet, kubisch Routinen abgedichtet, insbesondere gegen 000 Fall, 0:12
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

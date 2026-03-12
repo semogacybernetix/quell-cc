@@ -17,14 +17,14 @@ void quadratischreduziertk (ckomplexk a, ckomplexk b, ckomplexk& p)
 
 void quadratischnormal (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   {
-  ckomplexk a2, p, y1, y2;
+  ckomplexk ah, p, y1, y2;
 
   quadratischreduziertk (a, b, p);
   quadratischreduziert (p, y1, y2);
 
-  a2= a/2;
-  x1= y1 - a2;
-  x2= y2 - a2;
+  ah= a/2;
+  x1= y1 - ah;
+  x2= y2 - ah;
   }
 
 void quadratisch2 (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
@@ -33,8 +33,8 @@ void quadratisch2 (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
 
   D= sqrtr (a*a - b*4);
 
-  x1= -(a - D)/2;
-  x2= -(a + D)/2;
+  x1= (a + D)/-2;
+  x2= (a - D)/-2;
   }
 
 void quadratischp (ckomplexp a, ckomplexp b, ckomplexp& x1, ckomplexp& x2)
@@ -43,38 +43,37 @@ void quadratischp (ckomplexp a, ckomplexp b, ckomplexp& x1, ckomplexp& x2)
 
   D= sqrtr (a*a - b*4);
 
-  x1= -(a - D)/2;
-  x2= -(a + D)/2;
+  x1= (a + D)/-2;
+  x2= (a - D)/-2;
   }
 
 void quadratischparameter ()
   {
-  ckomplexk a, b, x1, x2, x3, x4, x5, x6;
-  ckomplexp x7, x8;
+  ckomplexk a, b, x1, x2;
+  ckomplexp xp1, xp2;
 
   vektor2eingabek (a);
   vektor2eingabek (b);
 
   quadratisch (a, b, x1, x2);
-  quadratisch (a, b, x3, x4);
-  quadratisch2 (a, b, x5, x6);
-  quadratischp (polar360 (a), polar360 (b), x7, x8);
 
   printtext ("---------------------- quadratisch ------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 1);
   printvektor2komplex ("x2          ", x2, 1);
   printtext ("\n");
-  printtext ("---------------------- quadratisch ------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", x3, 1);
-  printvektor2komplex ("x2          ", x4, 1);
+
+  quadratisch2 (a, b, x1, x2);
+
+  printtext ("---------------------- quadratisch2 ------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", x1, 1);
+  printvektor2komplex ("x2          ", x2, 1);
   printtext ("\n");
-  printtext ("---------------------- quadratisch2 -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", x5, 1);
-  printvektor2komplex ("x2          ", x6, 1);
-  printtext ("\n");
+
+  quadratischp (polar360 (a), polar360 (b), xp1, xp2);
+
   printtext ("---------------------- quadratischp -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplexp ("x1          ", x7);
-  printvektor2komplexp ("x2          ", x8);
+  printvektor2komplexp ("x1          ", xp1);
+  printvektor2komplexp ("x2          ", xp2);
   printtext ("\n");
   }
 
@@ -277,12 +276,16 @@ void kubischloesungen ()
 
   kubischreduziertreellc (p.x, q.x, y);
   printtext ("---------------------- kubischreduziert reell c -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x", y - a.x/3, 0);
+  printtext ("x:");
+  printreal (y - a.x/3);
+  printtext ("\n");
   printtext ("\n");
 
   kubischreduziertreellu (p.x, q.x, y);
   printtext ("---------------------- kubischreduziert reell u -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x", y - a.x/3, 0);
+  printtext ("x:");
+  printreal (y - a.x/3);
+  printtext ("\n");
   printtext ("\n");
   }
 

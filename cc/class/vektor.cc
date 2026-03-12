@@ -1874,14 +1874,26 @@ void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, 
 
   quadratisch (q, p*p*p/-27, u1, u2);
 
-  if (absr (u1) >= absr (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+  if (absr (u1) > absr (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+    {
     cbrtr (u1, z1, z2, z3);
-    else
+    y1= z1 - p/(z1*3);
+    y2= z2 - p/(z2*3);
+    y3= z3 - p/(z3*3);
+    }
+    else if (absr (u2) > 0)
+    {
     cbrtr (u2, z1, z2, z3);
-
-  y1= z1 - p/(z1*3);
-  y2= z2 - p/(z2*3);
-  y3= z3 - p/(z3*3);
+    y1= z1 - p/(z1*3);
+    y2= z2 - p/(z2*3);
+    y3= z3 - p/(z3*3);
+    }
+    else
+    {
+    y1= 0;
+    y2= 0;
+    y3= 0;
+    }
   }
 
 void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
@@ -1890,14 +1902,26 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
 
   quadratisch (q*27, p*p*p*-27, u1, u2);
 
-  if (absr (u1) >= absr (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+  if (absr (u1) > absr (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+    {
     cbrtr (u1, z1, z2, z3);
-    else
+    y1= z1 - p*3/z1;
+    y2= z2 - p*3/z2;
+    y3= z3 - p*3/z3;
+    }
+    else if (absr (u2) > 0)
+    {
     cbrtr (u2, z1, z2, z3);
-
-  y1= z1 - p*3/z1;
-  y2= z2 - p*3/z2;
-  y3= z3 - p*3/z3;
+    y1= z1 - p*3/z1;
+    y2= z2 - p*3/z2;
+    y3= z3 - p*3/z3;
+    }
+    else
+    {
+    y1= 0;
+    y2= 0;
+    y3= 0;
+    }
   }
 
 void kubischreduziertreellc (real p, real q, real& y)
