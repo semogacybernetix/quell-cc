@@ -1979,18 +1979,14 @@ void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, cko
 void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   {
   ckomplexk p, q, y1, y2, y3;
-  //real yr;
 
   kubischreduziertk (a, b, c, p, q);
 
   //kubischreduziertcardano (p, q, y1, y2, y3);
-  kubischreduziertcardano3 (p, q, y1, y2, y3);
+  //kubischreduziertcardano3 (p, q, y1, y2, y3);
   //kubischreduziertu (p, q, y1, y2, y3);
-  //kubischreduziertu3 (p, q, y1, y2, y3);
-  //kubischreduziertreellc (p.x, q.x, yr);
-  //kubischreduziertreellu (p.x, q.x, yr);
+  kubischreduziertu3 (p, q, y1, y2, y3);
 
-  //x1= (yr - a)/3;
   x1= (y1 - a)/3;
   x2= (y2 - a)/3;
   x3= (y3 - a)/3;
@@ -2049,7 +2045,7 @@ void kubischeresolventez (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, 
   pk= (p*p + r*12)/-3;
   qk= p*(r*36 - p*p)/real (13.5) - q*q;
 
-  kubischreduziertcardano (pk, qk, z1, z2, z3);
+  kubischreduziertu (pk, qk, z1, z2, z3);
   }
 
 void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
@@ -2059,7 +2055,7 @@ void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1,
   pk= (p*p + r*12)/-3;
   qk= p*(r*36 - p*p)/real (13.5) - q*q;
 
-  kubischreduziertcardano3 (pk, qk, z1, z2, z3);
+  kubischreduziertu3 (pk, qk, z1, z2, z3);
   }
 
 void kubischeresolventemalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
@@ -3084,9 +3080,9 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
   }
 
-void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, vxl, uk1, uk2, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter der reduzierten quartischen Gleichung
@@ -3108,21 +3104,22 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   // Lösungen der kubischen Resolvente
   xl= pk*pk*pk + qk*qk;
   if (xl > 0)                                                     // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
-    {                                                             // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
-    if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ykr1= cbrtr (qk + sqrtr (xl));
-      else
-      ykr1= cbrtr (qk - sqrtr (xl));
-    yk2= ckomplexk (ykr1/-2, ykr1*sqrtr (real (0.75)));
+    {
+    // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
+    vxl= sqrtr (xl);                                              // xl immer > 0
+    uk1= cbrtr (qk - vxl);
+    uk2= cbrtr (qk + vxl);
+    ykr1= uk1 + uk2;
+    yk2= e31*uk1 + e32*uk2;
 
-    ur1= sqrtr (ak3 + ykr1 - pk/ykr1);                            // Rücktransformation von ykr1
-    u2= sqrtr (ak3 + yk2 - pk/yk2);                               // Rücktransformation von yk2
+    ur1= sqrtr (ak3 + ykr1);
+    u2= sqrtr (ak3 + yk2);
 
     // Lösungen der reduzierten quartischen Gleichung
     yr1=  ur1 + u2.x*2;
     yr2=  ur1 - u2.x*2;
 
-    // Lösungen der normalen quartischen Gleichung
+    // Lösungen den normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*(u2.x*u2.x + u2.y*u2.y);
     if (absr (bed + qq8) < absr (bed - qq8))
@@ -3193,9 +3190,9 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     }
   }
 
-void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, vxl, uk1, uk2, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
+  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter der reduzierten quartischen Gleichung
@@ -3217,22 +3214,21 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   // Lösungen der kubischen Resolvente
   xl= pk*pk*pk + qk*qk;
   if (xl > 0)                                                     // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
-    {
-    // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
-    vxl= sqrtr (xl);                                              // xl immer > 0
-    uk1= cbrtr (qk - vxl);
-    uk2= cbrtr (qk + vxl);
-    ykr1= uk1 + uk2;
-    yk2= e31*uk1 + e32*uk2;
+    {                                                             // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
+    if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ykr1= cbrtr (qk + sqrtr (xl));
+      else
+      ykr1= cbrtr (qk - sqrtr (xl));
+    yk2= ckomplexk (ykr1/-2, ykr1*sqrtr (real (0.75)));
 
-    ur1= sqrtr (ak3 + ykr1);
-    u2= sqrtr (ak3 + yk2);
+    ur1= sqrtr (ak3 + ykr1 - pk/ykr1);                            // Rücktransformation von ykr1
+    u2= sqrtr (ak3 + yk2 - pk/yk2);                               // Rücktransformation von yk2
 
     // Lösungen der reduzierten quartischen Gleichung
     yr1=  ur1 + u2.x*2;
     yr2=  ur1 - u2.x*2;
 
-    // Lösungen den normalen quartischen Gleichung
+    // Lösungen der normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -qq
     bed= ur1*(u2.x*u2.x + u2.y*u2.y);
     if (absr (bed + qq8) < absr (bed - qq8))
