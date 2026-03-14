@@ -1,14 +1,11 @@
 2019.05.30  --Wconversion Compileroption in Makefile von jpeg, screen, xscreen
             - cosl sinl M_PIl  ersetzen
 
-namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
-
 2019.08.19 xebrauser reparieren
 
 2019.08.20 calccrc
 
 2020.02.29 symmetriegruppen, Dodekaeder, io Klassen auslagern
-
 
 2020.03.15  Beststand
             Threadprogrammierung steckengeblieben, weil die ganze Rayklasse nicht auf threadfestigkeit ausgelegt ist und komplett von unten neu geschrieben werden muss. Deshalb neue Klasse raythread angelegt.
@@ -29,7 +26,6 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
             - Netze der platonischen Körper und Dualnetze auf Kugel
             - Schalenkörper, Zwiebelkörper visualisieren
             - Kantendrehungen (Dualkörper) visualisieren
-
 
 2020.03.25  Fundamentalbereiche programmiert
             Koordinatensystem
@@ -380,9 +376,11 @@ namespace std nicht notwendig, doch um nicht std::cout schreiben zu müssen
 2026.03.11 Mi  22:24, quartischmalin, kubischelementar entfernt, alle quartischroutinen gesäubert, verschiedene Winkel in quartischintr Routinen getestet, implementiert, 1:54
 2026.03.12 Do  23:35, quadratisch Routinen abgedichtet, kubisch Routinen abgedichtet, insbesondere gegen 000 Fall, 0:12
 2026.03.13 Fr  11:20, kubisch auf kubischreduziertu3 umgestellt, kubische Resolventen von c nach u umgestellt, quartisch optimiert, 12:04
+2026.03.14 Sa  20:30, schlechte Verfassung, nichts erreicht, aufgeräumt in cc/class, 21:47
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+u,v maximieren, kubische Resolvente komplex berechnen, diffpuintrc ohne quant
 framerate sauber implementieren
 Mauszeiger implementieren um Daten von der quartische Gleichung für Fehlerpixel zu bekommen
 xray framebuffer, keyboardbuffer

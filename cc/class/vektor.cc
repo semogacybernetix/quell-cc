@@ -2147,6 +2147,17 @@ void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
 
   quadratisch (a1, b1, y1, y2);
   quadratisch (a2, b2, y3, y4);
+
+  //return;
+
+  printtext ("---------------------------------- quartischbuchf Zwischenwerte-------------------------------------------------------\n");
+  printvektor2komplex ("u          ", u, 0);
+  printvektor2komplex ("v          ", v, 0);
+  printtext ("\n");
+  printvektor2komplex ("a1         ", a1, 0);
+  printvektor2komplex ("b1         ", b1, 0);
+  printvektor2komplex ("a2         ", a2, 0);
+  printvektor2komplex ("b2         ", b2, 0);
   }
 
 void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
