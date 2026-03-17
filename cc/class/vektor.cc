@@ -2381,9 +2381,11 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& p
 void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
   real aq4, pq, qq, rq, ak, bk, ck, pk, qk, yk, zk;
+
+  ckomplexk zk1, zk2, zk3, zkc, uqc, vqc, uc, vc, b1c, b2c;
+
   real uq, vq, u, v, bed, a1, a2, b1, b2;
   real D12, D34, x1, x2, x3, x4;
-  ckomplexk yk1, yk2, yk3, zkc, uqc, vqc, uc, vc;
 
   // Parameter der reduzierten quartischen Gleichung
   pq= aq*aq*3/-8 + bq;
@@ -2401,9 +2403,6 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
 
   // kubische Resolvente
   kubischreduziertreellu (pk, qk, yk);
-  //kubischreduziertreellelementar (pk, qk, yk);
-  //kubischreellelementar (ak, bk, ck, yk);
-  //kubisch (ak, bk, ck, yk1, yk2, yk3);
   zk= yk - ak/3;
 
   // Lösungen der beiden quadratischen Gleichungen
@@ -2411,9 +2410,27 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   vq= zk*zk - rq;
   u= sqrtr (uq);
   v= sqrtr (vq);
+  b1= zk + v;
+  b2= zk - v;
 
-  //u= uc.x;
-  //v= vc.x;
+/*
+  //kubisch (ak, bk, ck, zk1, zk2, zk3);
+  zkc= zk1;
+
+  // Lösungen der beiden quadratischen Gleichungen
+  uqc= zkc*2 - pq;
+  vqc= zkc*zkc - rq;
+  uc= sqrtr (uqc);
+  vc= sqrtr (vqc);
+  b1c= zkc + vc;
+  b2c= zkc - vc;
+  uq= uqc.x;
+
+  u= uc.x;
+  v= vc.x;
+  b1= b1c.x;
+  b2= b2c.x;
+*/
 
   // Bedingung -2uv = q
   bed= u*v*-2;
@@ -2422,8 +2439,6 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
 
   a1=  u;
   a2= -u;
-  b1= zk + v;
-  b2= zk - v;
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
@@ -2433,9 +2448,9 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
     x1= aq4 - a1/2 + D12;
     x2= aq4 - a1/2 - D12;
     if (x1 > 0)
-      psp.add (real (x1));
+      psp.add (x1);
     if (x2 > 0)
-      psp.add (real (x2));
+      psp.add (x2);
     }
   if (uq >= b2)
     {
@@ -2443,9 +2458,9 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
     x3= aq4 - a2/2 + D34;
     x4= aq4 - a2/2 - D34;
     if (x3 > 0)
-      psp.add (real (x3));
+      psp.add (x3);
     if (x4 > 0)
-      psp.add (real (x4));
+      psp.add (x4);
     }
   }
 
@@ -2511,9 +2526,9 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     x1= a1 - D12;
     x2= a1 + D12;
     if (x1 > 0)
-      psp.add (real (x1));
+      psp.add (x1);
     if (x2 > 0)
-      psp.add (real (x2));
+      psp.add (x2);
     }
   if (uq >= b2)
     {
@@ -2522,9 +2537,9 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     x3= a2 - D34;
     x4= a2 + D34;
     if (x3 > 0)
-      psp.add (real (x3));
+      psp.add (x3);
     if (x4 > 0)
-      psp.add (real (x4));
+      psp.add (x4);
     }
   }
 
@@ -2589,9 +2604,9 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     x1= a1 - D12;
     x2= a1 + D12;
     if (x1 > 0)
-      psp.add (real (x1));
+      psp.add (x1);
     if (x2 > 0)
-      psp.add (real (x2));
+      psp.add (x2);
     }
   if (uq >= b2)
     {
@@ -2600,9 +2615,9 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     x3= a2 - D34;
     x4= a2 + D34;
     if (x3 > 0)
-      psp.add (real (x3));
+      psp.add (x3);
     if (x4 > 0)
-      psp.add (real (x4));
+      psp.add (x4);
     }
   }
 
@@ -2678,9 +2693,9 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     x1= a1 - D12;
     x2= a1 + D12;
     if (x1 > 0)
-      psp.add (real (x1));
+      psp.add (x1);
     if (x2 > 0)
-      psp.add (real (x2));
+      psp.add (x2);
     }
   if (uq >= b2)
     {
@@ -2689,9 +2704,9 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     x3= a2 - D34;
     x4= a2 + D34;
     if (x3 > 0)
-      psp.add (real (x3));
+      psp.add (x3);
     if (x4 > 0)
-      psp.add (real (x4));
+      psp.add (x4);
     }
 
   //return;
@@ -2849,9 +2864,9 @@ void quartischdiffpuvintr (real aq, real bq, real cq, real dq, cschnittpunkte& p
     x1= a1 - D12;
     x2= a1 + D12;
     if (x1 > 0)
-      psp.add (real (x1));
+      psp.add (x1);
     if (x2 > 0)
-      psp.add (real (x2));
+      psp.add (x2);
     }
   if (uq >= b2)
     {
@@ -2860,9 +2875,9 @@ void quartischdiffpuvintr (real aq, real bq, real cq, real dq, cschnittpunkte& p
     x3= a2 - D34;
     x4= a2 + D34;
     if (x3 > 0)
-      psp.add (real (x3));
+      psp.add (x3);
     if (x4 > 0)
-      psp.add (real (x4));
+      psp.add (x4);
     }
   }
 
@@ -2955,9 +2970,9 @@ void quartischdiffpfintr3 (real aq, real bq, real cq, real dq, cschnittpunkte& p
     x1= a1 - D12;
     x2= a1 + D12;
     if (x1 > 0)
-      psp.add (real (x1));
+      psp.add (x1);
     if (x2 > 0)
-      psp.add (real (x2));
+      psp.add (x2);
     }
   if (uq >= b2)
     {
@@ -2966,16 +2981,16 @@ void quartischdiffpfintr3 (real aq, real bq, real cq, real dq, cschnittpunkte& p
     x3= a2 - D34;
     x4= a2 + D34;
     if (x3 > 0)
-      psp.add (real (x3));
+      psp.add (x3);
     if (x4 > 0)
-      psp.add (real (x4));
+      psp.add (x4);
     }
 
   //if (finite (yk))
   //if (finite (yk) && finite (u) && finite (v))
   //if (finite (u) && finite (v))
   //if (finite (u))
-    return;
+  return;
 
   // Nachberechnung Debugging
   real cyk= qk/pk/sqrtr (pk);
@@ -3074,9 +3089,9 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     x1= a1 - D12;
     x2= a1 + D12;
     if (x1 > 0)
-      psp.add (real (x1));
+      psp.add (x1);
     if (x2 > 0)
-      psp.add (real (x2));
+      psp.add (x2);
     }
   if (uq >= b2)
     {
@@ -3085,9 +3100,9 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     x3= a2 - D34;
     x4= a2 + D34;
     if (x3 > 0)
-      psp.add (real (x3));
+      psp.add (x3);
     if (x4 > 0)
-      psp.add (real (x4));
+      psp.add (x4);
     }
   }
 
@@ -3369,9 +3384,9 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     x1= a1h - D12;
     x2= a1h + D12;
     if (x1 > 0)
-      psp.add (real (x1));
+      psp.add (x1);
     if (x2 > 0)
-      psp.add (real (x2));
+      psp.add (x2);
     }
   if (a2q >= b2)
     {
@@ -3379,9 +3394,9 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     x3= a2h - D34;
     x4= a2h + D34;
     if (x3 > 0)
-      psp.add (real (x3));
+      psp.add (x3);
     if (x4 > 0)
-      psp.add (real (x4));
+      psp.add (x4);
     }
 
   //return;
