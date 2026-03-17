@@ -215,6 +215,10 @@ _Float32 sqrtr (const _Float32& a);
 _Float64 sqrtr (const _Float64& a);
 _Float80 sqrtr (const _Float80& a);
 
+_Float32 sqrtrz (const _Float32& a);
+_Float64 sqrtrz (const _Float64& a);
+_Float80 sqrtrz (const _Float80& a);
+
 _Float32 cbrtr (const _Float32& a);
 _Float64 cbrtr (const _Float64& a);
 _Float80 cbrtr (const _Float80& a);

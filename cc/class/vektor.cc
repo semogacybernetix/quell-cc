@@ -242,6 +242,31 @@ _Float80 sqrtr (const _Float80& a)
   return sqrtl (a);
   }
 
+//------------------------------------------------------------------------------------ sqrtrz ------------------------------------------------------------------------
+_Float32 sqrtrz (const _Float32& a)
+  {
+  if (a > 0)
+    return sqrtf (a);
+    else
+    return 0;
+  }
+
+_Float64 sqrtrz (const _Float64& a)
+  {
+  if (a > 0)
+    return sqrt (a);
+    else
+    return 0;
+  }
+
+_Float80 sqrtrz (const _Float80& a)
+  {
+  if (a > 0)
+    return sqrtl (a);
+    else
+    return 0;
+  }
+
 //------------------------------------------------------------------------------------ cbrtr ------------------------------------------------------------------------
 _Float32 cbrtr (const _Float32& a)
   {
@@ -592,12 +617,16 @@ ckomplexk kw (const ckomplexk pv)
 
 ckomplexk sqrtkr (const ckomplexk pv)
   {
-  real bet= sqrtr (pv.x*pv.x + pv.y*pv.y);
-  real re= sqrtr ((bet + pv.x)/2);
-  real im= sqrtr ((bet - pv.x)/2);
-  if (pv.y < 0)
-    im= -im;
-  return ckomplexk (re, im);
+  real l, x, y;
+
+  l= sqrtr (pv.x*pv.x + pv.y*pv.y);
+  x= sqrtr ((l + pv.x)/2);
+
+  if (pv.y >= 0)
+    y= sqrtr ((l - pv.x)/2);
+    else
+    y= -sqrtr ((l - pv.x)/2);
+  return ckomplexk (x, y);
   }
 
 ckomplexk sqrtr (const ckomplexk pv)
@@ -2382,7 +2411,7 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
   real aq4, pq, qq, rq, ak, bk, ck, pk, qk, yk, zk;
 
-  ckomplexk zk1, zk2, zk3, zkc, uqc, vqc, uc, vc, b1c, b2c;
+  ckomplexk uc, vc;
 
   real uq, vq, u, v, bed, a1, a2, b1, b2;
   real D12, D34, x1, x2, x3, x4;
@@ -2408,29 +2437,11 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   // Lösungen der beiden quadratischen Gleichungen
   uq= zk*2 - pq;
   vq= zk*zk - rq;
-  u= sqrtr (uq);
-  v= sqrtr (vq);
-  b1= zk + v;
-  b2= zk - v;
-
-/*
-  //kubisch (ak, bk, ck, zk1, zk2, zk3);
-  zkc= zk1;
-
-  // Lösungen der beiden quadratischen Gleichungen
-  uqc= zkc*2 - pq;
-  vqc= zkc*zkc - rq;
-  uc= sqrtr (uqc);
-  vc= sqrtr (vqc);
-  b1c= zkc + vc;
-  b2c= zkc - vc;
-  uq= uqc.x;
+  uc= sqrtr (ckomplexk (uq));
+  vc= sqrtr (ckomplexk (vq));
 
   u= uc.x;
   v= vc.x;
-  b1= b1c.x;
-  b2= b2c.x;
-*/
 
   // Bedingung -2uv = q
   bed= u*v*-2;
@@ -2439,6 +2450,94 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
 
   a1=  u;
   a2= -u;
+
+  b1= zk + v;
+  b2= zk - v;
+
+  // Lösungen normale quartische Gleichung
+  aq4= aq/-4;
+  if (uq >= b1)
+    {
+    D12= sqrtr (a1*a1/4 - b1);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    x1= aq4 - a1/2 + D12;
+    x2= aq4 - a1/2 - D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (uq >= b2)
+    {
+    D34= sqrtr (a2*a2/4 - b2);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    x3= aq4 - a2/2 + D34;
+    x4= aq4 - a2/2 - D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+  }
+
+void quartischtestintr2 (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+  {
+  real aq4, pq, qq, rq, ak, bk, ck, pk, qk, yk, zk;
+
+  ckomplexk zk1, zk2, zk3, zkc, uqc, vqc, uc, vc, b1c, b2c, bedc;
+
+  real uq, u, a1, a2, b1, b2;
+  real D12, D34, x1, x2, x3, x4;
+
+  // Parameter der reduzierten quartischen Gleichung
+  pq= aq*aq*3/-8 + bq;
+  qq= aq*(aq*aq/8 + bq/-2) + cq;
+  rq= aq*(aq*aq*aq*3/-256 + aq*bq/16 + cq/-4) + dq;
+
+  //kubische Resolvente Buch
+  ak= pq/-2;
+  bk= -rq;
+  ck= rq*pq/2 - qq*qq/8;
+
+//*
+  // Parameter der reduzierten kubischen Gleichung
+  pk= ak*ak/-3 + bk;
+  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
+
+  // kubische Resolvente
+  kubischreduziertreellu (pk, qk, yk);
+  zk= yk - ak/3;
+
+//*
+  // Lösungen der beiden quadratischen Gleichungen
+  uq= zk*2 - pq;
+  //vq= zk*zk - rq;
+  u= sqrtr (uq);
+  //v= sqrtr (vq);
+//*/
+
+ kubisch (ak, bk, ck, zk1, zk2, zk3);
+  zkc= zk1;
+
+  // Lösungen der beiden quadratischen Gleichungen
+  uqc= zkc*2 - pq;
+  vqc= zkc*zkc - rq;
+  uc= sqrtr (uqc);
+  vc= sqrtr (vqc);
+
+  uq= uqc.x;
+
+  // Bedingung -2uv = q
+  bedc= uc*vc*-2;
+  if (absr (bedc + qq) < absr (bedc - qq))
+    vc= -vc;
+
+  u= uc.x;
+  a1=  u;
+  a2= -u;
+
+  b1c= zkc + vc;
+  b2c= zkc - vc;
+  b1= b1c.x;
+  b2= b2c.x;
 
   // Lösungen normale quartische Gleichung
   aq4= aq/-4;
@@ -2502,7 +2601,8 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     else                                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pk);                                                    // pk > 0 immer, l = 0 bei pk= 0
-    yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l;                            // 0° breiter Krizzelrand, +-pi2/3 schmaler Rand
+    //yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l;                            // 0° breiter Krizzelrand, +-pi2/3 schmaler Rand
+    yk= cosr (acosr (qk/pk/l)/3)*l;                            // 0° breiter Krizzelrand, +-pi2/3 schmaler Rand
     //yk= -cosr (acosr (-qk/sqrtr (pk3))/3)*l;                          //  0° und - PI2d schmaler Rand, +PI2d breiter Rand
     }
 
@@ -2511,7 +2611,7 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   z= yk + pq6;
 
   uq= yk/2 - pq6;
-  u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
+  u= sqrtrz (uq);                                                      // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel und roten Hintergrund bei yk(0°)
   v= qq/u/4;
 
   b1= z - v;
@@ -2521,7 +2621,7 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   aq4= aq/-4;
   if (uq >= b1)
     {
-    D12= sqrtr (uq - b1);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
     a1= aq4 - u;
     x1= a1 - D12;
     x2= a1 + D12;
@@ -2532,7 +2632,7 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     }
   if (uq >= b2)
     {
-    D34= sqrtr (uq - b2);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
     a2= aq4 + u;
     x3= a2 - D34;
     x4= a2 + D34;
@@ -2581,14 +2681,15 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     else                                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pk);                                                    // pk > 0 immer, l = 0 bei pk= 0
-    yk= cosr (acosr (qk/pk/l)/3 - PI2d)*l;                            // +p2d jetstream, 0° große Lücke
+    //yk= cosr (acosr (qk/pk/l)/3 - PI2d)*l;                            // +p2d jetstream, 0° große Lücke
+    yk= cosr (acosr (qk/pk/l)/3)*l;                            // +p2d jetstream, 0° große Lücke
     //yk= -cosr (acosr (-qk/sqrtr (pk3))/3)*l;                          //  0° und - PI2d schmaler Rand, +PI2d breiter Rand
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
   z= yk + pq/6;
 
-  v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
+  v= sqrtrz (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
   u= qq/v/4;
   uq= u*u;
 
@@ -2659,7 +2760,8 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     else                                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pk);                                                    // pk > 0 immer, l = 0 bei pk= 0
-    yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l;                            // 0° breiter Krizzelrand, +-pi2/3 schmaler Rand
+    //yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l;                            // 0° breiter Krizzelrand, +-pi2/3 schmaler Rand
+    yk= cosr (acosr (qk/pk/l)/3)*l;                                   // 0° breiter Krizzelrand, +-pi2/3 schmaler Rand
     //yk= -cosr (acosr (-qk/sqrtr (pk3))/3)*l;                          //  0° und - PI2d schmaler Rand, +PI2d breiter Rand
     }
 
@@ -2668,12 +2770,12 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   zk= yk + pq6;
   uq= yk/2 - pq6;
 
-  u= sqrtr (uq);                                                  // 2. Fehlerquelle u, uq < 0 wegen Ungenauigkeit, durch Abfangen entsteht Außenfeuer
-  v= sqrtr (zk*zk - rq);                                          // 3. Fehlerquelle v, vq < 0 wegen Ungenauigkeit, durch Abfangen entsteht Außenfeuer
+  u= sqrtr (uq);                                                      // 2. Fehlerquelle u, uq < 0 wegen Ungenauigkeit, durch Abfangen entsteht Außenfeuer
+  v= sqrtrz (zk*zk - rq);                                             // 3. Fehlerquelle v, vq < 0 wegen Ungenauigkeit, durch Abfangen Enfernung blauer Pixel Mitte, nicht bei yk (+-120°)
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
-  if (absr (bed + qq) < absr (bed - qq))                          // komplizierte Abfrage, weil die Gleichung wegen Ungenauigkeiten nicht immer stimmt
+  if (absr (bed + qq) < absr (bed - qq))                              // komplizierte Abfrage, weil die Gleichung wegen Ungenauigkeiten nicht immer stimmt
     {
     b1= zk - v;
     b2= zk + v;
@@ -2688,7 +2790,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   aq4= aq/-4;
   if (uq >= b1)
     {
-    D12= sqrtr (uq - b1);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
     a1= aq4 - u;
     x1= a1 - D12;
     x2= a1 + D12;
@@ -2699,7 +2801,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     }
   if (uq >= b2)
     {
-    D34= sqrtr (uq - b2);                                           // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
     a2= aq4 + u;
     x3= a2 - D34;
     x4= a2 + D34;
@@ -3064,8 +3166,8 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   z= yk + pq6;
 
   uq= yk/2 - pq6;
-  u= sqrtr (uq);                                                  // u > 0 wegen Ungenauigkeit, Abfangen bringt nur rote Fehlerpixel
-  v= sqrtr (z*z - rq);                                            // zzrq < 0 wegen Ungenauigkeit, abfangen bringt nur rote Fehlerpixel
+  u= sqrtr (uq);                                                  // uq < 0 wegen Ungenauigkeit, Abfangen erzeugt Außenfeuer auch bei _Float64
+  v= sqrtrz (z*z - rq);                                           // Abfangen entfernt blaue Pixel
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
@@ -3363,6 +3465,7 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     {
     l= sqrtr (pk);                                                    // pk > 0 immer, l > 0 immer, wegen Division
     zk= ak6 + cosr (acosr (qk/pk/l)/3 + PI2d)*l;                      // durchgehende Krizzel, bei anderem Winkel zerfetzte Außenröhren, Ausfaserung der Röhren, Fehlerpixel bei _Float64 bei keinem Offset, Doppelbeule
+    //zk= ak6 + cosr (acosr (qk/pk/l)/3)*l;                      // durchgehende Krizzel, bei anderem Winkel zerfetzte Außenröhren, Ausfaserung der Röhren, Fehlerpixel bei _Float64 bei keinem Offset, Doppelbeule
     //zk= ak6 - cosr (acosr (-qk/sqrtr (pk3))/3)*l;                   // durchgehende Krizzel, bei anderem Winkel zerfetzte Außenröhren, Ausfaserung der Röhren, Fehlerpixel bei _Float64 bei keinem Offset, Doppelbeule
     }
 
