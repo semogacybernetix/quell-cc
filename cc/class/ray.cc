@@ -209,6 +209,29 @@ void cshpara::berechne (const cvektor3 &prv, cschnittpunkte &psp)
     psp.add (s2);
   }
 
+// ---------------------------- ebzyl -----------------------------------------------
+
+csebzyl::csebzyl ()
+  {
+  }
+
+void csebzyl::init (const cvektor3 &pov)
+  {
+  ov= pov;
+  }
+
+void csebzyl::berechne (const cvektor3 &rv, cschnittpunkte& psp)
+  {
+  real A, B, C, D;
+
+  A= rv.x*rv.x*rv.z + rv.y*rv.y*rv.z;
+  B= ov.z*rv.x*rv.x + rv.y*rv.y*ov.z + 2*ov.x*rv.x*rv.z + 2*ov.y*rv.y*rv.z;
+  C= 2*ov.x*ov.z*rv.x + 2*ov.y*ov.z*rv.y + ov.x*ov.x*rv.z + ov.y*ov.y*rv.z;
+  D= ov.x*ov.x*ov.z + ov.y*ov.y*ov.z - 1;
+
+  kubischintr (B/A, C/A, D/A, psp);
+  }
+
 // ---------------------------- Torus -----------------------------------------------
 
 cstorus::cstorus (const real pr)

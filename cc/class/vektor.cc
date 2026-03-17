@@ -2021,6 +2021,59 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   x3= (y3 - a)/3;
   }
 
+//-------------------- kubisch integriert ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp)
+  {
+  real akq, pk, qk, xl, qk2, yt, l, y, y2, y3, ak3, x, x2, x3;
+
+  // Parameter reduzierte kubische Gleichung
+  akq= ak*ak;
+  pk= akq/-3 + bk;
+  qk= ak*(akq/real (4.5) - bk)/3 + ck;
+
+  ak3= ak/-3;
+  // Lösungen der reduzierten kubischen Gleichung
+  xl= qk*qk/4 + pk*pk*pk/27;
+  if (xl >= 0)
+    {
+    qk2= qk/-2;
+    if (qk2 > 0)
+      {
+      yt= cbrtr (qk2 + sqrtr (xl));
+      y= yt - pk/yt/3;
+      }
+      else if (qk2 < 0)
+      {
+      yt= cbrtr (qk2 - sqrtr (xl));
+      y= yt - pk/yt/3;
+      }
+      else
+      y= 0;
+    x= ak3 + y;
+    if (x > 0)
+      psp.add (x);
+    }
+    else
+    {
+    l= sqrtr (pk/real (-0.75));
+    y= l*cosr (acosr (qk*3/pk/l)/3);
+    y2= l*cosr (acosr (qk*3/pk/l)/3 + PI2d);
+    y3= l*cosr (acosr (qk*3/pk/l)/3 - PI2d);
+
+    x= ak3 + y;
+    x2= ak3 + y2;
+    x3= ak3 + y3;
+
+    if (x > 0)
+      psp.add (x);
+    if (x2 > 0)
+      psp.add (x2);
+    if (x3 > 0)
+      psp.add (x3);
+    }
+  }
+
 //--------------------------------------------------- kubische Resolventen ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)

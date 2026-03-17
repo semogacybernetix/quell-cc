@@ -379,6 +379,7 @@
 2026.03.14 Sa  20:30, schlechte Verfassung, nichts erreicht, aufgeräumt in cc/class, 21:47
 
 2026.03.17 Di   4:05, real (x1234) in quartischintr Routinen entfernt, quartischtestintr optimiert, immer noch fehlerhaft, 5:09, 8:05, sqrtrz erstellt, blauer Pixel bei reduziertf-Routinen durch sqrtz entfernt, 10:54
+               14:04, ebzyl ovrv Parameter erstellt, ebzyl erstellt, kubischintr erstellt, 15:03
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

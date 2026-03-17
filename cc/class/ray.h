@@ -77,6 +77,16 @@ struct cshpara : public clschnitt
   real c;
   };
 
+struct csebzyl : public clschnitt
+  {
+  csebzyl ();
+  void init (const cvektor3 &pov);
+  void berechne (const cvektor3 &prv, cschnittpunkte &psp);
+
+  private:
+  cvektor3 ov;
+  };
+
 struct cstorus : public clschnitt
   {
   cstorus (const real pr);
