@@ -230,6 +230,7 @@ void kubischloesungen ()
   {
   real y;
   ckomplexk x1, x2, x3, a, b, c, p, q, y1, y2, y3;
+  cschnittpunkte psp;
 
   vektor2eingabek (x1);
   vektor2eingabek (x2);
@@ -274,6 +275,16 @@ void kubischloesungen ()
   printvektor2komplex ("x3", (y3 - a)/3, 0);
   printtext ("\n");
 
+  psp.anz= 0;
+  kubischintr (a.x, b.x, c.x, psp);
+
+  printtext ("-------------------------------- kubischintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("anz         ", real (psp.anz), 0);
+  printvektor2komplex ("x1          ", psp.abstand[0], 0);
+  printvektor2komplex ("x2          ", psp.abstand[1], 0);
+  printvektor2komplex ("x3          ", psp.abstand[2], 0);
+  printtext ("\n");
+
   kubischreduziertreellc (p.x, q.x, y);
   printtext ("---------------------- kubischreduziert reell c -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printtext ("x:");
@@ -287,6 +298,8 @@ void kubischloesungen ()
   printreal (y - a.x/3);
   printtext ("\n");
   printtext ("\n");
+
+
   }
 
 void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)

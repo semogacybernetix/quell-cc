@@ -18,9 +18,6 @@ copts=-std=$(CCSTANDARD) -Wall -Wextra -Wconversion -pedantic-errors -O2
 
 # -------------------------- Ziele ------------------------------------------
 
-$(opfad)quartic.o: quartic.cc quartic.h vektor.h
-	$(comp) $< -c $(copts) -o $@
-
 $(opfad)vektor.o: vektor.cc vektor.h
 	$(comp) $< -c $(copts) -o $@
 

@@ -381,6 +381,8 @@
 2026.03.17 Di   4:05, real (x1234) in quartischintr Routinen entfernt, quartischtestintr optimiert, immer noch fehlerhaft, 5:09, 8:05, sqrtrz erstellt, blauer Pixel bei reduziertf-Routinen durch sqrtz entfernt, 10:54
                14:04, ebzyl ovrv Parameter erstellt, ebzyl erstellt, kubischintr erstellt, 15:03
 
+2026.03.19 Do  21:22, kubischintr optimiert, quartic.h .cc entfernt, ebzyl optimiert, 0:09
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Auswahl reeller kubischer Resolvente und sqrtrz beeinflussen sich

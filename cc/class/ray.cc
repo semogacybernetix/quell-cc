@@ -4,7 +4,6 @@
 #include <sys/times.h>                  // tms, times, ckoerper::aktualisiere ()
 
 #include "../../conio/vektorcon.h"      // zum Debuggen (printtext, printinteger, printreal)
-#include "quartic.h"
 
 //using namespace std;                  // auskommentiert lassen, weil sonst sqrt-sqrtr Fehler nicht gefunden werden (greater conversion rank)
 
@@ -224,10 +223,14 @@ void csebzyl::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   {
   real A, B, C, D;
 
-  A= rv.x*rv.x*rv.z + rv.y*rv.y*rv.z;
-  B= ov.z*rv.x*rv.x + rv.y*rv.y*ov.z + 2*ov.x*rv.x*rv.z + 2*ov.y*rv.y*rv.z;
-  C= 2*ov.x*ov.z*rv.x + 2*ov.y*ov.z*rv.y + ov.x*ov.x*rv.z + ov.y*ov.y*rv.z;
-  D= ov.x*ov.x*ov.z + ov.y*ov.y*ov.z - 1;
+  real rvxy=  rv.x*rv.x + rv.y*rv.y;
+  real ovrv= (ov.x*rv.x + ov.y*rv.y)*2;
+  real ovxy=  ov.x*ov.x + ov.y*ov.y;
+
+  A= rvxy*rv.z;
+  B= rvxy*ov.z + ovrv*rv.z;
+  C= ovrv*ov.z + ovxy*rv.z;
+  D= ovxy*ov.z - 1;
 
   kubischintr (B/A, C/A, D/A, psp);
   }
@@ -298,23 +301,6 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   //quartischdiffpuvintr (B/A, C/A, D/A, E/A, psp);                   // Innenwand sauber, Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   //quartischdiffpfintr3 (B/A, C/A, D/A, E/A, psp);                   // Innenwand verquierkst, Feuer weit außerhalb
   quartischmalinintr (B/A, C/A, D/A, E/A, psp);                     // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
-
-/*
-  std::complex<real>* solutions= solve_quartic (B/A, C/A, D/A, E/A);  // etwas langsam, Außenröhren zerfetzt, Torus geteilt, Linseneffekt beim Überklappen
-  real x1= solutions[0].real ();
-  real x2= solutions[1].real ();
-  real x3= solutions[2].real ();
-  real x4= solutions[3].real ();
-  if ((solutions[0].imag () == 0) && ( x1 > 0))
-    psp.add (x1);
-  if ((solutions[1].imag () == 0) && ( x2 > 0))
-    psp.add (x2);
-  if ((solutions[2].imag () == 0) && ( x3 > 0))
-    psp.add (x3);
-  if ((solutions[3].imag () == 0) && ( x4 > 0))
-    psp.add (x4);
-  delete [] solutions;
-//*/
   }
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************

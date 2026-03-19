@@ -2025,52 +2025,51 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
 
 void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp)
   {
-  real akq, pk, qk, xl, qk2, yt, l, y, y2, y3, ak3, x, x2, x3;
+  real ak3, ak2, pk, qk, xl, ztk, zk1, zk2, zk3, l, l2, w;
 
-  // Parameter reduzierte kubische Gleichung
-  akq= ak*ak;
-  pk= akq/-3 + bk;
-  qk= ak*(akq/real (4.5) - bk)/3 + ck;
-
+  // Parameter reduzierte kubische Gleichung malin
   ak3= ak/-3;
-  // Lösungen der reduzierten kubischen Gleichung
-  xl= qk*qk/4 + pk*pk*pk/27;
+  ak2= ak*ak;
+
+  pk= (ak2 + bk*-3)/9;
+  qk= (ak*(ak2 - bk*real (4.5)) + ck*real (13.5))/-27;
+
+  xl= qk*qk - pk*pk*pk;
+
+  // reelle Lösung der kubischen Resolvente
   if (xl >= 0)
     {
-    qk2= qk/-2;
-    if (qk2 > 0)
+    if (qk >= 0)
       {
-      yt= cbrtr (qk2 + sqrtr (xl));
-      y= yt - pk/yt/3;
-      }
-      else if (qk2 < 0)
-      {
-      yt= cbrtr (qk2 - sqrtr (xl));
-      y= yt - pk/yt/3;
+      ztk= cbrtr (qk + sqrtr (xl));
+      zk1= (ztk + pk/ztk) + ak3;
+      if (zk1 > 0)
+        psp.add (zk1);
       }
       else
-      y= 0;
-    x= ak3 + y;
-    if (x > 0)
-      psp.add (x);
+      {
+      ztk= cbrtr (qk - sqrtr (xl));
+      zk1= (ztk + pk/ztk) + ak3;
+      if (zk1 > 0)
+        psp.add (zk1);
+      }
     }
     else
     {
-    l= sqrtr (pk/real (-0.75));
-    y= l*cosr (acosr (qk*3/pk/l)/3);
-    y2= l*cosr (acosr (qk*3/pk/l)/3 + PI2d);
-    y3= l*cosr (acosr (qk*3/pk/l)/3 - PI2d);
+    l= sqrtr (pk);
+    l2= l*2;
+    w= acosr (qk/pk/l)/3;
 
-    x= ak3 + y;
-    x2= ak3 + y2;
-    x3= ak3 + y3;
+    zk1= ak3 + cosr (w)*l2;
+    zk2= ak3 + cosr (w + PI2d)*l2;
+    zk3= ak3 + cosr (w - PI2d)*l2;
 
-    if (x > 0)
-      psp.add (x);
-    if (x2 > 0)
-      psp.add (x2);
-    if (x3 > 0)
-      psp.add (x3);
+    if (zk1 > 0)
+      psp.add (zk1);
+    if (zk2 > 0)
+      psp.add (zk2);
+    if (zk3 > 0)
+      psp.add (zk3);
     }
   }
 
