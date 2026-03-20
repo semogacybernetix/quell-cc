@@ -873,7 +873,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
   // Bewegungskugel
   real kzoom= 100;
   cschachfeld* textur1= new cschachfeld (cvektor3 (0,255,0), cvektor3 (255,0,0), PI/6, PI/6);
-  ckoerper* beskugel= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, nullv3, real (0.1)*kzoom*einsb3);
+  ckoerper* beskugel= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, vnull3, real (0.1)*kzoom*einsb3);
 
   integer renderanz;
   tms zeit;

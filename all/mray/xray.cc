@@ -253,13 +253,18 @@ void addebzyl (cwelt& pwelt)
   //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,400), cvektor3 (0,25,0));          // flacher Ellipsentorus
 
   // Texturen
-  cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 80/PI, 80/PI);
+  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 80/PI, 80/PI);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 800/PI, 10/PI);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/60, PI/15);
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/80, PI/10);
 
+  // Begrenzungen
+  cbegrrechteck* reck1= new cbegrrechteck (-4, 4, real (-0.3), real (1));
+
   // Körper
-  ckoerper* koerper1= new ckoerper (new csebzyl, new cparaebenepolw, new cbegrkeine, textur1, kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new csebzyl, new cparaebenepolw, new cbegrkeine, textur1, kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new csebzyl, new cparaebenepolw, reck1, textur1, kstobj, klobj);
+  ckoerper* koerper1= new ckoerper (new csebzyl, new cparaebenepolw, reck1, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 6/PI, 6/PI), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.0125)), new cparatorusu, new cbegrkeine, textur1, kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorusu, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusu, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/sechseck1024.jpg"), real (8/PI), real (1/PI)), kstobj, klobj);

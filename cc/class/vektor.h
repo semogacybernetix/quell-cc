@@ -14,11 +14,11 @@ typedef long double _Float80;
 //typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen      gibts nicht auf raspi5                                     5.00              3.96
 
 // ------------------------- 32 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
+typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
-typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
+//typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
@@ -170,10 +170,10 @@ const ckomplexp ew4 (1, PI/2);
 //const ckomplexp ew5 (1, PI*2/5);
 
 // cvektor3 Konstanten
-const cvektor3 nullv3 (0);
-//const cvektor3 xvektor3 (1, 0, 0);
-//const cvektor3 yvektor3 (0, 1, 0);
-//const cvektor3 zvektor3 (0, 0, 1);
+const cvektor3 vnull3 (0);
+const cvektor3 vxe3 (1, 0, 0);
+const cvektor3 vye3 (0, 1, 0);
+const cvektor3 vze3 (0, 0, 1);
 
 // quaternionische Konstanten
 //const cquaternion nullq (0, 0, 0, 0);

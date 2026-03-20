@@ -1833,13 +1833,13 @@ cvektor4 quaternionfromeulerwinkel (const cvektor3 pflugw)
 
 void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   {
-  ckomplexk A, D;
+  ckomplexk a2, D;
 
-  A= a/-2;
-  D= sqrtr (A*A - b);
+  a2= a/-2;
+  D= sqrtr (a2*a2 - b);
 
-  x1= A - D;
-  x2= A + D;
+  x1= a2 - D;
+  x2= a2 + D;
   }
 
 // ------------------------------------------------------- kubisch ----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1903,7 +1903,7 @@ void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, 
 
   quadratisch (q, p*p*p/-27, u1, u2);
 
-  if (absr (u1) > absr (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+  if (absr (u1) > absr (u2))                                          // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
     {
     cbrtr (u1, z1, z2, z3);
     y1= z1 - p/(z1*3);
@@ -1931,7 +1931,7 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
 
   quadratisch (q*27, p*p*p*-27, u1, u2);
 
-  if (absr (u1) > absr (u2))                                     // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+  if (absr (u1) > absr (u2))                                          // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
     {
     cbrtr (u1, z1, z2, z3);
     y1= z1 - p*3/z1;
@@ -1967,7 +1967,7 @@ void kubischreduziertreellc (real p, real q, real& y)
     else
     {
     l= sqrtr (p/real (-0.75));
-    y= l*cosr (acosr (q*3/p/l)/3);
+    y= cosr (acosr (q*3/p/l)/3)*l;
     }
   }
 
@@ -1995,7 +1995,7 @@ void kubischreduziertreellu (real p, real q, real& y)
     else
     {
     l= sqrtr (p/real (-0.75));
-    y= l*cosr (acosr (q*3/p/l)/3);
+    y= cosr (acosr (q*3/p/l)/3)*l;
     }
   }
 
@@ -2027,7 +2027,7 @@ void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp)
   {
   real ak3, ak2, pk, qk, xl, ztk, zk1, zk2, zk3, l, l2, w;
 
-  // Parameter reduzierte kubische Gleichung malin
+  // Parameter der reduzierten kubischen Gleichung
   ak3= ak/-3;
   ak2= ak*ak;
 

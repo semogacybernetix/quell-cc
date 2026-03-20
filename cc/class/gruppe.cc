@@ -249,7 +249,7 @@ cbasis3 getsternbasis2 (const real pwi)      // über gleichschenkliges Dreieck
 
 void subvektorhinzu (cbasis3liste& pgruppe, cvektor3liste& ppartliste, cvektor3& psubvektor)        // bekommt die volle Gruppe, nicht nur den Kern
   {
-  if (aehnlich (psubvektor, nullv3))    // 0°-Drehungen übergehen
+  if (aehnlich (psubvektor, vnull3))    // 0°-Drehungen übergehen
     return;
   cvektor3liste subliste (1000);
 
