@@ -343,18 +343,22 @@ struct cschnittpunkte
 
 void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2);
 
-// kubische Formeln komplex
+// reduzierte kubische Gleichung komplex
 void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertcardano (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertcardano3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
 void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3);
-void kubischreduziertreellc (real p, real q, real& y);
-void kubischreduziertreellu (real p, real q, real& y);
+
+// normale kubische Gleichung komplex
 void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, ckomplexk& q);
 void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);
 
-// kubische Formeln für reelle Koeffizienten
+// reduzierte kubische Gleichung reell
+void kubischreduziertreellc (real p, real q, real& y);
+void kubischreduziertreellu (real p, real q, real& y);
+
+// normale kubische Gleichung reell
 void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp);
 
 // kubische Resolventen komplex
@@ -366,7 +370,7 @@ void kubischeresolventez (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, 
 void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventemalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 
-// quartische Formeln komplex mit eigenen Resolventen
+// reduzierte quartische Gleichung komplex mit eigenen Resolventen
 void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertbuchu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertbuchv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
@@ -374,23 +378,25 @@ void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
 void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 
-// quartische Formeln komplex mit zentrierter dreifacher Resolvente
+// reduzierte quartische Gleichung komplex mit zentrierter dreifacher Resolvente
 void quartischreduziertbuchf3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertpdfw23 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
+
+// normale quartische Gleichung
 void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& p, ckomplexk& q, ckomplexk& r);
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
-// quartische Formeln für reelle Koeffizienten  (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
+// normale quartische Gleichung reell (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
 void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpuvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischdiffpfintr3 (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischpdfw2intr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);

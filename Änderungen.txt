@@ -383,10 +383,11 @@
 
 2026.03.19 Do  21:22, kubischintr optimiert, quartic.h .cc entfernt, ebzyl optimiert, 0:09
 2026.03.20 Fr   5:50, symflip mit symmetriegruppen verglichen, symflip neuer, 6:30, 16:23, symflip debuggt, Polynomformeln durchgegangen bis vor kubischintr, 17:11, 21 Uhr, texturierte Trompete erzeugt, 21:52
+2026.03.21 Sa  17:26, quartischpdfw2 optimiert, alle quartisch Routinen durchgegangen, Schnittpunkt Kugel geändert, 0:26
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-pdfw2intr erstellen, quartischdiffpu ohne quant, Mauszeiger mit Pixeldaten
+quartischdiffpu ohne quant, Mauszeiger mit Pixeldaten
 Auswahl reeller kubischer Resolvente und sqrtrz beeinflussen sich
 u,v maximieren, kubische Resolvente komplex berechnen, Auswahl reelle Resolvente bei casus irreduzibiles, diffpuintrc ohne quant, Lösungen von allen Parametern abhängig machen anstatt dass einer fehlt
 framerate sauber implementieren

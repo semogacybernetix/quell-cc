@@ -75,15 +75,15 @@ void cskugel::init (const cvektor3 &pov)
 void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
   real a= prv%prv;
-  real b= -(prv%ov);
+  real b= prv%ov;
 
   real d= b*b - a*c;
   if (d < 0)
     return;
 
   real e= sqrtr (d);
-  real s1= (b + e)/a;
-  real s2= (b - e)/a;
+  real s1= ( e - b)/a;
+  real s2= (-e - b)/a;
 
   if (s1 > 0)
     psp.add (s1);
@@ -294,13 +294,13 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);                    // Außenwand sauber, Feuer weit außerhalb des Torusses
   //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
 
-  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
+  quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
+  //quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // gleiches Fehlerverhalten wie quartischdiffpfintr
 
   //quartischdiffpuvintr (B/A, C/A, D/A, E/A, psp);                   // Innenwand sauber, Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
-  //quartischdiffpfintr3 (B/A, C/A, D/A, E/A, psp);                   // Innenwand verquierkst, Feuer weit außerhalb
-  quartischmalinintr (B/A, C/A, D/A, E/A, psp);                     // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
+  //quartischmalinintr (B/A, C/A, D/A, E/A, psp);                     // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
   }
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************
