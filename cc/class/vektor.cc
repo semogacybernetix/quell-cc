@@ -2025,7 +2025,7 @@ void kubischreduziertreellu (real p, real q, real& y)
 
 void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp)
   {
-  real ak3, ak2, pk, qk, xl, ztk, zk1, zk2, zk3, l, l2, w;
+  real ak3, ak2, pk, qk, xl, ytk, zk1, zk2, zk3, l, l2, w;
 
   // Parameter der reduzierten kubischen Gleichung
   ak3= ak/-3;
@@ -2040,19 +2040,12 @@ void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp)
   if (xl >= 0)
     {
     if (qk >= 0)
-      {
-      ztk= cbrtr (qk + sqrtr (xl));
-      zk1= (ztk + pk/ztk) + ak3;
-      if (zk1 > 0)
-        psp.add (zk1);
-      }
+      ytk= cbrtr (qk + sqrtr (xl));
       else
-      {
-      ztk= cbrtr (qk - sqrtr (xl));
-      zk1= (ztk + pk/ztk) + ak3;
-      if (zk1 > 0)
-        psp.add (zk1);
-      }
+      ytk= cbrtr (qk - sqrtr (xl));
+    zk1= ytk + pk/ytk + ak3;
+    if (zk1 > 0)
+      psp.add (zk1);
     }
     else
     {
@@ -2060,9 +2053,9 @@ void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp)
     l2= l*2;
     w= acosr (qk/pk/l)/3;
 
-    zk1= ak3 + cosr (w)*l2;
-    zk2= ak3 + cosr (w + PI2d)*l2;
-    zk3= ak3 + cosr (w - PI2d)*l2;
+    zk1= ak3 + l2*cosr (w);
+    zk2= ak3 + l2*cosr (w + PI2d);
+    zk3= ak3 + l2*cosr (w - PI2d);
 
     if (zk1 > 0)
       psp.add (zk1);
@@ -2071,6 +2064,35 @@ void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp)
     if (zk3 > 0)
       psp.add (zk3);
     }
+
+  //return;
+  if (finiter (zk1)) return;
+
+  // Printausgabe Variablen quartischdiffpf
+  printtext ("ak: ");
+  printreal (ak);
+  printtext ("\n");
+  printtext ("bk: ");
+  printreal (bk);
+  printtext ("\n");
+  printtext ("ck: ");
+  printreal (ck);
+  printtext ("\n");
+  printtext ("\n");
+  printtext ("pk: ");
+  printreal (pk);
+  printtext ("\n");
+  printtext ("qk: ");
+  printreal (qk);
+  printtext ("\n");
+  printtext ("\n");
+  printtext ("xl: ");
+  printreal (xl);
+  printtext ("\n");
+  printtext ("zk1: ");
+  printreal (zk1);
+  printtext ("\n");
+  printtext ("---------------------------------------\n");
   }
 
 //--------------------------------------------------- kubische Resolventen ---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2439,7 +2461,9 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& p
 
   // Lösung der reduzierten kubischen Gleichung
   cbrtr (qk + sqrtr (ckomplexk (pk*pk*pk + qk*qk)), ytk1, ytk2, ytk3);
-  yk= (ytk3 - pk/ytk3)/4;
+  //yk= (ytk1 - pk/ytk1)/4;          // Röhrenstern
+  //yk= (ytk2 - pk/ytk2)/4;            // Mittenkrizzel
+  yk= (ytk3 - pk/ytk3)/4;            // Ober- Unterlinie
 
   // Lösungen der beiden quadratischen Gleichungen
   u= sqrtr (yk + pq/-6);
@@ -2656,10 +2680,7 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     {
     l= sqrtr (pk);
     //yk= cosr (acosr (qk/pk/l)/3)*l;                                   // Außensprühen
-    //yk= -cosr (acosr (qk/-sqrtr (pk3))/3 + PI2d)*l;                   // Außensprühen
     yk= cosr (acosr (qk/pk/l)/3 - PI2d)*l;                            // Röhrenkrizzel, Außenlinie
-    //yk= -cosr (acosr (qk/-sqrtr (pk3))/3 - PI2d)*l;                   // Röhrenkrizzel, Außenlinie
-
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq für Rückreduzierung)
@@ -2737,8 +2758,6 @@ void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   printreal (b2);
   printtext ("\n");
   printtext ("---------------------------------------\n");
-  eingabe ();
-  eingabe ();
   }
 
 void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
@@ -2774,8 +2793,6 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     l= sqrtr (pk);
     //yk= cosr (acosr (qk/pk/l)/3)*l;                                   // Mittenloch
     yk= cosr (acosr (qk/pk/l)/3 - PI2d)*l;                            // Mittenkrizzel oben unten Ungenauigkeit
-    //yk= -cosr (acosr (qk/-sqrtr (pk3))/3 + PI2d)*l;                   // Mittenloch
-    //yk= -cosr (acosr (qk/-sqrtr (pk3))/3 - PI2d)*l;                   // Mittenkrizzel oben unten Ungenauigkeit
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -2860,8 +2877,6 @@ void quartischdiffpvintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   printreal (b2);
   printtext ("\n");
   printtext ("---------------------------------------\n");
-  eingabe ();
-  eingabe ();
   }
 
 void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
@@ -2898,9 +2913,6 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     yk= cosr (acosr (qk/pk/l)/3)*l;                                   // breiter Mittenkrizzel verschwindet bei sqrtz
     //yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l;                                   // schmaler Mittenkrizzel
     //yk= cosr (acosr (qk/pk/l)/3 - PI2d)*l;                                   // schmaler Mittenkrizzel verschwindet bei sqrtz
-    //yk= -cosr (acosr (qk/-sqrtr (pk3))/3)*l;                          // schmaler Mittenkrizzel
-    //yk= -cosr (acosr (qk/-sqrtr (pk3))/3 + PI2d)*l;                          // breiter Mittenkrizzel verschwindet bei sqrtz
-    //yk= -cosr (acosr (qk/-sqrtr (pk3))/3 - PI2d)*l;                          // schmaler Mittenkrizzel verschwindet bei sqrtz
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -2996,8 +3008,6 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   printreal (b2);
   printtext ("\n");
   printtext ("---------------------------------------\n");
-  eingabe ();
-  eingabe ();
   }
 
 void quartischdiffpuvintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
@@ -3040,7 +3050,6 @@ void quartischdiffpuvintr (real aq, real bq, real cq, real dq, cschnittpunkte& p
     {
     l= sqrtr (pk);                                                    // pk > 0 immer, l = 0 bei pk= 0
     yk= cosr (acosr (qk/pk/l)/3)*l;                                   // Sauberkeit nur bei 0°
-    //yk= -cosr (acosr (-qk/sqrtr (pk3))/3)*l;                          //  0° und - PI2d schmaler Rand, +PI2d breiter Rand
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-pq/2 für Rückreduzierung)
@@ -3159,8 +3168,9 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   zk= yk + pq6;
 
   uq= yk/2 - pq6;
-  u= sqrtr (uq);                                                      // uq < 0 wegen Ungenauigkeit, Abfangen erzeugt Außenfeuer auch bei _Float64
-  v= sqrtrz (zk*zk - rq);                                             // Abfangen entfernt blaue Pixel
+  u= sqrtr (ckomplexk (uq)).x;                                                      // uq < 0 wegen Ungenauigkeit, Abfangen erzeugt Außenfeuer auch bei _Float64
+  //v= sqrtrz (zk*zk - rq);                                             // Abfangen entfernt blaue Pixel
+  v= sqrtr (ckomplexk (zk*zk - rq)).x;                                             // Abfangen entfernt blaue Pixel
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
@@ -3240,8 +3250,6 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   printreal (b2);
   printtext ("\n");
   printtext ("---------------------------------------\n");
-  eingabe ();
-  eingabe ();
   }
 
 void quartischpdfw2intr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
@@ -3351,8 +3359,6 @@ void quartischpdfw2intr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   printreal (b2);
   printtext ("\n");
   printtext ("---------------------------------------\n");
-  eingabe ();
-  eingabe ();
   }
 
 void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
@@ -3612,9 +3618,7 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     {
     l= sqrtr (pk);
     zk= ak6 + cosr (acosr (qk/pk/l)/3 + PI2d)*l;                      // durchgehende Krizzel
-    //zk= ak6 - cosr (acosr (qk/-sqrtr (pk3))/3)*l;                     //  durchgehende Krizzel
     //zk= ak6 + cosr (acosr (qk/pk/l)/3)*l;                             // zerfetzte Röhren, Außenfetzen
-    //zk= ak6 - cosr (acosr (qk/-sqrtr (pk3))/3 + PI2d)*l;              // zerfetzte Röhren, Außenfetzen
     }
 
   // Lösungen der beiden quadratischen Gleichungen
@@ -3706,6 +3710,4 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   printtext ("\n");
   printtext ("\n");
   printtext ("---------------------------------------\n");
-  eingabe ();
-  eingabe ();
   }

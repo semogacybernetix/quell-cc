@@ -75,6 +75,8 @@ void cskugel::init (const cvektor3 &pov)
 void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
   real a= prv%prv;
+  if (a == 0)
+    printtext ("a = 0");
   real b= prv%ov;
 
   real d= b*b - a*c;
@@ -134,7 +136,7 @@ void cshyper::berechne (const cvektor3 &prv, cschnittpunkte &psp)
     psp.add (s2);
   }
 
-// ---------------------------- Rotationsparaboloid ----------------------------------------
+// ---------------------------- elliptisches Paraboloid ----------------------------------------
 
 csrpara::csrpara ()
   {
@@ -166,7 +168,7 @@ void csrpara::berechne (const cvektor3 &prv, cschnittpunkte &psp)
     psp.add (s2);
   }
 
-// ---------------------------- hyperbolisches Paraboloid ----------------------------------
+// ---------------------------- hyperbolisches Paraboloid --------------------------------------
 
 cshpara::cshpara ()
   {
@@ -232,7 +234,24 @@ void csebzyl::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   C= ovrv*ov.z + ovxy*rv.z;
   D= ovxy*ov.z - 1;
 
-  kubischintr (B/A, C/A, D/A, psp);
+  if (A != 0)
+    {
+    kubischintr (B/A, C/A, D/A, psp);
+    return;
+    }
+
+  printtext ("A:");
+  printreal (A);
+  printtext ("\n");
+  printtext ("B:");
+  printreal (B);
+  printtext ("\n");
+  printtext ("C:");
+  printreal (C);
+  printtext ("\n");
+  printtext ("D:");
+  printreal (D);
+  printtext ("\n");
   }
 
 // ---------------------------- Torus -----------------------------------------------
@@ -288,13 +307,14 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
   //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);                   // langsam, starke Ausfälle bei 4 Lösungen, einige Fehlerpixel außerhalb
-  //quartischtestintr (B/A, C/A, D/A, E/A, psp);                      // Innenwand sauber, Sprühen außerhalb des Torusses
+  quartischtestintr (B/A, C/A, D/A, E/A, psp);                      // sehr sauber, kleine Ungenauigkeit nahe Wand
+  //quartischtestintr2 (B/A, C/A, D/A, E/A, psp);                      // Innenwand sauber, Sprühen außerhalb des Torusses
 
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand sauber, Sprühen außerhalb des Torusses
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);                    // Außenwand sauber, Feuer weit außerhalb des Torusses
   //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
 
-  quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
+  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // wie testintr außer mit Oben-untenlinie
   //quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // gleiches Fehlerverhalten wie quartischdiffpfintr
