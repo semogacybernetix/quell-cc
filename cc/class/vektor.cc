@@ -2494,12 +2494,11 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& p
 
 void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aq4, pq, qq, rq, ak, bk, ck, pk, qk, yk, zk;
+  real aq4, pq, qq, rq, ak, bk, ck, pk, qk, yk, zk, uq, vq;
 
   ckomplexk uc, vc;
 
-  real uq, vq, u, v, bed, a1, a2, b1, b2;
-  real D12, D34, x1, x2, x3, x4;
+  real u, v, bed, a1, a2, b1, b2, D12, D34, x1, x2, x3, x4;
 
   // Parameter der reduzierten quartischen Gleichung
   pq= aq*aq*3/-8 + bq;
@@ -2522,6 +2521,7 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   // Lösungen der beiden quadratischen Gleichungen
   uq= zk*2 - pq;
   vq= zk*zk - rq;
+
   uc= sqrtr (ckomplexk (uq));
   vc= sqrtr (ckomplexk (vq));
 
@@ -2535,7 +2535,6 @@ void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
 
   a1=  u;
   a2= -u;
-
   b1= zk + v;
   b2= zk - v;
 
@@ -2595,12 +2594,14 @@ void quartischtestintr2 (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   // Lösungen der beiden quadratischen Gleichungen
   uq= zk*2 - pq;
   //vq= zk*zk - rq;
+
   u= sqrtr (uq);
   //v= sqrtr (vq);
 //*/
 
- kubisch (ak, bk, ck, zk1, zk2, zk3);
-  zkc= zk1;
+  kubisch (ak, bk, ck, zk1, zk2, zk3);
+  zkc= zk;        // reelle Resolvente geht
+  //zkc= zk1;       // komplexe Resolvente versagt in den Röhren
 
   // Lösungen der beiden quadratischen Gleichungen
   uqc= zkc*2 - pq;

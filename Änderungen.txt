@@ -386,6 +386,8 @@
 2026.03.21 Sa  17:26, quartischpdfw2 optimiert, alle quartisch Routinen durchgegangen, Schnittpunkt Kugel geändert, 0:26
 2026.03.22 So   4:50, unzählige kleine Verbesserungen, quartischtestintr sehr sauber aber deutlich langsamer, 6:32
 
+2026.03.24 Di  13:30, quartischtestintr verbessert, quartischtestintr2 Fehler komplexe Resolvente geht nicht gefunden, 14:09
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 quartischdiffpu ohne quant, Mauszeiger mit Pixeldaten
