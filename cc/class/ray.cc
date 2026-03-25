@@ -308,11 +308,11 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
   //quartischdiffpuintrc (B/A, C/A, D/A, E/A, psp);                   // langsam, starke Ausfälle bei 4 Lösungen, einige Fehlerpixel außerhalb
   //quartischtestintr (B/A, C/A, D/A, E/A, psp);                      // sehr sauber, kleine Ungenauigkeit nahe Wand
-  quartischtestintr2 (B/A, C/A, D/A, E/A, psp);                      // sauber, defekte Innenröhren
+  //quartischtestintr2 (B/A, C/A, D/A, E/A, psp);                      // sauber, defekte Innenröhren
 
   //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand sauber, Sprühen außerhalb des Torusses
   //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);                    // Außenwand sauber, Feuer weit außerhalb des Torusses
-  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+  quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
 
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // wie testintr außer mit Oben-untenlinie
   //quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr

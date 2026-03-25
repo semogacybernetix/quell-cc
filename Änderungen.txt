@@ -387,10 +387,11 @@
 2026.03.22 So   4:50, unzählige kleine Verbesserungen, quartischtestintr sehr sauber aber deutlich langsamer, 6:32
 
 2026.03.24 Di  13:30, quartischtestintr verbessert, quartischtestintr2 Fehler komplexe Resolvente geht nicht gefunden, 14:09
+2026.03.25 Mi   5:50, Fehlersuche quartischtestintr, Fehler gefunden (reelle Wurzelbedingung nicht skaliert) Fehlerbegründung nicht gefunden, quartischdiffpintr und quartischbuchfintr angepasst, sauber gekriegt, 9:37
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-quartischdiffpu ohne quant, Mauszeiger mit Pixeldaten
+quartischdiffpu ohne quant, Mauszeiger mit Pixeldaten, Polynom xl (aq, bq, cq, dq) vereinfachen
 Auswahl reeller kubischer Resolvente und sqrtrz beeinflussen sich
 u,v maximieren, kubische Resolvente komplex berechnen, Auswahl reelle Resolvente bei casus irreduzibiles, diffpuintrc ohne quant, Lösungen von allen Parametern abhängig machen anstatt dass einer fehlt
 framerate sauber implementieren
