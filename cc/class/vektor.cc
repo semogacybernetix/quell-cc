@@ -2465,12 +2465,12 @@ void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomple
   x4= a2 + D34;
   }
 
-//-------------------- quartisch integriert ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------- quartisch integriert (quartischintr) --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischdiffpintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, rq4, pk, qk, aq4;
-  ckomplexk ytk1, ytk2, ytk3, yk, u, v, d, D1, D2, x1, x2, x3, x4;
+  real aq4, pq6, aqq, pq, qq, rq, pqq, rq4, pk, qk, xl;
+  ckomplexk ytk1, ytk2, ytk3, yk, zk, uq, vq, u, v, bed, d, D1, D2, b1, b2, x1, x2, x3, x4;
 
   // Parameter der reduzierten quartischen Gleichung
   aqq= aq*aq/8;
@@ -2484,17 +2484,22 @@ void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& p
   pk= pqq/-9 + rq4;
   qk= pq*(pqq/27 + rq4) + qq*qq/2;
 
+  // Lösung der normalen linearen Gleichung
+  xl= qk*qk + pk*pk*pk;
+
   // Lösung der reduzierten kubischen Gleichung
-  cbrtr (qk + sqrtr (ckomplexk (pk*pk*pk + qk*qk)), ytk1, ytk2, ytk3);
-  //yk= (ytk1 - pk/ytk1)/4;          // Röhrenstern
-  //yk= (ytk2 - pk/ytk2)/4;            // Mittenkrizzel
+  cbrtr (qk + sqrtr (ckomplexk (xl)), ytk1, ytk2, ytk3);
+  //yk= (ytk1 - pk/ytk1)/2;          // Röhrenstern
+  //yk= (ytk2 - pk/ytk2)/2;            // Mittenkrizzel
   yk= (ytk3 - pk/ytk3)/4;            // Ober- Unterlinie
 
   // Lösungen der beiden quadratischen Gleichungen
-  u= sqrtr (yk + pq/-6);
-  v= qq/u/4;
+  pq6= pq/6;
+  zk= yk*2 + pq6;
+  u= sqrtr (yk - pq6);
+  //v= qq/u/4;
+  v= sqrtr (zk*zk - rq);
   d= pq/-3 - yk;
-
   D1= sqrtr (d + v);
   D2= sqrtr (d - v);
 
@@ -3042,8 +3047,13 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   zk= yk + pq6;
 
   uq= yk/2 - pq6;
+  if (uq < 1e-9) return;
+  real vq= zk*zk - rq;
+  if (vq < 1e-10) return;
+
   u= sqrtrz (uq);                                                     // 2. Fehlerquelle u, uq < 0 wegen Ungenauigkeit, durch Abfangen entsteht Außenfeuer wenn die sqrt-Bedingung nicht skaliert ist
-  v= sqrtrz (zk*zk - rq);                                             // 3. Fehlerquelle v, vq < 0 wegen Ungenauigkeit, durch Abfangen Enfernung blauer Pixel Mitte
+  v= sqrtrz (vq);                                             // 3. Fehlerquelle v, vq < 0 wegen Ungenauigkeit, durch Abfangen Enfernung blauer Pixel Mitte
+  //v= sqrtrz (zk*zk - rq);                                             // 3. Fehlerquelle v, vq < 0 wegen Ungenauigkeit, durch Abfangen Enfernung blauer Pixel Mitte
 
   // Bedingung -2uv = qq
   bed= u*v*-2;
@@ -3695,7 +3705,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
 
 void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
   {
-  real bk, ck, ak2, pk, qk, pk3, qk2, ak6, ztk, l, zk, Dq, D, b1, b2, a1h, a2h, a1q, a2q, D12, D34, x1, x2, x3, x4;
+  real ak6, ak2, bk, ck, pk, qk, xl, ztk, l, zk, Dq, D, b1, b2, a1h, a2h, a1q, a2q, D12, D34, x1, x2, x3, x4;
 
   // Parameter normale kubische Gleichung
   bk= aq*cq - dq*4;
@@ -3708,20 +3718,20 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   pk= (ak2 + bk*-3)/9;
   qk= (bq*(bk*real (4.5) - ak2) + ck*real (13.5))/-27;
 
-  pk3= pk*pk*pk;
-  qk2= qk*qk;
+  // Lösung der normalen linearen Gleichung
+  xl= qk*qk - pk*pk*pk;
 
   // reelle Lösung der kubischen Resolvente
-  if (qk2 >= pk3)
+  if (xl >= 0)
     {
     if (qk > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ztk= cbrtr (qk + sqrtr (qk2 - pk3));
+      ztk= cbrtr (qk + sqrtr (xl));
       zk= (ztk + pk/ztk)/2 + ak6;                                     // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
       else if (qk < 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ztk= cbrtr (qk - sqrtr (qk2 - pk3));                            // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      ztk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
       zk= (ztk + pk/ztk)/2 + ak6;                                     // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
       else
@@ -3781,13 +3791,6 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   printtext ("\n");
   printtext ("ck: ");
   printreal (ck);
-  printtext ("\n");
-  printtext ("\n");
-  printtext ("pk3:");
-  printreal (pk3);
-  printtext ("\n");
-  printtext ("qk2:");
-  printreal (qk2);
   printtext ("\n");
   printtext ("\n");
   printtext ("pk: ");

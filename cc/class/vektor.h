@@ -389,7 +389,7 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
 // normale quartische Gleichung reell (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
-void quartischdiffpuintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischdiffpintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischtestintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischtestintr2 (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
 void quartischdiffpuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);

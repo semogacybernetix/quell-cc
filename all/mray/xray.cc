@@ -15,10 +15,16 @@ void addebene (cwelt& pwelt)
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 1, 1);
   cschachfeld* textur1= new cschachfeld (cvektor3 (255,127,0), cvektor3 (0,255,255), 1, 1);
 
+  // Begrenzungen
+  cbegrkreis* begkreis1= new cbegrkreis (-10, 10, -4, 4);
+
   // Körper
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebenew, new cbegrkeine, textur1, kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new cshyper (1), new cparaebenew, new cbegrkeine, textur1, kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cshpara, new cparaebenew, new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cshyper (1), new cparaebenepol, new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csrpara, new cparaebenepol, new cbegrkeine, textur1, kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new csrpara, new cparaebenepol, begkreis1, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cshpara, new cparaebenepol, new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cshpara, new cparaebenepol, begkreis1, textur1, kst1, kl1);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
@@ -224,10 +230,10 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Canberra.jpg"), real (0.3183), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0), kstobj, klobj);
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Texturen/1080 linien.jpg"), real (0.33), 0), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Texturen/1080 linien.jpg"), real (0.33), 0), kstobj, klobj);
 
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentextur2pm (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentextur2zm (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentextur2zm (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
@@ -393,7 +399,7 @@ void fliege ()
   //addzylinder (*welt);
   //addkugel (*welt);
   //addebzyl (*welt);
-  addtorus (*welt);
+  //addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
 
