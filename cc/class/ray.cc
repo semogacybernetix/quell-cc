@@ -306,21 +306,14 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
-  quartischdiffpintrc (B/A, C/A, D/A, E/A, psp);                   // langsam, starke Ausfälle bei 4 Lösungen, einige Fehlerpixel außerhalb
-  //quartischtestintr (B/A, C/A, D/A, E/A, psp);                      // sehr sauber, kleine Ungenauigkeit nahe Wand
-  //quartischtestintr2 (B/A, C/A, D/A, E/A, psp);                      // sauber, defekte Innenröhren
+  //quartischdiffpintrc (B/A, C/A, D/A, E/A, psp);                   // langsam, starke Ausfälle bei 4 Lösungen, einige Fehlerpixel außerhalb
 
-  //quartischdiffpuintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand sauber, Sprühen außerhalb des Torusses
-  //quartischdiffpvintr (B/A, C/A, D/A, E/A, psp);                    // Außenwand sauber, Feuer weit außerhalb des Torusses
-  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
-
+  quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // wie testintr außer mit Oben-untenlinie
   //quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
-  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr
-  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // gleiches Fehlerverhalten wie quartischdiffpfintr
-
-  //quartischdiffpuvintr (B/A, C/A, D/A, E/A, psp);                   // Innenwand sauber, Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   //quartischmalinintr (B/A, C/A, D/A, E/A, psp);                     // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
+  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // gleiches Fehlerverhalten wie quartischdiffpfintr
+  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr
   }
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************

@@ -399,7 +399,7 @@ void fliege ()
   //addzylinder (*welt);
   //addkugel (*welt);
   //addebzyl (*welt);
-  //addtorus (*welt);
+  addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
 

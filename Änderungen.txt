@@ -390,6 +390,7 @@
 2026.03.25 Mi   5:50, Fehlersuche quartischtestintr, Fehler gefunden (reelle Wurzelbedingung nicht skaliert) Fehlerbegründung nicht gefunden, quartischdiffpintr und quartischbuchfintr angepasst, sauber gekriegt, 9:37
 
 2026.03.27 Fr  21:18, quartischintrmalin verbessert, quartischdiffpintrc erstellt, fehlerhaft, 23:10
+2026.03.28 Sa   4:50, quartischintrroutinen bearbeitet, 7:00, 8:00 überflüssige quartischintr Routinen entfernt, restliche quartischintr Routinen auf Konsistenz gebracht, 9:22
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
