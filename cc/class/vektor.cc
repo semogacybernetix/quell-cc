@@ -2452,7 +2452,7 @@ void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomple
 
   b1= z + D;
   b2= z - D;
-  a1= (c - a*b1)/D/4;
+  a1= (a*b1 - c)/D/-4;
   a2= (a*b2 - c)/D/4;
 
   // Lösungen der beiden quadratischen Gleichungen
@@ -2467,17 +2467,17 @@ void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomple
 
 //-------------------- quartisch integriert (quartischintr) --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void quartischdiffpintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq4, aqq, pq, qq, rq, pqq, rq4, pk, qk, xl;
-  ckomplexk ytk1, ytk2, ytk3, yk, zk, uq, vq, u, v, bed, d, D12, D34, b1, b2, x1, x2, x3, x4;
+  real a4, aq, pq, qq, rq, pqq, rq4, pk, qk, xl;
+  ckomplexk ytk1, ytk2, ytk3, yk, zk, uq, vq, u, v, bed, D, D12, D34, b1, b2, x1, x2, x3, x4;
 
   // Parameter der reduzierten quartischen Gleichung
-  aq4= aq/-4;
-  aqq= aq*aq/8;
-  pq= aqq*-3 + bq;
-  qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
+  a4= a/-4;
+  aq= a*a/8;
+  pq= aq*-3 + b;
+  qq= a*(aq + b/-2) + c;
+  rq= a*(a*aq*real (-0.09375) + a*b/16 + c/-4) + d;
 
   // Parameter der reduzierten kubischen Gleichung
   pqq= pq*pq;
@@ -2499,15 +2499,15 @@ void quartischdiffpintrc (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   u= sqrtr (yk - pq/6);
   v= qq/u/4;
 
-  d= pq/-3 - yk;
-  D12= sqrtr (d + v);
-  D34= sqrtr (d - v);
+  D= pq/-3 - yk;
+  D12= sqrtr (D + v);
+  D34= sqrtr (D - v);
 
   // Lösungen der normalen quartischen Gleichung
-  x1= aq4 - u - D12;
-  x2= aq4 - u + D12;
-  x3= aq4 + u - D34;
-  x4= aq4 + u + D34;
+  x1= a4 - u - D12;
+  x2= a4 - u + D12;
+  x3= a4 + u - D34;
+  x4= a4 + u + D34;
 
   // reelle Lösungen in Schnittpunktliste eintragen
   real quant= real (1e-3);
@@ -2521,17 +2521,92 @@ void quartischdiffpintrc (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     psp.add (x4.x);
   }
 
-void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischpdfw2intr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq4, aqq, pq, qq, rq, pqq, pk, qk, xl;
+  real aq, pq, qq, rq, ak, ak2, bk, ck, pk, qk, xl;
+  real ytk, yk, l, uq, u, b1, b2, a4, a1, a2, D12, D34, x1, x2, x3, x4;
+
+  // Parameter reduzierte quartische Gleichung
+  aq= a*a/8;
+  pq= aq*-3 + b;
+  qq= a*(aq + b/-2) + c;
+  rq= a*(aq*a*real (-0.09375) + a*b/16 + c/-4) + d;
+
+  // Parameter normale kubische Gleichung
+  ak= pq*2;
+  bk= pq*pq - rq*4;
+  ck= -(qq*qq);
+
+  // Parameter der reduzierten kubischen Gleichung
+  ak2= ak*ak;
+  pk= (ak2 + bk*-3)/9;
+  qk= (ak*(ak2 - bk*real (4.5)) + ck*real (13.5))/-27;
+
+  // Lösung der normalen linearen Gleichung
+  xl= qk*qk - pk*pk*pk;
+
+  // reelle Lösung der kubischen Resolvente
+  if (xl >= 0)
+    {
+    if (qk >= 0)
+      ytk= cbrtr (qk + sqrtr (xl));
+      else
+      ytk= cbrtr (qk - sqrtr (xl));
+    yk= ytk + pk/ytk;
+    }
+    else
+    {
+    l= sqrtr (pk);
+    //yk= cosr (acosr (qk/pk/l)/3)*l*2;
+    yk= cosr (acosr (qk/pk/l)/3 - PI2d)*l*2;
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen
+  uq= yk - ak/3;
+  u= sqrtr (uq);
+
+  b1= (uq + pq - qq/u)/2;
+  b2= (uq + pq + qq/u)/2;
+
+  // Lösungen normale quartische Gleichung
+  uq= uq/4;
+  u= u/2;
+  a4= a/-4;
+  if (uq >= b1)
+    {
+    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a1= a4 - u;
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (uq >= b2)
+    {
+    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a2= a4 + u;
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+  }
+
+void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  real a4, aq, pq, qq, rq, pqq, pk, qk, xl;
   real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
-  aq4= aq/-4;
-  aqq= aq*aq/8;
-  pq= aqq*-3 + bq;
-  qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
+  a4= a/-4;
+  aq= a*a/8;
+  pq= aq*-3 + b;
+  qq= a*(aq + b/-2) + c;
+  rq= a*(a*aq*real (-0.09375) + a*b/16 + c/-4) + d;
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
@@ -2577,7 +2652,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   if (uq*2 >= b1)
     {
     D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a1= aq4 - u;
+    a1= a4 - u;
     x1= a1 - D12;
     x2= a1 + D12;
     if (x1 > 0)
@@ -2588,7 +2663,7 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
   if (uq*2 >= b2)
     {
     D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a2= aq4 + u;
+    a2= a4 + u;
     x3= a2 - D34;
     x4= a2 + D34;
     if (x3 > 0)
@@ -2598,17 +2673,17 @@ void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& ps
     }
   }
 
-void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq4, aqq, pq, qq, rq, pqq, pk, qk, xl;
+  real a4, aq, pq, qq, rq, pqq, pk, qk, xl;
   real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
 
   // Parameter reduzierte quartische Gleichung
-  aq4= aq/-4;
-  aqq= aq*aq/8;
-  pq= aqq*-3 + bq;
-  qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
+  a4= a/-4;
+  aq= a*a/8;
+  pq= aq*-3 + b;
+  qq= a*(aq + b/-2) + c;
+  rq= a*(a*aq*real (-0.09375) + a*b/16 + c/-4) + d;
 
   // Parameter reduzierte kubische Gleichung
   pqq= pq*pq;
@@ -2654,7 +2729,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (uq*2 >= b1)
     {
     D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a1= aq4 - u;
+    a1= a4 - u;
     x1= a1 - D12;
     x2= a1 + D12;
     if (x1 > 0)
@@ -2665,7 +2740,7 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (uq*2 >= b2)
     {
     D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a2= aq4 + u;
+    a2= a4 + u;
     x3= a2 - D34;
     x4= a2 + D34;
     if (x3 > 0)
@@ -2675,96 +2750,14 @@ void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
   }
 
-void quartischpdfw2intr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, ak, ak2, bk, ck, pk, qk, xl;
-  real ytk, yk, l, uq, u, b1, b2, aq4, a1, a2, D12, D34, x1, x2, x3, x4;
-
-  // Parameter reduzierte quartische Gleichung
-  aqq= aq*aq/8;
-  pq= aqq*-3 + bq;
-  qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aqq*aq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
-
-  // Parameter normale kubische Gleichung
-  ak= pq*2;
-  bk= pq*pq - rq*4;
-  ck= -(qq*qq);
-
-  // Parameter der reduzierten kubischen Gleichung
-  ak2= ak*ak;
-  pk= (ak2 + bk*-3)/9;
-  qk= (ak*(ak2 - bk*real (4.5)) + ck*real (13.5))/-27;
-
-  // Lösung der normalen linearen Gleichung
-  xl= qk*qk - pk*pk*pk;
-
-  // reelle Lösung der kubischen Resolvente
-  if (xl >= 0)
-    {
-    if (qk >= 0)
-      ytk= cbrtr (qk + sqrtr (xl));
-      else
-      ytk= cbrtr (qk - sqrtr (xl));
-    yk= ytk + pk/ytk;
-    }
-    else
-    {
-    l= sqrtr (pk);
-    //yk= cosr (acosr (qk/pk/l)/3)*l*2;
-    yk= cosr (acosr (qk/pk/l)/3 - PI2d)*l*2;
-    }
-
-  // Lösungen der beiden quadratischen Gleichungen
-  uq= yk - ak/3;
-  u= sqrtr (uq);
-
-  b1= (uq + pq - qq/u)/2;
-  b2= (uq + pq + qq/u)/2;
-
-  // Lösungen normale quartische Gleichung
-  uq= uq/4;
-  u= u/2;
-  aq4= aq/-4;
-  if (uq >= b1)
-    {
-    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a1= aq4 - u;
-    x1= a1 - D12;
-    x2= a1 + D12;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
-    }
-  if (uq >= b2)
-    {
-    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a2= aq4 + u;
-    x3= a2 - D34;
-    x4= a2 + D34;
-    if (x3 > 0)
-      psp.add (x3);
-    if (x4 > 0)
-      psp.add (x4);
-    }
-  }
-
-void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
-  {
-  real ak6, ak2, bk, ck, pk, qk, xl;
-  real ztk, l, zk, Dq, D, b1, b2, a1h, a2h, a1q, a2q, D12, D34, x1, x2, x3, x4;
-
-  // Parameter normale kubische Gleichung
-  bk= aq*cq - dq*4;
-  ck= bq*dq*4 - aq*aq*dq - cq*cq;
+  real pk, qk, xl;
+  real ytk, yk, l, zk, D, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
 
   // Parameter reduzierte kubische Gleichung malin
-  ak6= bq/6;
-  ak2= bq*bq;
-
-  pk= (ak2 + bk*-3)/9;
-  qk= (bq*(bk*real (4.5) - ak2) + ck*real (13.5))/-27;
+  pk= (a*c*-3 + b*b + d*12)/9;
+  qk= (a*b*c*-9 + a*a*d*27 + b*d*-72 + b*b*b*2 + c*c*27)/54;
 
   // Lösung der normalen linearen Gleichung
   xl= qk*qk - pk*pk*pk;
@@ -2774,41 +2767,41 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     {
     if (qk > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ztk= cbrtr (qk + sqrtr (xl));
-      zk= (ztk + pk/ztk)/2 + ak6;                                     // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      ytk= cbrtr (qk + sqrtr (xl));
+      yk= (ytk + pk/ytk)/2;                                           // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
       else if (qk < 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ztk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      zk= (ztk + pk/ztk)/2 + ak6;                                     // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      ytk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      yk= (ytk + pk/ytk)/2;                                           // 1. Fehlerquelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
       else
-      zk= ak6;
+      yk= 0;
     }
     else
     {
     l= sqrtr (pk);
-    zk= ak6 + cosr (acosr (qk/pk/l)/3 + PI2d)*l;                      // durchgehende Krizzel
-    //zk= ak6 + cosr (acosr (qk/pk/l)/3)*l;                             // zerfetzte Röhren, Außenfetzen
+    yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l;                            // durchgehende Krizzel
+    //yk= cosr (acosr (qk/pk/l)/3)*l;                                   // zerfetzte Röhren, Außenfetzen
     }
 
   // Lösungen der beiden quadratischen Gleichungen
-  Dq= zk*zk - dq;                                                     // Dq wird deutlich kleiner als 0 (nicht wegen Ungenauigkeit)
-  D= sqrtr (Dq);
+  zk= yk + b/6;
+  D= sqrtr (zk*zk - d);
 
   b1= zk + D;
   b2= zk - D;
-  a1h= (cq - aq*b1)/D/4;                                              // 2. Fehlerquelle D = 0
-  a2h= (aq*b2 - cq)/D/4;
+  a1= (a*b1 - c)/D/-4;                                              // 2. Fehlerquelle D = 0
+  a2= (a*b2 - c)/D/4;
 
   // Lösungen normale quartische Gleichung
-  a1q= a1h*a1h;
-  a2q= a2h*a2h;
+  a1q= a1*a1;
+  a2q= a2*a2;
   if (a1q >= b1)
     {
     D12= sqrtr (a1q - b1);
-    x1= a1h - D12;
-    x2= a1h + D12;
+    x1= a1 - D12;
+    x2= a1 + D12;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
@@ -2817,8 +2810,8 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
   if (a2q >= b2)
     {
     D34= sqrtr (a2q - b2);
-    x3= a2h - D34;
-    x4= a2h + D34;
+    x3= a2 - D34;
+    x4= a2 + D34;
     if (x3 > 0)
       psp.add (x3);
     if (x4 > 0)
@@ -2826,17 +2819,17 @@ void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp
     }
   }
 
-void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl;
+  real aq, pq, qq, rq, pqq, pk, qk, a4, ak3, qq8, xl;
   real l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter der reduzierten quartischen Gleichung
-  aqq= aq*aq/8;
-  pq= aqq*-3 + bq;
-  qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
+  aq= a*a/8;
+  pq= aq*-3 + b;
+  qq= a*(aq + b/-2) + c;
+  rq= a*(a*aq*real (-0.09375) + a*b/16 + c/-4) + d;
 
   // Parameter der reduzierten kubischen Gleichung
   pqq= pq*pq;
@@ -2844,7 +2837,7 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   qk= pq*(pqq/1728 + rq/-48) + qq*qq/128;
 
   // Lösungen der reduzierten kubischen Gleichung
-  aq4= aq/-4;
+  a4= a/-4;
   ak3= pq/-6;
   qq8= qq/8;
 
@@ -2870,13 +2863,13 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     bed= ur1*(u2.x*u2.x + u2.y*u2.y);
     if (absr (bed + qq8) < absr (bed - qq8))
       {
-      xr1= aq4 + yr1;
-      xr2= aq4 + yr2;
+      xr1= a4 + yr1;
+      xr2= a4 + yr2;
       }
       else
       {
-      xr1= aq4 - yr1;
-      xr2= aq4 - yr2;
+      xr1= a4 - yr1;
+      xr2= a4 - yr2;
       }
 
     // die reell-positiven Lösungen an den Schnittpunktspeicher übergeben
@@ -2911,17 +2904,17 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     bed= ur1*ur2*ur3;
     if (absr (bed + qq8) < absr (bed - qq8))
       {
-      xr1= aq4 + yr1;
-      xr2= aq4 + yr2;
-      xr3= aq4 + yr3;
-      xr4= aq4 + yr4;
+      xr1= a4 + yr1;
+      xr2= a4 + yr2;
+      xr3= a4 + yr3;
+      xr4= a4 + yr4;
       }
       else
       {
-      xr1= aq4 - yr4;
-      xr2= aq4 - yr3;
-      xr3= aq4 - yr2;
-      xr4= aq4 - yr1;
+      xr1= a4 - yr4;
+      xr2= a4 - yr3;
+      xr3= a4 - yr2;
+      xr4= a4 - yr1;
       }
 
     // positive Lösungen an den Schnittpunktspeicher übergeben
@@ -2936,17 +2929,17 @@ void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     }
   }
 
-void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp)
+void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aqq, pq, qq, rq, pqq, pk, qk, aq4, ak3, qq8, xl;
+  real aq, pq, qq, rq, pqq, pk, qk, a4, ak3, qq8, xl;
   real vxl, uk1, uk2, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter der reduzierten quartischen Gleichung
-  aqq= aq*aq/8;
-  pq= aqq*-3 + bq;
-  qq= aq*(aqq + bq/-2) + cq;
-  rq= aq*(aq*aqq*real (-0.09375) + aq*bq/16 + cq/-4) + dq;
+  aq= a*a/8;
+  pq= aq*-3 + b;
+  qq= a*(aq + b/-2) + c;
+  rq= a*(a*aq*real (-0.09375) + a*b/16 + c/-4) + d;
 
   // Parameter der reduzierten kubischen Gleichung
   pqq= pq*pq;
@@ -2954,7 +2947,7 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
   qk= pq*(pqq/1728 + rq/-48) + qq*qq/128;
 
   // Lösungen der reduzierten kubischen Gleichung
-  aq4= aq/-4;
+  a4= a/-4;
   ak3= pq/-6;
   qq8= qq/8;
 
@@ -2981,13 +2974,13 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     bed= ur1*(u2.x*u2.x + u2.y*u2.y);
     if (absr (bed + qq8) < absr (bed - qq8))
       {
-      xr1= aq4 + yr1;
-      xr2= aq4 + yr2;
+      xr1= a4 + yr1;
+      xr2= a4 + yr2;
       }
       else
       {
-      xr1= aq4 - yr1;
-      xr2= aq4 - yr2;
+      xr1= a4 - yr1;
+      xr2= a4 - yr2;
       }
 
     // die reell-positiven Lösungen an den Schnittpunktspeicher übergeben
@@ -3022,17 +3015,17 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
     bed= ur1*ur2*ur3;
     if (absr (bed + qq8) < absr (bed - qq8))
       {
-      xr1= aq4 + yr1;
-      xr2= aq4 + yr2;
-      xr3= aq4 + yr3;
-      xr4= aq4 + yr4;
+      xr1= a4 + yr1;
+      xr2= a4 + yr2;
+      xr3= a4 + yr3;
+      xr4= a4 + yr4;
       }
       else
       {
-      xr1= aq4 - yr4;
-      xr2= aq4 - yr3;
-      xr3= aq4 - yr2;
-      xr4= aq4 - yr1;
+      xr1= a4 - yr4;
+      xr2= a4 - yr3;
+      xr3= a4 - yr2;
+      xr4= a4 - yr1;
       }
 
     // positive Lösungen an den Schnittpunktspeicher übergeben
@@ -3046,4 +3039,3 @@ void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte&
       psp.add (xr4);
     }
   }
-

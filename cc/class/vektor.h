@@ -389,13 +389,13 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
 // normale quartische Gleichung reell (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
-void quartischdiffpintrc (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischdiffpfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischbuchfintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischpdfw2intr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischmalinintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischlagrangeuintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
-void quartischlagrangecintr (real aq, real bq, real cq, real dq, cschnittpunkte& psp);
+void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischpdfw2intr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp);
 
 // --------------------- ckomplexk Operatoren ---------------------------------------------------------
 
