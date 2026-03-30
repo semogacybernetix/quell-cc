@@ -2598,17 +2598,15 @@ void quartischpdfw2intr (real a, real b, real c, real d, cschnittpunkte& psp)
 
 void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real a4, aq, p, q, r, pq, pk, qk, xl;
+  real a4, p, q, r, pq, pk, qk, xl;
   real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
 
-  // Parameter reduzierte quartische Gleichung
-  a4= a/-4;
-  aq= a*a/8;
-  p= aq*-3 + b;
-  q= a*(aq + b/-2) + c;
-  r= a*(a*aq*real (-0.09375) + a*b/16 + c/-4) + d;
+  // Parameter der reduzierten quartischen Gleichung
+  p= a*a*3/-8 + b;
+  q= a*a*a/8 + a*b/-2 + c;
+  r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
 
-  // Parameter reduzierte kubische Gleichung
+  // Parameter der reduzierten kubischen Gleichung
   pq= p*p;
   pk= pq/9 + r*4/3;
   qk= p*(pq/27 + r*4/-3) + q*q/2;
@@ -2634,7 +2632,7 @@ void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
   zk= yk + p/6;
 
-  uq= zk/2 - p/4;
+  uq= yk/2 - p/6;
   vq= zk*zk - r;
 
   u= sqrtrz (uq);
@@ -2649,6 +2647,7 @@ void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   b2= zk - v;
 
   // Lösungen normale quartische Gleichung
+  a4= a/-4;
   if (uq*2 >= b1)
     {
     D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
@@ -2675,20 +2674,21 @@ void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp)
 
 void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real a4, aq, p, q, r, pq, pk, qk, xl;
+  real a4, p, q, r, pk, qk, xl;
   real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
 
-  // Parameter reduzierte quartische Gleichung
-  a4= a/-4;
-  aq= a*a/8;
-  p= aq*-3 + b;
-  q= a*(aq + b/-2) + c;
-  r= a*(a*aq*real (-0.09375) + a*b/16 + c/-4) + d;
+  // Parameter der reduzierten quartischen Gleichung
+  p= a*a*-3/16 + b/2;
+  q= a*a*a/16 + a*b/-4 + c/2;
+  r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
 
-  // Parameter reduzierte kubische Gleichung
-  pq= p*p;
-  pk= pq/36 + r/3;
-  qk= p*(pq/216 + r/-6) + q*q/16;
+  // Parameter der reduzierten kubischen Gleichung
+  pk= p*p/9 + r/3;
+  qk= p*p*p/27 + p*r/-3 + q*q/4;
+
+  // direkt berechnete Parameter der reduzierten kubischen Gleichung (ungenauer)
+  //pk= (b*b/4 + a*c*-3/4 + d*3)/9;
+  //qk= (b*b*b/8 + a*b*c*9/-16 + (a*a*d + c*c)*27/16 + b*d*9/-2)/27;
 
   // Lösung der normalen linearen Gleichung
   xl= qk*qk - pk*pk*pk;
@@ -2709,23 +2709,24 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
-  zk= yk + p/6;
+  zk= yk + p/3;
 
-  uq= zk/2 - p/4;
+  uq= yk/2 - p/3;
   vq= zk*zk - r;
 
   u= sqrtrz (uq);
   v= sqrtrz (vq);
 
-  // Bedingung -2uv = q
-  bed= u*v*-2;
-  if (absr (bed + q) < absr (bed - q))
+  // Bedingung uv = -q
+  bed= u*v;
+  if (absr (bed - q) < absr (bed + q))
     v= -v;
 
   b1= zk + v;
   b2= zk - v;
 
   // Lösungen normale quartische Gleichung
+  a4= a/-4;
   if (uq*2 >= b1)
     {
     D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
