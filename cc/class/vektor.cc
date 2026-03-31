@@ -150,10 +150,11 @@ void swap (integer& a, integer& b)
 
 integer max (integer a, integer b)
   {
-  if (a >= b)
-    return a;
-    else
-    return b;
+  switch (a >= b)
+    {
+    case false: return b;
+    case true:  return a;
+    }
   }
 
 void savemax (integer& pmax, integer pr)
@@ -246,25 +247,22 @@ _Float80 sqrtr (const _Float80& a)
 _Float32 sqrtrz (const _Float32& a)
   {
   if (a > 0)
-    return sqrtf (a);
-    else
-    return 0;
+    /**/ return sqrtf (a);
+    else return 0;
   }
 
 _Float64 sqrtrz (const _Float64& a)
   {
   if (a > 0)
-    return sqrt (a);
-    else
-    return 0;
+    /**/ return sqrt (a);
+    else return 0;
   }
 
 _Float80 sqrtrz (const _Float80& a)
   {
   if (a > 0)
-    return sqrtl (a);
-    else
-    return 0;
+    /**/ return sqrtl (a);
+    else return 0;
   }
 
 //------------------------------------------------------------------------------------ cbrtr ------------------------------------------------------------------------
@@ -287,25 +285,22 @@ _Float80 cbrtr (const _Float80& a)
 _Float32 qnrtr (const _Float32& a)
   {
   if (a >= 0)
-    return powf (a, _Float32 (0.2));
-    else
-    return -powf (-a, _Float32 (0.2));
+    /**/ return  powf ( a, _Float32 (0.2));
+    else return -powf (-a, _Float32 (0.2));
   }
 
 _Float64 qnrtr (const _Float64& a)
   {
   if (a >= 0)
-    return pow (a, _Float64 (0.2));
-    else
-    return -pow (-a, _Float64 (0.2));
+    /**/ return  pow ( a, _Float64 (0.2));
+    else return -pow (-a, _Float64 (0.2));
   }
 
 _Float80 qnrtr (const _Float80& a)
   {
   if (a >= 0)
-    return powl (a, (_Float80) (0.2));
-    else
-    return -powl (-a, (_Float80) (0.2));
+    /**/ return  powl ( a, (_Float80) (0.2));
+    else return -powl (-a, (_Float80) (0.2));
   }
 
 //------------------------------------------------------------------------------------ expr ------------------------------------------------------------------------
@@ -623,9 +618,8 @@ ckomplexk sqrtkr (const ckomplexk pv)
   x= sqrtr ((l + pv.x)/2);
 
   if (pv.y >= 0)
-    y= sqrtr ((l - pv.x)/2);
-    else
-    y= -sqrtr ((l - pv.x)/2);
+    /**/ y=  sqrtr ((l - pv.x)/2);
+    else y= -sqrtr ((l - pv.x)/2);
   return ckomplexk (x, y);
   }
 
@@ -691,9 +685,8 @@ ckomplexk logr (const ckomplexk pv)                               // Rückgabe e
   {
   ckomplexp lv= polar180 (pv);
   if (lv.b > 0)
-    lv.b= logr (lv.b);
-    else
-    lv.b= real (-1e10);
+    /**/ lv.b= logr (lv.b);
+    else lv.b= real (-1e10);
   return ckomplexk (lv.b, lv.w);
   }
 
@@ -878,12 +871,9 @@ ckomplexp operator * (const real &pf, const ckomplexp &pv)
   if (pf >= 0)
     return ckomplexp (pf*pv.b, pv.w);
     else
-    {
     if (pv.w <= 0)
-      return ckomplexp (-pf*pv.b, pv.w + PI);
-      else
-      return ckomplexp (-pf*pv.b, pv.w - PI);
-    }
+      /**/ return ckomplexp (-pf*pv.b, pv.w + PI);
+      else return ckomplexp (-pf*pv.b, pv.w - PI);
   }
 
 // Skalardivision
@@ -892,12 +882,9 @@ ckomplexp operator / (const ckomplexp &pv, const real &pf)
   if (pf >= 0)
     return ckomplexp (pv.b/pf, pv.w);
     else
-    {
     if (pv.w <= 0)
-      return ckomplexp (-pv.b/pf, pv.w + PI);
-      else
-      return ckomplexp (-pv.b/pf, pv.w - PI);
-    }
+      /**/ return ckomplexp (-pv.b/pf, pv.w + PI);
+      else return ckomplexp (-pv.b/pf, pv.w - PI);
   }
 
 // Skalar durch polarkomplexe Zahl
@@ -907,9 +894,8 @@ ckomplexp operator / (const real &pf, const ckomplexp &pv)
     return ckomplexp (pf/pv.b, -pv.w);
     else
     if (pv.w >= 0)
-      return ckomplexp (-pf/pv.b,  PI - pv.w);
-      else
-      return ckomplexp (-pf/pv.b, -PI - pv.w);
+      /**/ return ckomplexp (-pf/pv.b,  PI - pv.w);
+      else return ckomplexp (-pf/pv.b, -PI - pv.w);
   }
 
 ckomplexp operator * (const ckomplexp &pv1, const ckomplexp &pv2)
@@ -990,18 +976,15 @@ ckomplexp polartan180 (const ckomplexk pv)                        // Winkelrück
   {
   real phi= PI/4;
 
-  if (absr (pv.x) > absr (pv.y))                                // pv.x = 0 geht weiter
+  if (absr (pv.x) > absr (pv.y))                                  // pv.x = 0 geht weiter
     {
     phi= atanr (pv.y/pv.x);
-
     if (pv.x < 0)
       {                                                           // Klammer wegen ambigious else
       if (pv.y >= 0)  // 180° statt -180°
-        phi+= PI;
-        else
-        phi-= PI;
+        /**/ phi+= PI;
+        else phi-= PI;
       }
-
     return ckomplexp (absr (pv), phi);
     }
 
@@ -1010,10 +993,8 @@ ckomplexp polartan180 (const ckomplexk pv)                        // Winkelrück
     phi= atanr (pv.x/pv.y);
 
     if (pv.y >= 0)
-      phi= PI/2 - phi;
-      else
-      phi= PI/-2 - phi;
-
+      /**/ phi= PI/2 - phi;
+      else phi= PI/-2 - phi;
     return ckomplexp (absr (pv), phi);
     }
 
@@ -1682,9 +1663,8 @@ cvektor4 winkelachsefrommatrix (const cbasis3 &pdreh)             // Bei Drehspi
   {
   cvektor4 qwa;
   if (det (pdreh) > 0)
-    qwa= qwafrommatrix (pdreh);
-    else
-    qwa= qwafrommatrix (-pdreh);
+    /**/ qwa= qwafrommatrix (pdreh);
+    else qwa= qwafrommatrix (-pdreh);
   if (absr (qwa.i) <= quantg)
     qwa.i= 0;
   if (absr (qwa.j) <= quantg)
@@ -1866,7 +1846,7 @@ void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomp
     vindex[1]= 2;
     vindex[2]= 0;
     }
-
+    else
   // Die v-Sequenz um einen Schritt vorwärts rotieren falls das u[0], v[2] Paar richtig ist
   if ((absr (u1*v[2] - bed) < absr (u1*v[0] - bed)) && (absr (u1*v[2] - bed) < absr (u1*v[1] - bed)))
     {
@@ -1910,14 +1890,15 @@ void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, 
     y2= z2 - p/(z2*3);
     y3= z3 - p/(z3*3);
     }
-    else if (absr (u2) > 0)
+  else
+  if (absr (u2) > 0)
     {
     cbrtr (u2, z1, z2, z3);
     y1= z1 - p/(z1*3);
     y2= z2 - p/(z2*3);
     y3= z3 - p/(z3*3);
     }
-    else
+  else
     {
     y1= 0;
     y2= 0;
@@ -1938,14 +1919,15 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
     y2= z2 - p*3/z2;
     y3= z3 - p*3/z3;
     }
-    else if (absr (u2) > 0)
+  else
+  if (absr (u2) > 0)
     {
     cbrtr (u2, z1, z2, z3);
     y1= z1 - p*3/z1;
     y2= z2 - p*3/z2;
     y3= z3 - p*3/z3;
     }
-    else
+  else
     {
     y1= 0;
     y2= 0;
@@ -2007,16 +1989,15 @@ void kubischreduziertreellu (real p, real q, real& y)
   // reelle Lösung der kubischen Resolvente
   if (xl >= 0)                                                        // 2 oder 0 Schnittpunkte mit dem Torus
     {
-    if (q >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      yt= cbrtr (q + sqrtr (xl));
-      else
-      yt= cbrtr (q - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-    y= yt + p/yt;                                                 // ytk = 0 ausgeschlossen, da Auslöschung verhindert
+    if (q >= 0)                                                       // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      /**/ yt= cbrtr (q + sqrtr (xl));
+      else yt= cbrtr (q - sqrtr (xl));                                // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+    y= yt + p/yt;                                                     // ytk = 0 ausgeschlossen, da Auslöschung verhindert
     }
     else                                                              // 4 Schnittpunkte mit dem Torus
     {
-    l= sqrtr (p);                                                    // pk > 0 immer, l > 0 immer, wegen Division
-    y= cosr (acosr (q/p/l)/3)*l*2;                                 // 1. Fehlerquelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    l= sqrtr (p);                                                     // pk > 0 immer, l > 0 immer, wegen Division
+    y= cosr (acosr (q/p/l)/3)*l*2;                                    // 1. Fehlerquelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
     }
   }
 
@@ -2033,12 +2014,13 @@ void kubischreduziertreellualt (real p, real q, real& y)
       yt= cbrtr (q2 + sqrtr (xl));
       y= yt - p/yt/3;
       }
-      else if (q2 < 0)
+    else
+    if (q2 < 0)
       {
       yt= cbrtr (q2 - sqrtr (xl));
       y= yt - p/yt/3;
       }
-      else
+    else
       y= 0;
     }
     else
@@ -2065,9 +2047,8 @@ void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp)
   if (xl >= 0)
     {
     if (qk >= 0)
-      ytk= cbrtr (qk + sqrtr (xl));
-      else
-      ytk= cbrtr (qk - sqrtr (xl));
+      /**/ ytk= cbrtr (qk + sqrtr (xl));
+      else ytk= cbrtr (qk - sqrtr (xl));
     zk1= ytk + pk/ytk + ak3;
     if (zk1 > 0)
       psp.add (zk1);
@@ -2549,9 +2530,8 @@ void quartischpdfw2intr (real a, real b, real c, real d, cschnittpunkte& psp)
   if (xl >= 0)
     {
     if (qk >= 0)
-      ytk= cbrtr (qk + sqrtr (xl));
-      else
-      ytk= cbrtr (qk - sqrtr (xl));
+      /**/ ytk= cbrtr (qk + sqrtr (xl));
+      else ytk= cbrtr (qk - sqrtr (xl));
     yk= ytk + pk/ytk;
     }
     else
@@ -2618,9 +2598,8 @@ void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   if (xl >= 0)                                                        // 2 oder 0 Schnittpunkte mit dem Torus
     {
     if (qk >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ytk= cbrtr (qk + sqrtr (xl));
-      else
-      ytk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      /**/ ytk= cbrtr (qk + sqrtr (xl));
+      else ytk= cbrtr (qk - sqrtr (xl));                              // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
     yk= (ytk + pk/ytk)/2;                                             // ytk = 0 ausgeschlossen, da Auslöschung verhindert
     }
     else                                                              // 4 Schnittpunkte mit dem Torus
@@ -2697,12 +2676,11 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   if (xl >= 0)                                                        // 2 oder 0 Schnittpunkte mit dem Torus
     {
     if (qk >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ytk= cbrtr (qk + sqrtr (xl));
-      else
-      ytk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      /**/ ytk= cbrtr (qk + sqrtr (xl));
+      else ytk= cbrtr (qk - sqrtr (xl));                              // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
     yk= ytk + pk/ytk;                                                 // ytk = 0 ausgeschlossen, da Auslöschung verhindert
     }
-    else                                                              // 4 Schnittpunkte mit dem Torus
+  else                                                                // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pk);                                                    // pk > 0 immer, l > 0 immer, wegen Division
     yk= cosr (acosr (qk/pk/l)/3)*l*2;                                 // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
@@ -2771,12 +2749,13 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
       ytk= cbrtr (qk + sqrtr (xl));
       yk= (ytk + pk/ytk)/2;                                           // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
-      else if (qk < 0)
+    else
+    if (qk < 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
       yk= (ytk + pk/ytk)/2;                                           // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
-      else
+    else
       yk= 0;
     }
     else
@@ -2847,9 +2826,8 @@ void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp
   if (xl > 0)                                                     // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
     {                                                             // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
     if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ykr1= cbrtr (qk + sqrtr (xl));
-      else
-      ykr1= cbrtr (qk - sqrtr (xl));
+      /**/ ykr1= cbrtr (qk + sqrtr (xl));
+      else ykr1= cbrtr (qk - sqrtr (xl));
     yk2= ckomplexk (ykr1/-2, ykr1*sqrtr (real (0.75)));
 
     ur1= sqrtr (ak3 + ykr1 - pk/ykr1);                            // Rücktransformation von ykr1

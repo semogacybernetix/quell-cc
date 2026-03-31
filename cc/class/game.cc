@@ -196,7 +196,7 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       printtext (" tks    ");
       if ((framedauer > 0) && (frameticks != 0))
         printinteger (100/frameticks);
-        else
+      else
         printtext ("---");
       printtext (" fps\n");
 //*/
@@ -212,8 +212,8 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
 */
       fflush (stdout);
       }
-      else
-       usleep (10000);
+    else
+      usleep (10000);
 
     keyboard->flush ();
     if (keyboard->getkey (19, 5) == 0)
@@ -344,8 +344,8 @@ void cflugsimu::fliege ()                              // ohne Körper drehen zu
       fflush (stdout);
       ticks= times (&zeit);
       }
-      else
-        usleep (50000);
+    else
+      usleep (50000);
 
     keyboard->flush ();
     if (koerper == 0)
@@ -440,7 +440,8 @@ void cflugsimu::fliegek ()              // mit Körperdrehungen
       fflush (stdout);
       //ticks= times (&zeit);
       }
-      else usleep (50000);
+    else
+      usleep (50000);
     keyboard->flush ();
     if (koerper == 0)
       {
@@ -630,7 +631,7 @@ void cflugsimu::fliegetakt ()
 
       fflush (stdout);
       }
-      else
+    else
         usleep (0);
 
       keyboard->flush ();
@@ -751,8 +752,8 @@ void cflugsimu::fliegespiel (cbasis3& spiegelebenen, ckoerper* bewkugel)
       fflush (stdout);
       ticks= times (&zeit);
       }
-      else
-        usleep (50000);
+    else
+      usleep (50000);
 
     keyboard->flush ();
     if (koerper == 0)
@@ -912,8 +913,8 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
       fflush (stdout);
       ticks= times (&zeit);
       }
-      else
-        usleep (0);
+    else
+      usleep (0);
 
     keyboard->flush ();
     if (koerper == 0)

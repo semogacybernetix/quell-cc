@@ -87,22 +87,22 @@ void cpsdatei::flush ()
   real scalex, scaley;
   if (ratio < psy/psx)
     {
- scalex= psx;
- scaley= psx*ratio;
- transx= 5*mm;
- transy= 5*mm + (psy - scaley)/2;
- }
- else
- {
- scalex= psy/ratio;
- scaley= psy;
- transx= 5*mm + (psx - scalex)/2;
- transy= 5*mm;
- }
+    scalex= psx;
+    scaley= psx*ratio;
+    transx= 5*mm;
+    transy= 5*mm + (psy - scaley)/2;
+    }
+  else
+    {
+    scalex= psy/ratio;
+    scaley= psy;
+    transx= 5*mm + (psx - scalex)/2;
+    transy= 5*mm;
+    }
 
-//  fprintf (datei, "%Lf %Lf translate\n", transx, transy);
+  //fprintf (datei, "%Lf %Lf translate\n", transx, transy);
   transx+= 0; transy+= 0;
-//  fprintf (datei, "%Lf %Lf scale\n", scalex, scaley);
+  //fprintf (datei, "%Lf %Lf scale\n", scalex, scaley);
   fprintf (datei, "/DeviceCMYK setcolorspace\n");
   fprintf (datei, "\n");
   fprintf (datei, "<<\n");
@@ -133,7 +133,7 @@ void cpsdatei::flush ()
     fwrite (zeichen, 2, 1, datei);
     if ((laufb + 3)%24)
       fprintf (datei, " ");
-      else
+    else
       fprintf (datei, "\n");
     }
   fprintf (datei, "\n");
@@ -148,10 +148,10 @@ void cpsdatei::gethexstring (char* ochar, unsigned char iwert)
   unsigned char st2= iwert%16;
   if (st1 < 10)
     ochar[0]= char (0x30 + st1);
-    else
+  else
     ochar[0]= char (0x37 + st1);
   if (st2 < 10)
     ochar[1]= char (0x30 + st2);
-    else
+  else
     ochar[1]= char (0x37 + st2);
   }

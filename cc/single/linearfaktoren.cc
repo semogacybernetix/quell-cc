@@ -1851,7 +1851,7 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
     {                                                             // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
     if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytrk= cbrtr (qk + sqrtr (xl));
-      else
+    else
       ytrk= cbrtr (qk - sqrtr (xl));
     yk2= ckomplexk (ytrk/-2, ytrk*-sqrtr (real (0.75)));
     yk3= ckomplexk (yk2.x, -yk2.y);
@@ -1860,7 +1860,7 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
     yk2= (yk2 - pk/yk2);
     yk3= (yk3 - pk/yk3);
     }
-    else
+  else
     {
     // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
     l= sqrtr (-pk);                                              // -pk nie unter 0 wegen xl
@@ -1893,7 +1893,7 @@ void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk
     b1= z - v;
     b2= z + v;
     }
-    else
+  else
     {
     b1= z + v;
     b2= z - v;

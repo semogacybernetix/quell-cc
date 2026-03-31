@@ -393,6 +393,7 @@
 2026.03.28 Sa   4:50, quartischintrroutinen bearbeitet, 7:00, 8:00 überflüssige quartischintr Routinen entfernt, restliche quartischintr Routinen auf Konsistenz gebracht, 9:22
 2026.03.29 So  10:42, quartischmalinintr p,q verkürzt, alle intr Routinen Parameter aq -> a, ..., 12:56
 2026.03.30 Mo   3:44, quartischbuchfintr pk, qk (a, b, c, d) erstellt, alles umsonst, Genauigkeit verschlechtert, 7:52, pq, qq, rq -> p, q, r, 8:04, 12 Uhr, quartischbuchfintr, quartischdiffpfintr optimiert, 13:50
+2026.03.31 Di   9:42, iftest.cc erweitert, else ausgerückt, switch {case false: case true:} ausprobiert, /**/ als Schlüsselwort für then eingeführt, else wieder eingerückt, 13:27
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

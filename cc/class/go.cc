@@ -97,9 +97,9 @@ bool cgoanalyse::c_setze (unsigned char p_satz)
     }
   for (unsigned char l_feld= 0; l_feld < c_feldanz; l_feld++)
     if (c_feld[l_feld] & gefmask)
-        c_feld[l_feld]= c_leer;
-      else
-        c_feld[l_feld]&= 7;
+      c_feld[l_feld]= c_leer;
+    else
+      c_feld[l_feld]&= 7;
   *c_zamsatz= gegenfarbe;
   return true;
   }
@@ -147,7 +147,7 @@ void cgoanalyse::c_addstellungen ()
         if (c_addfeld ())
           c_addstellungen ();
       }
-      else
+    else
       {
       memcpy (c_feld, afeld, c_satzanz);
       c_setbewertung (1);
@@ -201,9 +201,9 @@ bool cgoanalyse::c_setnextfeld (unsigned long* p_baumpos, unsigned char p_feld)
       c_setanfangsfeld ((unsigned char) (p_feld + 1));
       return true;
       }
-      else
+    else
       return false;
- }
+    }
   if (p_baumpos[c_schwarz])
     {
     c_feld[p_feld]= c_schwarz;
@@ -379,7 +379,7 @@ cgoanalyse::cgoanalyse (char* p_name)
   fret= fread (&token, 1, 1, datei);
   if (token == 'w')
     c_ausgangsstellung[c_feldanz]= c_weiss;
-    else
+  else
     c_ausgangsstellung[c_feldanz]= c_schwarz;
   lookfor (datei, 'k');
   fret= fread (&gr1, 1, 1, datei);

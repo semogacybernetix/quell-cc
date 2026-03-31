@@ -101,20 +101,20 @@ cbasis3 spiegelachsenvonebenenwinkele (const cvektor3 wi)  // über gleichschenk
   real viz= cosr (wi.z);
 
   if (ebx >= quantg)
-    spieg3.x= (viy + viz)/ebx/2;        // dritte Spiegelachse über Skalarprodukte ausrechnen
-    else
+    spieg3.x= (viy + viz)/ebx/2;          // dritte Spiegelachse über Skalarprodukte ausrechnen
+  else
     spieg3.x= 0;                          // wi.x = 180°, wi.y + wi.z = 180° wi.y [0..180°]
 
-   if (eby >= quantg)
+  if (eby >= quantg)
     spieg3.y= (viy - viz)/eby/2;
-    else
+  else
     spieg3.y= 0;                          // wi.x = 0°, wi.y = wi.z, wi.y [0..180°]
 
   spieg3.z= 1 - spieg3.x*spieg3.x - spieg3.y*spieg3.y;  // 2 Schnittpunkte der Kreise, negativer Wert = positive Determinante
 
   if (spieg3.z > -quantg)
     spieg3.z= sqrtr (absr (spieg3.z));
-    else
+  else
     spieg3.z= 0;                          // Dreiecksungleichung ist nicht erfüllt
   return cbasis3 (spieg1, spieg2, spieg3);
   }
@@ -140,19 +140,19 @@ cbasis3 spiegelachsenvonebenenwinkeld (const cvektor3 wi)  // über gleichschenk
 
   if (ebx >= quantg)
     spieg3.x= (viy + viz)/ebx/2;        // dritte Spiegelachse über Skalarprodukte ausrechnen
-    else
+  else
     spieg3.x= 0;                          // wi.x = 180°, wi.y + wi.z = 180° wi.y [0..180°]
 
-   if (eby >= quantg)
+  if (eby >= quantg)
     spieg3.y= (viy - viz)/eby/2;
-    else
+  else
     spieg3.y= 0;                          // wi.x = 0°, wi.y = wi.z, wi.y [0..180°]
 
   spieg3.z= 1 - spieg3.x*spieg3.x - spieg3.y*spieg3.y;  // 2 Schnittpunkte der Kreise, negativer Wert = positive Determinante
 
   if (spieg3.z > -quantg)
     spieg3.z= sqrtr (absr (spieg3.z));
-    else
+  else
     spieg3.z= 0;                          // Dreiecksungleichung ist nicht erfüllt
   return cbasis3 (spieg1, spieg2, spieg3);
   }
@@ -593,9 +593,9 @@ void cbasis3liste::erstellezykel ()
       lpos= elposition (lb);
       if (zykel[lpos] == 0)
         zykel[lpos]= lzykel;
-        else
-        if (zykel[lpos] < 92000000000000000) // Größe von integer - 2 Stellen wegen Hundertergröße 9.2e16
-          zykel[lpos]= zykel[lpos]*100 + lzykel;
+      else
+      if (zykel[lpos] < 92000000000000000) // Größe von integer - 2 Stellen wegen Hundertergröße 9.2e16
+        zykel[lpos]= zykel[lpos]*100 + lzykel;
       lb= lb*b[lauf];
       }
     lzykel++;
@@ -666,9 +666,9 @@ void cbasis3liste::sortierenachordnungalt ()
       lpos= elposition (lb);
       if (zykel[lpos] == 0)
         zykel[lpos]= lzykel;
-        else
-        if (zykel[lpos] < 92000000000000000) // Größe von integer - 2 Stellen wegen Hundertergröße 9.2e16
-          zykel[lpos]= zykel[lpos]*100 + lzykel;
+      else
+      if (zykel[lpos] < 92000000000000000) // Größe von integer - 2 Stellen wegen Hundertergröße 9.2e16
+        zykel[lpos]= zykel[lpos]*100 + lzykel;
       lb= lb*b[lauf];
       }
     lzykel++;
@@ -832,9 +832,9 @@ void cvektor4liste::sortierenachordnung ()
       lpos= elposition (lv);
       if (zykel[lpos] == 0)
         zykel[lpos]= lzykel;
-        else
-        if (zykel[lpos] < 92000000000000000) // Größe von integer - 2 Stellen wegen Hundertergröße 9.2e16
-          zykel[lpos]= zykel[lpos]*100 + lzykel;
+      else
+      if (zykel[lpos] < 92000000000000000) // Größe von integer - 2 Stellen wegen Hundertergröße 9.2e16
+        zykel[lpos]= zykel[lpos]*100 + lzykel;
       lv= lv*v[lauf];
       }
     lzykel++;

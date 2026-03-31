@@ -38,9 +38,9 @@ int main ()
 // g++ -std=c++11 -Wall -Wextra -pedantic-errors -O2 gccerrmsg.cc -o /root/bin/linux/sbin/gccerrmsg
 
 // erwartete Fehlermeldung:
-// error[10]: illegal assignment because of different data types: var1= var2;: var1 is ‘signed char´ but var2 is ‘signed long long int´
+// error[10]: illegal assignment because of different data types: var1= var2;: var1 is "signed char" but var2 is "signed long long int"
 
- // void (var1)  benutzen 
+ // void (var1) benutzen
 /*
 
 Warum beanstandet der Compiler in dem einen Fall und in dem anderen nicht, obwohl beide gleich doll inkompatibel sind?

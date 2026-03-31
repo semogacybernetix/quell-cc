@@ -17,7 +17,7 @@ void addebene (cwelt& pwelt)
   cschachfeld* textur1= new cschachfeld (cvektor3 (255,127,0), cvektor3 (0,255,255), 1, 1);
 
   // Begrenzungen
-  cbegrkreis* begkreis1= new cbegrkreis (-10, 10, -4, 4);
+  //cbegrkreis* begkreis1= new cbegrkreis (-10, 10, -4, 4);
 
   // Körper
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebenew, new cbegrkeine, textur1, kst1, kl1);

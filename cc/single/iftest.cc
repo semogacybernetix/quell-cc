@@ -33,7 +33,7 @@ Programmieren durch Einrückung: Compiler kann das leider nicht verstehen
 if a=b
   then machedas
   else machedies
-  
+
 case a=b
   true: machedas
   false: machedies
@@ -82,7 +82,7 @@ void outerswitchelse ()
     if (true)
       cout << "ifif\n";
     break;
-    
+
     case false:
     cout << "else\n";
     break;
@@ -98,12 +98,13 @@ void innerswitch ()
       case true:
       cout << "ifif\n";
       break;
-      
+
       case false:
       cout << "ifelse\n";
       break;
       }
   }
+
 
 void outerswitch ()
   {
@@ -113,12 +114,14 @@ void outerswitch ()
     switch (true)
       case true:
       cout << "ifif\n";
-    
+      break;
+
     case false:
     cout << "else\n";
     break;
     }
   }
+
 
 void halfifsingle ()
   {
@@ -212,7 +215,7 @@ if (true)
   cout << "Die Bedingung ist nicht erfüllt\n";
 }
 
-  
+
 // bei halfswitchsingle darf kein break stehen, weil sonst der Compiler meckert
 
 void halfswitchsingle ()
@@ -284,8 +287,153 @@ void fullswitchmulti ()
     }
   }
 
+void iftest ()
+  {
+  signed long long a= 6;
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+  switch (a == 5)
+    case true: printf ("a ist fünf\n");                                             // break Statement am Ende verboten (not in a switch or loop)
+  printf ("Das war einzelif\n\n");
+
+  switch (a == 5)
+    case false: printf ("a ist nicht fünf\n");                                             // break Statement am Ende verboten (not in a switch or loop)
+  printf ("Das war einzelif\n\n");
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+  switch (a == 5)
+    case true:
+    {
+    printf ("a ist fünf\n");
+    printf ("a ist immer noch fünf\n");
+    }
+  printf ("Das war Blockif\n\n");
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+  switch (a == 5)
+    case false:
+    {
+    printf ("a ist nicht fünf\n");
+    printf ("a ist immer noch nicht fünf\n");
+    }
+  printf ("Das war Blockif\n\n");
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+  switch (a == 5)
+    {
+    case true:  printf ("a ist fünf\n"); break;
+    case false: printf ("a ist nicht fünf\n"); break;
+    }
+  printf ("Das war ifelse\n\n");
+
+  switch (a == 5)
+    {
+    case false: printf ("a ist nicht fünf\n"); break;
+    case true:  printf ("a ist fünf\n"); break;
+    }
+  printf ("Das war ifelse umgekehrt\n\n");
+
+  if (a == 5)
+    printf ("a ist fünf\n");
+  else
+    printf ("a ist nicht fünf\n");
+  printf ("Das war ifelse\n\n");
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+  switch (a == 5)
+    {
+    case true:
+    printf ("a ist fünf\n");
+    printf ("a ist immer noch fünf\n");
+    break;
+    case false:
+    printf ("a ist nicht fünf\n");
+    printf ("a ist immer noch nicht fünf\n");
+    break;
+    }
+  printf ("Das war Blockifelse\n\n");
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+  switch (a == 5)
+    {
+    case false:
+    printf ("a ist nicht fünf\n");
+    printf ("a ist immer noch nicht fünf\n");
+    break;
+    case true:
+    printf ("a ist fünf\n");
+    printf ("a ist immer noch fünf\n");
+    break;
+    }
+  printf ("Das war Blockifelse\n\n");
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+  switch (a == 5)
+    {
+    case true:
+    printf ("a ist fünf\n");
+    printf ("a ist immer noch fünf\n");
+    break;
+    case false:
+  switch (a == 6)
+    {
+    case true:
+    printf ("a ist sechs\n");
+    printf ("a ist immer noch sechs\n");
+    break;
+    case false:
+  switch (a == 7)
+    {
+    case true:
+    printf ("a ist sieben\n");
+    printf ("a ist immer noch sieben\n");
+    break;
+    }
+    }
+    }
+  printf ("Das war die offene ifelse Kette\n\n");
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+  switch (a == 5)
+    {
+    case true:
+    printf ("a ist fünf\n");
+    printf ("a ist immer noch fünf\n");
+    break;
+    case false:
+    printf ("a ist nicht fünf\n");
+    printf ("a ist immer noch nicht fünf\n");
+  switch (a == 6)
+    {
+    case true:
+    printf ("a ist sechs\n");
+    printf ("a ist immer noch sechs\n");
+    break;
+    case false:
+    printf ("a ist nicht sechs\n");
+    printf ("a ist immer noch nicht sechs\n");
+  switch (a == 7)
+    {
+    case true:
+    printf ("a ist sieben\n");
+    printf ("a ist immer noch sieben\n");
+    break;
+  // default
+    case false:
+    printf ("a ist nicht sieben\n");
+    printf ("a ist immer noch nicht sieben\n");
+    break;
+    }
+    }
+    }
+  printf ("Das war die abgeschlossene ifelse Kette\n\n");
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+  printf ("Ende von iftest\n");
+  }
+
 int main ()
   {
-  fullswitchsingle2 ();
+  iftest ();
   return 0;
   }
