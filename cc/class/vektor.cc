@@ -2578,18 +2578,21 @@ void quartischpdfw2intr (real a, real b, real c, real d, cschnittpunkte& psp)
 
 void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real a4, p, q, r, pq, pk, qk, xl;
+  real a4, p, q, r, pk, qk, xl;
   real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
 
-  // Parameter der reduzierten quartischen Gleichung
+  // Parameter der reduzierten quartischen Gleichung diffp
   p= a*a*3/-8 + b;
   q= a*a*a/8 + a*b/-2 + c;
   r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
 
-  // Parameter der reduzierten kubischen Gleichung
-  pq= p*p;
-  pk= pq/9 + r*4/3;
-  qk= p*(pq/27 + r*4/-3) + q*q/2;
+  // Parameter der reduzierten kubischen Gleichung diffp
+  pk= p*p/9 + r*4/3;
+  qk= p*p*p/27 + p*r*4/-3 + q*q/2;
+
+  // Parameter der reduzierten kubischen Gleichung direkt diffpf (ungenauer)
+  //pk= a*c/-3 + b*b/9 + d*4/3;
+  //qk= a*b*c/-6 + a*a*d/2 + b*d*4/-3 + b*b*b/27 + c*c/2;
 
   // Lösung der normalen linearen Gleichung
   xl= qk*qk - pk*pk*pk;
@@ -2734,35 +2737,35 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
   real p, q, r, pk, qk, xl;
   real ytk, yk, l, zk, D, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
 
-  // Parameter der reduzierten quartischen Gleichung malin
-  p= a*a*-3/8 + b;
-  q= a*a*a/8 + a*b/-2 + c;
-  r= a*a*a*a*3/-64 + a*a*b/4 - a*c + d*4;
+  // Parameter der reduzierten quartischen Gleichung malin (buchf)
+  p= a*a/-16 + b/6;
+  q= a*a*a/32 + a*b/-8 + c/4;
+  r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
 
-  // Parameter der reduzierten kubischen Gleichung malin
-  pk= p*p/9 + r/3;
-  qk= p*p*p/27 + p*r/-3 + q*q/2;
+  // Parameter der reduzierten kubischen Gleichung malin (buchf)
+  pk= p*p + r/3;
+  qk= p*p*p - p*r + q*q;
 
-  // Parameter der reduzierten kubischen Gleichung direkt malin (ungenauer)
-  //pk= a*c/-3 + b*b/9 + d*4/3;
-  //qk= a*b*c/-6 + a*a*d/2 + b*d*4/-3 + b*b*b/27 + c*c/2;
+  // Parameter der reduzierten kubischen Gleichung direkt buchf (ungenauer)
+  //pk= a*c/-12 + b*b/36 + d/3;
+  //qk= a*b*c/-48 + a*a*d/16 + b*d/-6 + b*b*b/216 + c*c/16;
 
   // Lösung der normalen linearen Gleichung
   xl= qk*qk - pk*pk*pk;
 
-  // reelle Lösung der kubischen Resolvente
+  // reelle Lösung der kubischen Resolvente buchf
   if (xl >= 0)
     {
     if (qk > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytk= cbrtr (qk + sqrtr (xl));
-      yk= (ytk + pk/ytk)/2;                                           // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      yk= (ytk + pk/ytk);                                           // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
     else
     if (qk < 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      yk= (ytk + pk/ytk)/2;                                           // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      yk= (ytk + pk/ytk);                                           // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
     else
       yk= 0;
@@ -2770,8 +2773,8 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
     else
     {
     l= sqrtr (pk);
-    yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l;                            // durchgehende Krizzel
-    //yk= cosr (acosr (qk/pk/l)/3)*l;                                   // zerfetzte Röhren, Außenfetzen
+    yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l*2;                            // durchgehende Krizzel
+    //yk= cosr (acosr (qk/pk/l)/3)*l*2;                                   // zerfetzte Röhren, Außenfetzen
     }
 
   // Lösungen der beiden quadratischen Gleichungen
