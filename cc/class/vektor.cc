@@ -2656,18 +2656,18 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   real a4, p, q, r, pk, qk, xl;
   real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
 
-  // Parameter der reduzierten quartischen Gleichung
-  p= a*a*-3/16 + b/2;
+  // Parameter der reduzierten quartischen Gleichung buchf
+  p= a*a/-16 + b/6;
   q= a*a*a/16 + a*b/-4 + c/2;
   r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
 
-  // Parameter der reduzierten kubischen Gleichung
-  pk= p*p/9 + r/3;
-  qk= p*p*p/27 + p*r/-3 + q*q/4;
+  // Parameter der reduzierten kubischen Gleichung buchf
+  pk= p*p + r/3;
+  qk= p*p*p - p*r + q*q/4;
 
-  // direkt berechnete Parameter der reduzierten kubischen Gleichung (ungenauer)
-  //pk= (b*b/4 + a*c*-3/4 + d*3)/9;
-  //qk= (b*b*b/8 + a*b*c*9/-16 + (a*a*d + c*c)*27/16 + b*d*9/-2)/27;
+  // Parameter der reduzierten kubischen Gleichung direkt buchf (ungenauer)
+  //pk= a*c/-12 + b*b/36 + d/3;
+  //qk= a*b*c/-48 + a*a*d/16 + b*d/-6 + b*b*b/216 + c*c/16;
 
   // Lösung der normalen linearen Gleichung
   xl= qk*qk - pk*pk*pk;
@@ -2687,9 +2687,9 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
-  zk= yk + p/3;
+  zk= yk + p;
 
-  uq= yk/2 - p/3;
+  uq= yk/2 - p;
   vq= zk*zk - r;
 
   u= sqrtrz (uq);
@@ -2731,12 +2731,21 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
 
 void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real pk, qk, xl;
+  real p, q, r, pk, qk, xl;
   real ytk, yk, l, zk, D, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
 
-  // Parameter reduzierte kubische Gleichung malin
-  pk= (a*c*-3 + b*b + d*12)/9;
-  qk= (a*b*c*-9 + a*a*d*27 + b*d*-72 + b*b*b*2 + c*c*27)/54;
+  // Parameter der reduzierten quartischen Gleichung malin
+  p= a*a*-3/8 + b;
+  q= a*a*a/8 + a*b/-2 + c;
+  r= a*a*a*a*3/-64 + a*a*b/4 - a*c + d*4;
+
+  // Parameter der reduzierten kubischen Gleichung malin
+  pk= p*p/9 + r/3;
+  qk= p*p*p/27 + p*r/-3 + q*q/2;
+
+  // Parameter der reduzierten kubischen Gleichung direkt malin (ungenauer)
+  //pk= a*c/-3 + b*b/9 + d*4/3;
+  //qk= a*b*c/-6 + a*a*d/2 + b*d*4/-3 + b*b*b/27 + c*c/2;
 
   // Lösung der normalen linearen Gleichung
   xl= qk*qk - pk*pk*pk;

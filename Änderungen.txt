@@ -395,8 +395,11 @@
 2026.03.30 Mo   3:44, quartischbuchfintr pk, qk (a, b, c, d) erstellt, alles umsonst, Genauigkeit verschlechtert, 7:52, pq, qq, rq -> p, q, r, 8:04, 12 Uhr, quartischbuchfintr, quartischdiffpfintr optimiert, 13:50
 2026.03.31 Di   9:42, iftest.cc erweitert, else ausgerückt, switch {case false: case true:} ausprobiert, /**/ als Schlüsselwort für then eingeführt, else wieder eingerückt, 13:27
 
+2026.04.02 Do  18:08, quartischmalinintr: p, q, r eingeführt, Ausdünnung weg, nur noch feine Linien und Überklappung, Parameter malinintr, buchfintr homogenisiert, 20:18
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+dünner Torus xray Rechtecke beseitigen
 quartischdiffpintr ohne quant, Mauszeiger mit Pixeldaten, Polynom xl (aq, bq, cq, dq) vereinfachen
 Auswahl reeller kubischer Resolvente und sqrtrz beeinflussen sich
 u,v maximieren, kubische Resolvente komplex berechnen, Auswahl reelle Resolvente bei casus irreduzibiles, diffpuintrc ohne quant, Lösungen von allen Parametern abhängig machen anstatt dass einer fehlt
