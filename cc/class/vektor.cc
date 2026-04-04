@@ -281,7 +281,7 @@ _Float80 cbrtr (const _Float80& a)
   return cbrtl (a);
   }
 
-//------------------------------------------------------------------------------------ quinr ------------------------------------------------------------------------
+//------------------------------------------------------------------------------------ qnrtr ------------------------------------------------------------------------
 _Float32 qnrtr (const _Float32& a)
   {
   if (a >= 0)
@@ -603,13 +603,14 @@ real operator % (const cvektor2 &pv1, const cvektor2 &pv2)
 
 //--------------------- ckomplexk Funktionen für kartesischkomplexe Zahlen -----------------------------------------------------------------
 
-// komplexer Kehrwert
+// -------------------------------------------------- komplexer Kehrwert
 ckomplexk kw (const ckomplexk pv)
   {
   real z= pv%pv;
   return ckomplexk (pv.x, -pv.y)/z;
   }
 
+// -------------------------------------------------- Quadratwurzel
 ckomplexk sqrtkr (const ckomplexk pv)
   {
   real l, x, y;
@@ -631,6 +632,7 @@ ckomplexk sqrtr (const ckomplexk pv)
   return kartes (vpol);
   }
 
+// -------------------------------------------------- Kubikwurzel
 ckomplexk cbrtr (const ckomplexk pv)
   {
   ckomplexp vpol= polar180 (pv);
@@ -650,14 +652,25 @@ void cbrtr (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   x3= kartes (ckomplexp (vpol.b, vpol.w - PI2d));
   }
 
+// -------------------------------------------------- vierte Wurzel
+ckomplexk qartr (const ckomplexk pv)
+  {
+  ckomplexp vpol= polar180 (pv);
+  vpol.b= powr (vpol.b, real (0.25));
+  vpol.w= vpol.w/4;
+  return kartes (vpol);
+  }
+
+// -------------------------------------------------- fünfte Wurzel
 ckomplexk qnrtr (const ckomplexk pv)
   {
   ckomplexp vpol= polar180 (pv);
-  vpol.b= cbrtr (vpol.b);
+  vpol.b= powr (vpol.b, real (0.2));
   vpol.w= vpol.w/5;
   return kartes (vpol);
   }
 
+// -------------------------------------------------- n-te Potenz
 ckomplexk pown (const ckomplexk a, const integer n)
   {
   ckomplexk ret= 1;
@@ -667,6 +680,7 @@ ckomplexk pown (const ckomplexk a, const integer n)
   return ret;
   }
 
+// -------------------------------------------------- z hoch z
 ckomplexk powr (const ckomplexk pv1, const ckomplexk pv2)
   {
   ckomplexk ret, retx, rety;
@@ -676,6 +690,7 @@ ckomplexk powr (const ckomplexk pv1, const ckomplexk pv2)
   return retx*rety;
   }
 
+// -------------------------------------------------- Exponentialfunktion
 ckomplexk expr (const ckomplexk pv)
   {
   return kartes (ckomplexp (expr (pv.x), (pv.y)));                // keine Einschränkung Bijektivitätsbereich
@@ -775,8 +790,8 @@ ckomplexk operator ^ (const ckomplexk &pv, const integer &pn)
     ret= ret*pv;
 
   if (pn >= 0)
-    return ret;
-  return kw (ret);
+    /**/ return ret;
+    else return kw (ret);
   }
 
 // kartesischkomplexe Potenz von reeller Zahl

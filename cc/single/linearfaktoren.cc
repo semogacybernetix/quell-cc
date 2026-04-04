@@ -2446,12 +2446,14 @@ void polartest ()
 void sqrttest ()
   {
   ckomplexk ein;
-  ckomplexk w1, w2, q1, q2;
+  ckomplexk w1, w2, w4, w5, q1, q2;
 
   vektor2eingabek (ein);
 
   w1= sqrtr (ein);
   w2= sqrtkr (ein);
+  w4= qartr (ein);
+  w5= qnrtr (ein);
 
   q1= w1*w1;
   q2= w2*w2;
@@ -2465,6 +2467,14 @@ void sqrttest ()
   printvektor2komplex ("q1            ", q1, 1);
   printvektor2komplex ("q2            ", q2, 1);
   printtext ("\n");
+  printvektor2komplex ("w4            ", w4, 1);
+  printvektor2komplex ("w4^4          ", w4^integer (4), 1);
+  printvektor2komplex ("w4i^4         ", (w4*ik)^integer (4), 1);
+  printvektor2komplex ("-w4^4         ", (-w4)^integer (4), 1);
+  printvektor2komplex ("-w4i^4        ", (-w4*ik)^integer (4), 1);
+  printtext ("\n");
+  printvektor2komplex ("w5            ", w5, 1);
+  printvektor2komplex ("w5^5          ", w5^integer (5), 1);
   }
 
 integer entscheidungseingabe ()

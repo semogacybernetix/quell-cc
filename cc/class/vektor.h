@@ -314,7 +314,8 @@ ckomplexk sqrtr  (const ckomplexk pv);                                          
 ckomplexk sqrtkr (const ckomplexk pv);                                               // Quadratwurzel Hauptwert √ ohne Zwischenumwandlung in Polarkoordinaten Sprung bei 180/-180°
 ckomplexk cbrtr  (const ckomplexk pv);                                               // Kubikwurzel ∛ Sprung bei +-180°
 void      cbrtr  (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3);  // Kubikwurzel komplett  ∛
-ckomplexk qnrtr  (const ckomplexk pv);                                               // Kubikwurzel ∛ Sprung bei +-180°
+ckomplexk qartr  (const ckomplexk pv);                                               // vierte Wurzel Sprung bei +-180°
+ckomplexk qnrtr  (const ckomplexk pv);                                               // fünfte Wurzel ∛ Sprung bei +-180°
 
 ckomplexk expr   (const ckomplexk pv);
 ckomplexk logr   (const ckomplexk pv);
