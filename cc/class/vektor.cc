@@ -2438,27 +2438,21 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 
 void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
-  ckomplexk z1, z2, z3, z, D, b1, b2, a1, a2, D12, D34;
+  ckomplexk z1, z2, z3, z, D, b1, b2, a1, a2;
 
   kubischeresolventemalin (a, b, c, d, z1, z2, z3);
 
-  // Parameter der beiden quadratischen Gleichungen
   z= z3;
   D= sqrtr (z*z - d);
 
   b1= z + D;
   b2= z - D;
-  a1= (a*b1 - c)/D/-4;
-  a2= (a*b2 - c)/D/4;
 
-  // Lösungen der beiden quadratischen Gleichungen
-  D12= sqrtr (a1*a1 - b1);
-  D34= sqrtr (a2*a2 - b2);
+  a1= (a*b1 - c)/D/2;
+  a2= (a*b2 - c)/D/-2;
 
-  x1= a1 - D12;
-  x2= a1 + D12;
-  x3= a2 - D34;
-  x4= a2 + D34;
+  quadratisch (a1, b1, x1, x2);
+  quadratisch (a2, b2, x3, x4);
   }
 
 //-------------------- quartisch integriert (quartischintr) --------------------------------------------------------------------------------------------------------------------------------------------------------------------------

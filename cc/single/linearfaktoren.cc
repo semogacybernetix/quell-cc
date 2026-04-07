@@ -2139,14 +2139,17 @@ void quartischloesungen ()
   printvektor2komplex ("x4          ", x4, 0);
   printtext ("\n");
 
+  printtext ("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+
   psp.anz= 0;
   quartischdiffpintrc (a.x, b.x, c.x, d.x, psp);
 
-  printtext ("-------------------------------- quartischdiffpuintrc Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", x1, 0);
-  printvektor2komplex ("x2          ", x2, 0);
-  printvektor2komplex ("x3          ", x3, 0);
-  printvektor2komplex ("x4          ", x4, 0);
+  printtext ("-------------------------------- quartischdiffpintrc Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("anz         ", real (psp.anz), 0);
+  printvektor2komplex ("x1          ", psp.abstand[0], 0);
+  printvektor2komplex ("x2          ", psp.abstand[1], 0);
+  printvektor2komplex ("x3          ", psp.abstand[2], 0);
+  printvektor2komplex ("x4          ", psp.abstand[3], 0);
   printtext ("\n");
 
   psp.anz= 0;

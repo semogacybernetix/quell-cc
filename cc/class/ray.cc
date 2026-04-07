@@ -75,8 +75,6 @@ void cskugel::init (const cvektor3 &pov)
 void cskugel::berechne (const cvektor3 &prv, cschnittpunkte &psp)
   {
   real a= prv%prv;
-  if (a == 0)
-    printtext ("a = 0");
   real b= prv%ov;
 
   real d= b*b - a*c;
@@ -234,24 +232,7 @@ void csebzyl::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   C= ovrv*ov.z + ovxy*rv.z;
   D= ovxy*ov.z - 1;
 
-  if (A != 0)
-    {
-    kubischintr (B/A, C/A, D/A, psp);
-    return;
-    }
-
-  printtext ("A:");
-  printreal (A);
-  printtext ("\n");
-  printtext ("B:");
-  printreal (B);
-  printtext ("\n");
-  printtext ("C:");
-  printreal (C);
-  printtext ("\n");
-  printtext ("D:");
-  printreal (D);
-  printtext ("\n");
+  kubischintr (B/A, C/A, D/A, psp);
   }
 
 // ---------------------------- Torus -----------------------------------------------
@@ -412,11 +393,8 @@ cvektor2 cparakugelf::berechne (const cvektor3 &pv)
 
 cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
   {
-
-//*
   real z= sinr (atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));       // Bogenmethode, sauberer schwarzer Kreis im Gegenpol, stabiler Gegenpol
   real k= sqrtr (z + 1);
-//*/
 
 /*
   real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Krizzelkreis
@@ -508,7 +486,7 @@ cvektor2 cparatorusu::berechne (const cvektor3 &pv)
   {
   // Längengrad bestimmen
   real kx= atan2r (pv.y, pv.x);                            // Längengrad bestimmen
-  //real kx= atanr (pv.y/pv.x);                               // Periodizität [0, pi]
+  //real kx= atanr (pv.y/pv.x);                              // Periodizität [0, pi]
   if (kx < 0)                                              // Periode verschieben, atan2r von [-pi, pi] -> [0, 2pi] umrechnen
     kx= kx + PI2;                                          // bei negativem Wert eine volle Periode addieren
 /*
