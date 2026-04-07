@@ -2486,8 +2486,8 @@ void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp)
 
   // Lösung der reduzierten kubischen Gleichung
   cbrtr (qk + sqrtr (ckomplexk (xl)), ytk1, ytk2, ytk3);
-  //yk= (ytk1 - pk/ytk1)/4;                                         // Röhrenstern
-  //yk= (ytk2 - pk/ytk2)/4;                                         // Mittenkrizzel
+  //yk= (ytk1 - pk/ytk1)/4;                                             // Röhrenstern
+  //yk= (ytk2 - pk/ytk2)/4;                                             // Mittenkrizzel
   yk= (ytk3 + pk/ytk3)/4;                                             // Ober- Unterlinie
   zk= yk*2 + p/6;
 
@@ -2706,8 +2706,10 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
   zk= yk + p;
+  //zk= yk + b/6 - a*a/16;
 
   uq= yk/2 - p;
+  //uq= (zk - p*3)/2;
   vq= zk*zk - r;
 
   u= sqrtrz (uq);
@@ -2774,13 +2776,13 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
     if (qk > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytk= cbrtr (qk + sqrtr (xl));
-      yk= (ytk + pk/ytk);                                           // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      yk= (ytk + pk/ytk);                                             // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
     else
     if (qk < 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ytk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      yk= (ytk + pk/ytk);                                           // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      yk= (ytk + pk/ytk);                                             // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
       }
     else
       yk= 0;
@@ -2788,17 +2790,18 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
     else
     {
     l= sqrtr (pk);
-    yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l*2;                            // durchgehende Krizzel
-    //yk= cosr (acosr (qk/pk/l)/3)*l*2;                                   // zerfetzte Röhren, Außenfetzen
+    yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l*2;                          // durchgehende Krizzel
+    //yk= cosr (acosr (qk/pk/l)/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
     }
 
   // Lösungen der beiden quadratischen Gleichungen
   zk= yk + b/6;
+
   D= sqrtr (zk*zk - d);
 
   b1= zk + D;
   b2= zk - D;
-  a1= (a*b1 - c)/D/-4;                                              // 2. Fehleruelle D = 0
+  a1= (a*b1 - c)/D/-4;                                                // 2. Fehleruelle D = 0
   a2= (a*b2 - c)/D/4;
 
   // Lösungen normale quartische Gleichung
@@ -2850,15 +2853,15 @@ void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp
 
   // Lösungen der kubischen Resolvente
   xl= pk*pk*pk + qk*qk;
-  if (xl > 0)                                                     // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
-    {                                                             // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
-    if (qk >= 0)                                                  // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+  if (xl > 0)                                                         // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
+    {                                                                 // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
+    if (qk >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       /**/ ykr1= cbrtr (qk + sqrtr (xl));
       else ykr1= cbrtr (qk - sqrtr (xl));
     yk2= ckomplexk (ykr1/-2, ykr1*sqrtr (real (0.75)));
 
-    ur1= sqrtr (ak3 + ykr1 - pk/ykr1);                            // Rücktransformation von ykr1
-    u2= sqrtr (ak3 + yk2 - pk/yk2);                               // Rücktransformation von yk2
+    ur1= sqrtr (ak3 + ykr1 - pk/ykr1);                                // Rücktransformation von ykr1
+    u2= sqrtr (ak3 + yk2 - pk/yk2);                                   // Rücktransformation von yk2
 
     // Lösungen der reduzierten quartischen Gleichung
     yr1=  ur1 + u2.x*2;
@@ -2887,13 +2890,13 @@ void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp
     else
     {
     // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
-    l= sqrtr (-pk);                                               // -pk nie unter 0 wegen xl
+    l= sqrtr (-pk);                                                   // -pk nie unter 0 wegen xl
     phi3= acosr (qk/(pk*-l))/3;
-    ykr1= l*cosr (phi3)*2;                                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
+    ykr1= l*cosr (phi3)*2;                                            // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
     ykr2= l*cosr (phi3 + PI2d)*2;
     ykr3= l*cosr (phi3 - PI2d)*2;
 
-    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0)) // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
+    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0))     // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
     ur1= sqrtr (ak3 + ykr2);
     ur2= sqrtr (ak3 + ykr3);
@@ -2959,10 +2962,10 @@ void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp
 
   // Lösungen der kubischen Resolvente
   xl= pk*pk*pk + qk*qk;
-  if (xl > 0)                                                     // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
+  if (xl > 0)                                                         // xl= 0: drei reelle Lösungen der kubischen Resolvente davon eine doppelt, 4 reelle Lösungen der quartischen Gleichung davon eine doppelt
     {
     // eine reelle, 2 komplexe Lösungen der kubischen Resolvente, 2 reelle Lösungen der quartischen Gleichung
-    vxl= sqrtr (xl);                                              // xl immer > 0
+    vxl= sqrtr (xl);                                                  // xl immer > 0
     uk1= cbrtr (qk - vxl);
     uk2= cbrtr (qk + vxl);
     ykr1= uk1 + uk2;
@@ -2998,13 +3001,13 @@ void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp
     else
     {
     // 3 reelle Lösungen der kubischen Resolvente, 4 reelle Lösungen der quartischen Gleichung
-    l= sqrtr (-pk);                                               // -pk nie unter 0 wegen xl
+    l= sqrtr (-pk);                                                   // -pk nie unter 0 wegen xl
     phi3= acosr (qk/(pk*-l))/3;
-    ykr1= l*cosr (phi3)*2;                                        // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
+    ykr1= l*cosr (phi3)*2;                                            // Bereichsüberschreitung acos abfangen lohnt nicht, nur ein Wert 1.000000119 (Float32) sehr selten
     ykr2= l*cosr (phi3 + PI2d)*2;
     ykr3= l*cosr (phi3 - PI2d)*2;
 
-    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0)) // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
+    if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0))     // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
     ur1= sqrtr (ak3 + ykr2);
     ur2= sqrtr (ak3 + ykr3);
