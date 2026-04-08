@@ -1953,7 +1953,7 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
 void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, ckomplexk& q)
   {
   p= a*a/-3 + b;
-  q= a*(a*a/real (4.5) - b)/3 + c;
+  q= a*a*a/real (13.5) + a*b/-3 + c;
   }
 
 void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)

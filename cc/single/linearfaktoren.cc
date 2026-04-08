@@ -174,7 +174,7 @@ void quadratischeingabezw ()
 
 void kubischparameter ()
   {
-  ckomplexk a, b, c, p, q, dp, y1, y2, y3;
+  ckomplexk a, b, c, p, q, dp, dpq, y1, y2, y3, x1, x2, x3, dpx, D;
   real x;
 
   vektor2eingabek (a);
@@ -182,9 +182,15 @@ void kubischparameter ()
   vektor2eingabek (c);
 
   kubischreduziertk (a, b, c, p, q);
-  dp= sqrtr (q*q/4 + p*p*p/27)*sqrtr (ckomplexk (-108));
+
+  //dp= sqrtr (q*q/4 + p*p*p/27)*sqrtr (ckomplexk (-108));
+  dpq= q*q*-27 + p*p*p*-4;
+  D= q*q/4 + p*p*p/27;
+
   printtext ("---------------------- Differenzenprodukt der Lösungen -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("dp          ", dp, 0);
+  printvektor2komplex ("dpq          ", dpq, 0);
+  printvektor2komplex ("dp           ", -sqrtr (dpq), 0);
+  printvektor2komplex ("D            ", D, 0);
   printtext ("\n");
 
   kubischreduziertcardano (p, q, y1, y2, y3);
@@ -226,6 +232,16 @@ void kubischparameter ()
   printtext ("---------------------- reellu -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printtext ("x:");
   printreal (x);
+  printtext ("\n");
+
+  x1= (y1 - a)/3;
+  x2= (y2 - a)/3;
+  x3= (y3 - a)/3;
+
+  dpx= (x1-x2)*(x2-x3)*(x1-x3);
+
+  printtext ("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("dpx         ", dpx, 0);
   printtext ("\n");
   printtext ("\n");
   }
