@@ -400,6 +400,7 @@
 2026.04.04 Sa  11:51, qartr (4. Wurzel) implementiert, qnrtr (5. Wurzel) korrigiert, linearfaktoren Wurzeltest erweitert, 12:56
 
 2026.04.07 Di  15:51, quartischbuchfintr, quartischmalinintr zk-Unterschied abgeglichen, 16:52, 22:37, quartischmalinintr verkürzt, ray.cc Parametrisierungen geliftet, 23:45
+2026.04.08 Mi   9:09, kubischintr Polynome vereinfacht, Kosmetik Formeln, 11:04
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

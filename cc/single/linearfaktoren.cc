@@ -6,8 +6,12 @@
 
 void quadratischreduziert (ckomplexk p, ckomplexk& y1, ckomplexk& y2)
   {
-  y1=  sqrtr (-p);
-  y2= -sqrtr (-p);
+  ckomplexk d;
+
+  d= sqrtr (-p);
+
+  y1=  d;
+  y2= -d;
   }
 
 void quadratischreduziertk (ckomplexk a, ckomplexk b, ckomplexk& p)
@@ -17,14 +21,14 @@ void quadratischreduziertk (ckomplexk a, ckomplexk b, ckomplexk& p)
 
 void quadratischnormal (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   {
-  ckomplexk ah, p, y1, y2;
+  ckomplexk a2, p, y1, y2;
 
   quadratischreduziertk (a, b, p);
   quadratischreduziert (p, y1, y2);
 
-  ah= a/2;
-  x1= y1 - ah;
-  x2= y2 - ah;
+  a2= a/-2;
+  x1= y1 + a2;
+  x2= y2 + a2;
   }
 
 void quadratisch2 (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
@@ -298,8 +302,6 @@ void kubischloesungen ()
   printreal (y - a.x/3);
   printtext ("\n");
   printtext ("\n");
-
-
   }
 
 void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)

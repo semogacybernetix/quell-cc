@@ -2016,106 +2016,48 @@ void kubischreduziertreellu (real p, real q, real& y)
     }
   }
 
-void kubischreduziertreellualt (real p, real q, real& y)
+void kubischintr (real a, real b, real c, cschnittpunkte& psp)
   {
-  real xl, q2, yt, l;
+  real a3, p, q, xl, yt, z1, z2, z3, l, l2, w;
 
-  xl= q*q/4 + p*p*p/27;
-  if (xl >= 0)
-    {
-    q2= q/-2;
-    if (q2 > 0)
-      {
-      yt= cbrtr (q2 + sqrtr (xl));
-      y= yt - p/yt/3;
-      }
-    else
-    if (q2 < 0)
-      {
-      yt= cbrtr (q2 - sqrtr (xl));
-      y= yt - p/yt/3;
-      }
-    else
-      y= 0;
-    }
-    else
-    {
-    l= sqrtr (p/real (-0.75));
-    y= cosr (acosr (q*3/p/l)/3)*l;
-    }
-  }
-
-void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp)
-  {
-  real ak3, ak2, pk, qk, xl, ytk, zk1, zk2, zk3, l, l2, w;
+  a3= a/-3;
 
   // Parameter der reduzierten kubischen Gleichung
-  ak3= ak/-3;
-  ak2= ak*ak;
+  p= a*a/9 + b/-3;
+  q= a*a*a/-27 + a*b/6 + c/-2;
 
-  pk= (ak2 + bk*-3)/9;
-  qk= (ak*(ak2 - bk*real (4.5)) + ck*real (13.5))/-27;
-
-  xl= qk*qk - pk*pk*pk;
+  xl= q*q - p*p*p;
 
   // reelle Lösung der kubischen Resolvente
   if (xl >= 0)
     {
-    if (qk >= 0)
-      /**/ ytk= cbrtr (qk + sqrtr (xl));
-      else ytk= cbrtr (qk - sqrtr (xl));
-    zk1= ytk + pk/ytk + ak3;
-    if (zk1 > 0)
-      psp.add (zk1);
+    if (q >= 0)
+      /**/ yt= cbrtr (q + sqrtr (xl));
+      else yt= cbrtr (q - sqrtr (xl));
+    z1= yt + p/yt + a3;
+    if (z1 > 0)
+      psp.add (z1);
     }
     else
     {
-    l= sqrtr (pk);
+    l= sqrtr (p);
     l2= l*2;
-    w= acosr (qk/pk/l)/3;
+    w= acosr (q/p/l)/3;
 
-    zk1= ak3 + l2*cosr (w);
-    zk2= ak3 + l2*cosr (w + PI2d);
-    zk3= ak3 + l2*cosr (w - PI2d);
+    z1= a3 + l2*cosr (w);
+    z2= a3 + l2*cosr (w + PI2d);
+    z3= a3 + l2*cosr (w - PI2d);
 
-    if (zk1 > 0)
-      psp.add (zk1);
-    if (zk2 > 0)
-      psp.add (zk2);
-    if (zk3 > 0)
-      psp.add (zk3);
+    if (z1 > 0)
+      psp.add (z1);
+    if (z2 > 0)
+      psp.add (z2);
+    if (z3 > 0)
+      psp.add (z3);
     }
-
-  //return;
-  if (finiter (zk1)) return;
-
-  // Printausgabe Variablen quartischdiffpf
-  printtext ("ak: ");
-  printreal (ak);
-  printtext ("\n");
-  printtext ("bk: ");
-  printreal (bk);
-  printtext ("\n");
-  printtext ("ck: ");
-  printreal (ck);
-  printtext ("\n");
-  printtext ("\n");
-  printtext ("pk: ");
-  printreal (pk);
-  printtext ("\n");
-  printtext ("qk: ");
-  printreal (qk);
-  printtext ("\n");
-  printtext ("\n");
-  printtext ("xl: ");
-  printreal (xl);
-  printtext ("\n");
-  printtext ("zk1: ");
-  printreal (zk1);
-  printtext ("\n");
-  printtext ("---------------------------------------\n");
   }
 
+// ------------------------------------------------------- quartisch ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------- kubische Resolventen ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
@@ -2135,7 +2077,7 @@ void kubischeresolventebuch (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z
 
   ak= p/-2;
   bk= -r;
-  ck= r*p/2 - q*q/8;
+  ck= r*p/2 + q*q/-8;
 
   kubisch (ak, bk, ck, z1, z2, z3);
   }
@@ -2145,7 +2087,7 @@ void kubischeresolventepdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   ckomplexk ak, bk, ck;
 
   ak= p*2;
-  bk= p*p - r*4;
+  bk= p*p + r*-4;
   ck= -(q*q);
 
   kubisch (ak, bk, ck, z1, z2, z3);
@@ -2156,7 +2098,7 @@ void kubischeresolventelagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
   ckomplexk ak, bk, ck;
 
   ak= p/2;
-  bk= p*p/16 - r/4;
+  bk= p*p/16 + r/-4;
   ck= q*q/-64;
 
   kubisch (ak, bk, ck, z1, z2, z3);
@@ -2166,8 +2108,8 @@ void kubischeresolventez (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, 
   {
   ckomplexk pk, qk;
 
-  pk= (p*p + r*12)/-3;
-  qk= p*(r*36 - p*p)/real (13.5) - q*q;
+  pk= p*p/-3 + r*-4;
+  qk= p*r*8/3 + p*p*p/real (-13.5) - q*q;
 
   kubischreduziertu (pk, qk, z1, z2, z3);
   }
@@ -2176,8 +2118,8 @@ void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1,
   {
   ckomplexk pk, qk;
 
-  pk= (p*p + r*12)/-3;
-  qk= p*(r*36 - p*p)/real (13.5) - q*q;
+  pk= p*p/-3 + r*-4;
+  qk= p*r*8/3 + p*p*p/real (-13.5) - q*q;
 
   kubischreduziertu3 (pk, qk, z1, z2, z3);
   }
@@ -2188,7 +2130,7 @@ void kubischeresolventemalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d
 
   ak= b/-2;
   bk= a*c/4 - d;
-  ck= ((b*4 - a*a)*d - c*c)/8;
+  ck= b*d/2 + a*a*d/-8 + c*c/-8;
 
   kubisch (ak, bk, ck, z1, z2, z3);
   }
@@ -2429,11 +2371,11 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
   //quartischreduziertpdfw23 (p, q, r, y1, y2, y3, y4);
   //quartischreduziertlagrange3 (p, q, r, y1, y2, y3, y4);
 
-  a4= a/4;
-  x1= y1 - a4;
-  x2= y2 - a4;
-  x3= y3 - a4;
-  x4= y4 - a4;
+  a4= a/-4;
+  x1= y1 + a4;
+  x2= y2 + a4;
+  x3= y3 + a4;
+  x4= y4 + a4;
   }
 
 void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
