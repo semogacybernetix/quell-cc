@@ -35,112 +35,142 @@ $(opfad)single.o: single.cc single.h ../class/vektor.h
 #-------------------------- Programme ---------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------------
-gradnetz:
-	make -C ../../cc/class $(opfad)vektor.o
-	make -C ../../cc/screen $(opfad)vscr.o
-	make -C ../../cc/screen $(opfad)jpegscr.o
-	make -C ../../cc/screen $(opfad)bmpscr.o
+prog00=gradnetz
+$(prog00):
+	make -C ../class $(opfad)vektor.o
+	make -C ../../conio $(opfad)vektorcon.o
+	make -C ../screen $(opfad)vscr.o
+	make -C ../screen $(opfad)jpegscr.o
+	make -C ../screen $(opfad)bmpscr.o
 	make $(ppfad)$@
 
-$(ppfad)gradnetz: gradnetz.cc
-	$(comp) $(opfad)vektor.o $(opfad)vscr.o $(opfad)jpegscr.o $(opfad)bmpscr.o -ljpeg $< $(copts) -o $@
+$(opfad)$(prog00).o: $(prog00).cc ../class/vektor.h ../../conio/vektorcon.h
+	$(comp) $< -c $(copts) -o $@
+
+$(ppfad)$(prog00): $(opfad)$(prog00).o $(opfad)vektorcon.o $(opfad)vektor.o
+	$(comp) $(opfad)vektor.o $(opfad)vektorcon.o $(opfad)vscr.o $(opfad)jpegscr.o $(opfad)bmpscr.o -ljpeg $< $(copts) -o $@
 #----------------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------------
-tastatur: $(ppfad)tastatur
+prog08=wavegen
+$(prog08):
+	make -C ../class $(opfad)vektor.o
+	make -C ../../conio/ $(opfad)vektorcon.o
+	make $(ppfad)$@
+
+$(opfad)$(prog08).o: $(prog08).cc single.h ../class/vektor.h ../../conio/vektorcon.h
+	$(comp) $< -c $(copts2) -o $@
+
+$(ppfad)$(prog08): $(opfad)$(prog08).o $(opfad)single.o $(opfad)vektor.o $(opfad)vektorcon.o
+	$(comp) $+ -o $@
+#----------------------------------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------------------------------------
+prog04=undos
+$(prog04): $(ppfad)$(prog04)
 	
 
-$(ppfad)tastatur: tastatur.cc
+$(ppfad)$(prog04): $(prog04).cc
+	$(comp) $< $(copts) -o $@
+#----------------------------------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------------------------------------
+prog03=tastatur
+$(prog03): $(ppfad)$(prog03)
+	
+
+$(ppfad)$(prog03): $(prog03).cc
 	$(comp) $< $(copts) -lncurses -o $@
 #----------------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------------
-fließkomma: $(ppfad)fließkomma
+prog01=iftest
+$(prog01): $(ppfad)$(prog01)
 	
 
-$(ppfad)fließkomma: fließkomma.cc
-	$(comp) $< $(copts) -o $@
+$(opfad)$(prog01).o: $(prog01).cc
+	$(comp) $< -c $(copts) -o $@
+
+$(ppfad)$(prog01): $(opfad)$(prog01).o
+	$(comp) $+ -o $@
 #----------------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------------
-undos: $(ppfad)undos
-	
-
-$(ppfad)undos: undos.cc
-	$(comp) $< $(copts) -o $@
-#----------------------------------------------------------------------------------------------------------
-
-#----------------------------------------------------------------------------------------------------------
-iftest: $(ppfad)iftest
-	
-
-$(ppfad)iftest: iftest.cc
-	$(comp) $< $(copts) -o $@
-#----------------------------------------------------------------------------------------------------------
-
-#----------------------------------------------------------------------------------------------------------
-fpubenchmark: $(ppfad)fpubenchmark
-	
-
-$(ppfad)fpubenchmark: $(opfad)fpubenchmark.o $(opfad)single.o $(opfad)vektor.o $(opfad)libscr.a $(opfad)fbscr.o
-	$(comp) $(opfad)fpubenchmark.o $(opfad)single.o $(opfad)vektor.o $(opfad)fbscr.o -lscr -L$(opfad) -o $@
-
-$(opfad)fpubenchmark.o: fpubenchmark.cc single.h ../class/vektor.h ../screen/allscr.h
-	$(comp) $< -c $(copts2) -o $@
-#----------------------------------------------------------------------------------------------------------
-
-#----------------------------------------------------------------------------------------------------------
-wavegen:
-	make -C ../../cc/class $(opfad)vektor.o
+prog05=planetenberechnung
+$(prog05):
+	make -C ../class $(opfad)vektor.o
+	make -C ../../conio $(opfad)vektorcon.o
 	make $(ppfad)$@
 
-$(opfad)wavegen.o: wavegen.cc single.h ../class/vektor.h
+$(opfad)$(prog05).o: $(prog05).cc ../class/vektor.h ../../conio/vektorcon.h
+	$(comp) $< -c $(copts) -o $@
+
+$(ppfad)$(prog05): $(opfad)$(prog05).o $(opfad)vektor.o $(opfad)vektorcon.o
+	$(comp) $+ -o $@
+#----------------------------------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------------------------------------
+prog02=fließkomma
+$(prog02): $(ppfad)$(prog02)
+	
+
+$(ppfad)$(prog02): $(prog02).cc
+	$(comp) $< $(copts) -o $@
+#----------------------------------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------------------------------------
+prog07=fpubenchmark
+$(prog07):
+	make -C ../class $(opfad)vektor.o
+	make $(ppfad)$@
+
+$(opfad)$(prog07).o: $(prog07).cc single.h ../class/vektor.h ../screen/allscr.h
 	$(comp) $< -c $(copts2) -o $@
 
-$(ppfad)wavegen: $(opfad)wavegen.o $(opfad)single.o $(opfad)vektor.o
-	$(comp) $(opfad)wavegen.o $(opfad)single.o $(opfad)vektor.o -o $@
+$(ppfad)$(prog07): $(opfad)$(prog07).o $(opfad)single.o $(opfad)vektor.o $(opfad)libscr.a $(opfad)fbscr.o
+	$(comp) $+ -lscr -L$(opfad) -o $@
 #----------------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------------
-komplextest:
+prog09=komplextest
+$(prog09):
 	make -C ../../cc/class $(opfad)vektor.o
 	make -C ../../conio $(opfad)vektorcon.o
 	make $(ppfad)$@
 
-$(opfad)komplextest.o: komplextest.cc ../class/vektor.h
+$(opfad)$(prog09).o: $(prog09).cc ../class/vektor.h ../../conio/vektorcon.h
 	$(comp) $< -c $(copts) -o $@
 
-$(ppfad)komplextest: $(opfad)komplextest.o $(opfad)vektorcon.o $(opfad)vektor.o
-	$(comp) $(opfad)komplextest.o $(opfad)vektorcon.o $(opfad)vektor.o -o $@
-
-#----------------------------------------------------------------------------------------------------------
-
-#----------------------------------------------------------------------------------------------------------
-linearfaktoren:
-	make -C ../../cc/class $(opfad)vektor.o
-	make -C ../../conio $(opfad)vektorcon.o
-	make $(ppfad)$@
-
-$(opfad)linearfaktoren.o: linearfaktoren.cc ../../conio/vektorcon.h ../class/vektor.h
-	$(comp) $< -c $(copts) -o $@
-
-$(ppfad)linearfaktoren: $(opfad)linearfaktoren.o $(opfad)vektorcon.o $(opfad)vektor.o
-	$(comp) $(opfad)linearfaktoren.o $(opfad)vektorcon.o $(opfad)vektor.o -o $@
-
+$(ppfad)$(prog09): $(opfad)$(prog09).o $(opfad)vektorcon.o $(opfad)vektor.o
+	$(comp) $+ -o $@
 #----------------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------------
 quaternionentest:
-	make -C ../../cc/class $(opfad)vektor.o
-	make -C ../../cc/class $(opfad)gruppe.o
+	make -C ../class $(opfad)vektor.o
+	make -C ../class $(opfad)gruppe.o
 	make -C ../../conio $(opfad)vektorcon.o
 	make -C ../../conio $(opfad)gruppecon.o
 	make $(ppfad)$@
 
-$(opfad)quaternionentest.o: quaternionentest.cc ../../conio/vektorcon.h ../../conio/gruppecon.h ../class/gruppe.h ../class/vektor.h
+$(opfad)quaternionentest.o: quaternionentest.cc ../class/vektor.h ../../conio/vektorcon.h ../class/gruppe.h ../../conio/gruppecon.h
 	$(comp) $< -c $(copts) -o $@
 
 $(ppfad)quaternionentest: $(opfad)vektor.o $(opfad)gruppe.o $(opfad)vektorcon.o $(opfad)gruppecon.o $(opfad)quaternionentest.o
-	$(comp) $(opfad)vektor.o $(opfad)gruppe.o $(opfad)vektorcon.o $(opfad)gruppecon.o $(opfad)quaternionentest.o -o $@
+	$(comp) $+ -o $@
+#----------------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------------
+prog06=linearfaktoren
+$(prog06):
+	make -C ../class $(opfad)vektor.o
+	make -C ../../conio $(opfad)vektorcon.o
+	make $(ppfad)$@
+
+$(opfad)$(prog06): $(prog06).cc ../class/vektor.h ../../conio/vektorcon.h
+	$(comp) $< -c $(copts) -o $@
+
+$(ppfad)$(prog06): $(opfad)$(prog06) $(opfad)vektor.o $(opfad)vektorcon.o
+	$(comp) $+ -o $@
+#----------------------------------------------------------------------------------------------------------
+
