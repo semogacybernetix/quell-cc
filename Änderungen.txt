@@ -402,6 +402,8 @@
 2026.04.07 Di  15:51, quartischbuchfintr, quartischmalinintr zk-Unterschied abgeglichen, 16:52, 22:37, quartischmalinintr verkürzt, ray.cc Parametrisierungen geliftet, 23:45
 2026.04.08 Mi   9:09, kubischintr Polynome vereinfacht, Kosmetik Formeln, 11:04, 19:36, linearfaktoren Galoisgruppen überprüft, 23:08, cc/single/Makefile alle Programmeinträge verbessert, 2:15
 
+2026.04.10 Fr   8:49, Mondkarte erstellt, Erde-Mond-System hinzugefügt, 10:28
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 dünner Torus xray Rechtecke beseitigen

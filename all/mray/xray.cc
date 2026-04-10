@@ -166,6 +166,7 @@ void addkugel (cwelt& pwelt)
 
   // Plattkarten
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/0400 platt hellblau.jpg"), real (0.3183), 0), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/0648 platt Mondkarte.jpg"), real (0.3183), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/1000 platt dunkelblau.jpg"), real (0.3183), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/1436 platt-z politisch.jpg"), real (0.3183), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/1466 platt schief.jpg"), real (0.3183), 0), kstobj, klobj);
@@ -211,6 +212,7 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels2, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Texturen/1080 quadrat.jpg"), real (0.1), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels2, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Texturen/1080 linien.jpg"), real (0.1), 0), kstobj, klobj);
 
+  // Polkarten stereografisch 2 Karten
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentextur2zs (new cjpegdatei ("/root/quell-cc/media/Polkarten/0339 stereo 00 rot.jpg"), real (0.269), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/0339 stereo 180 rot.jpg"), real (0.269), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentextur2zs (new cjpegdatei ("/root/quell-cc/media/Polkarten/1000 stereo Nordpol.jpg"), real (0.6366), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/9999 stereo Südpol Riemann.jpg"), real (0.0509), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentextur2zs (new cjpegdatei ("/root/quell-cc/media/Polkarten/4000 stereo Nordpol.jpg"), real (0.6366), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/9999 stereo Südpol Riemann.jpg"), real (0.0509), 0), kstobj, klobj);
@@ -233,11 +235,49 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Texturen/1080 linien.jpg"), real (0.33), 0), kstobj, klobj);
 
+  // Polkarten mittenabstandstreu 2 Karten
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentextur2pm (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
   ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentextur2zm (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
+
+  // Augposition setzen
+  pwelt.setzeposition (kstauge);
+  pwelt.setzelage (klauge);
+
+  // Hintergrundfarbe setzen
+  pwelt.himmelfarbe= cvektor3 (22, 22, 12);
+  }
+
+void adderdemond (cwelt& pwelt)
+  {
+  // Daten Himmelskörper
+  real re= 6371;
+  real rm= real (1737.4);
+  real em= 384400;
+
+  //real re= 100;
+  //real rm= 100;
+  //real em= real (8108.4);
+
+  // Körperstandpunkte
+  cvektor3 kstobj (0,0,0);
+  cvektor3 kstobj2 (-em,0,0);
+  //cvektor3 kstauge (20000,0,0);
+  cvektor3 kstauge (6371 + 35786,0,0);                                // geostationäre Umlaufbahn
+
+  // Körperlagen
+  cbasis3 klobj (cvektor3 (re,0,0), cvektor3 (0,re,0), cvektor3 (0,0,-re));
+  cbasis3 klobj2 (cvektor3 (rm,0,0), cvektor3 (0,rm,0), cvektor3 (0,0,-rm));
+  cbasis3 klauge (cvektor3 (0,1,0), cvektor3 (0,0,-1), cvektor3 (-1,0,0));
+
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentextur2zm (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
+  ckoerper* koerper2= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Plattkarten/0648 platt Mondkarte.jpg"), real (0.3183), 0), kstobj2, klobj2);
+
+  // Körper addieren
+  pwelt.addkoerper (koerper1);
+  pwelt.addkoerper (koerper2);
 
   // Augposition setzen
   pwelt.setzeposition (kstauge);
@@ -399,7 +439,8 @@ void fliege ()
   //addebenen90 (*welt);
   //addzylinder (*welt);
   //addkugel (*welt);
-  addebzyl (*welt);
+  adderdemond (*welt);
+  //addebzyl (*welt);
   //addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
