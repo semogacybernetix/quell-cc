@@ -178,16 +178,16 @@ void kubischparameter ()
   ckomplexk pq, qq, zy1, zy2, zp1, zp2, yp11, yp21, yp31, yp12, yp22, yp32;
   real x;
 
-  vektor2eingabek (a);
-  vektor2eingabek (b);
-  vektor2eingabek (c);
+  vektor2eingabek (y1);
+  vektor2eingabek (y2);
+  vektor2eingabek (y3);
+
+  a= -(y1+y2+y3);
+  b= y1*y2 + y2*y3 + y3*y1;
+  c= -(y1*y2*y3);
 
   kubischreduziertk (a, b, c, p, q);
-  kubischreduziertcardano (p, q, y1, y2, y3);
-
-  //a= -(y1+y2+y3);
-  //b= y1*y2 + y2*y3 + y3*y1;
-  //c= -(y1*y2*y3);
+  //kubischreduziertcardano (p, q, y1, y2, y3);
 
   dpqp= q*q*-27 + p*p*p*-4;
   dpqy= (y1-y2)*(y2-y3)*(y3-y1);
@@ -209,15 +209,17 @@ void kubischparameter ()
   yp22= yp22/3 - p/yp22;
   yp32= yp32/3 - p/yp32;
 
-  printtext ("---------------------- Differenzenprodukt der Lösungen -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("---------------------- Differenzenprodukt -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("dp²(p,q)     ", dpqp, 0);
   printvektor2komplex ("dp²(yn)      ", dpqy, 0);
   printtext ("\n");
+  printtext ("---------------------- Lösungen der quadratischen Resolvente -----------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("z1 (p,q)     ", zp1, 0);
   printvektor2komplex ("z1 (yn)      ", zy1, 0);
   printvektor2komplex ("z2 (p,q)     ", zp2, 0);
   printvektor2komplex ("z2 (yn)      ", zy2, 0);
   printtext ("\n");
+  printtext ("---------------------- Lösungen der Gleichung --------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("y11(p)       ", yp11, 0);
   printvektor2komplex ("y21(p)       ", yp21, 0);
   printvektor2komplex ("y31(p)       ", yp31, 0);
@@ -253,6 +255,20 @@ void kubischparameter ()
   printvektor2komplex ("x1          ", (y1 - a)/3, 0);
   printvektor2komplex ("x2          ", (y2 - a)/3, 0);
   printvektor2komplex ("x3          ", (y3 - a)/3, 0);
+  printtext ("\n");
+
+  kubischreduziertg (p, q, y1, y2, y3);
+  printtext ("---------------------- kubisch g -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", y1 - a/3, 0);
+  printvektor2komplex ("x2          ", y2 - a/3, 0);
+  printvektor2komplex ("x3          ", y3 - a/3, 0);
+  printtext ("\n");
+
+  kubischreduziertg2 (p, q, y1, y2, y3);
+  printtext ("---------------------- kubisch g2 -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", y1 - a/3, 0);
+  printvektor2komplex ("x2          ", y2 - a/3, 0);
+  printvektor2komplex ("x3          ", y3 - a/3, 0);
   printtext ("\n");
 
   kubischreduziertreellc (p.x, q.x, x);
@@ -320,6 +336,20 @@ void kubischloesungen ()
   printvektor2komplex ("x1", (y1 - a)/3, 0);
   printvektor2komplex ("x2", (y2 - a)/3, 0);
   printvektor2komplex ("x3", (y3 - a)/3, 0);
+  printtext ("\n");
+
+  kubischreduziertg (p, q, y1, y2, y3);
+  printtext ("---------------------- kubischreduziert g -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1", y1 - a/3, 0);
+  printvektor2komplex ("x2", y2 - a/3, 0);
+  printvektor2komplex ("x3", y3 - a/3, 0);
+  printtext ("\n");
+
+  kubischreduziertg2(p, q, y1, y2, y3);
+  printtext ("---------------------- kubischreduziert g2 ----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1", y1 - a/3, 0);
+  printvektor2komplex ("x2", y2 - a/3, 0);
+  printvektor2komplex ("x3", y3 - a/3, 0);
   printtext ("\n");
 
   psp.anz= 0;
@@ -768,7 +798,7 @@ void kubischweg1 (ckomplexk x1k, ckomplexk x2k, ckomplexk& x3k)
 void kubischweg2 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   {
   ckomplexk xl, x1d, x2d, u1p, u2p, u3p, v1p, v2p, v3p, y1p, y2p, y3p, x1p, x2p, x3p, u1, u2, u3, v1, v2, v3;
-  ckomplexk ak, bk, ck, ak3, pk, qk, dpx, dpqx, dpqk, r1x, r2x, r3x, r1k, r2k, r3k, f1x, f2x, f3x, f1k, f2k, f3k, y1k, y2k, y3k;
+  ckomplexk ak, bk, ck, ak3, pk, qk, dpx, dpqx, dpqk, r1x, r2x, r3x, r1k, r2k, r3k, nabla, f1x, f2x, f3x, f1k, f2k, f3k, y1k, y2k, y3k;
 
   // Parameter der normalen kubischen Gleichung, kubischer Offset
   ak= -(x1 + x2 + x3);
@@ -786,9 +816,9 @@ void kubischweg2 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   dpqk= pk*pk*pk*-4 + qk*qk*-27;
 
   // die 3 r's
-  r1x= (x1     + x2*e31 + x3*e32);
-  r2x= (x1     + x2*e32 + x3*e31);
-  r3x= (x1     + x2     + x3    );
+  r1x= (x3     + x1*e31 + x2*e32);
+  r2x= (x3     + x1*e32 + x2*e31);
+  r3x= (x3     + x1     + x2    );
 
   // die 3 f's aus den Lösungen
   f1x= r1x*r1x*r1x;
@@ -796,20 +826,20 @@ void kubischweg2 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   f3x= r3x*r3x*r3x;
 
   // die 3 f's aus den Koeffizienten
-  f1k= (-qk*sqrtr (real (27)) - dpx*ik)*sqrtr (ckomplexk (-108));
-  f2k= qk*real (-13.5) + dpx*sqrtr (ckomplexk (real (-6.75)));
-  //f3k= -ak*ak*ak - ak*bk*4.5 - ck*13.5;                             // fehlerhafter Realteil
-  f3k= ak*ak*ak - ak*bk*real (4.5) + ck*real (13.5);                             // fehlerhafter Realteil
+  nabla= sqrtr (ak*ak*bk*bk - 4*ak*ak*ak*ck - 4*bk*bk*bk + 18*ak*bk*ck - 27*ck*ck);
 
-  // die 2 r's aus den Koeffizienten
-  r1k= cbrtr (f1k)*e32;
+  f1k= -ak*ak*ak + ak*bk*real (4.5) - ck*13.5 - ik*3*sqrtr (real (3))/2*nabla;
+  f2k= -ak*ak*ak + ak*bk*real (4.5) - ck*13.5 + ik*3*sqrtr (real (3))/2*nabla;
+  f3k= -ak*ak*ak;
+
+  // die 3 r's aus den Koeffizienten
+  r1k= cbrtr (f1k);
   r2k= cbrtr (f2k);
-  r3k= 0;
+  r3k= cbrtr (f3k);
 
-  // rk3 = 0
-  y1k= (r1k + r2k)/3;
-  y2k= (r1k*e32 + r2k*e31)/3;
-  y3k= (r1k*e31 + r2k*e32)/3;
+  y2k= (r3k + r1k*e31 + r2k*e32)/3;
+  y3k= (r3k + r1k*e32 + r2k*e31)/3;
+  y1k= (r3k + r1k     + r2k)/3;
 
   //kubischreduziertelementar (pk, qk, y1k, y2k, y3k);
 

@@ -1950,6 +1950,70 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
     }
   }
 
+void kubischreduziertg (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+  {
+  ckomplexk  xl, z, z1, z2;
+
+  // Lösung der normalen linearen Gleichung
+  q= q/-2;
+  p= p/-3;
+  xl= q*q - p*p*p;
+
+  // Lösung der quadratischen Gleichung
+  z= sqrtr (xl);
+  z1= q + z;
+  z2= q - z;
+  if (absr (z1) >= absr (z2))
+    /**/ z= z1;
+    else z= z2;
+
+  // Lösung der kubischen Gleichung
+  if (absr (z) > 0)
+    {
+    cbrtr (z, y1, y2, y3);
+    y1= y1 + p/y1;
+    y2= y2 + p/y2;
+    y3= y3 + p/y3;
+    }
+    else
+    {
+    y1= 0;
+    y2= 0;
+    y3= 0;
+    }
+  }
+
+void kubischreduziertg2 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+  {
+  ckomplexk  xl, z, z1, z2;
+
+  // Lösung der normalen linearen Gleichung
+  xl= q*q*729 + p*p*p*108;
+
+  // Lösung der quadratischen Gleichung
+  z= sqrtr (xl);
+  z1= q*27 + z;
+  z2= q*27 - z;
+  if (absr (z1) >= absr (z2))
+    /**/ z= z1;
+    else z= z2;
+
+  // Lösung der kubischen Gleichung
+  if (absr (z) > 0)
+    {
+    cbrtr (z/-2, y1, y2, y3);
+    y1= y1/3 - p/y1;
+    y2= y2/3 - p/y2;
+    y3= y3/3 - p/y3;
+    }
+    else
+    {
+    y1= 0;
+    y2= 0;
+    y3= 0;
+    }
+  }
+
 void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, ckomplexk& q)
   {
   p= a*a/-3 + b;
@@ -1965,11 +2029,12 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   //kubischreduziertcardano (p, q, y1, y2, y3);
   //kubischreduziertcardano3 (p, q, y1, y2, y3);
   //kubischreduziertu (p, q, y1, y2, y3);
-  kubischreduziertu3 (p, q, y1, y2, y3);
+  //kubischreduziertu3 (p, q, y1, y2, y3);
+  kubischreduziertg (p, q, y1, y2, y3);
 
-  x1= (y1 - a)/3;
-  x2= (y2 - a)/3;
-  x3= (y3 - a)/3;
+  x1= y1 - a/3;
+  x2= y2 - a/3;
+  x3= y3 - a/3;
   }
 
 //-------------------- kubisch reell ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
