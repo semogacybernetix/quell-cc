@@ -174,7 +174,8 @@ void quadratischeingabezw ()
 
 void kubischparameter ()
   {
-  ckomplexk a, b, c, p, q, dp, dpq, y1, y2, y3, x1, x2, x3, dpx, D;
+  ckomplexk a, b, c, p, q, dp, dpqp, y1, y2, y3, x1, x2, x3, dpqy;
+  ckomplexk pq, qq, zy1, zy2, zp1, zp2, yp11, yp21, yp31, yp12, yp22, yp32;
   real x;
 
   vektor2eingabek (a);
@@ -182,22 +183,55 @@ void kubischparameter ()
   vektor2eingabek (c);
 
   kubischreduziertk (a, b, c, p, q);
+  kubischreduziertcardano (p, q, y1, y2, y3);
 
-  //dp= sqrtr (q*q/4 + p*p*p/27)*sqrtr (ckomplexk (-108));
-  dpq= q*q*-27 + p*p*p*-4;
-  D= q*q/4 + p*p*p/27;
+  //a= -(y1+y2+y3);
+  //b= y1*y2 + y2*y3 + y3*y1;
+  //c= -(y1*y2*y3);
+
+  dpqp= q*q*-27 + p*p*p*-4;
+  dpqy= (y1-y2)*(y2-y3)*(y3-y1);
+  dpqy= dpqy*dpqy;
+
+  zp1= (q*27 - sqrtr (q*q*729 + p*p*p*108))/-2;
+  zp2= (q*27 + sqrtr (q*q*729 + p*p*p*108))/-2;
+  zy1= (y1 + e31*y2 + e32*y3)^integer (3);
+  zy2= (y1 + e32*y2 + e31*y3)^integer (3);
+
+  cbrtr (zp1, yp11, yp21, yp31);
+  cbrtr (zp2, yp12, yp22, yp32);
+
+  yp11= yp11/3 - p/yp11;
+  yp21= yp21/3 - p/yp21;
+  yp31= yp31/3 - p/yp31;
+
+  yp12= yp12/3 - p/yp12;
+  yp22= yp22/3 - p/yp22;
+  yp32= yp32/3 - p/yp32;
 
   printtext ("---------------------- Differenzenprodukt der Lösungen -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("dpq          ", dpq, 0);
-  printvektor2komplex ("dp           ", -sqrtr (dpq), 0);
-  printvektor2komplex ("D            ", D, 0);
+  printvektor2komplex ("dp²(p,q)     ", dpqp, 0);
+  printvektor2komplex ("dp²(yn)      ", dpqy, 0);
+  printtext ("\n");
+  printvektor2komplex ("z1 (p,q)     ", zp1, 0);
+  printvektor2komplex ("z1 (yn)      ", zy1, 0);
+  printvektor2komplex ("z2 (p,q)     ", zp2, 0);
+  printvektor2komplex ("z2 (yn)      ", zy2, 0);
+  printtext ("\n");
+  printvektor2komplex ("y11(p)       ", yp11, 0);
+  printvektor2komplex ("y21(p)       ", yp21, 0);
+  printvektor2komplex ("y31(p)       ", yp31, 0);
+  printtext ("\n");
+  printvektor2komplex ("y12(p)       ", yp12, 0);
+  printvektor2komplex ("y22(p)       ", yp22, 0);
+  printvektor2komplex ("y32(p)       ", yp32, 0);
   printtext ("\n");
 
   kubischreduziertcardano (p, q, y1, y2, y3);
   printtext ("---------------------- kubisch cardano -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", (y1 - a)/3, 0);
-  printvektor2komplex ("x2          ", (y2 - a)/3, 0);
-  printvektor2komplex ("x3          ", (y3 - a)/3, 0);
+  printvektor2komplex ("x1          ", y1 - a/3, 0);
+  printvektor2komplex ("x2          ", y2 - a/3, 0);
+  printvektor2komplex ("x3          ", y3 - a/3, 0);
   printtext ("\n");
 
   kubischreduziertcardano3 (p, q, y1, y2, y3);
@@ -209,9 +243,9 @@ void kubischparameter ()
 
   kubischreduziertu (p, q, y1, y2, y3);
   printtext ("---------------------- kubisch u -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", (y1 - a)/3, 0);
-  printvektor2komplex ("x2          ", (y2 - a)/3, 0);
-  printvektor2komplex ("x3          ", (y3 - a)/3, 0);
+  printvektor2komplex ("x1          ", y1 - a/3, 0);
+  printvektor2komplex ("x2          ", y2 - a/3, 0);
+  printvektor2komplex ("x3          ", y3 - a/3, 0);
   printtext ("\n");
 
   kubischreduziertu3 (p, q, y1, y2, y3);
@@ -237,13 +271,6 @@ void kubischparameter ()
   x1= (y1 - a)/3;
   x2= (y2 - a)/3;
   x3= (y3 - a)/3;
-
-  dpx= (x1-x2)*(x2-x3)*(x1-x3);
-
-  printtext ("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("dpx         ", dpx, 0);
-  printtext ("\n");
-  printtext ("\n");
   }
 
 void kubischloesungen ()

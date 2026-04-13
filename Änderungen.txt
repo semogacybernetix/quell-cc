@@ -404,6 +404,8 @@
 
 2026.04.10 Fr   8:49, Mondkarte erstellt, Erde-Mond-System hinzugefügt, 10:28
 
+2026.04.12 So  12:41, kubische Gleichung bearbeitet, massive Skalierungsprobleme, aufgegeben, 18 Uhr, 22 Uhr wieder massive Skalierungsprobleme, Skalierungsfehler behoben, kubische Gleichung mit y-Korrespondenz geschafft, 2:00
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 dünner Torus xray Rechtecke beseitigen
