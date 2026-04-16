@@ -105,6 +105,7 @@ struct clpara                                                     // abstraktes 
   virtual cvektor2 berechne (const cvektor3 &pv)= 0;
   };
 
+//------------------------- Ebene --------------------------------------------------------------------------------------------------------------------
 struct cparaebenew : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
@@ -120,11 +121,13 @@ struct cparaebenepolw : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+//------------------------- Zylinder -----------------------------------------------------------------------------------------------------------------
 struct cparazylinderw : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+//------------------------- Kugel --------------------------------------------------------------------------------------------------------------------
 struct cparakugel : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
@@ -180,6 +183,7 @@ struct cparakugelm2 : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+//------------------------- Hyperboloid --------------------------------------------------------------------------------------------------------------------
 struct cparahypere : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
@@ -190,16 +194,19 @@ struct cparahyperz : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+//------------------------- Kegel --------------------------------------------------------------------------------------------------------------------------
 struct cparakegelw : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+//------------------------- Rotationsparaboloid ------------------------------------------------------------------------------------------------------------
 struct cpararpara : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+//------------------------- Torus --------------------------------------------------------------------------------------------------------------------------
 struct cparatorusu : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
@@ -270,6 +277,16 @@ struct ctexmonochrom : public cltextur
 struct cschachfeld : public cltextur
   {
   cschachfeld (const cvektor3 &pfb1, const cvektor3 &pfb2, const real &pkx, const real &pky);
+  cvektor3 getpunkt (const cvektor2 &pv);
+
+  private:
+  cvektor3 fb1, fb2;        // Färbung des Schachfelds
+  real kx, ky;              // Skalierung des Schachfelds (Größe)
+  };
+
+struct cschachfeldf : public cltextur
+  {
+  cschachfeldf (const cvektor3 &pfb1, const cvektor3 &pfb2, const real &pkx, const real &pky);
   cvektor3 getpunkt (const cvektor2 &pv);
 
   private:

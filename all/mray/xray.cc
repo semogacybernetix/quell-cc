@@ -6,7 +6,7 @@
 void addebene (cwelt& pwelt)
   {
   // Körperstandpunkte
-  cvektor3 kst1 (0,0,0);
+  cvektor3 kst1 (0,0,300);
 
   // Körperlagen
   cbasis3 kl1 (cvektor3 (10,0,0), cvektor3 (0,0,10), cvektor3 (0,10,0));
@@ -14,17 +14,19 @@ void addebene (cwelt& pwelt)
 
   // Texturen
   //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 1, 1);
-  cschachfeld* textur1= new cschachfeld (cvektor3 (255,127,0), cvektor3 (0,255,255), 1, 1);
+  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,127,0), cvektor3 (0,255,255), 1, 1);
+  cschachfeldf* textur1= new cschachfeldf (cvektor3 (255,127,0), cvektor3 (0,255,255), 1, 1);
 
   // Begrenzungen
   //cbegrkreis* begkreis1= new cbegrkreis (-10, 10, -4, 4);
 
   // Körper
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebenew, new cbegrkeine, textur1, kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new csebene, new cparaebenew, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cshyper (1), new cparaebenepol, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new csrpara, new cparaebenepol, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new csrpara, new cparaebenepol, begkreis1, textur1, kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new cshpara, new cparaebenepol, new cbegrkeine, textur1, kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cshpara, new cparaebenepol, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cshpara, new cparaebenepol, begkreis1, textur1, kst1, kl1);
 
   // Körper addieren
@@ -434,12 +436,12 @@ void fliege ()
   {
   cwelt* welt= new cwelt (cvektor3 (0), cbasis3 (1));  // Standpunkt, Lage
 
-  //addebene (*welt);
+  addebene (*welt);
   //addkoord (*welt);
   //addebenen90 (*welt);
   //addzylinder (*welt);
   //addkugel (*welt);
-  adderdemond (*welt);
+  //adderdemond (*welt);
   //addebzyl (*welt);
   //addtorus (*welt);
 
@@ -448,8 +450,8 @@ void fliege ()
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 320);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 512, 256), 512);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 675, 500), 750);
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1350, 1000), 1350);
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 768, 576), 750);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1350, 1000), 1350);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080), 1920);
 
   //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 512, 256), 512);

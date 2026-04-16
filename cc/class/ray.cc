@@ -300,7 +300,7 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************
 
-//---------------------------------------------------------------------- Ebene --------------------------------------------------------------------
+//---------------------------------------------------------------------- Ebene ------------------------------------------------------------------------------------------------------------------------------------
 
 //----------- Ebene winkeltreu -------------------------
 
@@ -406,9 +406,8 @@ cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
 /*
   real z;
   if (pv.z >= 0)                                                   // xy-Radiusmethode, schwarzes Quadrat im Gegenpol, Äquatornaht, Äquatorfluktuationen
-    z= sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
-  else
-    z= -sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
+         z=  sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
+    else z= -sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
   real k= sqrtr (z + 1);
 //*/
 
@@ -642,9 +641,32 @@ cschachfeld::cschachfeld (const cvektor3 &pfb1, const cvektor3 &pfb2, const real
 cvektor3 cschachfeld::getpunkt (const cvektor2 &pv)
   {
   if (integer (absr (floorr (pv.x*kx) + floorr (pv.y*ky))) & 1)
-    return fb2;
-  else
-    return fb1;
+    /**/ return fb2;
+    else return fb1;
+  }
+
+//------------------------- Schachfeld Funktionstexturierung ---------------------------------
+
+cschachfeldf::cschachfeldf (const cvektor3 &pfb1, const cvektor3 &pfb2, const real &pkx, const real &pky)
+  {
+  fb1= pfb1;
+  fb2= pfb2;
+  kx= pkx;
+  ky= pky;
+  }
+
+cvektor3 cschachfeldf::getpunkt (const cvektor2 &pv)
+  {
+  //if (pv.x*pv.x < pv.y)
+  //if (expr (pv.x) < pv.y)
+  //if (expr (pv.x) < pv.y)
+  if (1/(pv.x*pv.x) < pv.y)
+    if (integer (absr (floorr (pv.x*kx) + floorr (pv.y*ky))) & 1)
+      /**/ return fb2/2;
+      else return fb1/2;
+    else if (integer (absr (floorr (pv.x*kx) + floorr (pv.y*ky))) & 1)
+      /**/ return fb1;
+      else return fb2;
   }
 
 //------------------------- Texturierung aus einem Screen (bmpdatei, jpgdatei) ---------------------------------
@@ -732,7 +754,7 @@ cvektor3 cscreentextur2pm::getpunkt (const cvektor2 &pv)
     integer y1= integer (yz1 - pv.x*kx1);
     screen1->getpixel (x1, y1, r, g, b);
     }
-  else
+    else
     {
     real xa= (PI/l - 1)*kx2;
     integer x2= integer (xz2 + pv.y*xa);
@@ -771,7 +793,7 @@ cvektor3 cscreentextur2zm::getpunkt (const cvektor2 &pv)
     integer y1= integer (yz1 - y*kx1);
     screen1->getpixel (x1, y1, r, g, b);
     }
-  else
+    else
     {
     l= PIh + pv.y;
     x= sinr (pv.x)*l;
@@ -814,7 +836,7 @@ cvektor3 cscreentextur2zs::getpunkt (const cvektor2 &pv)
     integer y1= integer (yz1 - x*kx1);
     screen1->getpixel (x1, y1, r, g, b);
     }
-  else
+    else
     {
     z= sinr (pv.y);
     k= 1 - z;
@@ -869,9 +891,8 @@ void ckoerper::dreheein ()
   {
   cvektor4 aw (winkelachsefrommatrix (koerperbasis));
   if (aw.r < 0.01745329)
-    aw.r= -aw.r;
-  else
-    aw.r*= real (-0.2);
+    /**/ aw.r= -aw.r;
+    else aw.r*= real (-0.2);
   cbasis3 db (matrixfromquaternion (quaternionfromwinkelachse (aw)));
   drehe (db);
   }
@@ -916,7 +937,7 @@ void ckoerper::aktualisiere ()
       bewpos= (zeitpos - startzeit)/(stopzeit - startzeit);
       koerperpos= (1 - bewpos)*startpos + bewpos*stoppos;
       }
-    else
+      else
       koerperpos= stoppos;
     }
 
@@ -997,8 +1018,7 @@ cvektor3 cwelt::getpunkt (const cvektor2 &pv)
       {
       if (kmin == -1)
         kmin= nlauf;
-      else
-      if (schnittpunkte.abstand[nlauf] < schnittpunkte.abstand[kmin])                      // Schnittpunkt markieren wenn er näher ist
+      else if (schnittpunkte.abstand[nlauf] < schnittpunkte.abstand[kmin])                      // Schnittpunkt markieren wenn er näher ist
         kmin= nlauf;
       }
 
@@ -1072,9 +1092,8 @@ void cwelt::dreheaugenorm (const real pwinkel)
   cbasis3 bnorm (getroty (flugw.x));
   cvektor4 aw (winkelachsefrommatrix (augbasis/bnorm));
   if (aw.r < 0.01745329)
-    aw.r= -aw.r;
-  else
-    aw.r*= real (-0.2);
+    /**/ aw.r= -aw.r;
+    else aw.r*= real (-0.2);
   cbasis3 db (matrixfromwinkelachse (aw));
   augbasis= normiere (augbasis*db);
   koerperliste.setzeauge (augpos, augbasis);
@@ -1085,9 +1104,8 @@ void cwelt::dreheaugeein (const real pwinkel)
   {
   cvektor4 aw (winkelachsefrommatrix (augbasis));
   if (aw.r < 0.01745329)
-    aw.r= -aw.r;
-  else
-    aw.r*= real (-0.2);
+    /**/ aw.r= -aw.r;
+    else aw.r*= real (-0.2);
   cbasis3 db (matrixfromwinkelachse (aw));
   augbasis= normiere (augbasis*db);
   koerperliste.setzeauge (augpos, augbasis);
