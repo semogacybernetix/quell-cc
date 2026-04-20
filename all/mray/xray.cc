@@ -146,21 +146,21 @@ void addkugel (cwelt& pwelt)
   {
   // Körperstandpunkte
   cvektor3 kstobj (0,0,0);
-  cvektor3 kstauge (500,0,0);
+  cvektor3 kstauge (500,0,-100);
 
   // Körperlagen
   cbasis3 klobj (cvektor3 (100,0,0), cvektor3 (0,100,0), cvektor3 (0,0,-100));
   cbasis3 klauge (cvektor3 (0,1,0), cvektor3 (0,0,-1), cvektor3 (-1,0,0));
 
   // Texturen
-  //cschachfeld* textur1= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), 18/PI, 18/PI);
-  //cschachfeld* textur2= new cschachfeld (cvektor3 (255,255,0), cvektor3 (255,0,255), 18/PI, 18/PI);
+  cschachfeldf* textur1= new cschachfeldf (cvektor3 (255,0,0), cvektor3 (0,255,0), 18/PI, 18/PI);
+  cschachfeldf* textur2= new cschachfeldf (cvektor3 (255,127,0), cvektor3 (0,255,255), 18/PI, 18/PI);
 
   // Begrenzungen
   //cbegrrechteck* begr1= new cbegrrechteck (-10, 10, real (-2.4), real (2.4));    // für (6732 Mercator-blz Straßennetz.jpg)
 
   // Bilder
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelg, new cbegrkeine, textur1, kstkugel, klkugel);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelg, new cbegrkeine, textur1, kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur2, kstobj, kl1);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 2/PI, 2/PI), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 12/PI, 12/PI), kstobj, klobj);
@@ -197,6 +197,8 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelg, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/5000 gnom Nordpol kontrast.jpg"), real (0.3183), 0), kstobj, klobj);
 
   // Polkarten stereografisch
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels, new cbegrkeine, textur1, kstobj, klobj);
+  ckoerper* koerper2= new ckoerper (new csebene, new cparaebenew, new cbegrkeine, textur2, kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/0339 stereo 00 rot.jpg"), real (0.269), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/0339 stereo 180 rot.jpg"), real (0.269), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/0400 stereo Südpol.jpg"), real (0.4124), 0), kstobj, klobj);
@@ -239,17 +241,19 @@ void addkugel (cwelt& pwelt)
 
   // Polkarten mittenabstandstreu 2 Karten
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelm2, new cbegrkeine, new cscreentextur2pm (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentextur2zm (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel2, new cbegrkeine, new cscreentextur2zm (new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Nordpol.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten/4096 mitten Südpol.jpg"), real (0.3183), 0), kstobj, klobj);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
+  pwelt.addkoerper (koerper2);
 
   // Augposition setzen
   pwelt.setzeposition (kstauge);
   pwelt.setzelage (klauge);
 
   // Hintergrundfarbe setzen
-  pwelt.himmelfarbe= cvektor3 (22, 22, 12);
+  //pwelt.himmelfarbe= cvektor3 (22, 22, 12);
+  pwelt.himmelfarbe= cvektor3 (0, 0, 255);
   }
 
 void adderdemond (cwelt& pwelt)
@@ -436,11 +440,11 @@ void fliege ()
   {
   cwelt* welt= new cwelt (cvektor3 (0), cbasis3 (1));  // Standpunkt, Lage
 
-  addebene (*welt);
+  //addebene (*welt);
   //addkoord (*welt);
   //addebenen90 (*welt);
   //addzylinder (*welt);
-  //addkugel (*welt);
+  addkugel (*welt);
   //adderdemond (*welt);
   //addebzyl (*welt);
   //addtorus (*welt);

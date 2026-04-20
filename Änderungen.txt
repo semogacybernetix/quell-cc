@@ -409,9 +409,10 @@
 
 2026.04.16 Do  19:50, schachfeldf Färbung erzeugt, Szene Funktion auf unendlicher Ebene, 21:37
 
+2026.04.20 Mo  18:19, Funktionen mit stereografischer Projektion auf Kugel implementiert, Ikosaderüberlagerung auf Riemannkugel visualisiert, 19:29
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-dünner Torus xray Rechtecke beseitigen
 quartischdiffpintr ohne quant, Mauszeiger mit Pixeldaten, Polynom xl (aq, bq, cq, dq) vereinfachen
 Auswahl reeller kubischer Resolvente und sqrtrz beeinflussen sich
 u,v maximieren, kubische Resolvente komplex berechnen, Auswahl reelle Resolvente bei casus irreduzibiles, diffpuintrc ohne quant, Lösungen von allen Parametern abhängig machen anstatt dass einer fehlt

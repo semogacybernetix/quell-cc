@@ -291,8 +291,8 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
 
   //quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
-  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // wie testintr außer mit Oben-untenlinie
-  quartischmalinintr (B/A, C/A, D/A, E/A, psp);                     // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
+  quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // wie testintr außer mit Oben-untenlinie
+  //quartischmalinintr (B/A, C/A, D/A, E/A, psp);                     // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
 
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr
@@ -657,10 +657,12 @@ cschachfeldf::cschachfeldf (const cvektor3 &pfb1, const cvektor3 &pfb2, const re
 
 cvektor3 cschachfeldf::getpunkt (const cvektor2 &pv)
   {
+  //if (pv.x < pv.y)
   //if (pv.x*pv.x < pv.y)
   //if (expr (pv.x) < pv.y)
-  //if (expr (pv.x) < pv.y)
-  if (1/(pv.x*pv.x) < pv.y)
+  //if (1/(pv.x*pv.x) < pv.y)
+  //if (expr (pv.x/2)*sinr (-sqrtr (real (3))*pv.x/2) < pv.y)
+  if (powr ((powr (pv.x, 20) - 228*powr (pv.x, 15) + 494*powr (pv.x, 10) + 228*powr (pv.x, 5) + 1), 3)/(1728*powr (powr (pv.x, 11) + 11*powr (pv.x, 6) - pv.x,5)) < pv.y)
     if (integer (absr (floorr (pv.x*kx) + floorr (pv.y*ky))) & 1)
       /**/ return fb2/2;
       else return fb1/2;
