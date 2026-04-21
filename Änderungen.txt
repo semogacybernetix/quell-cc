@@ -409,7 +409,8 @@
 
 2026.04.16 Do  19:50, schachfeldf Färbung erzeugt, Szene Funktion auf unendlicher Ebene, 21:37
 
-2026.04.20 Mo  18:19, Funktionen mit stereografischer Projektion auf Kugel implementiert, Ikosaderüberlagerung auf Riemannkugel visualisiert, 19:29
+2026.04.20 Mo  18:19, Funktionen mit stereografischer Projektion auf Kugel implementiert, reelle Ikosaderüberlagerung auf Riemannkugel visualisiert, 19:29
+2026.04.21 Di   1:48, komplexe Ikosaederüberlagerung auf Ebene und Kugel visualisiert, 4:36
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

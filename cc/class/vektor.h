@@ -4,21 +4,21 @@
 #include <cmath>                                // M_PIl, cosl, sinl
 //#include <quadmath.h>                           // M_PIq, cosq, sinq  quadmath_snprintf %Q    -lquadmath      // fehlt auf ARM64
 
-// ------------------------------------------------------------------------  Datentypen -----------------------------------------------------
+// ---------------------------------------------------------- Datentypen --------------------------------------------------------------------------------------------------------------------------------------------------
 
 typedef signed long long integer;
 typedef long double _Float80;
 
 //                                                                                                                                           xray N97  raspi5  Apfel N97  Apfel raspi5                     orangepi5
 // ------------------------- 16 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen      gibts nicht auf raspi5                                     5.00              3.96
+//typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen      gibt es nicht auf raspi5                                   5.00              3.96
 
 // ------------------------- 32 Bit -------------------------------------------------------------------------------------------------------------
-typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
+//typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
+typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
@@ -45,6 +45,7 @@ struct ckomplexk : public cvektor2
   ckomplexk ();
   ckomplexk (const real &pr);
   ckomplexk (const real &px, const real &py);
+  ckomplexk (const cvektor2 &pv);
   };
 
 struct ckomplexp
@@ -304,7 +305,7 @@ cvektor2 operator *  (const cvektor2 &pv, const real &pf);                      
 cvektor2 operator /  (const cvektor2 &pv, const real &pf);                      // Skalar Division
 real     operator %  (const cvektor2 &pv1, const cvektor2 &pv2);                // Skalarprodukt
 
-// -------------------- ckomplexk Funktionen ----------------------------------------------------------------
+// -------------------- ckomplexk Funktionen ---------------------------------------------------------------------------------------
 
 // Umwandlungsfunktionen
 ckomplexk kartes    (const ckomplexp pv);

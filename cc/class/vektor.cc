@@ -41,6 +41,9 @@ ckomplexk::ckomplexk (const real &pr)
 ckomplexk::ckomplexk (const real &px, const real &py)
   : cvektor2 (px, py) {}
 
+ckomplexk::ckomplexk (const cvektor2 &pv)
+  : cvektor2 (pv) {}
+
 //------------------------------------------- ckomplexp ---------------------------------------------------------
 ckomplexp::ckomplexp () {}
 
