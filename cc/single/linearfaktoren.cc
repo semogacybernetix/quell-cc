@@ -828,8 +828,8 @@ void kubischweg2 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   // die 3 f's aus den Koeffizienten
   nabla= sqrtr (ak*ak*bk*bk - 4*ak*ak*ak*ck - 4*bk*bk*bk + 18*ak*bk*ck - 27*ck*ck);
 
-  f1k= -ak*ak*ak + ak*bk*real (4.5) - ck*13.5 - ik*3*sqrtr (real (3))/2*nabla;
-  f2k= -ak*ak*ak + ak*bk*real (4.5) - ck*13.5 + ik*3*sqrtr (real (3))/2*nabla;
+  f1k= -ak*ak*ak + ak*bk*real (4.5) - ck*real (13.5) - ik*3*sqrtr (real (3))/2*nabla;
+  f2k= -ak*ak*ak + ak*bk*real (4.5) - ck*real (13.5) + ik*3*sqrtr (real (3))/2*nabla;
   f3k= -ak*ak*ak;
 
   // die 3 r's aus den Koeffizienten

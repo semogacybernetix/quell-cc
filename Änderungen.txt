@@ -412,6 +412,9 @@
 2026.04.20 Mo  18:19, Funktionen mit stereografischer Projektion auf Kugel implementiert, reelle Ikosaderüberlagerung auf Riemannkugel visualisiert, 19:29
 2026.04.21 Di   1:48, komplexe Ikosaederüberlagerung auf Ebene und Kugel visualisiert, 4:36
 
+2026.04.25 Sa   3:57, mray/symmetriegruppen.cc Compilerfehler beseitigt, 4:35, 11:15, symflip und symmetriegruppen gehen nicht mehr weil quant und Gruppenerstellung nicht mehr funktionieren, Version nach 2025.09.27 funktioniert
+               mit symflip aber nich mit symmetriegruppen, quaternionentest defekt, 12:53
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 quartischdiffpintr ohne quant, Mauszeiger mit Pixeldaten, Polynom xl (aq, bq, cq, dq) vereinfachen

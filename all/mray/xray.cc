@@ -153,8 +153,8 @@ void addkugel (cwelt& pwelt)
   cbasis3 klauge (cvektor3 (0,1,0), cvektor3 (0,0,-1), cvektor3 (-1,0,0));
 
   // Texturen
-  cschachfeldf* textur1= new cschachfeldf (cvektor3 (255,0,0), cvektor3 (0,255,0), 18/PI, 18/PI);
-  cschachfeldf* textur2= new cschachfeldf (cvektor3 (255,127,0), cvektor3 (0,255,255), 18/PI, 18/PI);
+  //cschachfeldf* textur1= new cschachfeldf (cvektor3 (255,0,0), cvektor3 (0,255,0), 18/PI, 18/PI);
+  //cschachfeldf* textur2= new cschachfeldf (cvektor3 (255,127,0), cvektor3 (0,255,255), 18/PI, 18/PI);
 
   // Begrenzungen
   //cbegrrechteck* begr1= new cbegrrechteck (-10, 10, real (-2.4), real (2.4));    // für (6732 Mercator-blz Straßennetz.jpg)
@@ -188,7 +188,7 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Mercatorkarten/2768 Mercator-bl85 braun.jpg"), real (0.3183), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Mercatorkarten/3821 Mercator-blz politisch.jpg"), real (0.3183), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Mercatorkarten/6732 Mercator-blz Straßennetz.jpg"), real (0.3183), 0), kstobj, klobj);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Mercatorkarten/7682 Mercator-blz politisch.jpg"), real (0.3183), 0), kstobj, klobj);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Mercatorkarten/7682 Mercator-blz politisch.jpg"), real (0.3183), 0), kstobj, klobj);
 
   // Polkarten gnomonisch
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelg, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/0400 gnom hellblau.jpg"), real (0.3183), 0), kstobj, klobj);
@@ -197,8 +197,8 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugelg, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/5000 gnom Nordpol kontrast.jpg"), real (0.3183), 0), kstobj, klobj);
 
   // Polkarten stereografisch
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels, new cbegrkeine, textur1, kstobj, klobj);
-  ckoerper* koerper2= new ckoerper (new csebene, new cparaebenew, new cbegrkeine, textur2, kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels, new cbegrkeine, textur1, kstobj, klobj);
+  //ckoerper* koerper2= new ckoerper (new csebene, new cparaebenew, new cbegrkeine, textur2, kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/0339 stereo 00 rot.jpg"), real (0.269), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/0339 stereo 180 rot.jpg"), real (0.269), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugels, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten/0400 stereo Südpol.jpg"), real (0.4124), 0), kstobj, klobj);
@@ -245,15 +245,15 @@ void addkugel (cwelt& pwelt)
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
-  pwelt.addkoerper (koerper2);
+  //pwelt.addkoerper (koerper2);
 
   // Augposition setzen
   pwelt.setzeposition (kstauge);
   pwelt.setzelage (klauge);
 
   // Hintergrundfarbe setzen
-  //pwelt.himmelfarbe= cvektor3 (22, 22, 12);
-  pwelt.himmelfarbe= cvektor3 (0, 0, 255);
+  pwelt.himmelfarbe= cvektor3 (22, 22, 12);
+  //pwelt.himmelfarbe= cvektor3 (0, 0, 255);
   }
 
 void adderdemond (cwelt& pwelt)
@@ -449,12 +449,16 @@ void fliege ()
   //addebzyl (*welt);
   //addtorus (*welt);
 
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 450);                    // cxscreen: Fehlerpixel mit xraythread
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 800);                     // cxscreen: Fehlerpixel mit xraythread
+
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 512, 256), 512);                // weißer Balken rechts oben
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);              // weißer Balken rechts oben
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 768, 576), 768);                // weißer Balken rechts oben
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 768, 512), 768);                // weißer Balken rechts oben
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1280, 768), 1280);               // Fehler unterer Rand
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 320);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 512, 256), 512);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1024, 512), 1024);
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 768, 576), 750);
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 900, 600), 900);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1350, 1000), 1350);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080), 1920);
 
