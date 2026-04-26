@@ -444,10 +444,10 @@ void fliege ()
   //addkoord (*welt);
   //addebenen90 (*welt);
   //addzylinder (*welt);
-  addkugel (*welt);
+  //addkugel (*welt);
   //adderdemond (*welt);
   //addebzyl (*welt);
-  //addtorus (*welt);
+  addtorus (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 800);                     // cxscreen: Fehlerpixel mit xraythread
 

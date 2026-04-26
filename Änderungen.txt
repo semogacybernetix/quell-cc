@@ -413,11 +413,14 @@
 2026.04.21 Di   1:48, komplexe Ikosaederüberlagerung auf Ebene und Kugel visualisiert, 4:36
 
 2026.04.25 Sa   3:57, mray/symmetriegruppen.cc Compilerfehler beseitigt, 4:35, 11:15, symflip und symmetriegruppen gehen nicht mehr weil quant und Gruppenerstellung nicht mehr funktionieren, Version nach 2025.09.27 funktioniert
-               mit symflip aber nich mit symmetriegruppen, quaternionentest defekt, 12:53
+               mit symflip aber nicht mit symmetriegruppen, quaternionentest defekt, 12:53
+2026.04.26 So  10 Uhr, symflipfehler gesucht, gefunden: 2025.10.05.So symflip funktioniert, 2025.10.06.Mo symflip funktioniert nicht: Fehler wegen fliegespiel: framezeit -> framerate, 12 Uhr, 22 Uhr quartischmalin Divisionsartefakte
+               versucht zu eliminieren, 0:00
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-quartischdiffpintr ohne quant, Mauszeiger mit Pixeldaten, Polynom xl (aq, bq, cq, dq) vereinfachen
+buchfintr Skalierunsfaktor bei a1,a2,b1,b2 klären, malinintr D Division, < 0 beheben, Mauszeiger mit Pixeldaten, symflip reparieren
+quartischdiffpintr ohne quant
 Auswahl reeller kubischer Resolvente und sqrtrz beeinflussen sich
 u,v maximieren, kubische Resolvente komplex berechnen, Auswahl reelle Resolvente bei casus irreduzibiles, diffpuintrc ohne quant, Lösungen von allen Parametern abhängig machen anstatt dass einer fehlt
 framerate sauber implementieren
