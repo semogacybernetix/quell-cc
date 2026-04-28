@@ -1877,11 +1877,6 @@ void quartischzurueck (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
   // 1. Zwischenwert: Differenzenprodukt der Lösungen der normalen quartischen Gleichung
   dpy= (y1-y2)*(y1-y3)*(y1-y4)*(y2-y3)*(y2-y4)*(y3-y4);
 
-  // 2. Zwischenwert: Lösungen der kubischen Resolvente aus den Lösungen der reduzierten quartischen Gleichung
-  z1= y1*y2 + y3*y4;
-  z2= y1*y3 + y2*y4;
-  z3= y1*y4 + y2*y3;
-
   // ---------------------------------------------------------- Variablenausgabe --------------------------------------------------------------------------
   printtext ("----------------------------------------------------------- Parameter der normalen quartischen Gleichung --------------------------------------------------------------------\n");
   printvektor2komplex ("a          ", aq, 0);
@@ -1892,11 +1887,37 @@ void quartischzurueck (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
   printtext ("----------------------------------------------------------- 1. Zwischenwert (Differenzenprodukt) ----------------------------------------------------------------------------\n");
   printvektor2komplex ("(y1-y2)*(y1-y3)*(y1-y4)*(y2-y3)*(y2-y4)*(y3-y4)", dpy, 1);
   printtext ("\n");
+
+  // 2. Zwischenwert: Lösungen der kubischen Resolvente aus den Lösungen der reduzierten quartischen Gleichung
+  z1= y1*y2 + y3*y4;
+  z2= y1*y3 + y2*y4;
+  z3= y1*y4 + y2*y3;
   printtext ("----------------------------------------------------------- 2. Zwischenwert (Produktsumme) ----------------------------------------------------------------------------------\n");
   printvektor2komplex ("y1y2 + y3y4", z1, 0);
   printvektor2komplex ("y1y3 + y2y4", z2, 0);
   printvektor2komplex ("y1y4 + y2y3", z3, 0);
   printtext ("\n");
+
+  // 2. Zwischenwert: Lösungen der kubischen Resolvente aus den Lösungen der reduzierten quartischen Gleichung
+  z1= (y1+y2)*(y3+y4);
+  z2= (y1+y3)*(y2+y4);
+  z3= (y1+y4)*(y2+y3);
+  printtext ("----------------------------------------------------------- 2. Zwischenwert (Summenprodukt) ----------------------------------------------------------------------------------\n");
+  printvektor2komplex ("(y1+y2)(y3+y4)", z1, 0);
+  printvektor2komplex ("(y1+y3)(y2+y4)", z2, 0);
+  printvektor2komplex ("(y1+y4)(y2+y3)", z3, 0);
+  printtext ("\n");
+
+  // 2. Zwischenwert: Lösungen der kubischen Resolvente aus den Lösungen der normalen quartischen Gleichung
+  z1= x1*x2 + x3*x4;
+  z2= x1*x3 + x2*x4;
+  z3= x1*x4 + x2*x3;
+  printtext ("----------------------------------------------------------- 2. Zwischenwert (Produktsumme) ----------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1x2 + x3x4", z1, 0);
+  printvektor2komplex ("x1x3 + x2x4", z2, 0);
+  printvektor2komplex ("x1x4 + x2x3", z3, 0);
+  printtext ("\n");
+
   }
 
 void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
@@ -2113,7 +2134,7 @@ void quartischparameter ()
 
 void quartischloesungen ()
   {
-  ckomplexk x1, x2, x3, x4, y1, y2, y3, y4, a, b, c, d, p, q, r;
+  ckomplexk x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, a, b, c, d, p, q, r;
   cschnittpunkte psp;
 
   vektor2eingabek (x1);
@@ -2124,8 +2145,56 @@ void quartischloesungen ()
   quartischzurueck (x1, x2, x3, x4, a, b, c, d);
   quartischreduziertk (a, b, c, d, p, q, r);
 
-  quartischreduziertdiffpu (p, q, r, y1, y2, y3, y4);
+  kubischeresolventediffp (p, q, r, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente diffp ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("z1          ", z1, 0);
+  printvektor2komplex ("z2          ", z2, 0);
+  printvektor2komplex ("z3          ", z3, 0);
+  printtext ("\n");
 
+  kubischeresolventebuch (p, q, r, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente buch ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("z1          ", z1, 0);
+  printvektor2komplex ("z2          ", z2, 0);
+  printvektor2komplex ("z3          ", z3, 0);
+  printtext ("\n");
+
+  kubischeresolventepdfw2 (p, q, r, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente pdfw2 ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("z1          ", z1, 0);
+  printvektor2komplex ("z2          ", z2, 0);
+  printvektor2komplex ("z3          ", z3, 0);
+  printtext ("\n");
+
+  kubischeresolventelagrange (p, q, r, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente lagrange ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("z1          ", z1, 0);
+  printvektor2komplex ("z2          ", z2, 0);
+  printvektor2komplex ("z3          ", z3, 0);
+  printtext ("\n");
+
+  kubischeresolventez (p, q, r, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente z ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("z1          ", z1, 0);
+  printvektor2komplex ("z2          ", z2, 0);
+  printvektor2komplex ("z3          ", z3, 0);
+  printtext ("\n");
+
+  kubischeresolventez3 (p, q, r, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente z3 ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("z1          ", z1, 0);
+  printvektor2komplex ("z2          ", z2, 0);
+  printvektor2komplex ("z3          ", z3, 0);
+  printtext ("\n");
+
+  kubischeresolventemalin (a, b, c, d, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente malin ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("z1          ", z1, 0);
+  printvektor2komplex ("z2          ", z2, 0);
+  printvektor2komplex ("z3          ", z3, 0);
+  printtext ("\n");
+
+  quartischreduziertdiffpu (p, q, r, y1, y2, y3, y4);
   printtext ("-------------------------------- quartischreduziertdiffpu Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2134,7 +2203,6 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertbuchu (p, q, r, y1, y2, y3, y4);
-
   printtext ("-------------------------------- quartischreduziertbuchu Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2143,7 +2211,6 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertbuchv (p, q, r, y1, y2, y3, y4);
-
   printtext ("-------------------------------- quartischreduziertbuchv Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2152,7 +2219,6 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertbuchf (p, q, r, y1, y2, y3, y4);
-
   printtext ("-------------------------------- quartischreduziertbuchf Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2161,7 +2227,6 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertpdfw2 (p, q, r, y1, y2, y3, y4);
-
   printtext ("-------------------------------- quartischreduziertpdfw2 Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2170,7 +2235,6 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertlagrange (p, q, r, y1, y2, y3, y4);
-
   printtext ("-------------------------------- quartischreduziertlagrange Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2179,7 +2243,6 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertbuchf3 (p, q, r, y1, y2, y3, y4);
-
   printtext ("-------------------------------- quartischreduziertbuchf3 Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2188,7 +2251,6 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertpdfw23 (p, q, r, y1, y2, y3, y4);
-
   printtext ("-------------------------------- quartischreduziertpdfw23 Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2197,7 +2259,6 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertlagrange3 (p, q, r, y1, y2, y3, y4);
-
   printtext ("-------------------------------- quartischreduziertlagrange3 Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2206,15 +2267,12 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischmalin (a, b, c, d, x1, x2, x3, x4);
-
   printtext ("-------------------------------- quartischmalin Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
   printvektor2komplex ("x2          ", x2, 0);
   printvektor2komplex ("x3          ", x3, 0);
   printvektor2komplex ("x4          ", x4, 0);
   printtext ("\n");
-
-  printtext ("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
   psp.anz= 0;
   quartischdiffpintrc (a.x, b.x, c.x, d.x, psp);

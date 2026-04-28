@@ -416,6 +416,8 @@
                mit symflip aber nicht mit symmetriegruppen, quaternionentest defekt, 12:53
 2026.04.26 So  10 Uhr, symflipfehler gesucht, gefunden: 2025.10.05.So symflip funktioniert, 2025.10.06.Mo symflip funktioniert nicht: Fehler wegen fliegespiel: framezeit -> framerate, 12 Uhr, 22 Uhr quartischmalin Divisionsartefakte
                versucht zu eliminieren, 0:00
+2026.04.27 Mo  21 Uhr, quartisch Formeln analysiert, Resolventen verglichen, Faktoren gefunden, Formeln für die Resolventen aus den Lösungen ermittelt (Produktsumme, Summenprodukt), mit linearfaktoren.cc getestet, 0:23
+2026.04.28 Di  9:20 Lösungsverfahren ausgearbeitet und als odf mit libreoffice geschrieben, lagrangeintr verbessert, Baustelle Lagrange-Verfahren, 14:33
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

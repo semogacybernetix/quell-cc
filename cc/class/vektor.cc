@@ -2312,8 +2312,8 @@ void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   quadratisch (a2, b2, y3, y4);
 
   printtext ("---------------------------------- pdfw2 Zwischenwerte-------------------------------------------------------\n");
-  printvektor2komplex ("z1         ", z1, 0);
   printvektor2komplex ("u          ", u, 0);
+  printvektor2komplex ("z (u²)     ", z1, 0);
   printtext ("\n");
   printvektor2komplex ("a1         ", a1, 0);
   printvektor2komplex ("b1         ", b1, 0);
@@ -2709,11 +2709,9 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
-  zk= yk + p;
-  //zk= yk + b/6 - a*a/16;
+  zk= yk + p;                                                         // zk= yk + b/6 - a*a/16;
 
-  uq= yk/2 - p;
-  //uq= (zk - p*3)/2;
+  uq= yk/2 - p;                                                       // uq= (zk - p*3)/2;
   vq= zk*zk - r;
 
   u= sqrtrz (uq);
@@ -2836,7 +2834,7 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
 void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, p, q, r, pq, pk, qk, a4, ak3, q8, xl;
-  real l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
+  real l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter der reduzierten quartischen Gleichung
@@ -2902,34 +2900,27 @@ void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp
 
     if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0))     // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
+
     ur1= sqrtr (ak3 + ykr2);
     ur2= sqrtr (ak3 + ykr3);
     ur3= sqrtr (ak3 + ykr1);
 
-    // Lösungen der reduzierten quartischen Gleichung
-    yr1=  ur1 - ur2 - ur3;
-    yr2=  ur2 - ur3 - ur1;
-    yr3=  ur3 - ur1 - ur2;
-    yr4=  ur1 + ur2 + ur3;
-
-    // Lösungen der normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -q
     bed= ur1*ur2*ur3;
-    if (absr (bed + q8) < absr (bed - q8))
+    if (absr (bed - q8) < absr (bed + q8))
       {
-      xr1= a4 + yr1;
-      xr2= a4 + yr2;
-      xr3= a4 + yr3;
-      xr4= a4 + yr4;
-      }
-      else
-      {
-      xr1= a4 - yr4;
-      xr2= a4 - yr3;
-      xr3= a4 - yr2;
-      xr4= a4 - yr1;
+      ur1= -ur1;
+      ur2= -ur2;
+      ur3= -ur3;
       }
 
+    // Lösungen der reduzierten quartischen Gleichung
+    xr1=  a4 + ur1 - ur2 - ur3;
+    xr2=  a4 + ur2 - ur3 - ur1;
+    xr3=  a4 + ur3 - ur1 - ur2;
+    xr4=  a4 + ur1 + ur2 + ur3;
+
+    // Lösungen der normalen quartischen Gleichung
     // positive Lösungen an den Schnittpunktspeicher übergeben
     if (xr1 > 0)
       psp.add (xr1);
