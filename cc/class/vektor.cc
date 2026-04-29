@@ -2511,13 +2511,13 @@ void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp)
 
   // reelle Lösungen in Schnittpunktliste eintragen
   real quant= real (1e-3);
-  if ((x1.x > 0) && (absr (x1.y) <= quant))
+  if ((x1.x > 0) && (absr (x1.y) < quant))
     psp.add (x1.x);
-  if ((x2.x > 0) && (absr (x2.y) <= quant))
+  if ((x2.x > 0) && (absr (x2.y) < quant))
     psp.add (x2.x);
-  if ((x3.x > 0) && (absr (x3.y) <= quant))
+  if ((x3.x > 0) && (absr (x3.y) < quant))
     psp.add (x3.x);
-  if ((x4.x > 0) && (absr (x4.y) <= quant))
+  if ((x4.x > 0) && (absr (x4.y) < quant))
     psp.add (x4.x);
   }
 
@@ -2556,8 +2556,8 @@ void quartischpdfw2intr (real a, real b, real c, real d, cschnittpunkte& psp)
     else
     {
     l= sqrtr (pk);
-    //yk= cosr (acosr (qk/pk/l)/3)*l*2;
-    yk= cosr (acosr (qk/pk/l)/3 - PI2d)*l*2;
+    //yk= cosr (acosr (qk/(pk*l))/3)*l*2;
+    yk= cosr (acosr (qk/(pk*l))/3 - PI2d)*l*2;
     }
 
   // Lösungen der beiden quadratischen Gleichungen
@@ -2627,7 +2627,7 @@ void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp)
     else                                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pk);                                                    // pk > 0 immer, l > 0 immer, wegen Division
-    yk= cosr (acosr (qk/pk/l)/3)*l;                                   // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    yk= cosr (acosr (qk/(pk*l))/3)*l;                                   // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
@@ -2705,7 +2705,7 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   else                                                                // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pk);                                                    // pk > 0 immer, l > 0 immer, wegen Division
-    yk= cosr (acosr (qk/pk/l)/3)*l*2;                                 // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    yk= cosr (acosr (qk/(pk*l))/3)*l*2;                                 // 1. Fehleruelle yk, |qk/(pk*l)| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
@@ -2792,8 +2792,8 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
     else
     {
     l= sqrtr (pk);
-    yk= cosr (acosr (qk/pk/l)/3 + PI2d)*l*2;                          // durchgehende Krizzel
-    //yk= cosr (acosr (qk/pk/l)/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
+    yk= cosr (acosr (qk/(pk*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
+    //yk= cosr (acosr (qk/(pk*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
     }
 
   // Lösungen der beiden quadratischen Gleichungen
@@ -2901,9 +2901,9 @@ void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp
     if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0))     // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
 
-    ur1= sqrtr (ak3 + ykr2);
-    ur2= sqrtr (ak3 + ykr3);
-    ur3= sqrtr (ak3 + ykr1);
+    ur1= sqrtr (ak3 + ykr1);
+    ur2= sqrtr (ak3 + ykr2);
+    ur3= sqrtr (ak3 + ykr3);
 
     // Bedingung: 8*u1*u2*u3 = -q
     bed= ur1*ur2*ur3;
@@ -2936,7 +2936,7 @@ void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp
 void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, p, q, r, pq, pk, qk, a4, ak3, q8, xl;
-  real vxl, uk1, uk2, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, yr3, yr4, bed, xr1, xr2, xr3, xr4;
+  real vxl, uk1, uk2, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, bed, xr1, xr2, xr3, xr4;
   ckomplexk yk2, u2;
 
   // Parameter der reduzierten quartischen Gleichung
@@ -3004,34 +3004,27 @@ void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp
 
     if ((ak3 + ykr1 < 0) || (ak3 + ykr2 < 0) || (ak3 + ykr3 < 0))     // ist einer der Werte kleiner 0 kommen nur komplexe Lösungen raus
       return;
-    ur1= sqrtr (ak3 + ykr2);
-    ur2= sqrtr (ak3 + ykr3);
-    ur3= sqrtr (ak3 + ykr1);
 
-    // Lösungen der reduzierten quartischen Gleichung
-    yr1=  ur1 - ur2 - ur3;
-    yr2=  ur2 - ur3 - ur1;
-    yr3=  ur3 - ur1 - ur2;
-    yr4=  ur1 + ur2 + ur3;
+    ur1= sqrtr (ak3 + ykr1);
+    ur2= sqrtr (ak3 + ykr2);
+    ur3= sqrtr (ak3 + ykr3);
 
-    // Lösungen der normalen quartischen Gleichung
     // Bedingung: 8*u1*u2*u3 = -q
     bed= ur1*ur2*ur3;
-    if (absr (bed + q8) < absr (bed - q8))
+    if (absr (bed - q8) < absr (bed + q8))
       {
-      xr1= a4 + yr1;
-      xr2= a4 + yr2;
-      xr3= a4 + yr3;
-      xr4= a4 + yr4;
-      }
-      else
-      {
-      xr1= a4 - yr4;
-      xr2= a4 - yr3;
-      xr3= a4 - yr2;
-      xr4= a4 - yr1;
+      ur1= -ur1;
+      ur2= -ur2;
+      ur3= -ur3;
       }
 
+    // Lösungen der reduzierten quartischen Gleichung
+    xr1=  a4 + ur1 - ur2 - ur3;
+    xr2=  a4 + ur2 - ur3 - ur1;
+    xr3=  a4 + ur3 - ur1 - ur2;
+    xr4=  a4 + ur1 + ur2 + ur3;
+
+    // Lösungen der normalen quartischen Gleichung
     // positive Lösungen an den Schnittpunktspeicher übergeben
     if (xr1 > 0)
       psp.add (xr1);

@@ -418,11 +418,11 @@
                versucht zu eliminieren, 0:00
 2026.04.27 Mo  21 Uhr, quartisch Formeln analysiert, Resolventen verglichen, Faktoren gefunden, Formeln für die Resolventen aus den Lösungen ermittelt (Produktsumme, Summenprodukt), mit linearfaktoren.cc getestet, 0:23
 2026.04.28 Di  9:20 Lösungsverfahren ausgearbeitet und als odf mit libreoffice geschrieben, lagrangeintr verbessert, Baustelle Lagrange-Verfahren, 14:33
+2026.04.29 Mi  22:10 quartischlagrangeu,c gesäubert, neue Fallunterscheidung implementiert, Division eliminiert, 23:28
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 buchfintr Skalierunsfaktor bei a1,a2,b1,b2 klären, malinintr D Division, < 0 beheben, Mauszeiger mit Pixeldaten, symflip reparieren
-quartischdiffpintr ohne quant
 Auswahl reeller kubischer Resolvente und sqrtrz beeinflussen sich
 u,v maximieren, kubische Resolvente komplex berechnen, Auswahl reelle Resolvente bei casus irreduzibiles, diffpuintrc ohne quant, Lösungen von allen Parametern abhängig machen anstatt dass einer fehlt
 framerate sauber implementieren
