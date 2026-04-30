@@ -86,6 +86,13 @@ cflugsimu::cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen,
     }
   }
 
+void cflugsimu::setframedauer (real pfr)            // (Dauer eines Frames in Millisekunden) setzen
+  {
+  tickms= 1000/real (sysconf (_SC_CLK_TCK));
+  framems= pfr;
+  frametks= framems/tickms;
+  }
+
 void cflugsimu::setframerate (real pfrate)          // (Dauer eines Frames in Millisekunden) setzen
   {
   tickms= 1000/real (sysconf (_SC_CLK_TCK));
@@ -858,6 +865,7 @@ void cflugsimu::fliegespiel (cbasis3& spiegelebenen, ckoerper* bewkugel)
 
 void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
   {
+  printtext ("fliegespieltakt\n");
   cvektor3 flugw (0, 0, 0);
   cvektor4 drehaw;
   cbasis3 achsbasis;

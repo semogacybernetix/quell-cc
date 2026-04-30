@@ -13,7 +13,6 @@
 // Ausgabemedien
 #include "../../conio/gruppecon.h"
 #include "../../cc/screen/allscr.h"
-#include "../../xwindow/screen/xscr.h"
 #include "../../xwindow/keyboard/xkbd.h"
 
 // Standardlibs
@@ -124,50 +123,51 @@ void visualisiereebenen (const cbasis3 pspiegelbasis)
   cvektor3 zentrivektor= -kzoom*cvektor3 (1, 1, 1);
   
   // Welt erschaffen
-  cwelt welt (5*zentrivektor, 1);  // Standpunkt, Lage
+  cwelt welt (5*zentrivektor, einsb3);  // Bildschirmentfernung, Standpunkt, Lage
   welt.himmelfarbe= cvektor3 (51, 51, 51);
 
   //addebenen90 (welt);
   addkoordinatensystem (welt);
 
   // Spiegelebenen hinzufügen
-  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp1, 0, kzoom*sp1));
-  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp2, 0, kzoom*sp2));
-  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp3, 0, kzoom*sp3));
-  
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp1, vnull3, kzoom*sp1));
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp2, vnull3, kzoom*sp2));
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp3, vnull3, kzoom*sp3));
+
   // Sichtpunkt einrichten
   cbasis3 augbasis;
   augbasis.z= -zentrivektor;
-  augbasis.x= augbasis.z^cvektor3 (0,0,1);
+  augbasis.x= augbasis.z^vze3;
   augbasis.y= augbasis.z^augbasis.x;
   augbasis= normiere (augbasis);
   welt.setzelage (augbasis);
-    
+
   // Flugsimulator starten
-  cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600), 600);
-  flugsimu.threadanz= 16;
-  flugsimu.setframedauer (100);
-  flugsimu.fliege ();
+  //cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600), 600);
+  cflugsimu flugsimu (&welt, new cxkeyboard, new cximagescreen ("Drehgruppe", 600, 600), 600);
+  flugsimu.threadanz= 4;
+  flugsimu.setframerate (10);
+  //flugsimu.fliege ();
+  flugsimu.fliegethread ();
   }
 
-void visualisiereexakt (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
+void visualisiereexakt (cbasis3liste& pbliste, const cbasis3 pspiegelbasis)
   {
-  pspiegelbasis= pspiegelbasis*cvektor3 (-1);
   ccluster cluster (1000);
   cluster.gruppe->kopiere (pbliste);
   cluster.vervollstaendige ();
-  //printf ("Cluster.gruppe\n");
+  printf ("Cluster.gruppe\n");
   printb3liste (*cluster.gruppe);
-  //printf ("Cluster.partliste\n");
+  printf ("Cluster.partliste\n");
   printv3liste (*cluster.partliste);
-  //printf ("Cluster.spieg\n");
+  printf ("Cluster.spieg\n");
   printb3liste (*cluster.spieg);
   
-  //printf ("Kantenliste\n");
+  printf ("Kantenliste\n");
   printv3liste (*cluster.kliste);
-  //printf ("Eckenliste\n");
+  printf ("Eckenliste\n");
   printv3liste (*cluster.eliste);
-  //printf ("Flächenliste\n");
+  printf ("Flächenliste\n");
   printv3liste (*cluster.fliste);
   
   // Ecken und Flächen vertauschen
@@ -219,7 +219,7 @@ void visualisiereexakt (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   real kzoom= 100;
 
   // Welt erschaffen
-  cwelt welt (cvektor3 (100, 100, -1920), 1);  // Standpunkt, Lage
+  cwelt welt (cvektor3 (100, 100, -1920), einsb3);  // Bildschirmentfernung, Standpunkt, Lage
   welt.himmelfarbe= cvektor3 (51, 51, 51);
 
   //addebenen90 (welt);
@@ -235,7 +235,7 @@ void visualisiereexakt (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   // Flugsimulator starten
   cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600), 600);
   flugsimu.threadanz= 16;
-  flugsimu.setframedauer (100);
+  flugsimu.setframerate (10);
   flugsimu.fliege ();
   }
 
@@ -243,12 +243,12 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   {
   ccluster cluster (1000);
   cluster.gruppe->kopiere (pbliste);
-  cluster.vervollstaendige ();                   // Fehler gefunden, der Dreck funktioniert nicht
-  //printf ("Cluster.gruppe\n");
+  cluster.vervollstaendige ();
+  printf ("Cluster.gruppe\n");
   printb3liste (*cluster.gruppe);
-  //printf ("Cluster.partliste\n");
+  printf ("Cluster.partliste\n");
   printv3liste (*cluster.partliste);
-  //printf ("Cluster.spieg\n");
+  printf ("Cluster.spieg\n");
   printb3liste (*cluster.spieg);
 
   // Ecken und Flächen vertauschen
@@ -256,14 +256,14 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   swapliste= cluster.eliste;
   cluster.eliste= cluster.fliste;
   cluster.fliste=swapliste;
-  
-  //printf ("Kantenliste\n");
-  printv3liste (*cluster.kliste);
-  //printf ("Eckenliste\n");
-  printv3liste (*cluster.eliste);
-  //printf ("Flächenliste\n");
-  printv3liste (*cluster.fliste);
 
+  printf ("Kantenliste\n");
+  printv3liste (*cluster.kliste);
+  printf ("Eckenliste\n");
+  printv3liste (*cluster.eliste);
+  printf ("Flächenliste\n");
+  printv3liste (*cluster.fliste);
+  
   // Spiegelebenen berechnen
   cbasis3 sp1, sp2, sp3;
   sp1.z= pspiegelbasis.x;
@@ -285,7 +285,7 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   cvektor3 kante;
   cvektor3 kurzkante;
   cvektor3 kvecke, kvecke2;
-  //real kantenlaenge;
+  real kantenlaenge;
   real kantendicke= 3;
   for (integer klauf= 0; klauf < cluster.kliste->anz; klauf++)
     {
@@ -299,8 +299,8 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
     klage= normiere (klage);
     klagenarray[klauf]= kantendicke*klage;                      // Dicke der Kanten einstellen
     }
-  //kantenlaenge= 0.5*absr (kvecke - kvecke2);
-  kurzkante= (kvecke + kvecke2)/2;                              // Kantenvektor zeigt auf Kantenmittelpunkt statt dahinter
+  kantenlaenge= absr (kvecke - kvecke2)/2;
+  kurzkante= (kvecke + kvecke2)/2;                            // Kantenvektor zeigt auf Kantenmittelpunkt statt dahinter
 
   // Lagenarray der Flächen erzeugen
   cbasis3* flagenarray= new cbasis3[lmax];
@@ -316,8 +316,8 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
     }
 
   // Welt erschaffen
-  cwelt welt (cvektor3 (0, 0, -1920), 1);        // Standpunkt, Lage
-  welt.himmelfarbe= cvektor3 (0, 77, 127);
+  cwelt welt (cvektor3 (0, 0, -1920), einsb3);        // Bildschirmentfernung, Standpunkt, Lage
+  welt.himmelfarbe= cvektor3 (0, 76, 127);
 
   // Körperstandpunkte
   cvektor3 kstursprung (0,0,0);
@@ -329,19 +329,19 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   cbasis3 klmitte (cvektor3 (100,0,0), cvektor3 (0,100,0), cvektor3 (0,0,100));
 
   // Begrenzungen anlegen
-  //real zbegrenzung= 100*kantenlaenge/kantendicke;
-  //cbegrrechteck* begrrecht= new cbegrrechteck (-4, 4, -zbegrenzung, zbegrenzung);        // Länge der Kanten einstellen
+  real zbegrenzung= 100*kantenlaenge/kantendicke;
+  cbegrrechteck* begrrecht= new cbegrrechteck (-4, 4, -zbegrenzung, zbegrenzung);        // Länge der Kanten einstellen
 
   // Texturen anlegen
-  cschachfeld* textur1= new cschachfeld (cvektor3 (255,255,255), cvektor3 (77,77,77), real (0.6), real (0.6));
-  //cschachfeld* textur2= new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,255,0), real (0.6), real (0.6));
-  //cschachfeld* textur3= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), real (0.6), real (0.6));
+  cschachfeld* textur1= new cschachfeld (cvektor3 (255,255,255), cvektor3 (76,76,76), PI/15, PI/15);
+  cschachfeld* textur2= new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,255,0), PI/15, PI/15);
+  //cschachfeld* textur3= new cschachfeld (cvektor3 (255,0,0), cvektor3 (0,255,0), PI/15, PI/15);
 
   // Körper addieren
   real kzoom= 100;
 
   // Bewegungskugel hinzufügen
-  ckoerper* bewkugel= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, 0, real (0.1)*kzoom);
+  ckoerper* bewkugel= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, vnull3, real (0.1)*kzoom*einsb3);
   bewkugel->koerperpos= kzoom*cluster.eliste->v[0];            // Bewegungskugel liegt auf einer Ecke
   //bewkugel->koerperpos= kzoom*absr (kurzkante)*cluster.kliste->v[0];      // Bewegungskugel liegt auf einer Kante
   //bewkugel->koerperpos= kzoom/sqrtl (3)*cluster.fliste->v[0];            // Bewegungskugel liegt auf einer Fläche
@@ -352,8 +352,8 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   welt.addkoerper (bewkugel);
 
   // Kantenzylinder hinzufügen
-  //for (integer lauf= 0; lauf < cluster.kliste->anz; lauf++)
-  //  welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrrecht, textur2, kzoom*absr (kurzkante)*cluster.kliste->v[lauf], klagenarray[lauf]));
+  for (integer lauf= 0; lauf < cluster.kliste->anz; lauf++)
+    welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrrecht, textur2, kzoom*absr (kurzkante)*cluster.kliste->v[lauf], klagenarray[lauf]));
 
   // Spiegelungen paarweise multiplizieren
   cbasis3 drehachsen= drehachsenvonspiegelungen (pspiegelbasis);
@@ -373,23 +373,23 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   dr3= normiere (dr3);
   
   // Drehachsen hinzufügen
-  //welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new cbegrkeine, textur3, 0, dr1));
-  //welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new cbegrkeine, textur3, 0, dr2));
-  //welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new cbegrkeine, textur3, 0, dr3));
+  //welt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, new cbegrkeine, textur3, vnull3, dr1));
+  //welt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, new cbegrkeine, textur3, vnull3, dr2));
+  //welt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, new cbegrkeine, textur3, vnull3, dr3));
 
   //cbegrrechteck* begrkreis= new cbegrrechteck (-4, 4, -10, 0);       // Polarebene abstandstreu
   cbegrkreis* begrkreis= new cbegrkreis (-4, 4, 0, 1);               // Schachbrettebene
 
   // Ebenentexturen
-  cschachfeld* textursp1= new cschachfeld (cvektor3 (255,0,127), cvektor3 (255,127,0), real (0.1), real (0.1));
-  cschachfeld* textursp2= new cschachfeld (cvektor3 (153,179,0), cvektor3 (0,179,153), real (0.1), real (0.1));
-  cschachfeld* textursp3= new cschachfeld (cvektor3 (0,127,255), cvektor3 (127,0,255), real (0.1), real (0.1));
+  cschachfeld* textursp1= new cschachfeld (cvektor3 (255,0,127), cvektor3 (255,127,0), PI/30, PI/30);
+  cschachfeld* textursp2= new cschachfeld (cvektor3 (153,178,0), cvektor3 (0,178,153), PI/30, PI/30);
+  cschachfeld* textursp3= new cschachfeld (cvektor3 (0,127,255), cvektor3 (127,0,255), PI/30, PI/30);
 
   // Spiegelebenen hinzufügen
-  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp1, 0, kzoom*sp1));
-  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp2, 0, kzoom*sp2));
-  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp3, 0, kzoom*sp3));
-  
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp1, vnull3, kzoom*sp1));
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp2, vnull3, kzoom*sp2));
+  welt.addkoerper (new ckoerper (new csebene, new cparaebenew, begrkreis, textursp3, vnull3, kzoom*sp3));
+
   // Sichtpunkt auf kleinstes Spiegeldreieck
   cbasis3 senkbasis (~pspiegelbasis);
   senkbasis.x = normiere (senkbasis.x);
@@ -410,27 +410,30 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   welt.setzelage (augbasis);
 
   // Flugsimulator starten
-  cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600), 600);
-  //cflugsimu flugsimu (&welt, new cxkeyboard, new cbmpdatei ("Drehgruppe.bmp", 3840, 2160));
+  //cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600), 600);
+  cflugsimu flugsimu (&welt, new cxkeyboard, new cximagescreen ("Drehgruppe", 600, 600), 600);
+  //cflugsimu flugsimu (&welt, new cxkeyboard, new cbmpdatei ("Drehgruppe.bmp", 1920, 1080), 1920);
 
-  flugsimu.bewstep= 10;
+  flugsimu.setframerate (10);
+  flugsimu.threadanz= 4;
+  flugsimu.bewstep=50;
   flugsimu.drehstep= real (0.01);
-  flugsimu.threadanz= 16;
-  flugsimu.setframedauer (100);
-  flugsimu.fliegespieltakt (pspiegelbasis, bewkugel);
+  //flugsimu.fliegespieltakt (pspiegelbasis, bewkugel);
+  printtext ("fliegespiel\n");
+  flugsimu.fliegespiel (pspiegelbasis, bewkugel);
   }
 
 // ----------------------------------------------------- Fundamentalbereiche visualisieren ---------------------------------
-void visualisierefundamentalbereiche (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
+void visualisierefundamentalbereiche (cbasis3liste& pbliste, const cbasis3 pspiegelbasis)
   {
   ccluster cluster (1000);
   cluster.gruppe->kopiere (pbliste);
   cluster.vervollstaendige ();
-  //printf ("Cluster.gruppe\n");
+  printf ("Cluster.gruppe\n");
   printb3liste (*cluster.gruppe);
-  //printf ("Cluster.partliste\n");
+  printf ("Cluster.partliste\n");
   printv3liste (*cluster.partliste);
-  //printf ("Cluster.spieg\n");
+  printf ("Cluster.spieg\n");
   printb3liste (*cluster.spieg);
   
   // Kanten, Ecken, Flächen liste Ortsvektoren erzeugen
@@ -452,11 +455,11 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, cbasis3 pspiegelbas
   flaechenliste.elementhinzu (flaechenvektor, 0);
   flaechenliste.schliesseab (*cluster.kern);
 
-  //printf ("Kantenliste\n");
+  printf ("Kantenliste\n");
   printv3liste (kantenliste);
-  //printf ("Eckenliste\n");
+  printf ("Eckenliste\n");
   printv3liste (eckenliste);
-  //printf ("Flächenliste\n");
+  printf ("Flächenliste\n");
   printv3liste (flaechenliste);
 
   // Lagenarray der Kanten erzeugen
@@ -479,8 +482,8 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, cbasis3 pspiegelbas
     klage= normiere (klage);
     klagenarray[klauf]= kantendicke*klage;                      // Dicke der Kanten einstellen
     }
-  //kantenlaenge= 0.5*absr (kvecke - kvecke2);
-  kurzkante= (kvecke + kvecke2)/2;                              // Kantenvektor zeigt auf Kantenmittelpunkt statt dahinter
+  //kantenlaenge= absr (kvecke - kvecke2)/2;
+  kurzkante= (kvecke + kvecke2)/2;                            // Kantenvektor zeigt auf Kantenmittelpunkt statt dahinter
 
   // Lagenarray der Flächen erzeugen
   cbasis3* flagenarray= new cbasis3[lmax];
@@ -496,7 +499,7 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, cbasis3 pspiegelbas
     }
 
   // Welt erschaffen
-  cwelt welt (cvektor3 (0, 0, -1000), cbasis3 (1));       // Standpunkt, Lage
+  cwelt welt (cvektor3 (0, 0, -1000), cbasis3 (1));       // Bildschirmentfernung, Standpunkt, Lage
 
   // Körperstandpunkte
   cvektor3 kstursprung (0,0,0);
@@ -513,34 +516,31 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, cbasis3 pspiegelbas
 
   // Texturen anlegen
   ctexmonochrom* textur1= new ctexmonochrom (cvektor3 (127, 127, 127));
-  cschachfeld* textur2= new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,255,0), 100/PI, 10/PI);
-  cschachfeld* textur4= new cschachfeld (cvektor3 (0,255,0), cvektor3 (0,255,255), 100/PI, 10/PI);
-  //ctexmonochrom* textur3= new ctexmonochrom (cvektor3 (127, 255, 0));
+  cschachfeld* textur2= new cschachfeld (cvektor3 (255,0,255), cvektor3 (255,255,0), PI/60, PI/15);
+  cschachfeld* textur4= new cschachfeld (cvektor3 (0,255,0), cvektor3 (0,255,255), PI/60, PI/15);
+  //cmonochrom* textur3= new cmonochrom (cvektor3 (127, 255, 0));
 
   // Körper addieren
   real kzoom= 100;
 
   // Fundametalbereiche zeigen
-  cbegrrechteck* begreb= new cbegrrechteck (-4, 4, real (1 - 0.05), real (1.05));
-  cbegrrechteck* begrzyl= new cbegrrechteck (-4, 4, real (-0.05), real (0.05));
+  cbegrrechteck* begreb= new cbegrrechteck (-4, 4, real (1-.05), real (1.05));
+  cbegrrechteck* begrzyl= new cbegrrechteck (-4, 4, real (-.05), real (.05));
   for (integer lauf= 0; lauf < cluster.spiegkoord->anz; lauf+= 1)
     {
-    welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrzyl, textur2, 0, real (1.201)*kzoom*cluster.spiegkoord->b[lauf]));
-    welt.addkoerper (new ckoerper (new csebene,    new cparaebenepol,  begreb,  textur4, 0, real (1.201)*kzoom*cluster.spiegkoord->b[lauf]));
+    welt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, begrzyl, textur2, vnull3, real (1.201)*kzoom*cluster.spiegkoord->b[lauf]));
+    welt.addkoerper (new ckoerper (new csebene,    new cparaebenepol,  begreb,  textur4, vnull3, real (1.201)*kzoom*cluster.spiegkoord->b[lauf]));
     }
   printb3liste (*cluster.spiegkoord);
 
-  //pspiegelbasis benutzen (Compilerfehler beseitigen)
-  pspiegelbasis= pspiegelbasis*cbasis3 (-1);
-
   // Mittenkugel hinzufügen
-  welt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, 0, real (1.2)*kzoom));
+  welt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, vnull3, real (1.2)*kzoom*einsb3));
 
   // Flugsimulator starten
   cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600), 600);
-  flugsimu.threadanz= 16;
-  flugsimu.setframedauer (100);
-  flugsimu.fliege ();
+  flugsimu.threadanz= 4;
+  flugsimu.setframerate (10);
+  flugsimu.fliegethread ();
   }
 
 //********************************************************** grafikfreie Funktionen ***********************************************************************
@@ -556,19 +556,19 @@ void zeigewinkel (const cbasis3& pdreibein)
   pwi.x*= 180/PI;
   pwi.y*= 180/PI;
   pwi.z*= 180/PI;
-  //real det3b= det (pdreibein);
+  real det3b= det (pdreibein);
   //printf ("%16.10LF %16.10LF %16.10LF Determinante: %16.10LF\n", pwi.x, pwi.y, pwi.z, det3b);
   }
 
 void zeigedreibein (const cbasis3& pdreibein)
   {
-  //printf ("Spiegelachsen:\n");
+  printtext ("Spiegelachsen:\n");
   printvektor3ord (pdreibein.x, 0);
   printvektor3ord (pdreibein.y, 0);
   printvektor3ord (pdreibein.z, 0);
-  //printf ("\n");
+  printtext ("\n");
 
-  //printf ("Winkel zwischen den Spiegelachsen:\n");
+  printtext ("Winkel zwischen den Spiegelachsen:\n");
   cbasis3 dreibein= pdreibein;
   zeigewinkel (dreibein);
   dreibein.x= -dreibein.x;
@@ -589,7 +589,7 @@ void zeigedreibein (const cbasis3& pdreibein)
   zeigewinkel (dreibein);
   dreibein.x= -dreibein.x;
   zeigewinkel (dreibein);
-  //printf ("\n");
+  printtext ("\n");
 
   cvektor3 iwi;
   iwi.x= winkelb (pdreibein.x^pdreibein.y, -pdreibein.y^pdreibein.z);
@@ -598,14 +598,14 @@ void zeigedreibein (const cbasis3& pdreibein)
   iwi.x*= 180/PI;
   iwi.y*= 180/PI;
   iwi.z*= 180/PI;
-  //real iws= iwi.x + iwi.y + iwi.z;
+  real iws= iwi.x + iwi.y + iwi.z;
   //printf ("Innenwinkel des Dreibeins:\n %16.10LF %16.10LF %16.10LF    Innenwinkelsumme: %16.10LF\n", iwi.x, iwi.y, iwi.z, iws);
-  //printf ("\n");
+  printtext ("\n");
 
   cvektor3 zv= normiere (pdreibein.x + pdreibein.y + pdreibein.z);
-  //printf ("Zentrivektor:\n");
+  printtext ("Zentrivektor:\n");
   printvektor3ord (zv, 0);
-  //printf ("\n");
+  printtext ("\n");
 
   cvektor3 zwi;
   zwi.x= winkelb (zv, pdreibein.x);
@@ -615,26 +615,30 @@ void zeigedreibein (const cbasis3& pdreibein)
   zwi.y*= 180/PI;
   zwi.z*= 180/PI;
   //printf ("Zentriwinkel zwischen Zentrivektor und den Spiegelachsen:\n %16.10LF %16.10LF %16.10LF\n", zwi.x, zwi.y, zwi.z);
-  //printf ("\n");
+  printtext ("\n");
 
   cbasis3liste spiegeldrehungen (3);
   drehungenvonspiegelungen (spiegeldrehungen, pdreibein);
-  //printf ("von den Spiegelungen abgeleitetes Drehsystem:\n");
+  printtext ("von den Spiegelungen abgeleitetes Drehsystem:\n");
   printbasis3dreh (spiegeldrehungen.b[0], 0, 0, 0);
   printbasis3dreh (spiegeldrehungen.b[1], 0, 0, 0);
   printbasis3dreh (spiegeldrehungen.b[2], 0, 0, 0);
-  //printf ("\n");
+  printtext ("\n");
 
-  //cvektor4 wiachs1= (winkelachsefrommatrix (spiegeldrehungen.b[0]));
-  //cvektor4 wiachs2= (winkelachsefrommatrix (spiegeldrehungen.b[1]));
+  cvektor4 wiachs1= (winkelachsefrommatrix (spiegeldrehungen.b[0]));
+  cvektor4 wiachs2= (winkelachsefrommatrix (spiegeldrehungen.b[1]));
   cvektor4 wiachs3 (winkelachsefrommatrix (spiegeldrehungen.b[2]));
-  //cvektor3 achse1= orientiere (normiere (cvektor3 (wiachs1.i, wiachs1.j, wiachs1.ij)));
-  //cvektor3 achse2= orientiere (normiere (cvektor3 (wiachs2.i, wiachs2.j, wiachs2.ij)));
+  cvektor3 achse1= orientiere (normiere (cvektor3 (wiachs1.i, wiachs1.j, wiachs1.ij)));
+  cvektor3 achse2= orientiere (normiere (cvektor3 (wiachs2.i, wiachs2.j, wiachs2.ij)));
   cvektor3 achse3 (orientiere (normiere (cvektor3 (wiachs3.i, wiachs3.j, wiachs3.ij))));
-  //real wid1 (180/PI*winkelg (achse1, achse2));
-  //real wid2 (180/PI*winkelg (achse1, achse3));
-  //real wid3 (180/PI*winkelg (achse2, achse3));
-  //printf ("Winkel zwischen den Drehachsen (xy,xz,yz): %9.3Lf°%9.3Lf°%9.3Lf°\n", wid1, wid2, wid3);
+  real wid1 (180/PI*winkelg (achse1, achse2));
+  real wid2 (180/PI*winkelg (achse1, achse3));
+  real wid3 (180/PI*winkelg (achse2, achse3));
+  printtext ("Winkel zwischen den Drehachsen (xy,xz,yz): ");
+  printreal (wid1);
+  printreal (wid2);
+  printreal (wid3);
+  printtext ("\n");
   }
 
 //--------------------------------------  1 Drehspiegelung -------------------------------------------------
@@ -673,8 +677,8 @@ void dreh2 ()
   bliste.winkelachsehinzu (el2);
   getchar ();
 
-  visualisiereexakt (bliste, 1);
-  //visualisierekantenmodell (bliste, 1);
+  visualisiereexakt (bliste, einsb3);
+  //visualisierekantenmodell (bliste, einsb3);
   }
 
 //-------------------------------------- 3 Drehspiegelungen ------------------------------------------------
@@ -713,8 +717,8 @@ void dreh3 ()
   printb3liste (bliste);
   getchar ();
 
-  visualisiereexakt (bliste, 1);
-  //visualisierekantenmodell (bliste, 1);
+  visualisiereexakt (bliste, einsb3);
+  //visualisierekantenmodell (bliste, einsb3);
   }
 
 //-------------------------------------- 3 Ebenenwinkel Ebenenrausdrehung ------------------------------------------------

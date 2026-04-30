@@ -537,12 +537,6 @@ cvektor3 operator ^ (const cvektor3 &pv1, const cvektor3 &pv2);
 // einen Vektor aus der Ebene wählen, auf dem der Vektor senkrecht steht
 cvektor3 operator ~ (const cvektor3 &pv);
 
-//---------- cvektor3, cbasis3 -----------------------------------------------------------------------------------
-
-cvektor3 operator * (const cbasis3  &pb, const cvektor3 &pv);
-cvektor3 operator & (const cvektor3 &pv, const cbasis3  &pb);
-cvektor3 operator / (const cvektor3 &pv, const cbasis3  &pb);
-
 //---------- cbasis3 Funktionen ------------------------------------------------------------------------------------------
 
 real     norm      (cbasis3 pb);
@@ -570,9 +564,14 @@ cbasis3  operator - (const cbasis3  &pb);
 cbasis3  operator + (const cbasis3 &pb1, const cbasis3 &pb2);
 cbasis3  operator - (const cbasis3 &pb1, const cbasis3 &pb2);
 
-// Skalarmultiplikation (Skalarmultiplikation von Matrizen)
+// Skalarmultiplikation von Matrizen
 //cbasis3  operator * (const real &pf, const cbasis3 &pb);
 cbasis3  operator / (const cbasis3 &pb, const real &pf);
+
+// Vektormultiplikation von Matrizen
+cvektor3 operator * (const cbasis3  &pb, const cvektor3 &pv);
+cvektor3 operator & (const cvektor3 &pv, const cbasis3  &pb);
+cvektor3 operator / (const cvektor3 &pv, const cbasis3  &pb);
 
 // Matrixmultiplikation (Körperoperationen von Matrizen)
 cbasis3  operator * (const cbasis3 &pb1, const cbasis3 &pb2);

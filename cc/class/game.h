@@ -8,14 +8,15 @@
 struct cflugsimu
   {
   cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen, real pabstand);
+  void setframedauer (real pfr);   // Millisekunden
   void setframerate (real pfrate);
   void welttoscreenl ();
   void welttoscreenz ();
   void welttoscreentakt (integer exitzeit, integer& renderanz);
   void welttoscreenthread (integer pthreadnr);
   void fliege ();
-  void fliegek ();              // mit Körperdrehungen
-  void fliegetakt ();           // noch nicht implementiert
+  void fliegek ();                 // mit Körperdrehungen
+  void fliegetakt ();              // noch nicht implementiert
   void fliegethread ();
   void fliegespiel (cbasis3& spiegelebenen, ckoerper* bewkugel);
   void fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel);
