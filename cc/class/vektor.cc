@@ -2203,6 +2203,17 @@ void kubischeresolventemalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d
   kubisch (ak, bk, ck, z1, z2, z3);
   }
 
+void kubischeresolventesym (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
+  {
+  ckomplexk ak, bk, ck;
+
+  ak= -b;
+  bk= a*c - d*4;
+  ck= b*d*4 - a*a*d - c*c;
+
+  kubisch (ak, bk, ck, z1, z2, z3);
+  }
+
 // --------------------------------------------  quartischreduziert --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2463,6 +2474,35 @@ void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomple
 
   quadratisch (a1, b1, x1, x2);
   quadratisch (a2, b2, x3, x4);
+  }
+
+void quartischsym (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+  {
+  ckomplexk z1, z2, z3, z, p1, p2, s1, s2, l1, l2, l3, l4, v1, v2;
+
+  kubischeresolventesym (a, b, c, d, z1, z2, z3);
+
+  z= z3;
+
+  quadratisch (-z, d, p1, p2);
+  quadratisch (a, b-z, s1, s2);
+
+  quadratisch (-s1, p1, x1, x2);
+  quadratisch (-s2, p2, x3, x4);
+
+  quadratisch (-s1, p2, l1, l2);
+  quadratisch (-s2, p1, l3, l4);
+
+  v1= x1*x2*x3 + x1*x2*x4 + x1*x3*x4 + x2*x3*x4;
+  v2= l1*l2*l3 + l1*l2*l4 + l1*l3*l4 + l2*l3*l4;
+
+  if (absr (v2 + c) < absr (v1 + c))
+    {
+    x1= l1;
+    x2= l2;
+    x3= l3;
+    x4= l4;
+    }
   }
 
 //-------------------- quartisch integriert (quartischintr) --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2752,6 +2792,86 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   }
 
 void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  real p, q, r, pk, qk, xl;
+  real ytk, yk, l, zk, D, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
+
+  // Parameter der reduzierten quartischen Gleichung malin (buchf)
+  p= a*a/-16 + b/6;
+  q= a*a*a/32 + a*b/-8 + c/4;
+  r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
+
+  // Parameter der reduzierten kubischen Gleichung malin (buchf)
+  pk= p*p + r/3;
+  qk= p*p*p - p*r + q*q;
+
+  // Parameter der reduzierten kubischen Gleichung direkt buchf (ungenauer)
+  //pk= a*c/-12 + b*b/36 + d/3;
+  //qk= a*b*c/-48 + a*a*d/16 + b*d/-6 + b*b*b/216 + c*c/16;
+
+  // Lösung der normalen linearen Gleichung
+  xl= qk*qk - pk*pk*pk;
+
+  // reelle Lösung der kubischen Resolvente buchf
+  if (xl >= 0)
+    {
+    if (qk > 0)
+      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ytk= cbrtr (qk + sqrtr (xl));
+      yk= (ytk + pk/ytk);                                             // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      }
+    else
+    if (qk < 0)
+      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ytk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      yk= (ytk + pk/ytk);                                             // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      }
+    else
+      yk= 0;
+    }
+    else
+    {
+    l= sqrtr (pk);
+    yk= cosr (acosr (qk/(pk*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
+    //yk= cosr (acosr (qk/(pk*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen
+  zk= yk + b/6;
+
+  D= sqrtr (zk*zk - d);
+
+  b1= zk + D;
+  b2= zk - D;
+  a1= (a*b1 - c)/D/-4;                                                // 2. Fehleruelle D = 0
+  a2= (a*b2 - c)/D/4;
+
+  // Lösungen normale quartische Gleichung
+  a1q= a1*a1;
+  a2q= a2*a2;
+  if (a1q >= b1)
+    {
+    D12= sqrtr (a1q - b1);
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (a2q >= b2)
+    {
+    D34= sqrtr (a2q - b2);
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+  }
+
+void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real p, q, r, pk, qk, xl;
   real ytk, yk, l, zk, D, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;

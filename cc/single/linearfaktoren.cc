@@ -2194,6 +2194,13 @@ void quartischloesungen ()
   printvektor2komplex ("z3          ", z3, 0);
   printtext ("\n");
 
+  kubischeresolventesym (a, b, c, d, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente sym ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("z1          ", z1, 0);
+  printvektor2komplex ("z2          ", z2, 0);
+  printvektor2komplex ("z3          ", z3, 0);
+  printtext ("\n");
+
   quartischreduziertdiffpu (p, q, r, y1, y2, y3, y4);
   printtext ("-------------------------------- quartischreduziertdiffpu Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
@@ -2268,6 +2275,14 @@ void quartischloesungen ()
 
   quartischmalin (a, b, c, d, x1, x2, x3, x4);
   printtext ("-------------------------------- quartischmalin Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", x1, 0);
+  printvektor2komplex ("x2          ", x2, 0);
+  printvektor2komplex ("x3          ", x3, 0);
+  printvektor2komplex ("x4          ", x4, 0);
+  printtext ("\n");
+
+  quartischsym (a, b, c, d, x1, x2, x3, x4);
+  printtext ("-------------------------------- quartischsym Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
   printvektor2komplex ("x2          ", x2, 0);
   printvektor2komplex ("x3          ", x3, 0);
