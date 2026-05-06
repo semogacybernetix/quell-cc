@@ -421,7 +421,7 @@
 2026.04.29 Mi  22:10, quartischlagrangeu,c gesäubert, neue Fallunterscheidung implementiert, Division eliminiert, 23:28
 2026.04.30 Do   6:20, Fehlersuche symmetriegruppen/symflip, 2. Fehler gefunden: cluster.vervollständige funktioniert nicht mehr, 9:43
 
-2026.05.06 Mi  13:03, symmetrische quartische Gleichung mit Resolvente x1x2+x3x4 Formeln erstellt, in Funktion quartischsym eingepflegt, 15:18
+2026.05.06 Mi  13:03, symmetrische quartische Gleichung mit Resolvente x1x2+x3x4 Formeln erstellt, in Funktion quartischsym eingepflegt, 15:18, 19:40, quartischsymintr erstellt, getestet, noch schrottig, 20:54
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

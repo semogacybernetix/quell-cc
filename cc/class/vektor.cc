@@ -2874,7 +2874,8 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
 void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real p, q, r, pk, qk, xl;
-  real ytk, yk, l, zk, D, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
+  real ytk, yk, l, zk, z;
+  real s1, s2, p1, p2, l1, l2, l3, l4, x1, x2, x3, x4, v1, v2;
 
   // Parameter der reduzierten quartischen Gleichung malin (buchf)
   p= a*a/-16 + b/6;
@@ -2918,37 +2919,105 @@ void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
 
   // Lösungen der beiden quadratischen Gleichungen
   zk= yk + b/6;
+  z= zk*2;
 
-  D= sqrtr (zk*zk - d);
+  p1= z/2 - sqrtr (z*z/4 - d);
+  p2= z/2 + sqrtr (z*z/4 - d);
+  s1= -a/2 - sqrtr (a*a/4 - b + z);
+  s2= -a/2 + sqrtr (a*a/4 - b + z);
 
-  b1= zk + D;
-  b2= zk - D;
-  a1= (a*b1 - c)/D/-4;                                                // 2. Fehleruelle D = 0
-  a2= (a*b2 - c)/D/4;
+  x1= s1/2 + sqrtr (s1*s1/4 - p1);
+  x2= s1/2 - sqrtr (s1*s1/4 - p1);
+  x3= s2/2 + sqrtr (s2*s2/4 - p2);
+  x4= s2/2 - sqrtr (s2*s2/4 - p2);
 
-  // Lösungen normale quartische Gleichung
-  a1q= a1*a1;
-  a2q= a2*a2;
-  if (a1q >= b1)
+  l1= s1/2 + sqrtr (s1*s1/4 - p2);
+  l2= s1/2 - sqrtr (s1*s1/4 - p2);
+  l3= s2/2 + sqrtr (s2*s2/4 - p1);
+  l4= s2/2 - sqrtr (s2*s2/4 - p1);
+
+  v1= x1*x2*x3 + x1*x2*x4 + x1*x3*x4 + x2*x3*x4;
+  v2= l1*l2*l3 + l1*l2*l4 + l1*l3*l4 + l2*l3*l4;
+
+  if (absr (v2 + c) < absr (v1 + c))
     {
-    D12= sqrtr (a1q - b1);
-    x1= a1 - D12;
-    x2= a1 + D12;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
+    x1= l1;
+    x2= l2;
+    x3= l3;
+    x4= l4;
     }
-  if (a2q >= b2)
+
+  if (x1 > 0)
+    psp.add (x1);
+  if (x2 > 0)
+    psp.add (x2);
+  if (x3 > 0)
+    psp.add (x3);
+  if (x4 > 0)
+    psp.add (x4);
+
+/*
+  printtext ("z symintr:");
+  printreal (z);
+  printtext ("\n");
+  printtext ("p1:");
+  printreal (p1);
+  printtext ("\n");
+  printtext ("p2:");
+  printreal (p2);
+  printtext ("\n");
+  printtext ("s1:");
+  printreal (s1);
+  printtext ("\n");
+  printtext ("s2:");
+  printreal (s2);
+  printtext ("\n");
+  printtext ("x1:");
+  printreal (x1);
+  printtext ("\n");
+  printtext ("x2:");
+  printreal (x2);
+  printtext ("\n");
+  printtext ("x3:");
+  printreal (x3);
+  printtext ("\n");
+  printtext ("x4:");
+  printreal (x4);
+  printtext ("\n");
+  printtext ("l1:");
+  printreal (l1);
+  printtext ("\n");
+  printtext ("l2:");
+  printreal (l2);
+  printtext ("\n");
+  printtext ("l3:");
+  printreal (l3);
+  printtext ("\n");
+  printtext ("l4:");
+  printreal (l4);
+  printtext ("\n");
+*/
+/*
+  quadratisch (-z, d, p1, p2);
+  quadratisch (a, b-z, s1, s2);
+
+  quadratisch (-s1, p1, x1, x2);
+  quadratisch (-s2, p2, x3, x4);
+
+  quadratisch (-s1, p2, l1, l2);
+  quadratisch (-s2, p1, l3, l4);
+
+  v1= x1*x2*x3 + x1*x2*x4 + x1*x3*x4 + x2*x3*x4;
+  v2= l1*l2*l3 + l1*l2*l4 + l1*l3*l4 + l2*l3*l4;
+
+  if (absr (v2 + c) < absr (v1 + c))
     {
-    D34= sqrtr (a2q - b2);
-    x3= a2 - D34;
-    x4= a2 + D34;
-    if (x3 > 0)
-      psp.add (x3);
-    if (x4 > 0)
-      psp.add (x4);
+    x1= l1;
+    x2= l2;
+    x3= l3;
+    x4= l4;
     }
+*/
   }
 
 void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp)
