@@ -391,7 +391,7 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   ckomplexk  kx1, kx2, kx3;
 
   ckomplexk  dx1k, dx2k, dy1k, dy2k, dxkff, kax, kbx, kcx, ky1, ky2, ky3, kpp, kqp, kpy, kqy, D3p, dpp, dx1, dx2, dy1, dy2, dax, dbx, diffpd, diffpk;
-  ckomplexk  bla, bla2, blay;
+  ckomplexk  blax, blax2, blay;
 
   // kubische Parameter aus kubischen Lösungen: kx1, kx2, kx3 -> kax, kbx, kcx
   kax= -(px1 + px2 + px3);
@@ -424,12 +424,12 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   kqy= -(ky1*ky2*ky3);
 
   // quadratische Lösungen aus kubischen Lösungen: px1, px2, px3 -> dx1k, dx2k
-  bla= (2*px1 - px2 - px3)*(-px1 + 2*px2 - px3)*(-px1 - px2 + 2*px3)/sqrtr (real (27));
   blay= (2*ky1 - ky2 - ky3)*(-ky1 + 2*ky2 - ky3)*(-ky1 - ky2 + 2*ky3)/sqrtr (real (27));
-  bla2= px1*px2*px3*sqrtr (real (27));  // ungenau
+  blax=  (2*px1 - px2 - px3)*(-px1 + 2*px2 - px3)*(-px1 - px2 + 2*px3)/sqrtr (real (27));
+  //blax= px1*px2*px3*sqrtr (real (27));  // ungenau
 
-  dx1k= bla*ik - px1*px2*px2 - px2*px3*px3 - px3*px1*px1 + px1*px1*px2 + px2*px2*px3 + px3*px3*px1;
-  dx2k= bla*ik + px1*px2*px2 + px2*px3*px3 + px3*px1*px1 - px1*px1*px2 - px2*px2*px3 - px3*px3*px1;
+  dx1k= blax*ik - px1*px2*px2 - px2*px3*px3 - px3*px1*px1 + px1*px1*px2 + px2*px2*px3 + px3*px3*px1;
+  dx2k= blax*ik + px1*px2*px2 + px2*px3*px3 + px3*px1*px1 - px1*px1*px2 - px2*px2*px3 - px3*px3*px1;
 
   dy1k= blay*ik - ky1*ky2*ky2 - ky2*ky3*ky3 - ky3*ky1*ky1 + ky1*ky1*ky2 + ky2*ky2*ky3 + ky3*ky3*ky1;
   dy2k= blay*ik + ky1*ky2*ky2 + ky2*ky3*ky3 + ky3*ky1*ky1 - ky1*ky1*ky2 - ky2*ky2*ky3 - ky3*ky3*ky1;
@@ -519,69 +519,67 @@ void kubischzwischenwerte (ckomplexk px1, ckomplexk px2, ckomplexk& px3)
   d_ql= dx1k - dx2k;
   dq= d_k*d_k;
 
-  // Lösungen Faktor 4.32   D= -60.75 d²
+  // Lösungen Faktor -4.32  D= -60.75 d²
   D27_lm= -dq*real (60.75);
   D27_pm= kqp*kqp*real (1640.25) + kpp*kpp*kpp*243;
   uh3_27pm= -kqp*real (40.5) + sqrtr (D27_lm);
   vh3_27pm= -kqp*real (40.5) - sqrtr (D27_lm);
-  bed= kpp*cbrtr (real (-243));
+  bed= kpp*-cbrtr (real (81));
   uvaddition (uh3_27pm, vh3_27pm, bed, L1_27pm, L2_27pm, L3_27pm);
   L1_27pm= L1_27pm/cbrtr (real (81));
   L2_27pm= L2_27pm/cbrtr (real (81));
   L3_27pm= L3_27pm/cbrtr (real (81));
 
-  // Lösungen Faktor 3    D= -6.75 d²            Differenzenprodukt ist ohne Faktor
+  // Lösungen Faktor -3    D= -6.75 d²            Differenzenprodukt ist ohne Faktor
   D3_lm= -dq*real (6.75);
   D3_pm= kqp*kqp*real (182.25) + kpp*kpp*kpp*27;
   uh3_3pm= -kqp*real (13.5) + sqrtr (D3_lm);
   vh3_3pm= -kqp*real (13.5) - sqrtr (D3_lm);
-  bed= -kpp*3;
+  bed= kpp*-3;
   uvaddition (uh3_3pm, vh3_3pm, bed, L1_3pm, L2_3pm, L3_3pm);
   L1_3pm= L1_3pm/3;
   L2_3pm= L2_3pm/3;
   L3_3pm= L3_3pm/3;
 
-  // Lösungen Faktor 2.18  D = -d²
+  // Lösungen Faktor -2.18  D = -d²
   D21_lm= -dq;
   D21_pm= kqp*kqp*27 + kpp*kpp*kpp*4;
   uh3_21pm= -kqp*sqrtr (real (27)) + sqrtr (D21_lm);
   vh3_21pm= -kqp*sqrtr (real (27)) - sqrtr (D21_lm);
-  bed= kpp*cbrtr (real (-4));
+  bed= kpp*-cbrtr (sqrtr (real (108)));
   uvaddition (uh3_21pm, vh3_21pm, bed, L1_21pm, L2_21pm, L3_21pm);
   L1_21pm= L1_21pm/cbrtr (sqrtr (real (108)));  // = sqrtr (3)*cbrtr (2)
   L2_21pm= L2_21pm/cbrtr (sqrtr (real (108)));
   L3_21pm= L3_21pm/cbrtr (sqrtr (real (108)));
 
-  // Lösungen Faktor -2.18i D = d²
+  // Lösungen Faktor 2.18i D = d²
   D21_l= dq;
   D21_p= kqp*kqp*-27 + kpp*kpp*kpp*-4;
-  uh3_21p= -kqp*sqrtr (real (27))*ik - sqrtr (D21_l);
-  vh3_21p= -kqp*sqrtr (real (27))*ik + sqrtr (D21_l);
-  d_21p= uh3_21p - vh3_21p;
-  bed= -kpp*cbrtr (-ckomplexk (4));
+  uh3_21p= -kqp*sqrtr (ckomplexk (-27)) + sqrtr (D21_p);
+  vh3_21p= -kqp*sqrtr (ckomplexk (-27)) - sqrtr (D21_p);
+  bed= -kpp*cbrtr (sqrtr (real (108)));
   uvaddition (uh3_21p, vh3_21p, bed, L1_21p, L2_21p, L3_21p);
-  L1_21p= L1_21p/cbrtr (ik*sqrtr (real (108)));
-  L2_21p= L2_21p/cbrtr (ik*sqrtr (real (108)));
-  L3_21p= L3_21p/cbrtr (ik*sqrtr (real (108)));
+  L1_21p= L1_21p/cbrtr (sqrtr (ckomplexk (-108)));
+  L2_21p= L2_21p/cbrtr (sqrtr (ckomplexk (-108)));
+  L3_21p= L3_21p/cbrtr (sqrtr (ckomplexk (-108)));
 
   // Lösungen Faktor 1.73i  D = d²/4
   D17_l= dq/4;
-  D17_p= -(kqp*kqp)*27/4 - kpp*kpp*kpp;
-  uh3_17p= -kqp/2*sqrtr (-ckomplexk (27)) + sqrtr (D17_l);
-  vh3_17p= -kqp/2*sqrtr (-ckomplexk (27)) - sqrtr (D17_l);
-  d_17p= uh3_17p - vh3_17p;
-  bed= kpp*-cbrtr (-ckomplexk (1));
+  D17_p= kqp*kqp*real (-6.75) - kpp*kpp*kpp;
+  uh3_17p= -kqp*sqrtr (ckomplexk (real (-6.75))) + sqrtr (D17_l);
+  vh3_17p= -kqp*sqrtr (ckomplexk (real (-6.75))) - sqrtr (D17_l);
+  bed= -kpp*cbrtr (sqrtr (real (27)));
   uvaddition (uh3_17p, vh3_17p, bed, L1_17p, L2_17p, L3_17p);
-  L1_17p= L1_17p/cbrtr (ik*sqrtr (real (27)));
-  L2_17p= L2_17p/cbrtr (ik*sqrtr (real (27)));
-  L3_17p= L3_17p/cbrtr (ik*sqrtr (real (27)));
+  L1_17p= L1_17p/cbrtr (sqrtr (ckomplexk (-27)));
+  L2_17p= L2_17p/cbrtr (sqrtr (ckomplexk (-27)));
+  L3_17p= L3_17p/cbrtr (sqrtr (ckomplexk (-27)));
 
   // Lösungen Faktor 1      D=d²/-108
   D1_lm= dq/-108;
   D1_pm= kqp*kqp/4 + kpp*kpp*kpp/27;
   uh3_1pm= -kqp/2 + sqrtr (D1_lm);
   vh3_1pm= -kqp/2 - sqrtr (D1_lm);
-  bed= kpp/-3;
+  bed= -kpp/3;
   uvaddition (uh3_1pm, vh3_1pm, bed, L1_1pm, L2_1pm, L3_1pm);
 
   // Lösungen Faktor -i     D= d²/108
@@ -1011,6 +1009,154 @@ void kubischweg3 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   printtext ("\n");
   }
 
+void kubischweg4 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
+  {
+  ckomplexk y1, y2, y3, ak, bk, ck, ak3, pk, qk, xl, x1d, x2d, u1p, u2p, u3p, v1p, v2p, v3p, y1p, y2p, y3p, x1p, x2p, x3p, u1, u2, u3, v1, v2, v3;
+  ckomplexk uh1, uh2, uh3, vh1, vh2, vh3;
+  ckomplexk blax, blay, bladx, blady, dx1, dx2, dy1, dy2;
+  ckomplexk dipx, dipy;
+
+  // die 3 Lösungen für u aus den Lösungen der normalen kubischen Gleichung
+  u1= (x1     + x2*e32 + x3*e31)/3;
+  u2= (x1*e31 + x2     + x3*e32)/3;
+  u3= (x1*e32 + x2*e31 + x3    )/3;
+
+  // die 3 Lösungen für v aus den Lösungen der normalen kubischen Gleichung
+  v1= (x1     + x2*e31 + x3*e32)/3;
+  v2= (x1*e32 + x2     + x3*e31)/3;
+  v3= (x1*e31 + x2*e32 + x3    )/3;
+
+  // die Kuben für u
+  uh1= u1*u1*u1;
+  uh2= u2*u2*u2;
+  uh3= u3*u3*u3;
+
+  // die Kuben für v
+  vh1= v1*v1*v1;
+  vh2= v2*v2*v2;
+  vh3= v3*v3*v3;
+
+  // Parameter der normalen kubischen Gleichung, kubischer Offset
+  ak= -(x1 + x2 + x3);
+  bk= x1*x2 + x2*x3 + x3*x1;
+  ck= -(x1*x2*x3);
+  ak3= ak/3;
+
+  // Lösungen der reduzierten kubischen Gleichung, kubischer Offset
+  y1= x1 + ak3;
+  y2= x2 + ak3;
+  y3= x3 + ak3;
+
+  // Das Differenzenprodukt
+  dipx= (x1-x2)*(x1-x3)*(x2-x3);
+  dipy= (y1-y2)*(y1-y3)*(y2-y3);
+  bladx= x1*x1*x2 + x2*x2*x3 + x3*x3*x1 - x1*x2*x2 - x2*x3*x3 - x3*x1*x1;
+  blady= y1*y1*y2 + y2*y2*y3 + y3*y3*y1 - y1*y2*y2 - y2*y3*y3 - y3*y1*y1;
+
+  // Parameter der reduzierten kubischen Gleichung
+  pk= ak*ak/-3 + bk;
+  qk= ak*(ak*ak/real (4.5) - bk)/3 + ck;
+
+  // Lösungen der eingebetteten quadratischen Gleichung
+  xl= pk*pk*pk/27 + qk*qk/4;
+  x1d= -qk/2 + sqrtr (xl);
+  x2d= -qk/2 - sqrtr (xl);
+
+  // Lösungen u v
+  cbrtr (x1d, u3p, u1p, u2p);
+  cbrtr (x2d, v3p, v2p, v1p);
+
+  // quadratische Lösungen aus kubischen Lösungen: px1, px2, px3 -> dx1k, dx2k
+  blax= (2*x1 - x2 - x3)*(-x1 + 2*x2 - x3)*(-x1 - x2 + 2*x3);
+  blay= y1*y2*y3/2;
+
+  dx1= (blax - dipx*sqrtr (ckomplexk (-27)))/54;
+  dx2= (blax + dipx*sqrtr (ckomplexk (-27)))/54;
+
+  dy1= blay + dipx/sqrtr (ckomplexk (-108));
+  dy2= blay - dipx/sqrtr (ckomplexk (-108));
+
+  // Rückübergabe der quadratischen Lösungen an die kubischen Lösungen
+  y1p= u1p - pk/(u1p*3);
+  y2p= u2p - pk/(u2p*3);
+  y3p= u3p - pk/(u3p*3);
+
+  //y1p= v1p - pk/(v1p*3);
+  //y2p= v2p - pk/(v2p*3);
+  //y3p= v3p - pk/(v3p*3);
+
+  //uvaddition (x1d, x2d, -pk/3, y1p, y2p, y3p);
+  //uvaddition (dx1, dx2, -pk/3, y1p, y2p, y3p);
+
+  // Rücktransformation der Lösungen der reduzierten kubischen Gleichung in die Lösungen der normalen kubischen Gleichung
+  x1p= y1p - ak3;
+  x2p= y2p - ak3;
+  x3p= y3p - ak3;
+
+  // Variablenausgabe
+  printvektor2komplex ("y1         ", y1, 1);
+  printvektor2komplex ("y2         ", y2, 1);
+  printvektor2komplex ("y3         ", y3, 1);
+  printtext ("\n");
+  printvektor2komplex ("ak         ", ak, 1);
+  printvektor2komplex ("bk         ", bk, 1);
+  printvektor2komplex ("ck         ", ck, 1);
+  printtext ("\n");
+  printvektor2komplex ("pk         ", pk, 1);
+  printvektor2komplex ("qk         ", qk, 1);
+  printtext ("\n");
+  printvektor2komplex ("dipx       ", dipx, 1);
+  printvektor2komplex ("dipy       ", dipy, 1);
+  printvektor2komplex ("bladx      ", bladx, 1);
+  printvektor2komplex ("blady      ", blady, 1);
+  printtext ("\n");
+  printvektor2komplex ("xl         ", xl, 1);
+  printvektor2komplex ("√xl        ", sqrtr (xl), 1);
+  printvektor2komplex ("dipx/√-108 ", dipx/sqrtr (ckomplexk (-108)), 1);
+  printtext ("\n");
+  printvektor2komplex ("x1d par    ", x1d, 0);
+  printvektor2komplex ("x2d par    ", x2d, 0);
+  printtext ("\n");
+  printvektor2komplex ("dx1        ", dx1, 0);
+  printvektor2komplex ("dx2        ", dx2, 0);
+  printtext ("\n");
+  printvektor2komplex ("dy1        ", dy1, 0);
+  printvektor2komplex ("dy2        ", dy2, 0);
+  printtext ("\n");
+  printvektor2komplex ("uh1 u1³    ", uh1, 1);
+  printvektor2komplex ("uh2 u2³    ", uh2, 1);
+  printvektor2komplex ("uh3 u3³    ", uh3, 1);
+  printtext ("\n");
+  printvektor2komplex ("vh1 v1³    ", vh1, 1);
+  printvektor2komplex ("vh2 v2³    ", vh2, 1);
+  printvektor2komplex ("vh3 v3³    ", vh3, 1);
+  printtext ("\n");
+  printvektor2komplex ("u1  x123   ", u1, 1);
+  printvektor2komplex ("u2  x123   ", u2, 1);
+  printvektor2komplex ("u3  x123   ", u3, 1);
+  printtext ("\n");
+  printvektor2komplex ("v1  x123   ", v1, 1);
+  printvektor2komplex ("v2  x123   ", v2, 1);
+  printvektor2komplex ("v3  x123   ", v3, 1);
+  printtext ("\n");
+  printvektor2komplex ("u1p 3√x12d ", u1p, 1);
+  printvektor2komplex ("u2p 3√x12d ", u2p, 1);
+  printvektor2komplex ("u3p 3√x12d ", u3p, 1);
+  printtext ("\n");
+  printvektor2komplex ("v1p 3√x12d ", v1p, 1);
+  printvektor2komplex ("v2p 3√x12d ", v2p, 1);
+  printvektor2komplex ("v3p 3√x12d ", v3p, 1);
+  printtext ("\n");
+  printvektor2komplex ("y1p        ", y1p, 0);
+  printvektor2komplex ("y2p        ", y2p, 0);
+  printvektor2komplex ("y3p        ", y3p, 0);
+  printtext ("\n");
+  printvektor2komplex ("x1p        ", x1p, 0);
+  printvektor2komplex ("x2p        ", x2p, 0);
+  printvektor2komplex ("x3p        ", x3p, 0);
+  printtext ("\n");
+  }
+
 void kubischeingabezw ()
   {
   ckomplexk x1, x2, x3;
@@ -1019,8 +1165,9 @@ void kubischeingabezw ()
   vektor2eingabek (x2);
   vektor2eingabek (x3);
 
-//  kubischzwischenwerte (x1, x2, x3);
-  kubischweg2 (x1, x2, x3);
+  //kubischzwischenwerte (x1, x2, x3);
+  //kubischweg2 (x1, x2, x3);
+  kubischweg4 (x1, x2, x3);
   }
 
 //--------------------------------------------------------------------------- quartische Gleichung ----------------------------------------------------------------------------------------------------------------------------------------

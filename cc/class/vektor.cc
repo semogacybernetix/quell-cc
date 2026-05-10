@@ -614,20 +614,20 @@ ckomplexk kw (const ckomplexk pv)
   }
 
 // -------------------------------------------------- Quadratwurzel
-ckomplexk sqrtkr (const ckomplexk pv)
+ckomplexk sqrtr (const ckomplexk pv)
   {
   real l, x, y;
 
   l= sqrtr (pv.x*pv.x + pv.y*pv.y);
   x= sqrtr ((l + pv.x)/2);
+  y= sqrtr ((l - pv.x)/2);
 
   if (pv.y >= 0)
-    /**/ y=  sqrtr ((l - pv.x)/2);
-    else y= -sqrtr ((l - pv.x)/2);
-  return ckomplexk (x, y);
+    /**/ return ckomplexk (x, y);
+    else return ckomplexk (x, -y);
   }
 
-ckomplexk sqrtr (const ckomplexk pv)
+ckomplexk sqrtkr (const ckomplexk pv)
   {
   ckomplexp vpol= polar180 (pv);
   vpol.b= sqrtr (vpol.b);
@@ -2675,7 +2675,103 @@ void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
   zk= yk + p/6;
 
-  uq= yk/2 - p/6;
+/*
+  b1= zk/2 - sqrtr (zk*zk/4 - r);
+  b2= zk/2 + sqrtr (zk*zk/4 - r);
+
+  a1= -sqrtr (zk - p);
+  a2=  sqrtr (zk - p);
+//*/
+
+//*
+  //uq= yk/2 - p/6;
+  //uq= zk/2 - p/4;
+  //vq= zk*zk - r;
+
+  uq= zk - p;
+  vq= zk*zk/4 - r;
+
+  //u= sqrtrz (uq);
+  //v= sqrtrz (vq);
+
+  u= sqrtr (uq);
+  v= sqrtr (vq);
+
+  // Bedingung -2uv = q
+  bed= u*v*-2;
+  if (absr (bed + q) < absr (bed - q))
+    v= -v;
+
+  b1= zk/2 + v;
+  b2= zk/2 - v;
+//*/
+
+  // Lösungen normale quartische Gleichung
+  a4= a/-4;
+  if (uq*2 >= b1)
+    {
+    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a1= a4 - u;
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (uq*2 >= b2)
+    {
+    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a2= a4 + u;
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+  }
+
+void quartischdiffpfintralt (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  real a4, p, q, r, pk, qk, xl;
+  real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
+
+  // Parameter der reduzierten quartischen Gleichung diffp
+  p= a*a*3/-8 + b;
+  q= a*a*a/8 + a*b/-2 + c;
+  r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
+
+  // Parameter der reduzierten kubischen Gleichung diffp
+  pk= p*p/9 + r*4/3;
+  qk= p*p*p/27 + p*r*4/-3 + q*q/2;
+
+  // Parameter der reduzierten kubischen Gleichung direkt diffpf (ungenauer)
+  //pk= a*c/-3 + b*b/9 + d*4/3;
+  //qk= a*b*c/-6 + a*a*d/2 + b*d*4/-3 + b*b*b/27 + c*c/2;
+
+  // Lösung der normalen linearen Gleichung
+  xl= qk*qk - pk*pk*pk;
+
+  // reelle Lösung der kubischen Resolvente
+  if (xl >= 0)                                                        // 2 oder 0 Schnittpunkte mit dem Torus
+    {
+    if (qk >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      /**/ ytk= cbrtr (qk + sqrtr (xl));
+      else ytk= cbrtr (qk - sqrtr (xl));                              // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+    yk= (ytk + pk/ytk)/2;                                             // ytk = 0 ausgeschlossen, da Auslöschung verhindert
+    }
+    else                                                              // 4 Schnittpunkte mit dem Torus
+    {
+    l= sqrtr (pk);                                                    // pk > 0 immer, l > 0 immer, wegen Division
+    yk= cosr (acosr (qk/(pk*l))/3)*l;                                   // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
+  zk= yk + p/6;
+
+  //uq= yk/2 - p/6;
+  uq= zk/2 - p/4;
   vq= zk*zk - r;
 
   u= sqrtrz (uq);
@@ -2875,11 +2971,8 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
 
 void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  //real aq, p, q, r;
   real pa, qa, xl, ykt, yk, l, zk;
-
-  real Dp, Ds, Dx1, Dx2, Dl1, Dl2;
-  real s1, s2, p1, p2, x1, x2, x3, x4, l1, l2, l3, l4, v1, v2;
+  real D, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
 
 /*
   // Parameter der reduzierten quartischen Gleichung diffp
@@ -2928,71 +3021,41 @@ void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
     }
 
   // Lösungen der beiden quadratischen Gleichungen
-  zk= yk + b/3;
+  //zk= yk + b/6;
+  zk= yk/2 + b/6;
 
-  Dp= zk*zk/4 - d;
-  p1= zk/2 - sqrtr (Dp);
-  p2= zk/2 + sqrtr (Dp);
+  D= sqrtr (zk*zk - d);
 
-  Ds= a*a/4 - b + zk;
-  s1= -a/2 - sqrtr (Ds);
-  s2= -a/2 + sqrtr (Ds);
+  b1= zk + D;
+  b2= zk - D;
+  a1= (a*b1 - c)/D/-4;                                                // 2. Fehleruelle D = 0
+  a2= (a*b2 - c)/D/4;
 
-  Dx1= s1*s1/4 - p1;
-  x1= s1/2 + sqrtr (Dx1);
-  x2= s1/2 - sqrtr (Dx1);
-
-  Dx2= s2*s2/4 - p2;
-  x3= s2/2 + sqrtr (Dx2);
-  x4= s2/2 - sqrtr (Dx2);
-
-  Dl1= s1*s1/4 - p2;
-  l1= s1/2 + sqrtr (Dl1);
-  l2= s1/2 - sqrtr (Dl1);
-
-  Dl2= s2*s2/4 - p1;
-  l3= s2/2 + sqrtr (Dl2);
-  l4= s2/2 - sqrtr (Dl2);
-
-  v1= x1*x2*x3 + x1*x2*x4 + x1*x3*x4 + x2*x3*x4;
-  v2= l1*l2*l3 + l1*l2*l4 + l1*l3*l4 + l2*l3*l4;
-
-  if (absr (v2 + c) < absr (v1 + c))
+  // Lösungen normale quartische Gleichung
+  a1q= a1*a1;
+  a2q= a2*a2;
+  if (a1q >= b1)
     {
-    if (Dl1 >= 0)
-      {
-      if (l1 > 0)
-        psp.add (l1);
-      if (l2 > 0)
-        psp.add (l2);
-      }
-    if (Dl2 >= 0)
-      {
-      if (l3 > 0)
-        psp.add (l3);
-      if (l4 > 0)
-        psp.add (l4);
-      }
+    D12= sqrtr (a1q - b1);
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
     }
-    else
+  if (a2q >= b2)
     {
-    if (Dx1 >= 0)
-      {
-      if (x1 > 0)
-        psp.add (x1);
-      if (x2 > 0)
-        psp.add (x2);
-      }
-    if (Dx2 >= 0)
-      {
-      if (x3 > 0)
-        psp.add (x3);
-      if (x4 > 0)
-        psp.add (x4);
-      }
+    D34= sqrtr (a2q - b2);
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
     }
 
-//*
+/*
   printtext ("xl:");
   printreal (xl);
   printtext ("\n");
@@ -3045,28 +3108,6 @@ void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
   printreal (l4);
   printtext ("\n");
 //*/
-
-/*
-  quadratisch (-z, d, p1, p2);
-  quadratisch (a, b-z, s1, s2);
-
-  quadratisch (-s1, p1, x1, x2);
-  quadratisch (-s2, p2, x3, x4);
-
-  quadratisch (-s1, p2, l1, l2);
-  quadratisch (-s2, p1, l3, l4);
-
-  v1= x1*x2*x3 + x1*x2*x4 + x1*x3*x4 + x2*x3*x4;
-  v2= l1*l2*l3 + l1*l2*l4 + l1*l3*l4 + l2*l3*l4;
-
-  if (absr (v2 + c) < absr (v1 + c))
-    {
-    x1= l1;
-    x2= l2;
-    x3= l3;
-    x4= l4;
-    }
-*/
   }
 
 void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp)

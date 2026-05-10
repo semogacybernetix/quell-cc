@@ -423,7 +423,8 @@
 
 2026.05.06 Mi  13:03, symmetrische quartische Gleichung mit Resolvente x1x2+x3x4 Formeln erstellt, in Funktion quartischsym eingepflegt, 15:18, 19:40, quartischsymintr erstellt, getestet, noch schrottig, 20:54
 
-2026.05.88 Fr  19:50, quartischsymintr Resolvente Korrektheit sichergestellt, optimiert, quartischsymintr Fehler in Berechnung nach Resolvente (nicht wegen float-Ungenauigkeit), 2:22
+2026.05.08 Fr  19:50, quartischsymintr Resolvente Korrektheit sichergestellt, optimiert, quartischsymintr Fehler in Berechnung nach Resolvente (nicht wegen float-Ungenauigkeit), 2:22
+2026.05.10 So  12:05, kubischweg4 bearbeitet, quadratische Resolvente in den Lösungen eingepflegt, 14:11, 19 Uhr, kubischweg4 verfeinert, alle Zwischenwerte sauber ermittelt, 23:33, quartischsym gesäubert, 23:59
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
