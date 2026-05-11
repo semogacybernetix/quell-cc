@@ -425,6 +425,7 @@
 
 2026.05.08 Fr  19:50, quartischsymintr Resolvente Korrektheit sichergestellt, optimiert, quartischsymintr Fehler in Berechnung nach Resolvente (nicht wegen float-Ungenauigkeit), 2:22
 2026.05.10 So  12:05, kubischweg4 bearbeitet, quadratische Resolvente in den Lösungen eingepflegt, 14:11, 19 Uhr, kubischweg4 verfeinert, alle Zwischenwerte sauber ermittelt, 23:33, quartischsym gesäubert, 23:59
+2026.05.11 Mo  22:25, quartischmalin Division beseitigt, Fallunterscheidung mit c und a1, a2, b1, b2 gefunden, malinintr und symintr noch Schrott, 1:29
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

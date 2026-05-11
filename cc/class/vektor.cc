@@ -2891,47 +2891,49 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
 
 void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real p, q, r, pk, qk, xl, ytk, yk, l, zk;
+  //real p, q, r;
+  real pa, qa, xl, ytk, yk, l, zk;
   real D, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
+  real v1, v2;
 
   // Parameter der reduzierten quartischen Gleichung malin (buchf)
-  p= a*a/-16 + b/6;
-  q= a*a*a/32 + a*b/-8 + c/4;
-  r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
+  //p= a*a/-16 + b/6;
+  //q= a*a*a/32 + a*b/-8 + c/4;
+  //r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
 
   // Parameter der reduzierten kubischen Gleichung malin (buchf)
-  pk= p*p + r/3;
-  qk= p*p*p - p*r + q*q;
+  //pa= p*p + r/3;
+  //qa= p*p*p - p*r + q*q;
 
   // Parameter der reduzierten kubischen Gleichung direkt buchf (ungenauer)
-  //pk= a*c/-12 + b*b/36 + d/3;
-  //qk= a*b*c/-48 + a*a*d/16 + b*d/-6 + b*b*b/216 + c*c/16;
+  pa= (a*c*-3 + b*b + d*12)/36;
+  qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/16;
 
   // Lösung der normalen linearen Gleichung
-  xl= qk*qk - pk*pk*pk;
+  xl= qa*qa - pa*pa*pa;
 
   // reelle Lösung der kubischen Resolvente buchf
   if (xl >= 0)
     {
-    if (qk > 0)
+    if (qa > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ytk= cbrtr (qk + sqrtr (xl));
-      yk= ytk + pk/ytk;                                             // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      ytk= cbrtr (qa + sqrtr (xl));
+      yk= ytk + pa/ytk;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
       }
     else
-    if (qk < 0)
+    if (qa < 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ytk= cbrtr (qk - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      yk= ytk + pk/ytk;                                             // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      ytk= cbrtr (qa - sqrtr (xl));                                   // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      yk= ytk + pa/ytk;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
       }
     else
       yk= 0;
     }
     else
     {
-    l= sqrtr (pk);
-    yk= cosr (acosr (qk/(pk*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
-    //yk= cosr (acosr (qk/(pk*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
+    l= sqrtr (pa);
+    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
+    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
     }
 
   // Lösungen der beiden quadratischen Gleichungen
@@ -2941,8 +2943,42 @@ void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp)
 
   b1= zk + D;
   b2= zk - D;
-  a1= (a*b1 - c)/D/-4;                                                // 2. Fehleruelle D = 0
-  a2= (a*b2 - c)/D/4;
+  //a1= (a*b1 - c)/D/-4;                                                // 2. Fehleruelle D = 0
+  //a2= (a*b2 - c)/D/4;
+  a1= -a/4 + sqrtr (a*a/16 - (b/4 - zk/2));
+  a2= -a/4 - sqrtr (a*a/16 - (b/4 - zk/2));
+  v1= a1*b2 + a2*b1;
+  v2= a1*b1 + a2*b2;
+  if (absr (v2*2 + c) < absr (v1*2 + c))
+    {
+    real bla= a1;
+    a1= a2;
+    a2= bla;
+    }
+
+/*
+  printtext ("zk:");
+  printreal (zk);
+  printtext ("\n");
+  printtext ("b:");
+  printreal (b);
+  printtext ("\n");
+  printtext ("c:");
+  printreal (c);
+  printtext ("\n");
+  printtext ("v1:");
+  printreal (v1);
+  printtext ("\n");
+  printtext ("v2:");
+  printreal (v2);
+  printtext ("\n");
+  printtext ("a1:");
+  printreal (a1);
+  printtext ("\n");
+  printtext ("a2:");
+  printreal (a2);
+  printtext ("\n");
+//*/
 
   // Lösungen normale quartische Gleichung
   a1q= a1*a1;
@@ -3002,13 +3038,13 @@ void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
     if (qa > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ykt= cbrtr (qa + sqrtr (xl));
-      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
       }
     else
     if (qa < 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ykt= cbrtr (qa - sqrtr (xl));                                   // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qk= pk= xl= 0  kann bei quartischmalin auftreten
+      ykt= cbrtr (qa - sqrtr (xl));                                   // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
       }
     else
       yk= 0;
@@ -3021,7 +3057,30 @@ void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
     }
 
   // Lösungen der beiden quadratischen Gleichungen
-  //zk= yk + b/6;
+  zk= yk + b/3;
+
+  a1= -a/2 + sqrtr (a*a/4 - b + zk);
+  a2= -a/2 - sqrtr (a*a/4 - b + zk);
+  b1= zk/2 + sqrtr (zk*zk/4 - d);
+  b2= zk/2 - sqrtr (zk*zk/4 - d);
+
+  x1= a1/2 + sqrtr (a1*a1/4 - b1);
+  x2= a1/2 - sqrtr (a1*a1/4 - b1);
+  x3= a2/2 + sqrtr (a2*a2/4 - b2);
+  x4= a2/2 - sqrtr (a2*a2/4 - b2);
+
+  if (x1 > 0)
+    psp.add (x1);
+  if (x2 > 0)
+    psp.add (x2);
+  if (x3 > 0)
+    psp.add (x3);
+  if (x4 > 0)
+    psp.add (x4);
+
+//  return;
+//*/
+//*
   zk= yk/2 + b/6;
 
   D= sqrtr (zk*zk - d);
@@ -3054,8 +3113,8 @@ void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
     if (x4 > 0)
       psp.add (x4);
     }
-
-/*
+//*/
+//*
   printtext ("xl:");
   printreal (xl);
   printtext ("\n");
@@ -3065,23 +3124,17 @@ void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
   printtext ("zk:");
   printreal (zk);
   printtext ("\n");
-  printtext ("Dp:");
-  printreal (Dp);
+  printtext ("a1:");
+  printreal (a1);
   printtext ("\n");
-  printtext ("Ds:");
-  printreal (Ds);
+  printtext ("b1:");
+  printreal (b1);
   printtext ("\n");
-  printtext ("p1:");
-  printreal (p1);
+  printtext ("a2:");
+  printreal (a2);
   printtext ("\n");
-  printtext ("p2:");
-  printreal (p2);
-  printtext ("\n");
-  printtext ("s1:");
-  printreal (s1);
-  printtext ("\n");
-  printtext ("s2:");
-  printreal (s2);
+  printtext ("b2:");
+  printreal (b2);
   printtext ("\n");
   printtext ("x1:");
   printreal (x1);
@@ -3094,18 +3147,6 @@ void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
   printtext ("\n");
   printtext ("x4:");
   printreal (x4);
-  printtext ("\n");
-  printtext ("l1:");
-  printreal (l1);
-  printtext ("\n");
-  printtext ("l2:");
-  printreal (l2);
-  printtext ("\n");
-  printtext ("l3:");
-  printreal (l3);
-  printtext ("\n");
-  printtext ("l4:");
-  printreal (l4);
   printtext ("\n");
 //*/
   }
