@@ -2409,6 +2409,14 @@ void quartischloesungen ()
   printvektor2komplex ("x4          ", x4, 0);
   printtext ("\n");
 
+  quartischsummenprodukt (a, b, c, d, x1, x2, x3, x4);
+  printtext ("-------------------------------- quartischsummenprodukt Lösungen ----------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", x1, 0);
+  printvektor2komplex ("x2          ", x2, 0);
+  printvektor2komplex ("x3          ", x3, 0);
+  printvektor2komplex ("x4          ", x4, 0);
+  printtext ("\n");
+
   psp.anz= 0;
   quartischdiffpintrc (a.x, b.x, c.x, d.x, psp);
 
@@ -2465,7 +2473,18 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
-  quartischsymintr (a.x, b.x, c.x, d.x, psp);
+  quartischproduktsumme (a.x, b.x, c.x, d.x, psp);
+
+  printtext ("-------------------------------- quartischsymintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("anz         ", real (psp.anz), 0);
+  printvektor2komplex ("x1          ", psp.abstand[0], 0);
+  printvektor2komplex ("x2          ", psp.abstand[1], 0);
+  printvektor2komplex ("x3          ", psp.abstand[2], 0);
+  printvektor2komplex ("x4          ", psp.abstand[3], 0);
+  printtext ("\n");
+
+  psp.anz= 0;
+  quartischsummenprodukt (a.x, b.x, c.x, d.x, psp);
 
   printtext ("-------------------------------- quartischsymintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);

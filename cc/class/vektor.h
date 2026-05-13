@@ -18,11 +18,11 @@ typedef long double _Float80;
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
+typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
-typedef _Float80 real;        // AMD64: 80 Bit hw, ARM64: 128 Bit sw                                                                       6.90      4.34    0.53         10.84                               5.55
+//typedef _Float80 real;        // AMD64: 80 Bit hw, ARM64: 128 Bit sw                                                                       6.90      4.34    0.53         10.84                               5.55
 //typedef long double real;     // AMD64: 80 Bit hw, ARM64: 128 Bit sw
 
 // ------------------------- 80 Bit -------------------------------------------------------------------------------------------------------------
@@ -383,6 +383,7 @@ void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ck
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
+void quartischsummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
 // normale quartische Gleichung reell (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
 void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp);
@@ -390,7 +391,8 @@ void quartischdiffpfintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischpdfw2intr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischmalinintr (real a, real b, real c, real d, cschnittpunkte& psp);
-void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischsummeproduktintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp);
 
