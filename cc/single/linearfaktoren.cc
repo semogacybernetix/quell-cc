@@ -6,12 +6,12 @@
 
 void quadratischreduziert (ckomplexk p, ckomplexk& y1, ckomplexk& y2)
   {
-  ckomplexk d;
+  ckomplexk D;
 
-  d= sqrtr (-p);
+  D= sqrtr (-p);
 
-  y1=  d;
-  y2= -d;
+  y1=  D;
+  y2= -D;
   }
 
 void quadratischreduziertk (ckomplexk a, ckomplexk b, ckomplexk& p)
@@ -21,7 +21,7 @@ void quadratischreduziertk (ckomplexk a, ckomplexk b, ckomplexk& p)
 
 void quadratischnormal (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   {
-  ckomplexk a2, p, y1, y2;
+  ckomplexk p, y1, y2, a2;
 
   quadratischreduziertk (a, b, p);
   quadratischreduziert (p, y1, y2);
@@ -37,8 +37,8 @@ void quadratisch2 (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
 
   D= sqrtr (a*a - b*4);
 
-  x1= (a + D)/-2;
-  x2= (a - D)/-2;
+  x1= (a - D)/-2;
+  x2= (a + D)/-2;
   }
 
 void quadratischp (ckomplexp a, ckomplexp b, ckomplexp& x1, ckomplexp& x2)
@@ -47,8 +47,8 @@ void quadratischp (ckomplexp a, ckomplexp b, ckomplexp& x1, ckomplexp& x2)
 
   D= sqrtr (a*a - b*4);
 
-  x1= (a + D)/-2;
-  x2= (a - D)/-2;
+  x1= (a - D)/-2;
+  x2= (a + D)/-2;
   }
 
 void quadratischparameter ()
@@ -291,7 +291,6 @@ void kubischparameter ()
 
 void kubischloesungen ()
   {
-  real y;
   ckomplexk x1, x2, x3, a, b, c, p, q, y1, y2, y3;
   cschnittpunkte psp;
 
@@ -345,11 +344,21 @@ void kubischloesungen ()
   printvektor2komplex ("x3", y3 - a/3, 0);
   printtext ("\n");
 
-  kubischreduziertg2(p, q, y1, y2, y3);
+  kubischreduziertg2 (p, q, y1, y2, y3);
   printtext ("---------------------- kubischreduziert g2 ----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1", y1 - a/3, 0);
   printvektor2komplex ("x2", y2 - a/3, 0);
   printvektor2komplex ("x3", y3 - a/3, 0);
+  printtext ("\n");
+
+  kubischreduziertreellc (p.x, q.x, y1.x);
+  printtext ("---------------------- kubischreduziert reellc ------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1", y1 - a/3, 0);
+  printtext ("\n");
+
+  kubischreduziertreellu (p.x, q.x, y1.x);
+  printtext ("---------------------- kubischreduziert reellu ------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1", y1 - a/3, 0);
   printtext ("\n");
 
   psp.anz= 0;
@@ -360,20 +369,6 @@ void kubischloesungen ()
   printvektor2komplex ("x1          ", psp.abstand[0], 0);
   printvektor2komplex ("x2          ", psp.abstand[1], 0);
   printvektor2komplex ("x3          ", psp.abstand[2], 0);
-  printtext ("\n");
-
-  kubischreduziertreellc (p.x, q.x, y);
-  printtext ("---------------------- kubischreduziert reell c -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printtext ("x:");
-  printreal (y - a.x/3);
-  printtext ("\n");
-  printtext ("\n");
-
-  kubischreduziertreellu (p.x, q.x, y);
-  printtext ("---------------------- kubischreduziert reell u -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-  printtext ("x:");
-  printreal (y - a.x/3);
-  printtext ("\n");
   printtext ("\n");
   }
 

@@ -673,7 +673,7 @@ ckomplexk qnrtr (const ckomplexk pv)
   return kartes (vpol);
   }
 
-// -------------------------------------------------- n-te Potenz
+// -------------------------------------------------- n-te Potenz rekursiv
 ckomplexk pown (const ckomplexk a, const integer n)
   {
   ckomplexk ret= 1;
@@ -1821,11 +1821,11 @@ cvektor4 quaternionfromeulerwinkel (const cvektor3 pflugw)
   cvektor4 q3 (cosr (wi.z), 0, 0, sinr (-wi.z));
   cvektor4 ret= q1*q2*q3;
   if (ret.r >= 0)
-    return ret;
-  return -ret;
+    /**/ return  ret;
+    else return -ret;
   }
 
-//-------------------------------------------------------- Polynomberechnung --------------------------------------------------------------------------------------------------------------------------------------------------------------
+//******************************************************** Polynomberechnung **************************************************************************************************************************************************************
 
 // ------------------------------------------------------- quadratisch ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1836,8 +1836,8 @@ void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   a2= a/-2;
   D= sqrtr (a2*a2 - b);
 
-  x1= a2 - D;
-  x2= a2 + D;
+  x1= a2 + D;
+  x2= a2 - D;
   }
 
 // ------------------------------------------------------- kubisch ----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1887,7 +1887,7 @@ void kubischreduziertcardano (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk
   uvaddition (u1, u2, -p, y1, y2, y3);
   }
 
-void kubischreduziertcardano3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+void kubischreduziertcardano3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)  // Cardano/Lagrange-Verfahren mit 3-fachen Lösungen
   {
   ckomplexk u1, u2;
 
@@ -1895,28 +1895,24 @@ void kubischreduziertcardano3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplex
   uvaddition (u1, u2, p*-3, y1, y2, y3);
   }
 
-void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)  // u-Verfahren
   {
   ckomplexk  u1, u2, u, z1, z2, z3;
 
   quadratisch (q, p*p*p/-27, u1, u2);
 
-  if (absr (u1) > absr (u2))                                          // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+  if (absr (u1) >= absr (u2))
+    /**/ u= u1;
+    else u= u2;
+
+  if (absr (u) > 0)                                                             // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
     {
     cbrtr (u1, z1, z2, z3);
     y1= z1 - p/(z1*3);
     y2= z2 - p/(z2*3);
     y3= z3 - p/(z3*3);
     }
-  else
-  if (absr (u2) > 0)
-    {
-    cbrtr (u2, z1, z2, z3);
-    y1= z1 - p/(z1*3);
-    y2= z2 - p/(z2*3);
-    y3= z3 - p/(z3*3);
-    }
-  else
+  else                                                                          // u1, u2 = 0
     {
     y1= 0;
     y2= 0;
@@ -1924,28 +1920,24 @@ void kubischreduziertu (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, 
     }
   }
 
-void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)  // u-Verfahren mit 3-fachen Lösungen
   {
   ckomplexk  u1, u2, u, z1, z2, z3;
 
   quadratisch (q*27, p*p*p*-27, u1, u2);
 
-  if (absr (u1) > absr (u2))                                          // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
+  if (absr (u1) >= absr (u2))
+    /**/ u= u1;
+    else u= u2;
+
+  if (absr (u) > 0)                                                             // die betragsmäßig größere Lösung nehmen um von der Division durch 0 wegzukommen
     {
     cbrtr (u1, z1, z2, z3);
     y1= z1 - p*3/z1;
     y2= z2 - p*3/z2;
     y3= z3 - p*3/z3;
     }
-  else
-  if (absr (u2) > 0)
-    {
-    cbrtr (u2, z1, z2, z3);
-    y1= z1 - p*3/z1;
-    y2= z2 - p*3/z2;
-    y3= z3 - p*3/z3;
-    }
-  else
+  else                                                                          // u1, u2 = 0
     {
     y1= 0;
     y2= 0;
@@ -1953,7 +1945,7 @@ void kubischreduziertu3 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
     }
   }
 
-void kubischreduziertg (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+void kubischreduziertg (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)  // u-Verfahren mit Parameterskalierung
   {
   ckomplexk  xl, z, z1, z2;
 
@@ -1961,13 +1953,12 @@ void kubischreduziertg (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, 
   q= q/-2;
   p= p/-3;
   xl= q*q - p*p*p;
-//  printvektor2komplex ("kubischreduziertg xl", xl, 0);
-//  printtext ("\n");
 
   // Lösung der quadratischen Gleichung
   z= sqrtr (xl);
   z1= q + z;
   z2= q - z;
+
   if (absr (z1) >= absr (z2))
     /**/ z= z1;
     else z= z2;
@@ -1988,7 +1979,7 @@ void kubischreduziertg (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, 
     }
   }
 
-void kubischreduziertg2 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+void kubischreduziertg2 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)  // u-Verfahren ganzzahlig skaliert
   {
   ckomplexk  xl, z, z1, z2;
 
@@ -1999,6 +1990,7 @@ void kubischreduziertg2 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
   z= sqrtr (xl);
   z1= q*27 + z;
   z2= q*27 - z;
+
   if (absr (z1) >= absr (z2))
     /**/ z= z1;
     else z= z2;
@@ -2035,7 +2027,8 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   //kubischreduziertcardano3 (p, q, y1, y2, y3);
   //kubischreduziertu (p, q, y1, y2, y3);
   //kubischreduziertu3 (p, q, y1, y2, y3);
-  kubischreduziertg (p, q, y1, y2, y3);
+  //kubischreduziertg (p, q, y1, y2, y3);
+  kubischreduziertg2 (p, q, y1, y2, y3);
 
   x1= y1 - a/3;
   x2= y2 - a/3;
@@ -2049,6 +2042,7 @@ void kubischreduziertreellc (real p, real q, real& y)
   real xl, q2, vxl, l;
 
   xl= q*q/4 + p*p*p/27;
+
   if (xl >= 0)
     {
     q2= q/-2;
