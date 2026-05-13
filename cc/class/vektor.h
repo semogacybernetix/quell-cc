@@ -367,8 +367,9 @@ void kubischintr (real ak, real bk, real ck, cschnittpunkte& psp);
 
 // kubische Resolventen komplex
 void kubischeresolventeproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
-void kubischeresolventesummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 void kubischeresolventeproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
+void kubischeresolventesummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
+void kubischeresolventesummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3);
 
 // reduzierte quartische Gleichung komplex mit eigenen Resolventen
 void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);

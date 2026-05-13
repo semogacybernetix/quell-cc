@@ -2135,6 +2135,17 @@ void kubischeresolventeproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckom
   kubisch (ak, bk, ck, z1, z2, z3);
   }
 
+void kubischeresolventeproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)  // Σ(x)
+  {
+  ckomplexk ak, bk, ck;
+
+  ak= -b;
+  bk= a*c - d*4;
+  ck= (b*4 - a*a)*d - c*c;
+
+  kubisch (ak, bk, ck, z1, z2, z3);
+  }
+
 void kubischeresolventesummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)  // Π(y)
   {
   ckomplexk ak, bk, ck;
@@ -2146,13 +2157,13 @@ void kubischeresolventesummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, cko
   kubisch (ak, bk, ck, z1, z2, z3);
   }
 
-void kubischeresolventeproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)  // Σ(x)
+void kubischeresolventesummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)  // Π(x)
   {
   ckomplexk ak, bk, ck;
 
-  ak= -b;
-  bk= a*c - d*4;
-  ck= (b*4 - a*a)*d - c*c;
+  ak= b*-2;
+  bk= a*c + b*b + d*-4;
+  ck= c*c;
 
   kubisch (ak, bk, ck, z1, z2, z3);
   }

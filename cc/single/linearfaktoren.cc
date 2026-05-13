@@ -2002,7 +2002,25 @@ void quartischwegz3kurz (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk&
 
 void quartischzurueck (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, ckomplexk& aq, ckomplexk& bq, ckomplexk& cq, ckomplexk& dq)
   {
-  ckomplexk y1, y2, y3, y4, dpy, z1, z2, z3;
+  ckomplexk psx1, psx2, psx3, spx1, spx2, spx3, akz, bkz, ckz, dpx, y1, y2, y3, y4, psy1, psy2, psy3, spy1, spy2, spy3, dpy;
+
+  // Produktsumme der x-Werte
+  psx1= x1*x2 + x3*x4;
+  psx2= x1*x3 + x2*x4;
+  psx3= x1*x4 + x2*x3;
+
+  // Summenprodukt der x-Werte
+  spx1= (x1+x2)*(x3+x4);
+  spx2= (x1+x3)*(x2+x4);
+  spx3= (x1+x4)*(x2+x3);
+
+  // Koeffizienten der kubischen Resolvente Summenprodukt
+  akz= -(spx1 + spx2 + spx3);
+  bkz= spx1*spx2 + spx1*spx3 + spx2*spx3;
+  ckz= -(spx1*spx2*spx3);
+
+  // Differenzenprodukt der x-Werte
+  dpx= (x1-x2)*(x1-x3)*(x1-x4)*(x2-x3)*(x2-x4)*(x3-x4);
 
   // quartische Parameter aus den quartischen Lösungen: x1, x2, x3, x4 -> aq, bq, cq, dq
   aq= -(x1 + x2 + x3 + x4);
@@ -2016,50 +2034,63 @@ void quartischzurueck (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
   y3= x3 + aq/4;
   y4= x4 + aq/4;
 
-  // 1. Zwischenwert: Differenzenprodukt der Lösungen der normalen quartischen Gleichung
+  // Produktsumme der y-Werte
+  psy1= y1*y2 + y3*y4;
+  psy2= y1*y3 + y2*y4;
+  psy3= y1*y4 + y2*y3;
+
+  // Summenprodukt der y-Werte
+  spy1= (y1+y2)*(y3+y4);
+  spy2= (y1+y3)*(y2+y4);
+  spy3= (y1+y4)*(y2+y3);
+
+  // Differenzenprodukt der y-Werte
   dpy= (y1-y2)*(y1-y3)*(y1-y4)*(y2-y3)*(y2-y4)*(y3-y4);
 
-  // ---------------------------------------------------------- Variablenausgabe --------------------------------------------------------------------------
   printtext ("----------------------------------------------------------- Parameter der normalen quartischen Gleichung --------------------------------------------------------------------\n");
   printvektor2komplex ("a          ", aq, 0);
   printvektor2komplex ("b          ", bq, 0);
   printvektor2komplex ("c          ", cq, 0);
   printvektor2komplex ("d          ", dq, 0);
   printtext ("\n");
-  printtext ("----------------------------------------------------------- 1. Zwischenwert (Differenzenprodukt) ----------------------------------------------------------------------------\n");
-  printvektor2komplex ("(y1-y2)*(y1-y3)*(y1-y4)*(y2-y3)*(y2-y4)*(y3-y4)", dpy, 1);
+
+  printtext ("----------------------------------------------------------- Produktsumme der x-Werte ---------------------------------------------------------------------------\n");
+  printvektor2komplex ("(x1*x2)+(x3*x4)", psx1, 1);
+  printvektor2komplex ("(x1*x3)+(x2*x4)", psx2, 1);
+  printvektor2komplex ("(x1*x4)+(x2*x3)", psx3, 1);
   printtext ("\n");
 
-  // 2. Zwischenwert: Lösungen der kubischen Resolvente aus den Lösungen der reduzierten quartischen Gleichung
-  z1= y1*y2 + y3*y4;
-  z2= y1*y3 + y2*y4;
-  z3= y1*y4 + y2*y3;
-  printtext ("----------------------------------------------------------- 2. Zwischenwert (Produktsumme) ----------------------------------------------------------------------------------\n");
-  printvektor2komplex ("y1y2 + y3y4", z1, 0);
-  printvektor2komplex ("y1y3 + y2y4", z2, 0);
-  printvektor2komplex ("y1y4 + y2y3", z3, 0);
+  printtext ("----------------------------------------------------------- Summenprodukt der x-Werte ---------------------------------------------------------------------------\n");
+  printvektor2komplex ("(x1+x2)*(x3+x4)", spx1, 1);
+  printvektor2komplex ("(x1+x3)*(x2+x4)", spx2, 1);
+  printvektor2komplex ("(x1+x4)*(x2+x3)", spx3, 1);
   printtext ("\n");
 
-  // 2. Zwischenwert: Lösungen der kubischen Resolvente aus den Lösungen der reduzierten quartischen Gleichung
-  z1= (y1+y2)*(y3+y4);
-  z2= (y1+y3)*(y2+y4);
-  z3= (y1+y4)*(y2+y3);
-  printtext ("----------------------------------------------------------- 2. Zwischenwert (Summenprodukt) ----------------------------------------------------------------------------------\n");
-  printvektor2komplex ("(y1+y2)(y3+y4)", z1, 0);
-  printvektor2komplex ("(y1+y3)(y2+y4)", z2, 0);
-  printvektor2komplex ("(y1+y4)(y2+y3)", z3, 0);
+  printtext ("----------------------------------------------------------- Koeffizienten der Resolvente Summenprodukt --------------------------------------------------------------\n");
+  printvektor2komplex ("akz", akz, 1);
+  printvektor2komplex ("bkz", bkz, 1);
+  printvektor2komplex ("ckz", ckz, 1);
   printtext ("\n");
 
-  // 2. Zwischenwert: Lösungen der kubischen Resolvente aus den Lösungen der normalen quartischen Gleichung
-  z1= x1*x2 + x3*x4;
-  z2= x1*x3 + x2*x4;
-  z3= x1*x4 + x2*x3;
-  printtext ("----------------------------------------------------------- 2. Zwischenwert (Produktsumme) ----------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1x2 + x3x4", z1, 0);
-  printvektor2komplex ("x1x3 + x2x4", z2, 0);
-  printvektor2komplex ("x1x4 + x2x3", z3, 0);
+  printtext ("----------------------------------------------------------- Differenzenprodukt der x-Werte ---------------------------------------------------------------------------\n");
+  printvektor2komplex ("(x1-x2)*(x1-x3)*(x1-xx)*(x2-x3)*(x2-x4)*(x3-x4)", dpx, 1);
   printtext ("\n");
 
+  printtext ("----------------------------------------------------------- Produktsumme der y-Werte ---------------------------------------------------------------------------------\n");
+  printvektor2komplex ("y1y2 + y3y4", psy1, 0);
+  printvektor2komplex ("y1y3 + y2y4", psy2, 0);
+  printvektor2komplex ("y1y4 + y2y3", psy3, 0);
+  printtext ("\n");
+
+  printtext ("----------------------------------------------------------- Summenprodukt der y-Werte ----------------------------------------------------------------------------------\n");
+  printvektor2komplex ("(y1+y2)(y3+y4)", spy1, 0);
+  printvektor2komplex ("(y1+y3)(y2+y4)", spy2, 0);
+  printvektor2komplex ("(y1+y4)(y2+y3)", spy3, 0);
+  printtext ("\n");
+
+  printtext ("----------------------------------------------------------- Differenzenprodukt der y-Werte ---------------------------------------------------------------------------\n");
+  printvektor2komplex ("(y1-y2)*(y1-y3)*(y1-x4)*(y2-y3)*(y2-y4)*(y3-y4)", dpy, 1);
+  printtext ("\n");
   }
 
 void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
@@ -2275,18 +2306,51 @@ void quartischloesungen ()
   quartischzurueck (x1, x2, x3, x4, a, b, c, d);
   quartischreduziertk (a, b, c, d, p, q, r);
 
-  kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
-  printtext ("-------------------------------- Resolvente Produktsumme (y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("z1          ", z1, 0);
-  printvektor2komplex ("z2          ", z2, 0);
-  printvektor2komplex ("z3          ", z3, 0);
-  printtext ("\n");
-
   kubischeresolventeproduktsumme (a, b, c, d, z1, z2, z3);
   printtext ("-------------------------------- Resolvente Produktsumme (x) ----------------------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("z1          ", z1, 0);
-  printvektor2komplex ("z2          ", z2, 0);
-  printvektor2komplex ("z3          ", z3, 0);
+  printvektor2komplex ("Σx1          ", z1, 0);
+  printvektor2komplex ("Σx2          ", z2, 0);
+  printvektor2komplex ("Σx3          ", z3, 0);
+  printtext ("\n");
+
+  kubischeresolventesummenprodukt (a, b, c, d, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente Summenprodukt (x) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("Πx1          ", z1, 0);
+  printvektor2komplex ("Πx2          ", z2, 0);
+  printvektor2komplex ("Πx3          ", z3, 0);
+  printtext ("\n");
+
+  ckomplexk akx= -((x1+x2)*(x3+x4) + (x1+x3)*(x2+x4) + (x1+x4)*(x2+x3));
+  ckomplexk bkx= (x1+x2)*(x3+x4)*(x1+x3)*(x2+x4) + (x1+x2)*(x3+x4)*(x1+x4)*(x2+x3) + (x1+x3)*(x2+x4)*(x1+x4)*(x2+x3);
+  ckomplexk ckx= -((x1+x2)*(x1+x3)*(x1+x4)*(x2+x3)*(x2+x4)*(x3+x4));
+
+  printvektor2komplex ("akx          ", akx, 0);
+  printvektor2komplex ("bkx          ", bkx, 0);
+  printvektor2komplex ("ckx          ", ckx, 0);
+  printtext ("\n");
+
+  ckomplexk akp= b*-2;
+  ckomplexk bkp= a*c + b*b + d*-4;
+  ckomplexk ckp= c*c;
+
+  printtext ("----------------------------------------------------------- Koeffizienten der Resolvente Summenprodukt aus den Parametern --------------------------------------------\n");
+  printvektor2komplex ("akp", akp, 1);
+  printvektor2komplex ("bkp", bkp, 1);
+  printvektor2komplex ("ckp", ckp, 1);
+  printtext ("\n");
+
+  kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente Produktsumme (y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("Σy1         ", z1, 0);
+  printvektor2komplex ("Σy2         ", z2, 0);
+  printvektor2komplex ("Σy3         ", z3, 0);
+  printtext ("\n");
+
+  kubischeresolventesummenprodukt (p, q, r, z1, z2, z3);
+  printtext ("-------------------------------- Resolvente Summenprodukt (y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("Πx1         ", z1, 0);
+  printvektor2komplex ("Πx2         ", z2, 0);
+  printvektor2komplex ("Πx3         ", z3, 0);
   printtext ("\n");
 
   quartischreduziertdiffpu (p, q, r, y1, y2, y3, y4);
