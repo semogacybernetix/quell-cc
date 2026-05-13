@@ -2130,7 +2130,7 @@ void kubischintr (real a, real b, real c, cschnittpunkte& psp)
 // ------------------------------------------------------- quartisch ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------- kubische Resolventen ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
+void kubischeresolventeproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)  // Σ(y)
   {
   ckomplexk ak, bk, ck;
 
@@ -2141,77 +2141,24 @@ void kubischeresolventediffp (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   kubisch (ak, bk, ck, z1, z2, z3);
   }
 
-void kubischeresolventebuch (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
+void kubischeresolventesummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)  // Π(y)
   {
   ckomplexk ak, bk, ck;
 
-  ak= p/-2;
-  bk= -r;
-  ck= r*p/2 + q*q/-8;
-
-  kubisch (ak, bk, ck, z1, z2, z3);
-  }
-
-void kubischeresolventepdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
-  {
-  ckomplexk ak, bk, ck;
-
-  ak= p*2;
+  ak= p*-2;
   bk= p*p + r*-4;
-  ck= -(q*q);
+  ck= q*q;
 
   kubisch (ak, bk, ck, z1, z2, z3);
   }
 
-void kubischeresolventelagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
-  {
-  ckomplexk ak, bk, ck;
-
-  ak= p/2;
-  bk= p*p/16 + r/-4;
-  ck= q*q/-64;
-
-  kubisch (ak, bk, ck, z1, z2, z3);
-  }
-
-void kubischeresolventez (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
-  {
-  ckomplexk pk, qk;
-
-  pk= p*p/-3 + r*-4;
-  qk= p*r*8/3 + p*p*p/real (-13.5) - q*q;
-
-  kubischreduziertu (pk, qk, z1, z2, z3);
-  }
-
-void kubischeresolventez3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
-  {
-  ckomplexk pk, qk;
-
-  pk= p*p/-3 + r*-4;
-  qk= p*r*8/3 + p*p*p/real (-13.5) - q*q;
-
-  kubischreduziertu3 (pk, qk, z1, z2, z3);
-  }
-
-void kubischeresolventemalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
-  {
-  ckomplexk ak, bk, ck;
-
-  ak= b/-2;
-  bk= a*c/4 - d;
-  ck= b*d/2 + a*a*d/-8 + c*c/-8;
-
-  kubisch (ak, bk, ck, z1, z2, z3);
-  }
-
-void kubischeresolventesym (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)
+void kubischeresolventeproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)  // Σ(x)
   {
   ckomplexk ak, bk, ck;
 
   ak= -b;
   bk= a*c - d*4;
-  ck= b*d*4 - a*a*d - c*c;
+  ck= (b*4 - a*a)*d - c*c;
 
   kubisch (ak, bk, ck, z1, z2, z3);
   }
@@ -2222,7 +2169,7 @@ void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk&
   {
   ckomplexk z1, z2, z3, z, u, v, bed, a1, a2, b1, b2;
 
-  kubischeresolventediffp (p, q, r, z1, z2, z3);
+  kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
 
   z= z1;
   u= sqrtr (z - p);
@@ -2236,31 +2183,13 @@ void quartischreduziertdiffpu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk&
   quadratisch (a2, b2, y3, y4);
   }
 
-void quartischreduziertbuchu (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
+void quartischreduziertdiffpv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
   {
   ckomplexk z1, z2, z3, z, u, v, bed, a1, a2, b1, b2;
 
-  kubischeresolventebuch (p, q, r, z1, z2, z3);
+  kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
 
-  z= z3;
-  u= sqrtr (z*2 - p);
-
-  a1=  u;
-  a2= -u;
-  b1= z - q/u/2;
-  b2= z + q/u/2;
-
-  quadratisch (a1, b1, y1, y2);
-  quadratisch (a2, b2, y3, y4);
-  }
-
-void quartischreduziertbuchv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
-  {
-  ckomplexk z1, z2, z3, z, u, v, bed, a1, a2, b1, b2;
-
-  kubischeresolventebuch (p, q, r, z1, z2, z3);
-
-  z= z2;
+  z= z2/2;
   v= sqrtr (z*z - r);
 
   a1= q/v/-2;
@@ -2272,13 +2201,13 @@ void quartischreduziertbuchv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   quadratisch (a2, b2, y3, y4);
   }
 
-void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
+void quartischreduziertdiffpf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
   {
   ckomplexk z1, z2, z3, z, u, v, bed, a1, a2, b1, b2;
 
-  kubischeresolventebuch (p, q, r, z1, z2, z3);
+  kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
 
-  z= z1;
+  z= z1/2;
   u= sqrtr (z*2 - p);
   v= sqrtr (z*z - r);
 
@@ -2295,9 +2224,8 @@ void quartischreduziertbuchf (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   quadratisch (a1, b1, y1, y2);
   quadratisch (a2, b2, y3, y4);
 
-  //return;
-
-  printtext ("---------------------------------- quartischbuchf Zwischenwerte-------------------------------------------------------\n");
+  return;
+  printtext ("---------------------------------- quartischdiffpf Zwischenwerte-------------------------------------------------------\n");
   printvektor2komplex ("u          ", u, 0);
   printvektor2komplex ("v          ", v, 0);
   printtext ("\n");
@@ -2311,9 +2239,9 @@ void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   {
   ckomplexk z1, z2, z3, z, u, a1, a2, b1, b2;
 
-  kubischeresolventepdfw2 (p, q, r, z1, z2, z3);
+  kubischeresolventesummenprodukt (p, q, r, z1, z2, z3);
 
-  z= z1;
+  z= -z1;
   u= sqrtr (z);
 
   a1=  u;
@@ -2324,6 +2252,7 @@ void quartischreduziertpdfw2 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& 
   quadratisch (a1, b1, y1, y2);
   quadratisch (a2, b2, y3, y4);
 
+  return;
   printtext ("---------------------------------- pdfw2 Zwischenwerte-------------------------------------------------------\n");
   printvektor2komplex ("u          ", u, 0);
   printvektor2komplex ("z (u²)     ", z1, 0);
@@ -2338,80 +2267,11 @@ void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
   {
   ckomplexk z1, z2, z3, u1, u2, u3, bed;
 
-  kubischeresolventelagrange (p, q, r, z1, z2, z3);
+  kubischeresolventesummenprodukt (p, q, r, z1, z2, z3);
 
-  u1= sqrtr (z1);
-  u2= sqrtr (z2);
-  u3= sqrtr (z3);
-
-  y1=  u1 + u2 + u3;
-  y2=  u1 - u2 - u3;
-  y3= -u1 + u2 - u3;
-  y4= -u1 - u2 + u3;
-
-  // Bedingung: -8*u1*u2*u3 = q
-  bed= u1*u2*u3*-8;
-  if (absr (bed + q) < absr (bed - q))
-    {
-    y1= -y1;
-    y2= -y2;
-    y3= -y3;
-    y4= -y4;
-    }
-  }
-
-void quartischreduziertbuchf3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
-  {
-  ckomplexk z1, z2, z3, z, u, v, bed, a1, a2, b1, b2;
-
-  kubischeresolventez3 (p, q, r, z1, z2, z3);
-
-  z= z1;
-  u= sqrtr ((z - p*2)/3);
-  v= z + p;
-  v= sqrtr (v*v - r*36)/6;
-
-  // Bedingung -2uv = q
-  bed= u*v*-2;
-  if (absr (bed + q) < absr (bed - q))
-    v= -v;
-
-  a1=  u;
-  a2= -u;
-  b1= (z + p)/6 + v;
-  b2= (z + p)/6 - v;
-
-  quadratisch (a1, b1, y1, y2);
-  quadratisch (a2, b2, y3, y4);
-  }
-
-void quartischreduziertpdfw23 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
-  {
-  ckomplexk z1, z2, z3, z, u, a1, a2, b1, b2;
-
-  kubischeresolventez3 (p, q, r, z1, z2, z3);
-
-  z= z1;
-  u= sqrtr ((z - p*2)/3);
-
-  a1=  u;
-  a2= -u;
-  b1= (z + p)/6 - q/u/2;
-  b2= (z + p)/6 + q/u/2;
-
-  quadratisch (a1, b1, y1, y2);
-  quadratisch (a2, b2, y3, y4);
-  }
-
-void quartischreduziertlagrange3 (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
-  {
-  ckomplexk z1, z2, z3, u1, u2, u3, bed;
-
-  kubischeresolventez3 (p, q, r, z1, z2, z3);
-
-  u1= sqrtr ((z1/2 - p)/6);
-  u2= sqrtr ((z2/2 - p)/6);
-  u3= sqrtr ((z3/2 - p)/6);
+  u1= sqrtr (z1/-4);
+  u2= sqrtr (z2/-4);
+  u3= sqrtr (z3/-4);
 
   y1=  u1 + u2 + u3;
   y2=  u1 - u2 - u3;
@@ -2443,14 +2303,10 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
   quartischreduziertk (a, b, c, d, p, q, r);
 
   //quartischreduziertdiffpu (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertbuchu (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertbuchv (p, q, r, y1, y2, y3, y4);
-  quartischreduziertbuchf (p, q, r, y1, y2, y3, y4);
+  //quartischreduziertdiffpv (p, q, r, y1, y2, y3, y4);
+  quartischreduziertdiffpf (p, q, r, y1, y2, y3, y4);
   //quartischreduziertpdfw2 (p, q, r, y1, y2, y3, y4);
   //quartischreduziertlagrange (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertbuchf3 (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertpdfw23 (p, q, r, y1, y2, y3, y4);
-  //quartischreduziertlagrange3 (p, q, r, y1, y2, y3, y4);
 
   a4= a/-4;
   x1= y1 + a4;
@@ -2463,9 +2319,9 @@ void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomple
   {
   ckomplexk z1, z2, z3, z, D, b1, b2, a1, a2;
 
-  kubischeresolventemalin (a, b, c, d, z1, z2, z3);
+  kubischeresolventeproduktsumme (a, b, c, d, z1, z2, z3);
 
-  z= z3;
+  z= z3/2;
   D= sqrtr (z*z - d);
 
   b1= z + D;
@@ -2478,11 +2334,11 @@ void quartischmalin (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomple
   quadratisch (a2, b2, x3, x4);
   }
 
-void quartischsym (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+void quartischproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
   ckomplexk z1, z2, z3, z, p1, p2, s1, s2, l1, l2, l3, l4, v1, v2;
 
-  kubischeresolventesym (a, b, c, d, z1, z2, z3);
+  kubischeresolventeproduktsumme (a, b, c, d, z1, z2, z3);
 
   z= z3;
 
@@ -3114,7 +2970,7 @@ void quartischsymintr (real a, real b, real c, real d, cschnittpunkte& psp)
       psp.add (x4);
     }
 //*/
-//*
+/*
   printtext ("xl:");
   printreal (xl);
   printtext ("\n");

@@ -20,6 +20,9 @@ utf-8 Codierung        Windows           Linux
   ½        1/2
   ¾        3/4
 
+  Σ        Summenzeichen
+  Π        Produktzeichen
+
   ℝ        R reelle Zahlen        8477
   ℂ        C komplexe Zahlen
   ℍ        H Quaternionen
