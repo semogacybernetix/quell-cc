@@ -429,6 +429,9 @@
 2026.05.13 Mi  03:28, kubische Resolventen auf Produktsumme und Summenprodukt reduziert, quartische Verfahren aussortiert, 05:09, 9:58 kubische Routinen aufgeräumt, unsauber nach den kubischen Resolventen, 11:38, 15:41,
                ak, bk bei Summenprodukt (a,b,c,d) ermittelt, bei ck steckengeblieben, 17:55, 19:46, quadratische Parameter aus resolventesummenprodukt ermittelt, Parameter c von quartischer Gleichung falsch, falsche Lösungen, 21:08
 
+2026.05.15 Fr  12:57, fehlerhaften Parameter c bei quartischsummenprodukt behoben, ck von kubischeresolventesummenprodukt durch systematisches probieren ermittelt, 17 Uhr, 18 Uhr, quartischproduktsummeintr Fehler behoben,
+               quartischsummenproduktintr erstellt, alles funktioniert korrekt, ist aber noch unoptimiert, 21:22
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 lscr, cbasis3*real

@@ -2264,8 +2264,33 @@ void quartischparameter ()
   vektor2eingabek (c);
   vektor2eingabek (d);
 
-  quartischweg3 (a.x, b.x, c.x, d.x, x1, x2, x3, x4);
+  quartisch (a, b, c, d, x1, x2, x3, x4);
+
+  a= -(x1 + x2 + x3 + x4);
+  b= x1*x2 + x1*x3 + x1*x4 + x2*x3 + x2*x4 + x3*x4;
+  c= -(x1*x2*x3 + x1*x2*x4 + x1*x3*x4 + x2*x3*x4);
+  d= x1*x2*x3*x4;
+
+  ckomplexk akx= -((x1+x2)*(x3+x4) + (x1+x3)*(x2+x4) + (x1+x4)*(x2+x3));
+  ckomplexk bkx= (x1+x2)*(x3+x4)*(x1+x3)*(x2+x4) + (x1+x2)*(x3+x4)*(x1+x4)*(x2+x3) + (x1+x3)*(x2+x4)*(x1+x4)*(x2+x3);
+  ckomplexk ckx= -((x1+x2)*(x1+x3)*(x1+x4)*(x2+x3)*(x2+x4)*(x3+x4));
+
+  printtext ("\n");
+  printtext ("---------------------- kubische Parameter ------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("a          ", a, 0);
+  printvektor2komplex ("b          ", b, 0);
+  printvektor2komplex ("c          ", c, 0);
+  printvektor2komplex ("d          ", d, 0);
+  printtext ("\n");
+  printtext ("---------------------- kubische Parameter Produktsumme ------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("akx          ", akx, 0);
+  printvektor2komplex ("bkx          ", bkx, 0);
+  printvektor2komplex ("ckx          ", ckx, 0);
+  printtext ("\n");
+
   return;
+
+  quartischweg3 (a.x, b.x, c.x, d.x, x1, x2, x3, x4);
 
   quartischreduziertk (a, b, c, d, p, q, r);
 
@@ -2331,7 +2356,7 @@ void quartischloesungen ()
 
   ckomplexk akp= b*-2;
   ckomplexk bkp= a*c + b*b + d*-4;
-  ckomplexk ckp= c*c;
+  ckomplexk ckp= c*c + a*(a*d - b*c);
 
   printtext ("----------------------------------------------------------- Koeffizienten der Resolvente Summenprodukt aus den Parametern --------------------------------------------\n");
   printvektor2komplex ("akp", akp, 1);
@@ -2417,6 +2442,8 @@ void quartischloesungen ()
   printvektor2komplex ("x4          ", x4, 0);
   printtext ("\n");
 
+  //return;
+
   psp.anz= 0;
   quartischdiffpintrc (a.x, b.x, c.x, d.x, psp);
 
@@ -2473,9 +2500,9 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
-  quartischproduktsumme (a.x, b.x, c.x, d.x, psp);
+  quartischproduktsummeintr (a.x, b.x, c.x, d.x, psp);
 
-  printtext ("-------------------------------- quartischsymintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischproduktsummeintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);
   printvektor2komplex ("x1          ", psp.abstand[0], 0);
   printvektor2komplex ("x2          ", psp.abstand[1], 0);
@@ -2484,15 +2511,17 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
-  quartischsummenprodukt (a.x, b.x, c.x, d.x, psp);
+  quartischsummenproduktintr (a.x, b.x, c.x, d.x, psp);
 
-  printtext ("-------------------------------- quartischsymintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischsummenproduktintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);
   printvektor2komplex ("x1          ", psp.abstand[0], 0);
   printvektor2komplex ("x2          ", psp.abstand[1], 0);
   printvektor2komplex ("x3          ", psp.abstand[2], 0);
   printvektor2komplex ("x4          ", psp.abstand[3], 0);
   printtext ("\n");
+
+  return;
 
   psp.anz= 0;
   quartischlagrangeuintr (a.x, b.x, c.x, d.x, psp);
