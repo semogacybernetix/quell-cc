@@ -432,8 +432,11 @@
 2026.05.15 Fr  12:57, fehlerhaften Parameter c bei quartischsummenprodukt behoben, ck von kubischeresolventesummenprodukt durch systematisches probieren ermittelt, 17 Uhr, 18 Uhr, quartischproduktsummeintr Fehler behoben,
                quartischsummenproduktintr erstellt, alles funktioniert korrekt, ist aber noch unoptimiert, 21:22
 
+2026.05.17 So  20:22, quartisch -psdiv, -ps, -sp homogenisiert, quartischintr -ps, -sp optimiert, quartische Verfahren umbenannt, linearfaktoren.cc angepasst, 1:12
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+quartischreduzierte Verfahren überarbeiten, intr-Verfahren straffen
 lscr, cbasis3*real
 buchfintr Skalierunsfaktor bei a1,a2,b1,b2 klären, malinintr D Division, < 0 beheben, Mauszeiger mit Pixeldaten, symflip reparieren
 Auswahl reeller kubischer Resolvente und sqrtrz beeinflussen sich

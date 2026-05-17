@@ -2306,7 +2306,7 @@ void quartischparameter ()
   printvektor2komplex ("z3          ", z3, 0);
   printtext ("\n");
 
-  quartischreduziertdiffpf (p, q, r, y1, y2, y3, y4);
+  quartischreduziertproduktsumme (p, q, r, y1, y2, y3, y4);
   printtext ("---------------------- quartisch diffpf -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
@@ -2378,32 +2378,16 @@ void quartischloesungen ()
   printvektor2komplex ("Πx3         ", z3, 0);
   printtext ("\n");
 
-  quartischreduziertdiffpu (p, q, r, y1, y2, y3, y4);
-  printtext ("-------------------------------- quartischreduziertdiffpu Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  quartischreduziertproduktsumme (p, q, r, y1, y2, y3, y4);
+  printtext ("-------------------------------- quartischreduziertproduktsumme Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
   printvektor2komplex ("x3          ", y3 - a/4, 0);
   printvektor2komplex ("x4          ", y4 - a/4, 0);
   printtext ("\n");
 
-  quartischreduziertdiffpv (p, q, r, y1, y2, y3, y4);
-  printtext ("-------------------------------- quartischreduziertdiffpv Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", y1 - a/4, 0);
-  printvektor2komplex ("x2          ", y2 - a/4, 0);
-  printvektor2komplex ("x3          ", y3 - a/4, 0);
-  printvektor2komplex ("x4          ", y4 - a/4, 0);
-  printtext ("\n");
-
-  quartischreduziertdiffpf (p, q, r, y1, y2, y3, y4);
-  printtext ("-------------------------------- quartischreduziertdiffpf Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("x1          ", y1 - a/4, 0);
-  printvektor2komplex ("x2          ", y2 - a/4, 0);
-  printvektor2komplex ("x3          ", y3 - a/4, 0);
-  printvektor2komplex ("x4          ", y4 - a/4, 0);
-  printtext ("\n");
-
-  quartischreduziertpdfw2 (p, q, r, y1, y2, y3, y4);
-  printtext ("-------------------------------- quartischreduziertpdfw2 Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  quartischreduziertsummenprodukt (p, q, r, y1, y2, y3, y4);
+  printtext ("-------------------------------- quartischreduziertsummenprodukt Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
   printvektor2komplex ("x3          ", y3 - a/4, 0);
@@ -2418,8 +2402,8 @@ void quartischloesungen ()
   printvektor2komplex ("x4          ", y4 - a/4, 0);
   printtext ("\n");
 
-  quartischmalin (a, b, c, d, x1, x2, x3, x4);
-  printtext ("-------------------------------- quartischmalin Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  quartischproduktsummediv (a, b, c, d, x1, x2, x3, x4);
+  printtext ("-------------------------------- quartischproduktsummediv Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
   printvektor2komplex ("x2          ", x2, 0);
   printvektor2komplex ("x3          ", x3, 0);
@@ -2521,7 +2505,7 @@ void quartischloesungen ()
   printvektor2komplex ("x4          ", psp.abstand[3], 0);
   printtext ("\n");
 
-  return;
+  //return;
 
   psp.anz= 0;
   quartischlagrangeuintr (a.x, b.x, c.x, d.x, psp);
