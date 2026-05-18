@@ -2507,9 +2507,9 @@ void quartischloesungen ()
   printtext ("\n");
 
   psp.anz= 0;
-  quartischpdfw2intr (a.x, b.x, c.x, d.x, psp);
+  quartischsummenproduktreduziertintr (a.x, b.x, c.x, d.x, psp);
 
-  printtext ("-------------------------------- quartischpdfw2intr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischsummenproduktreduziertintr Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("anz         ", real (psp.anz), 0);
   printvektor2komplex ("x1          ", psp.abstand[0], 0);
   printvektor2komplex ("x2          ", psp.abstand[1], 0);

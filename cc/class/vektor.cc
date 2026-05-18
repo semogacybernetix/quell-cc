@@ -2499,7 +2499,7 @@ void quartischproduktsummedivintr (real a, real b, real c, real d, cschnittpunkt
   //real aq, p, q, r;
   real pa, qa, xl, ytk, yk, l, zk;
   real Db, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
-//  real a4, Da, v1, v2;
+  //real a4, Da, v1, v2;
 
 /*
   // Parameter der reduzierten quartischen Gleichung diffp
@@ -3013,6 +3013,119 @@ void quartischproduktsummereduziertintr (real a, real b, real c, real d, cschnit
   printtext ("\n");
   }
 
+void quartischsummenproduktreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  real aq, p, q, r, pa, qa, xl;
+  real ytk, yk, zk, pzk, l, uq, vq, u, v, bed, b1, b2, a4, a1, a2, D12, D34, x1, x2, x3, x4;
+
+  // Parameter reduzierte quartische Gleichung
+  aq= a*a/8;
+  p= aq*-3 + b;
+  q= a*(aq + b/-2) + c;
+  r= a*(aq*a*real (-0.09375) + a*b/16 + c/-4) + d;
+
+  // Parameter reduzierte kubische Gleichung
+  pa= p*p*4/9 + r*4/3 + p*p/-3;
+  qa= p*p*p/-27 + p*r*4/3 + q*q/-2;
+
+  // Lösung der normalen linearen Gleichung
+  xl= qa*qa - pa*pa*pa;
+
+  // reelle Lösung der kubischen Resolvente
+  if (xl >= 0)
+    {
+    if (qa >= 0)
+      /**/ ytk= cbrtr (qa + sqrtr (xl));
+      else ytk= cbrtr (qa - sqrtr (xl));
+    yk= ytk + pa/ytk;
+    }
+    else
+    {
+    l= sqrtr (pa);
+    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;
+    yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen
+  zk= yk + p*2/3;     // ak = p*-2
+  pzk= p - zk;
+
+  uq= zk/-4;
+  vq= pzk*pzk/4 - r;
+
+  u= sqrtr (uq);
+  v= sqrtr (vq);
+
+  // Bedingung -4uv = q                                               // u= a/2
+  bed= u*v*-4;
+  if (absr (bed + q) < absr (bed - q))
+    v= -v;
+
+  b1= pzk/2 + v;
+  b2= pzk/2 - v;
+
+  // Lösungen normale quartische Gleichung
+  a4= a/-4;
+  if (uq*2 >= b1)
+    {
+    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a1= a4 - u;
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (uq*2 >= b2)
+    {
+    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a2= a4 + u;
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+
+  return;
+
+  printtext ("p: ");
+  printreal (p);
+  printtext ("\n");
+  printtext ("q: ");
+  printreal (q);
+  printtext ("\n");
+  printtext ("r: ");
+  printreal (r);
+  printtext ("\n");
+  printtext ("zk:");
+  printreal (zk);
+  printtext ("\n");
+  printtext ("uq:");
+  printreal (uq);
+  printtext ("\n");
+  printtext ("vq:");
+  printreal (vq);
+  printtext ("\n");
+  printtext ("u:");
+  printreal (u);
+  printtext ("\n");
+  printtext ("v:");
+  printreal (v);
+  printtext ("\n");
+  printtext ("bed:");
+  printreal (bed);
+  printtext ("\n");
+  printtext ("b1:");
+  printreal (b1);
+  printtext ("\n");
+  printtext ("b2:");
+  printreal (b2);
+  printtext ("\n");
+  }
+
 void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real a4, p, q, r, pk, qk, xl;
@@ -3103,131 +3216,6 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   printtext ("\n");
   printtext ("vq:");
   printreal (vq);
-  printtext ("\n");
-  }
-
-void quartischpdfw2intr (real a, real b, real c, real d, cschnittpunkte& psp)
-  {
-  real aq, p, q, r, pa, qa, xl;
-  real ytk, yk, zk, l, uq, vq, u, v, bed, b1, b2, a4, a1, a2, D12, D34, x1, x2, x3, x4;
-  real ak, bk, ck, pk, qk;
-
-  // Parameter reduzierte quartische Gleichung
-  aq= a*a/8;
-  p= aq*-3 + b;
-  q= a*(aq + b/-2) + c;
-  r= a*(aq*a*real (-0.09375) + a*b/16 + c/-4) + d;
-
-  // Parameter normale kubische Gleichung
-  ak= p*-2;
-  bk= r*-4 + p*p;
-  ck= q*q;
-
-  // Parameter reduzierte kubische Gleichung
-  pk= ak*ak/-3 + bk;
-  qk= ak*ak*ak/real (13.5) + ak*bk/-3 + ck;
-
-  // Lösung der normalen linearen Gleichung
-  pa= pk/-3;
-  qa= qk/-2;
-
-  // Lösung der normalen linearen Gleichung
-  xl= qa*qa - pa*pa*pa;
-
-  // reelle Lösung der kubischen Resolvente
-  if (xl >= 0)
-    {
-    if (qa >= 0)
-      /**/ ytk= cbrtr (qa + sqrtr (xl));
-      else ytk= cbrtr (qa - sqrtr (xl));
-    yk= ytk + pa/ytk;
-    }
-    else
-    {
-    l= sqrtr (pa);
-    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;
-    yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;
-    }
-
-  // Lösungen der beiden quadratischen Gleichungen
-  zk= yk - ak/3;
-
-  uq= zk/-4;
-  vq= (p - zk)*(p - zk)/4 - r;
-
-  u= sqrtr (uq);
-  v= sqrtr (vq);
-
-  // Bedingung -4uv = q                                               // u= a/2
-  bed= u*v*-4;
-  if (absr (bed + q) < absr (bed - q))
-    v= -v;
-
-  b1= (p - zk)/2 + v;
-  b2= (p - zk)/2 - v;
-
-  // Lösungen normale quartische Gleichung
-  a4= a/-4;
-  if (uq*2 >= b1)
-    {
-    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a1= a4 - u;
-    x1= a1 - D12;
-    x2= a1 + D12;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
-    }
-  if (uq*2 >= b2)
-    {
-    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a2= a4 + u;
-    x3= a2 - D34;
-    x4= a2 + D34;
-    if (x3 > 0)
-      psp.add (x3);
-    if (x4 > 0)
-      psp.add (x4);
-    }
-
-  return;
-
-  printtext ("p: ");
-  printreal (p);
-  printtext ("\n");
-  printtext ("q: ");
-  printreal (q);
-  printtext ("\n");
-  printtext ("r: ");
-  printreal (r);
-  printtext ("\n");
-  printtext ("ak:");
-  printreal (ak);
-  printtext ("\n");
-  printtext ("zk:");
-  printreal (zk);
-  printtext ("\n");
-  printtext ("uq:");
-  printreal (uq);
-  printtext ("\n");
-  printtext ("vq:");
-  printreal (vq);
-  printtext ("\n");
-  printtext ("u:");
-  printreal (u);
-  printtext ("\n");
-  printtext ("v:");
-  printreal (v);
-  printtext ("\n");
-  printtext ("bed:");
-  printreal (bed);
-  printtext ("\n");
-  printtext ("b1:");
-  printreal (b1);
-  printtext ("\n");
-  printtext ("b2:");
-  printreal (b2);
   printtext ("\n");
   }
 

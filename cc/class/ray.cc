@@ -292,8 +292,8 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   //quartischsummenproduktintr (B/A, C/A, D/A, E/A, psp);                         // krizzelig Innanartefakte
 
   //quartischproduktsummereduziertintr (B/A, C/A, D/A, E/A, psp);                 // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+  quartischsummenproduktreduziertintr (B/A, C/A, D/A, E/A, psp);                // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                                 // wie testintr außer mit Oben-untenlinie
-  quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);                                 // gleiches Fehlerverhalten wie quartischdiffpfintr
 
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                             // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                             // zusätzliche Artefakte zu lagrangeuintr
