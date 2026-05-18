@@ -287,17 +287,18 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
-  //quartischdiffpintrc (B/A, C/A, D/A, E/A, psp);                    // langsam, Fehlerpixel und Pseudopixel wegen Ungenauigkeit, auch reelle Lösungen haben einen kleinen Imaginärteil
+  //quartischproduktsummedivintr (B/A, C/A, D/A, E/A, psp);                       // krizzelig, Außenartefakte
+  //quartischproduktsummeintr (B/A, C/A, D/A, E/A, psp);                          // krizzelig Innanartefakte
+  //quartischsummenproduktintr (B/A, C/A, D/A, E/A, psp);                         // krizzelig Innanartefakte
 
-  //quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);                     // gleiches Fehlerverhalten wie quartischdiffpfintr
-  //quartischdiffpfintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
-  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                     // wie testintr außer mit Oben-untenlinie
-  //quartischmalinintr (B/A, C/A, D/A, E/A, psp);                     // Außenröhren zerfetzt, Auflösungserscheinungen beim Näherkommen
-  //quartischproduktsummeintr (B/A, C/A, D/A, E/A, psp);              // noch unoptimiert
-  quartischsummenproduktintr (B/A, C/A, D/A, E/A, psp);           // noch unoptimiert
+  //quartischproduktsummereduziertintr (B/A, C/A, D/A, E/A, psp);                 // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                                 // wie testintr außer mit Oben-untenlinie
+  quartischpdfw2intr (B/A, C/A, D/A, E/A, psp);                                 // gleiches Fehlerverhalten wie quartischdiffpfintr
 
-  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                 // gleiches Fehlerverhalten wie quartischdiffpfintr
-  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                 // zusätzliche Artefakte zu lagrangeuintr
+  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                             // gleiches Fehlerverhalten wie quartischdiffpfintr
+  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                             // zusätzliche Artefakte zu lagrangeuintr
+
+  //quartischdiffpintrc (B/A, C/A, D/A, E/A, psp);                                // langsam, Fehlerpixel und Pseudopixel wegen Ungenauigkeit, auch reelle Lösungen haben einen kleinen Imaginärteil
   }
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************

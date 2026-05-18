@@ -433,6 +433,7 @@
                quartischsummenproduktintr erstellt, alles funktioniert korrekt, ist aber noch unoptimiert, 21:22
 
 2026.05.17 So  20:22, quartisch -psdiv, -ps, -sp homogenisiert, quartischintr -ps, -sp optimiert, quartische Verfahren umbenannt, linearfaktoren.cc angepasst, 1:12
+2026.05.18 Mo   7:02, komplexe Verfahren bearbeitet, quartischlagrange offset fehlt, 9:19, quartischintegrierte Verfahren, quartischreduziertintegrierte Verfahren auf Konsistenz gebracht, noch Ungereimtheiten, 16:22
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
