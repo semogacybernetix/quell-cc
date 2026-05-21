@@ -436,6 +436,8 @@
 2026.05.18 Mo   7:02, komplexe Verfahren bearbeitet, quartischlagrange offset fehlt, 9:19, quartischintegrierte Verfahren, quartischreduziertintegrierte Verfahren auf Konsistenz gebracht, noch Ungereimtheiten, 16:22, 17:55,
                quartischsummenproduktreduziert optimiert, 18:51
 
+2026.05.21 Do  21:09, alle quartische Routinen Konsistenz verbessert, quartischsummenproduktreduziertintr und quartischproduktsummereduziertintr optimiert, 0:30
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 quartischreduzierte Verfahren überarbeiten, intr-Verfahren straffen

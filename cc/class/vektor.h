@@ -380,21 +380,23 @@ void quartischreduziertproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckom
 void quartischreduziertsummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4);
 
-// normale quartische Gleichung komplex mit Resolventen
 void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& p, ckomplexk& q, ckomplexk& r);
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
+// normale quartische Gleichung komplex mit Resolventen
 void quartischproduktsummediv (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischsummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischlagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
 // reduzierte quartische Gleichung integriert-reell (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
+void quartischproduktsummedivreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischproduktsummereduziertintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischsummenproduktreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp);
-void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp);
+
+void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp);
 
 // normale quartische Gleichung integriert-reell (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)

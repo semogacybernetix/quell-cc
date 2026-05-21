@@ -2261,9 +2261,6 @@ void quartischreduziertsummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, cko
   b1= pz + v;
   b2= pz - v;
 
-  //b1= (z + p - q/u)/2;
-  //b2= (z + p + q/u)/2;
-
   quadratisch (a1, b1, y1, y2);
   quadratisch (a2, b2, y3, y4);
 
@@ -2321,8 +2318,6 @@ void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
   printtext ("\n");
   }
 
-// --------------------------------------------  quartischnormal --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& p, ckomplexk& q, ckomplexk& r)
   {
   p= a*a*3/-8 + b;
@@ -2336,6 +2331,7 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
 
   quartischreduziertk (a, b, c, d, p, q, r);
 
+  //quartischreduziertproduktsummediv (p, q, r, y1, y2, y3, y4);
   quartischreduziertproduktsumme (p, q, r, y1, y2, y3, y4);
   //quartischreduziertsummenprodukt (p, q, r, y1, y2, y3, y4);
   //quartischreduziertlagrange (p, q, r, y1, y2, y3, y4);
@@ -2346,6 +2342,8 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
   x3= y3 + a4;
   x4= y4 + a4;
   }
+
+// --------------------------------------------  quartischnormal --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void quartischproduktsummediv (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
@@ -2450,13 +2448,15 @@ void quartischsummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d,
 
 void quartischlagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
-  ckomplexk z1, z2, z3, u1, u2, u3, bed, a4;
+  ckomplexk z1, z2, z3, zen, u1, u2, u3, bed, a4;
 
   kubischeresolventesummenprodukt (a, b, c, d, z1, z2, z3);
 
-  u1= sqrtr (484 - z1)/2;
-  u2= sqrtr (484 - z2)/2;
-  u3= sqrtr (484 - z3)/2;
+  zen= (z1 + z2 + z3)/3;
+
+  u1= sqrtr (z1 + zen)/2;                            // noch nicht korrekt
+  u2= sqrtr (z2 + zen)/2;
+  u3= sqrtr (z3 + zen)/2;
 
   a4= a/-4;
   x1=  (u1 + u2 + u3) + a4;
@@ -2492,428 +2492,24 @@ void quartischlagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckom
   printtext ("\n");
   }
 
-//-------------------- quartisch integriert normal (quartischintr) -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-void quartischproduktsummedivintr (real a, real b, real c, real d, cschnittpunkte& psp)
-  {
-  //real aq, p, q, r;
-  real pa, qa, xl, ytk, yk, l, zk;
-  real Db, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
-  //real a4, Da, v1, v2;
-
-/*
-  // Parameter der reduzierten quartischen Gleichung diffp
-  aq= a*a/-8;
-
-  p= aq + b/3;
-  q= (aq + b/2)*a - c;
-  r= ((aq*real (1.5) + b)*a/4 - c)*a + d*4;
-
-  // Parameter der angepassten reduzierten kubischen Gleichung diffp
-  pa= p*p/4 + r/12;
-  qa= (p*p - r)*p/8 + q*q/16;
-//*/
-
-//*
-  // Parameter der angepassten reduzierten kubischen Gleichung
-  pa= (a*c*-3 + b*b + d*12)/36;
-  qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/16;
-//*/
-
-  // Lösung der normalen linearen Gleichung
-  xl= qa*qa - pa*pa*pa;
-
-  // reelle Lösung der kubischen Resolvente buchf
-  if (xl >= 0)
-    {
-    if (qa > 0)
-      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ytk= cbrtr (qa + sqrtr (xl));
-      yk= ytk + pa/ytk;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
-      }
-    else
-    if (qa < 0)
-      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ytk= cbrtr (qa - sqrtr (xl));                                   // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      yk= ytk + pa/ytk;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
-      }
-    else
-      yk= 0;
-    }
-    else
-    {
-    l= sqrtr (pa);
-    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
-    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
-    }
-
-  // Lösungen der beiden quadratischen Gleichungen
-  zk= yk + b/6;
-
-  Db= sqrtr (zk*zk - d);
-
-  b1= zk + Db;
-  b2= zk - Db;
-
-//*
-  a1= (a*b1 - c)/Db/-4;                                                // 2. Fehleruelle D = 0
-  a2= (a*b2 - c)/Db/4;
-//*/
-
-/*
-  a4= a/-4;
-  Da= sqrtr (a*a/16 - b/4 + zk/2);
-  a1= a4 + Da;
-  a2= a4 - Da;
-
-  v1= a1*b2 + a2*b1;
-  v2= a1*b1 + a2*b2;
-
-  if (absr (v2*2 + c) < absr (v1*2 + c))
-    {
-    real sw= a1;
-    a1= a2;
-    a2= sw;
-    }
-//*/
-
-  // Lösungen normale quartische Gleichung
-  a1q= a1*a1;
-  a2q= a2*a2;
-  if (a1q >= b1)
-    {
-    D12= sqrtr (a1q - b1);
-    x1= a1 - D12;
-    x2= a1 + D12;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
-    }
-  if (a2q >= b2)
-    {
-    D34= sqrtr (a2q - b2);
-    x3= a2 - D34;
-    x4= a2 + D34;
-    if (x3 > 0)
-      psp.add (x3);
-    if (x4 > 0)
-      psp.add (x4);
-    }
-
-  return;
-
-  printtext ("zk:");
-  printreal (zk);
-  printtext ("\n");
-  printtext ("b:");
-  printreal (b);
-  printtext ("\n");
-  printtext ("c:");
-  printreal (c);
-  printtext ("\n");
-  printtext ("v1:");
-  //printreal (v1);
-  printtext ("\n");
-  printtext ("v2:");
-  //printreal (v2);
-  printtext ("\n");
-  printtext ("a1:");
-  printreal (a1);
-  printtext ("\n");
-  printtext ("a2:");
-  printreal (a2);
-  printtext ("\n");
-  }
-
-void quartischproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& psp)
-  {
-  real aq, p, q, r;
-  real pa, qa, xl, ykt, yk, l, zk;
-  real c1, c2, sw;
-  real Da, Db, ao, bo, a1, a2, b1, b2, a1q, a2q, D12, D34, x1, x2, x3, x4;
-
-//*
-  // Parameter der reduzierten quartischen Gleichung diffp
-  aq= a*a/-8;
-
-  p= aq + b/3;
-  q= (aq + b/2)*a - c;
-  r= ((aq*real (1.5) + b)*a/4 - c)*a + d*4;
-
-  // Parameter der angepassten reduzierten kubischen Gleichung diffp
-  pa= p*p + r/3;
-  qa= (p*p - r)*p + q*q/2;
-//*/
-
-/*
-  // Parameter der angepassten reduzierten kubischen Gleichung                       //  ungenauer, durchgehender Krizzel
-  pa= (a*c*-3 + b*b + d*12)/9;
-  qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/2;
-//*/
-
-  // Lösung der normalen linearen Gleichung
-  xl= qa*qa - pa*pa*pa;
-
-  // reelle Lösung der kubischen Resolvente
-  if (xl >= 0)
-    {
-    if (qa > 0)
-      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ykt= cbrtr (qa + sqrtr (xl));
-      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
-      }
-    else
-    if (qa < 0)
-      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ykt= cbrtr (qa - sqrtr (xl));                                   // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
-      }
-    else
-      yk= 0;
-    }
-    else
-    {
-    l= sqrtr (pa);
-    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
-    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
-    }
-
-  // Lösungen der beiden quadratischen Gleichungen
-  zk= yk + b/3;
-
-  Da= sqrtr (a*a/4 + zk - b)/2;
-  Db= sqrtr (zk*zk/4 - d);
-
-  ao= a/-4;
-  bo= zk/2;
-
-  a1= ao + Da;
-  a2= ao - Da;
-  b1= bo + Db;
-  b2= bo - Db;
-
-  c1= a1*b2 + a2*b1;
-  c2= a1*b1 + a2*b2;
-
-  if (absr (c2*2 + c) < absr (c1*2 + c))
-    {
-    sw= b1;
-    b1= b2;
-    b2= sw;
-    }
-
-  // Lösungen normale quartische Gleichung
-  a1q= a1*a1;
-  a2q= a2*a2;
-  if (a1q >= b1)
-    {
-    D12= sqrtr (a1q - b1);
-    x1= a1 - D12;
-    x2= a1 + D12;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
-    }
-  if (a2q >= b2)
-    {
-    D34= sqrtr (a2q - b2);
-    x3= a2 - D34;
-    x4= a2 + D34;
-    if (x3 > 0)
-      psp.add (x3);
-    if (x4 > 0)
-      psp.add (x4);
-    }
-
-  //return;
-
-  printtext ("p: ");
-  printreal (p);
-  printtext ("\n");
-  printtext ("q: ");
-  printreal (q);
-  printtext ("\n");
-  printtext ("r: ");
-  printreal (r);
-  printtext ("\n");
-  printtext ("xl:");
-  printreal (xl);
-  printtext ("\n");
-  printtext ("yk:");
-  printreal (yk);
-  printtext ("\n");
-  printtext ("zk:");
-  printreal (zk);
-  printtext ("\n");
-  printtext ("a1:");
-  printreal (a1);
-  printtext ("\n");
-  printtext ("b1:");
-  printreal (b1);
-  printtext ("\n");
-  printtext ("a2:");
-  printreal (a2);
-  printtext ("\n");
-  printtext ("b2:");
-  printreal (b2);
-  printtext ("\n");
-  }
-
-void quartischsummenproduktintr (real a, real b, real c, real d, cschnittpunkte& psp)
-  {
-  real aq, p, q, r;
-  real pa, qa, xl, ykt, yk, l, zk;
-  real c1, c2, sw;
-  real Da, Db, ao, bo, a1, a2, b1, b2, a1q, a2q, D12, D34, x1, x2, x3, x4;
-
-//*
-  // Parameter der reduzierten quartischen Gleichung diffp
-  aq= a*a/-8;
-
-  p= aq + b/3;
-  q= (aq + b/2)*a - c;
-  r= ((aq*real (1.5) + b)*a/4 - c)*a + d*4;
-
-  // Parameter der angepassten reduzierten kubischen Gleichung                       //  ungenauer, durchgehender Krizzel
-  pa= p*p + r/3;
-  qa= (r - p*p)*p + q*q/-2;
-//*/
-
-/*
-  // Parameter der angepassten kubischen Gleichung
-  pa= (a*c*-3 + b*b + d*12)/9;
-  qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/-2;
-//*/
-
-  // Lösung der normalen linearen Gleichung
-  xl= qa*qa - pa*pa*pa;
-
-  // reelle Lösung der kubischen Resolvente
-  if (xl >= 0)
-    {
-    if (qa > 0)
-      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ykt= cbrtr (qa + sqrtr (xl));
-      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
-      }
-    else
-    if (qa < 0)
-      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      ykt= cbrtr (qa - sqrtr (xl));                                   // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
-      }
-    else
-      yk= 0;
-    }
-    else
-    {
-    l= sqrtr (pa);
-    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // zerfetzte Röhren, Außenfetzen
-    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // durchgehende Krizzel
-    }
-
-  // Lösungen der beiden quadratischen Gleichungen
-  zk= yk + b*2/3;
-
-  Da= sqrtr (a*a/4 - zk)/2;
-  Db= sqrtr ((zk - b)*(zk - b)/4 - d);
-
-  ao= a/-4;
-  bo= (b - zk)/2;
-
-  a1= ao + Da;
-  a2= ao - Da;
-  b1= bo + Db;
-  b2= bo - Db;
-
-  c1= a1*b2 + a2*b1;
-  c2= a1*b1 + a2*b2;
-
-  if (absr (c2*2 + c) < absr (c1*2 + c))
-    {
-    sw= b1;
-    b1= b2;
-    b2= sw;
-    }
-
-  // Lösungen normale quartische Gleichung
-  a1q= a1*a1;
-  a2q= a2*a2;
-  if (a1q >= b1)
-    {
-    D12= sqrtr (a1q - b1);
-    x1= a1 - D12;
-    x2= a1 + D12;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
-    }
-  if (a2q >= b2)
-    {
-    D34= sqrtr (a2q - b2);
-    x3= a2 - D34;
-    x4= a2 + D34;
-    if (x3 > 0)
-      psp.add (x3);
-    if (x4 > 0)
-      psp.add (x4);
-    }
-
-  //return;
-
-  printtext ("p: ");
-  printreal (p);
-  printtext ("\n");
-  printtext ("q: ");
-  printreal (q);
-  printtext ("\n");
-  printtext ("r: ");
-  printreal (r);
-  printtext ("\n");
-  printtext ("xl:");
-  printreal (xl);
-  printtext ("\n");
-  printtext ("yk:");
-  printreal (yk);
-  printtext ("\n");
-  printtext ("zk:");
-  printreal (zk);
-  printtext ("\n");
-  printtext ("a1:");
-  printreal (a1);
-  printtext ("\n");
-  printtext ("b1:");
-  printreal (b1);
-  printtext ("\n");
-  printtext ("a2:");
-  printreal (a2);
-  printtext ("\n");
-  printtext ("b2:");
-  printreal (b2);
-  printtext ("\n");
-  }
-
 //-------------------- quartisch integriert reduziert (quartischintr) -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void quartischproduktsummereduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischproduktsummedivreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, a4, p, q, r, pa, qa, xl;
-  real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
+  real ytk, yk, l, zk, D, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
 
-  // Parameter reduzierte quartische Gleichung
+  // Parameter der reduzierten quartischen Gleichung
   aq= a*a/8;
   p= aq*-3 + b;
   q= a*(aq + b/-2) + c;
   r= a*(aq*a*real (-0.09375) + a*b/16 + c/-4) + d;
 
-  // Parameter der reduzierten kubischen Gleichung diffp
+  // Parameter der angepassten reduzierten kubischen Gleichung
   pa= p*p/9 + r*4/3;
   qa= p*p*p/27 + p*r*4/-3 + q*q/2;
 
-  // Parameter der reduzierten kubischen Gleichung direkt diffpf falsch
+  // Parameter der angepassten reduzierten kubischen Gleichung direkt
   //pa= (a*c*-3 + b*b + d*12)/9;
   //qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/2;
 
@@ -2934,6 +2530,127 @@ void quartischproduktsummereduziertintr (real a, real b, real c, real d, cschnit
     yk= cosr (acosr (qa/(pa*l))/3)*l*2;                               // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
     }
 
+  zk= yk + p/3;
+  //zk= yk + b/6;
+
+/*
+  D= sqrtr (z*z - r);
+
+  b1= z + D;
+  b2= z - D;
+  a1= q/D/-2;
+  a2= q/D/2;
+*/
+
+  D= sqrtr (zk*zk - r);
+
+  b1= zk + D;
+  b2= zk - D;
+
+  a1= q/D/-2;                                                // 2. Fehleruelle D = 0
+  a2= q/D/2;
+
+  // Lösungen normale quartische Gleichung
+  a4= a/-4;
+  uq= a1*a1;
+  if (uq*2 >= b1)
+    {
+    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a1= a4 - a1;
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  uq= a2*a2;
+  if (uq*2 >= b2)
+    {
+    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a2= a4 + a2;
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+
+  return;
+
+  printtext ("p: ");
+  printreal (p);
+  printtext ("\n");
+  printtext ("q: ");
+  printreal (q);
+  printtext ("\n");
+  printtext ("r: ");
+  printreal (r);
+  printtext ("\n");
+  printtext ("zk:");
+  printreal (zk);
+  printtext ("\n");
+  printtext ("uq:");
+  printreal (uq);
+  printtext ("\n");
+  printtext ("vq:");
+  printreal (vq);
+  printtext ("\n");
+  printtext ("u:");
+  printreal (u);
+  printtext ("\n");
+  printtext ("v:");
+  printreal (v);
+  printtext ("\n");
+  printtext ("bed:");
+  printreal (bed);
+  printtext ("\n");
+  printtext ("b1:");
+  printreal (b1);
+  printtext ("\n");
+  printtext ("b2:");
+  printreal (b2);
+  printtext ("\n");
+  }
+
+void quartischproduktsummereduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  real aq, a4, p, q, r, pa, qa, xl;
+  real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
+
+  // Parameter der reduzierten quartischen Gleichung
+  aq= a*a/8;
+  p= aq*-3 + b;
+  q= a*(aq + b/-2) + c;
+  r= a*(aq*a*real (-0.09375) + a*b/16 + c/-4) + d;
+
+  // Parameter der angepassten reduzierten kubischen Gleichung
+  pa= p*p/9 + r*4/3;
+  qa= p*p*p/27 + p*r*4/-3 + q*q/2;
+
+  // Parameter der angepassten reduzierten kubischen Gleichung direkt
+  //pa= (a*c*-3 + b*b + d*12)/9;
+  //qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/2;
+
+  // Lösung der normalen linearen Gleichung
+  xl= qa*qa - pa*pa*pa;
+
+  // reelle Lösung der kubischen Resolvente
+  if (xl >= 0)                                                        // 2 oder 0 Schnittpunkte mit dem Torus
+    {
+    if (qa >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      /**/ ytk= cbrtr (qa + sqrtr (xl));
+      else ytk= cbrtr (qa - sqrtr (xl));                              // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+    yk= ytk + pa/ytk;                                                 // ytk = 0 ausgeschlossen, da Auslöschung verhindert
+    }
+    else                                                              // 4 Schnittpunkte mit dem Torus
+    {
+    l= sqrtr (pa);                                                    // pk > 0 immer, l > 0 immer, wegen Division
+    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 //  funktioniert als einziger mit sqrtz (vq)
+    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
+    }
+
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
   zk= yk + p/3;
 
@@ -2944,8 +2661,8 @@ void quartischproduktsummereduziertintr (real a, real b, real c, real d, cschnit
   v= sqrtrz (vq);
 
   // Bedingung -2uv = q
-  bed= u*v*-2;
-  if (absr (bed + q) < absr (bed - q))
+  bed= u*v;
+  if (absr (bed - q) < absr (bed + q))
     v= -v;
 
   b1= zk/2 + v;
@@ -3015,18 +2732,22 @@ void quartischproduktsummereduziertintr (real a, real b, real c, real d, cschnit
 
 void quartischsummenproduktreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq, p, q, r, pa, qa, xl;
-  real ytk, yk, zk, pzk, l, uq, vq, u, v, bed, b1, b2, a4, a1, a2, D12, D34, x1, x2, x3, x4;
+  real aq, a4, p, q, r, pa, qa, xl;
+  real ytk, yk, l, zk, pzk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
 
-  // Parameter reduzierte quartische Gleichung
+  // Parameter der reduzierten quartischen Gleichung
   aq= a*a/8;
   p= aq*-3 + b;
   q= a*(aq + b/-2) + c;
   r= a*(aq*a*real (-0.09375) + a*b/16 + c/-4) + d;
 
-  // Parameter reduzierte kubische Gleichung
-  pa= p*p*4/9 + r*4/3 + p*p/-3;
+  // Parameter der reduzierten kubischen Gleichung
+  pa= p*p/9 + r*4/3;
   qa= p*p*p/-27 + p*r*4/3 + q*q/-2;
+
+  // Parameter der angepassten reduzierten kubischen Gleichung direkt
+  //pa= (a*c*-3 + b*b + d*12)/9;
+  //qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/-2;
 
   // Lösung der normalen linearen Gleichung
   xl= qa*qa - pa*pa*pa;
@@ -3042,23 +2763,23 @@ void quartischsummenproduktreduziertintr (real a, real b, real c, real d, cschni
     else
     {
     l= sqrtr (pa);
-    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;
-    yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;
+    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;             // 0, -2pi   Fehler mit sqrtrz (vq)
+    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;
     }
 
   // Lösungen der beiden quadratischen Gleichungen
-  zk= yk + p*2/3;     // ak = p*-2
+  zk= yk + p*2/3;
   pzk= p - zk;
 
   uq= zk/-4;
   vq= pzk*pzk/4 - r;
 
-  u= sqrtr (uq);
-  v= sqrtr (vq);
+  u= sqrtrz (uq);
+  v= sqrtrz (vq);
 
-  // Bedingung -4uv = q                                               // u= a/2
-  bed= u*v*-4;
-  if (absr (bed + q) < absr (bed - q))
+  // Bedingung -2uv = q
+  bed= u*v;
+  if (absr (bed - q) < absr (bed + q))
     v= -v;
 
   b1= pzk/2 + v;
@@ -3123,99 +2844,6 @@ void quartischsummenproduktreduziertintr (real a, real b, real c, real d, cschni
   printtext ("\n");
   printtext ("b2:");
   printreal (b2);
-  printtext ("\n");
-  }
-
-void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
-  {
-  real a4, p, q, r, pk, qk, xl;
-  real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
-
-  // Parameter der reduzierten quartischen Gleichung buchf   p= p/6
-  p= a*a/-16 + b/6;
-  q= a*a*a/16 + a*b/-4 + c/2;
-  r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
-
-  // Parameter der reduzierten kubischen Gleichung buchf
-  pk= p*p + r/3;
-  qk= p*p*p - p*r + q*q/4;
-
-  // Parameter der reduzierten kubischen Gleichung direkt buchf (ungenauer)
-  //pk= a*c/-12 + b*b/36 + d/3;
-  //qk= a*b*c/-48 + a*a*d/16 + b*d/-6 + b*b*b/216 + c*c/16;
-
-  // Lösung der normalen linearen Gleichung
-  xl= qk*qk - pk*pk*pk;
-
-  // reelle Lösung der kubischen Resolvente
-  if (xl >= 0)                                                        // 2 oder 0 Schnittpunkte mit dem Torus
-    {
-    if (qk >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      /**/ ytk= cbrtr (qk + sqrtr (xl));
-      else ytk= cbrtr (qk - sqrtr (xl));                              // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-    yk= ytk + pk/ytk;                                                 // ytk = 0 ausgeschlossen, da Auslöschung verhindert
-    }
-    else                                                              // 4 Schnittpunkte mit dem Torus
-    {
-    l= sqrtr (pk);                                                    // pk > 0 immer, l > 0 immer, wegen Division
-    yk= cosr (acosr (qk/(pk*l))/3)*l*2;                                 // 1. Fehleruelle yk, |qk/(pk*l)| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
-    }
-
-  // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
-  zk= yk + p;                                                         // zk= yk + b/6 - a*a/16;
-
-  uq= yk/2 - p;                                                       // uq= (zk - p*3)/2;
-  vq= zk*zk - r;
-
-  u= sqrtrz (uq);
-  v= sqrtrz (vq);
-
-  // Bedingung uv = -q
-  bed= u*v;
-  if (absr (bed - q) < absr (bed + q))
-    v= -v;
-
-  b1= zk + v;
-  b2= zk - v;
-
-  // Lösungen normale quartische Gleichung
-  a4= a/-4;
-  if (uq*2 >= b1)
-    {
-    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a1= a4 - u;
-    x1= a1 - D12;
-    x2= a1 + D12;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
-    }
-  if (uq*2 >= b2)
-    {
-    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a2= a4 + u;
-    x3= a2 - D34;
-    x4= a2 + D34;
-    if (x3 > 0)
-      psp.add (x3);
-    if (x4 > 0)
-      psp.add (x4);
-    }
-
-  return;
-
-  printtext ("p: ");
-  printreal (p);
-  printtext ("\n");
-  printtext ("zk:");
-  printreal (zk);
-  printtext ("\n");
-  printtext ("uq:");
-  printreal (uq);
-  printtext ("\n");
-  printtext ("vq:");
-  printreal (vq);
   printtext ("\n");
   }
 
@@ -3425,6 +3053,99 @@ void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp
     }
   }
 
+void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  real a4, p, q, r, pk, qk, xl;
+  real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
+
+  // Parameter der reduzierten quartischen Gleichung buchf   p= p/6
+  p= a*a/-16 + b/6;
+  q= a*a*a/16 + a*b/-4 + c/2;
+  r= a*a*a*a*3/-256 + a*a*b/16 + a*c/-4 + d;
+
+  // Parameter der reduzierten kubischen Gleichung buchf
+  pk= p*p + r/3;
+  qk= p*p*p - p*r + q*q/4;
+
+  // Parameter der reduzierten kubischen Gleichung direkt buchf (ungenauer)
+  //pk= a*c/-12 + b*b/36 + d/3;
+  //qk= a*b*c/-48 + a*a*d/16 + b*d/-6 + b*b*b/216 + c*c/16;
+
+  // Lösung der normalen linearen Gleichung
+  xl= qk*qk - pk*pk*pk;
+
+  // reelle Lösung der kubischen Resolvente
+  if (xl >= 0)                                                        // 2 oder 0 Schnittpunkte mit dem Torus
+    {
+    if (qk >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      /**/ ytk= cbrtr (qk + sqrtr (xl));
+      else ytk= cbrtr (qk - sqrtr (xl));                              // qk ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+    yk= ytk + pk/ytk;                                                 // ytk = 0 ausgeschlossen, da Auslöschung verhindert
+    }
+    else                                                              // 4 Schnittpunkte mit dem Torus
+    {
+    l= sqrtr (pk);                                                    // pk > 0 immer, l > 0 immer, wegen Division
+    yk= cosr (acosr (qk/(pk*l))/3)*l*2;                                 // 1. Fehleruelle yk, |qk/(pk*l)| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
+  zk= yk + p;                                                         // zk= yk + b/6 - a*a/16;
+
+  uq= yk/2 - p;                                                       // uq= (zk - p*3)/2;
+  vq= zk*zk - r;
+
+  u= sqrtrz (uq);
+  v= sqrtrz (vq);
+
+  // Bedingung uv = -q
+  bed= u*v;
+  if (absr (bed - q) < absr (bed + q))
+    v= -v;
+
+  b1= zk + v;
+  b2= zk - v;
+
+  // Lösungen normale quartische Gleichung
+  a4= a/-4;
+  if (uq*2 >= b1)
+    {
+    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a1= a4 - u;
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (uq*2 >= b2)
+    {
+    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    a2= a4 + u;
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+
+  return;
+
+  printtext ("p: ");
+  printreal (p);
+  printtext ("\n");
+  printtext ("zk:");
+  printreal (zk);
+  printtext ("\n");
+  printtext ("uq:");
+  printreal (uq);
+  printtext ("\n");
+  printtext ("vq:");
+  printreal (vq);
+  printtext ("\n");
+  }
+
 void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real a4, aq, p, q, r, pq, r4, pk, qk, xl;
@@ -3477,4 +3198,408 @@ void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp)
     psp.add (x3.x);
   if ((x4.x > 0) && (absr (x4.y) < quant))
     psp.add (x4.x);
+  }
+
+//-------------------- quartisch integriert normal (quartischintr) -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void quartischproduktsummedivintr (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  real aq, p, q, r;
+  real pa, qa, xl, ytk, yk, l, zk;
+  real Db, b1, b2, a1, a2, a1q, a2q, D12, D34, x1, x2, x3, x4;
+  //real a4, Da, v1, v2;
+
+//*
+  // Parameter der reduzierten quartischen Gleichung diffp
+  aq= a*a/-8;
+
+  p= aq + b/3;
+  q= (aq + b/2)*a - c;
+  r= ((aq*real (1.5) + b)*a/4 - c)*a + d*4;
+
+  // Parameter der angepassten reduzierten kubischen Gleichung diffp
+  pa= p*p/4 + r/12;
+  qa= (p*p - r)*p/8 + q*q/16;
+//*/
+
+/*
+  // Parameter der angepassten reduzierten kubischen Gleichung
+  pa= (a*c*-3 + b*b + d*12)/36;
+  qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/16;
+//*/
+
+  // Lösung der normalen linearen Gleichung
+  xl= qa*qa - pa*pa*pa;
+
+  // reelle Lösung der kubischen Resolvente buchf
+  if (xl >= 0)
+    {
+    if (qa > 0)
+      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ytk= cbrtr (qa + sqrtr (xl));
+      yk= ytk + pa/ytk;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
+      }
+    else
+    if (qa < 0)
+      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ytk= cbrtr (qa - sqrtr (xl));                                   // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      yk= ytk + pa/ytk;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
+      }
+    else
+      yk= 0;
+    }
+    else
+    {
+    l= sqrtr (pa);
+    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
+    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen
+  zk= yk + b/6;
+
+  Db= sqrtr (zk*zk - d);
+
+  b1= zk + Db;
+  b2= zk - Db;
+
+//*
+  a1= (a*b1 - c)/Db/-4;                                                // 2. Fehleruelle D = 0
+  a2= (a*b2 - c)/Db/4;
+//*/
+
+/*
+  a4= a/-4;
+  Da= sqrtr (a*a/16 - b/4 + zk/2);
+  a1= a4 + Da;
+  a2= a4 - Da;
+
+  v1= a1*b2 + a2*b1;
+  v2= a1*b1 + a2*b2;
+
+  if (absr (v2*2 + c) < absr (v1*2 + c))
+    {
+    real sw= a1;
+    a1= a2;
+    a2= sw;
+    }
+//*/
+
+  // Lösungen normale quartische Gleichung
+  a1q= a1*a1;
+  a2q= a2*a2;
+  if (a1q >= b1)
+    {
+    D12= sqrtr (a1q - b1);
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (a2q >= b2)
+    {
+    D34= sqrtr (a2q - b2);
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+
+  return;
+
+  printtext ("zk:");
+  printreal (zk);
+  printtext ("\n");
+  printtext ("b:");
+  printreal (b);
+  printtext ("\n");
+  printtext ("c:");
+  printreal (c);
+  printtext ("\n");
+  printtext ("v1:");
+  //printreal (v1);
+  printtext ("\n");
+  printtext ("v2:");
+  //printreal (v2);
+  printtext ("\n");
+  printtext ("a1:");
+  printreal (a1);
+  printtext ("\n");
+  printtext ("a2:");
+  printreal (a2);
+  printtext ("\n");
+  }
+
+void quartischproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  //real aq, p, q, r;
+  real pa, qa, xl, ykt, yk, l, zk;
+  real c1, c2, sw;
+  real Da, Db, ao, bo, a1, a2, b1, b2, a1q, a2q, D12, D34, x1, x2, x3, x4;
+
+/*
+  // Parameter der reduzierten quartischen Gleichung diffp
+  aq= a*a/-8;
+
+  p= aq + b/3;
+  q= (aq + b/2)*a - c;
+  r= ((aq*real (1.5) + b)*a/4 - c)*a + d*4;
+
+  // Parameter der angepassten reduzierten kubischen Gleichung diffp
+  pa= p*p + r/3;
+  qa= (p*p - r)*p + q*q/2;
+//*/
+
+//*
+  // Parameter der angepassten reduzierten kubischen Gleichung                       //  ungenauer, durchgehender Krizzel
+  pa= (a*c*-3 + b*b + d*12)/9;
+  qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/2;
+//*/
+
+  // Lösung der normalen linearen Gleichung
+  xl= qa*qa - pa*pa*pa;
+
+  // reelle Lösung der kubischen Resolvente
+  if (xl >= 0)
+    {
+    if (qa > 0)
+      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ykt= cbrtr (qa + sqrtr (xl));
+      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
+      }
+    else
+    if (qa < 0)
+      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ykt= cbrtr (qa - sqrtr (xl));                                   // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
+      }
+    else
+      yk= 0;
+    }
+    else
+    {
+    l= sqrtr (pa);
+    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
+    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen
+  zk= yk + b/3;
+
+  Da= sqrtr (a*a/4 + zk - b)/2;
+  Db= sqrtr (zk*zk/4 - d);
+
+  ao= a/-4;
+  bo= zk/2;
+
+  a1= ao + Da;
+  a2= ao - Da;
+  b1= bo + Db;
+  b2= bo - Db;
+
+  c1= a1*b2 + a2*b1;
+  c2= a1*b1 + a2*b2;
+
+  if (absr (c2*2 + c) < absr (c1*2 + c))
+    {
+    sw= b1;
+    b1= b2;
+    b2= sw;
+    }
+
+  // Lösungen normale quartische Gleichung
+  a1q= a1*a1;
+  a2q= a2*a2;
+  if (a1q >= b1)
+    {
+    D12= sqrtr (a1q - b1);
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (a2q >= b2)
+    {
+    D34= sqrtr (a2q - b2);
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+
+  return;
+
+  printtext ("p: ");
+  //printreal (p);
+  printtext ("\n");
+  printtext ("q: ");
+  //printreal (q);
+  printtext ("\n");
+  printtext ("r: ");
+  //printreal (r);
+  printtext ("\n");
+  printtext ("xl:");
+  printreal (xl);
+  printtext ("\n");
+  printtext ("yk:");
+  printreal (yk);
+  printtext ("\n");
+  printtext ("zk:");
+  printreal (zk);
+  printtext ("\n");
+  printtext ("a1:");
+  printreal (a1);
+  printtext ("\n");
+  printtext ("b1:");
+  printreal (b1);
+  printtext ("\n");
+  printtext ("a2:");
+  printreal (a2);
+  printtext ("\n");
+  printtext ("b2:");
+  printreal (b2);
+  printtext ("\n");
+  }
+
+void quartischsummenproduktintr (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  //real aq, p, q, r;
+  real pa, qa, xl, ykt, yk, l, zk;
+  real c1, c2, sw;
+  real Da, Db, ao, bo, a1, a2, b1, b2, a1q, a2q, D12, D34, x1, x2, x3, x4;
+
+/*
+  // Parameter der reduzierten quartischen Gleichung diffp
+  aq= a*a/-8;
+
+  p= aq + b/3;
+  q= (aq + b/2)*a - c;
+  r= ((aq*real (1.5) + b)*a/4 - c)*a + d*4;
+
+  // Parameter der angepassten reduzierten kubischen Gleichung                       //  ungenauer, durchgehender Krizzel
+  pa= p*p + r/3;
+  qa= (r - p*p)*p + q*q/-2;
+//*/
+
+//*
+  // Parameter der angepassten kubischen Gleichung
+  pa= (a*c*-3 + b*b + d*12)/9;
+  qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/-2;
+//*/
+
+  // Lösung der normalen linearen Gleichung
+  xl= qa*qa - pa*pa*pa;
+
+  // reelle Lösung der kubischen Resolvente
+  if (xl >= 0)
+    {
+    if (qa > 0)
+      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ykt= cbrtr (qa + sqrtr (xl));
+      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
+      }
+    else
+    if (qa < 0)
+      {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      ykt= cbrtr (qa - sqrtr (xl));                                   // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
+      }
+    else
+      yk= 0;
+    }
+    else
+    {
+    l= sqrtr (pa);
+    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // zerfetzte Röhren, Außenfetzen
+    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // durchgehende Krizzel
+    }
+
+  // Lösungen der beiden quadratischen Gleichungen
+  zk= yk + b*2/3;
+
+  Da= sqrtr (a*a/4 - zk)/2;
+  Db= sqrtr ((zk - b)*(zk - b)/4 - d);
+
+  ao= a/-4;
+  bo= (b - zk)/2;
+
+  a1= ao + Da;
+  a2= ao - Da;
+  b1= bo + Db;
+  b2= bo - Db;
+
+  c1= a1*b2 + a2*b1;
+  c2= a1*b1 + a2*b2;
+
+  if (absr (c2*2 + c) < absr (c1*2 + c))
+    {
+    sw= b1;
+    b1= b2;
+    b2= sw;
+    }
+
+  // Lösungen normale quartische Gleichung
+  a1q= a1*a1;
+  a2q= a2*a2;
+  if (a1q >= b1)
+    {
+    D12= sqrtr (a1q - b1);
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (a2q >= b2)
+    {
+    D34= sqrtr (a2q - b2);
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+
+  return;
+
+  printtext ("p: ");
+  //printreal (p);
+  printtext ("\n");
+  printtext ("q: ");
+  //printreal (q);
+  printtext ("\n");
+  printtext ("r: ");
+  //printreal (r);
+  printtext ("\n");
+  printtext ("xl:");
+  printreal (xl);
+  printtext ("\n");
+  printtext ("yk:");
+  printreal (yk);
+  printtext ("\n");
+  printtext ("zk:");
+  printreal (zk);
+  printtext ("\n");
+  printtext ("a1:");
+  printreal (a1);
+  printtext ("\n");
+  printtext ("b1:");
+  printreal (b1);
+  printtext ("\n");
+  printtext ("a2:");
+  printreal (a2);
+  printtext ("\n");
+  printtext ("b2:");
+  printreal (b2);
+  printtext ("\n");
   }

@@ -291,13 +291,13 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   //quartischproduktsummeintr (B/A, C/A, D/A, E/A, psp);                          // krizzelig Innanartefakte
   //quartischsummenproduktintr (B/A, C/A, D/A, E/A, psp);                         // krizzelig Innanartefakte
 
+  //quartischproduktsummedivreduziertintr (B/A, C/A, D/A, E/A, psp);              // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   //quartischproduktsummereduziertintr (B/A, C/A, D/A, E/A, psp);                 // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   quartischsummenproduktreduziertintr (B/A, C/A, D/A, E/A, psp);                // gleiches Fehlerverhalten wie quartischdiffpfintr
-  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                                 // wie testintr außer mit Oben-untenlinie
 
   //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                             // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                             // zusätzliche Artefakte zu lagrangeuintr
-
+  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                                 // wie testintr außer mit Oben-untenlinie
   //quartischdiffpintrc (B/A, C/A, D/A, E/A, psp);                                // langsam, Fehlerpixel und Pseudopixel wegen Ungenauigkeit, auch reelle Lösungen haben einen kleinen Imaginärteil
   }
 
