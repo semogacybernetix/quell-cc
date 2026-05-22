@@ -437,6 +437,7 @@
                quartischsummenproduktreduziert optimiert, 18:51
 
 2026.05.21 Do  21:09, alle quartische Routinen Konsistenz verbessert, quartischsummenproduktreduziertintr und quartischproduktsummereduziertintr optimiert, 0:30
+2026.05.22 Fr   7:35, quartischreduziertproduktsummediv Fehler korrigiert, optimiert, quartische Verfahren fehlergetestet, optimiert, 11:02
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

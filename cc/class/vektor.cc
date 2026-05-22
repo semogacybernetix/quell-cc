@@ -1825,9 +1825,8 @@ cvektor4 quaternionfromeulerwinkel (const cvektor3 pflugw)
     else return -ret;
   }
 
-//******************************************************** Polynomberechnung **************************************************************************************************************************************************************
-
-// ------------------------------------------------------- quadratisch ------------------------------------------------------------------------------------------------------------------------------------------------------
+//################################################### Polynomberechnung ######################################################################################################################################################################
+//*************************************************** quadratische Verfahren *****************************************************************************************************************************************************************
 
 void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   {
@@ -1840,7 +1839,7 @@ void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   x2= a2 - D;
   }
 
-// ------------------------------------------------------- kubisch ----------------------------------------------------------------------------------------------------------------------------------------------------------
+//*************************************************** kubische Verfahren *********************************************************************************************************************************************************************
 
 void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
   {
@@ -2014,7 +2013,7 @@ void kubischreduziertg2 (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2,
 void kubischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& p, ckomplexk& q)
   {
   p= a*a/-3 + b;
-  q= a*a*a/real (13.5) + a*b/-3 + c;
+  q= a*(a*a/real (13.5) + b/-3) + c;
   }
 
 void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
@@ -2035,7 +2034,7 @@ void kubisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk& x1, ckomplexk& x
   x3= y3 - a/3;
   }
 
-//-------------------- kubisch reell ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------- kubisch reelle Verfahren ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void kubischreduziertreellc (real p, real q, real& y)
   {
@@ -2080,6 +2079,8 @@ void kubischreduziertreellu (real p, real q, real& y)
     }
   }
 
+//--------------------------------------------------- kubisch reell integriert ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 void kubischintr (real a, real b, real c, cschnittpunkte& psp)
   {
   real a3, p, q, xl, yt, z1, z2, z3, l, l2, w;
@@ -2088,7 +2089,7 @@ void kubischintr (real a, real b, real c, cschnittpunkte& psp)
 
   // Parameter der reduzierten kubischen Gleichung
   p= a*a/9 + b/-3;
-  q= a*a*a/-27 + a*b/6 + c/-2;
+  q= a*(a*a/-27 + b/6) + c/-2;
 
   xl= q*q - p*p*p;
 
@@ -2121,8 +2122,8 @@ void kubischintr (real a, real b, real c, cschnittpunkte& psp)
     }
   }
 
-// ------------------------------------------------------- quartisch ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------- kubische Resolventen ---------------------------------------------------------------------------------------------------------------------------------------------------------
+//*************************************************** quartische Verfahren *******************************************************************************************************************************************************************
+//--------------------------------------------------- kubische Resolventen -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void kubischeresolventeproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& z1, ckomplexk& z2, ckomplexk& z3)  // Σ(y)
   {
@@ -2168,25 +2169,22 @@ void kubischeresolventesummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, cko
   kubisch (ak, bk, ck, z1, z2, z3);
   }
 
-// --------------------------------------------  quartischreduziert --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------- quartisch komplexe Verfahren -----------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------- quartisch komplex reduziert ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void quartischreduziertproduktsummediv (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
   {
-  ckomplexk z1, z2, z3, z, D, b1, b2, a1, a2;
+  ckomplexk z1, z2, z3, z, D, a1;
 
   kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
 
   z= z1/2;
 
   D= sqrtr (z*z - r);
+  a1= q/D/2;
 
-  b1= z + D;
-  b2= z - D;
-  a1= q/D/-2;
-  a2= q/D/2;
-
-  quadratisch (a1, b1, y1, y2);
-  quadratisch (a2, b2, y3, y4);
+  quadratisch (-a1, z + D, y1, y2);
+  quadratisch ( a1, z - D, y3, y4);
 
   //return;
 
@@ -2195,15 +2193,15 @@ void quartischreduziertproduktsummediv (ckomplexk p, ckomplexk q, ckomplexk r, c
   printtext ("\n");
   printvektor2komplex ("D          ", D, 0);
   printtext ("\n");
-  printvektor2komplex ("a1         ", a1, 0);
-  printvektor2komplex ("b1         ", b1, 0);
-  printvektor2komplex ("a2         ", a2, 0);
-  printvektor2komplex ("b2         ", b2, 0);
+  printvektor2komplex ("a1         ", -a1, 0);
+  printvektor2komplex ("b1         ", z + D, 0);
+  printvektor2komplex ("a2         ", a1, 0);
+  printvektor2komplex ("b2         ", z - D, 0);
   }
 
 void quartischreduziertproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
   {
-  ckomplexk z1, z2, z3, z, u, v, bed, a1, a2, b1, b2;
+  ckomplexk z1, z2, z3, z, u, v, bed;
 
   kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
 
@@ -2213,17 +2211,12 @@ void quartischreduziertproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckom
   v= sqrtr (z*z - r);
 
   // Bedingung -2uv = q
-  bed= u*v*-2;
-  if (absr (bed + q) < absr (bed - q))
+  bed= u*v;
+  if (absr (bed - q) < absr (bed + q))
     v= -v;
 
-  a1=  u;
-  a2= -u;
-  b1= z + v;
-  b2= z - v;
-
-  quadratisch (a1, b1, y1, y2);
-  quadratisch (a2, b2, y3, y4);
+  quadratisch ( u, z + v, y1, y2);
+  quadratisch (-u, z - v, y3, y4);
 
   //return;
 
@@ -2233,15 +2226,15 @@ void quartischreduziertproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckom
   printvektor2komplex ("u          ", u, 0);
   printvektor2komplex ("v          ", v, 0);
   printtext ("\n");
-  printvektor2komplex ("a1         ", a1, 0);
-  printvektor2komplex ("b1         ", b1, 0);
-  printvektor2komplex ("a2         ", a2, 0);
-  printvektor2komplex ("b2         ", b2, 0);
+  printvektor2komplex ("a1         ", u, 0);
+  printvektor2komplex ("b1         ", z + v, 0);
+  printvektor2komplex ("a2         ", -u, 0);
+  printvektor2komplex ("b2         ", z - v, 0);
   }
 
 void quartischreduziertsummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
   {
-  ckomplexk z1, z2, z3, z, u, pz, v, bed, a1, a2, b1, b2;
+  ckomplexk z1, z2, z3, z, u, pz, v, bed;
 
   kubischeresolventesummenprodukt (p, q, r, z1, z2, z3);
 
@@ -2252,17 +2245,12 @@ void quartischreduziertsummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, cko
   v= sqrtr (pz*pz - r);
 
   // Bedingung -2uv = q
-  bed= u*v*-2;
-  if (absr (bed + q) < absr (bed - q))
+  bed= u*v;
+  if (absr (bed - q) < absr (bed + q))
     v= -v;
 
-  a1=  u;
-  a2= -u;
-  b1= pz + v;
-  b2= pz - v;
-
-  quadratisch (a1, b1, y1, y2);
-  quadratisch (a2, b2, y3, y4);
+  quadratisch ( u, pz + v, y1, y2);
+  quadratisch (-u, pz - v, y3, y4);
 
   //return;
 
@@ -2272,10 +2260,10 @@ void quartischreduziertsummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, cko
   printvektor2komplex ("u          ", u, 0);
   printvektor2komplex ("v          ", v, 0);
   printtext ("\n");
-  printvektor2komplex ("a1         ", a1, 0);
-  printvektor2komplex ("b1         ", b1, 0);
-  printvektor2komplex ("a2         ", a2, 0);
-  printvektor2komplex ("b2         ", b2, 0);
+  printvektor2komplex ("a1         ", u, 0);
+  printvektor2komplex ("b1         ", pz + v, 0);
+  printvektor2komplex ("a2         ", -u, 0);
+  printvektor2komplex ("b2         ", pz - v, 0);
   }
 
 void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2343,25 +2331,24 @@ void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x
   x4= y4 + a4;
   }
 
-// --------------------------------------------  quartischnormal --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------  quartisch komplex normal --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void quartischproduktsummediv (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+void quartischnormalproduktsummediv (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
-  ckomplexk z1, z2, z3, z, D, b1, b2, a1, a2;
+  ckomplexk z1, z2, z3, z, D, a1, a2, b1, b2;
 
   kubischeresolventeproduktsumme (a, b, c, d, z1, z2, z3);
 
   z= z1/2;
 
   D= sqrtr (z*z - d);
-
   b1= z + D;
   b2= z - D;
   a1= (a*b1 - c)/D/2;
   a2= (a*b2 - c)/D/-2;
 
-  quadratisch (a1, b1, x1, x2);
-  quadratisch (a2, b2, x3, x4);
+  quadratisch ( a1, b1, x1, x2);
+  quadratisch ( a2, b2, x3, x4);
 
   //return;
 
@@ -2370,13 +2357,13 @@ void quartischproduktsummediv (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk 
   printtext ("\n");
   printvektor2komplex ("D          ", D, 0);
   printtext ("\n");
-  printvektor2komplex ("a1         ", a1, 0);
-  printvektor2komplex ("b1         ", b1, 0);
-  printvektor2komplex ("a2         ", a2, 0);
-  printvektor2komplex ("b2         ", b2, 0);
+  printvektor2komplex ("a1         ", a, 0);
+  printvektor2komplex ("b1         ", b, 0);
+  printvektor2komplex ("a2         ", -a, 0);
+  printvektor2komplex ("b2         ", z - D, 0);
   }
 
-void quartischproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+void quartischnormalproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
   ckomplexk z1, z2, z3, z, a1, a2, b1, b2, c1, c2;
 
@@ -2412,7 +2399,7 @@ void quartischproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, 
   printvektor2komplex ("b2         ", b2, 0);
   }
 
-void quartischsummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+void quartischnormalsummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
   ckomplexk z1, z2, z3, z, a1, a2, b1, b2, c1, c2;
 
@@ -2446,7 +2433,7 @@ void quartischsummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d,
   printvektor2komplex ("b2         ", b2, 0);
   }
 
-void quartischlagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
+void quartischnormallagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
   {
   ckomplexk z1, z2, z3, zen, u1, u2, u3, bed, a4;
 
@@ -2492,12 +2479,13 @@ void quartischlagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckom
   printtext ("\n");
   }
 
-//-------------------- quartisch integriert reduziert (quartischintr) -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------- reelle, integrierte Verfahren ----------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------- quartisch reduziert intr ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void quartischproduktsummedivreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischreduziertproduktsummedivintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, a4, p, q, r, pa, qa, xl;
-  real ytk, yk, l, zk, D, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
+  real ytk, yk, l, zk, D, a1, b1, b2, ao, D12, D34, x1, x2, x3, x4;
 
   // Parameter der reduzierten quartischen Gleichung
   aq= a*a/8;
@@ -2528,49 +2516,37 @@ void quartischproduktsummedivreduziertintr (real a, real b, real c, real d, csch
     {
     l= sqrtr (pa);                                                    // pk > 0 immer, l > 0 immer, wegen Division
     yk= cosr (acosr (qa/(pa*l))/3)*l*2;                               // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                          // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
     }
 
-  zk= yk + p/3;
-  //zk= yk + b/6;
-
-/*
-  D= sqrtr (z*z - r);
-
-  b1= z + D;
-  b2= z - D;
-  a1= q/D/-2;
-  a2= q/D/2;
-*/
+  zk= yk/2 + p/6;
 
   D= sqrtr (zk*zk - r);
 
+  a1= q/D/4;                                                          // 2. Fehleruelle D = 0
   b1= zk + D;
   b2= zk - D;
 
-  a1= q/D/-2;                                                // 2. Fehleruelle D = 0
-  a2= q/D/2;
-
   // Lösungen normale quartische Gleichung
   a4= a/-4;
-  uq= a1*a1;
-  if (uq*2 >= b1)
+  aq= a1*a1;
+  if (aq*2 >= b1)
     {
-    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a1= a4 - a1;
-    x1= a1 - D12;
-    x2= a1 + D12;
+    D12= sqrtr (aq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    ao= a4 + a1;
+    x1= ao - D12;
+    x2= ao + D12;
     if (x1 > 0)
       psp.add (x1);
     if (x2 > 0)
       psp.add (x2);
     }
-  uq= a2*a2;
-  if (uq*2 >= b2)
+  if (aq*2 >= b2)
     {
-    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    a2= a4 + a2;
-    x3= a2 - D34;
-    x4= a2 + D34;
+    D34= sqrtr (aq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
+    ao= a4 - a1;
+    x3= ao - D34;
+    x4= ao + D34;
     if (x3 > 0)
       psp.add (x3);
     if (x4 > 0)
@@ -2591,20 +2567,14 @@ void quartischproduktsummedivreduziertintr (real a, real b, real c, real d, csch
   printtext ("zk:");
   printreal (zk);
   printtext ("\n");
-  printtext ("uq:");
-  printreal (uq);
+  printtext ("D:");
+  printreal (D);
   printtext ("\n");
-  printtext ("vq:");
-  printreal (vq);
+  printtext ("a1:");
+  printreal (a1);
   printtext ("\n");
-  printtext ("u:");
-  printreal (u);
-  printtext ("\n");
-  printtext ("v:");
-  printreal (v);
-  printtext ("\n");
-  printtext ("bed:");
-  printreal (bed);
+  printtext ("a2:");
+  printreal (-a1);
   printtext ("\n");
   printtext ("b1:");
   printreal (b1);
@@ -2614,7 +2584,7 @@ void quartischproduktsummedivreduziertintr (real a, real b, real c, real d, csch
   printtext ("\n");
   }
 
-void quartischproduktsummereduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischreduziertproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, a4, p, q, r, pa, qa, xl;
   real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
@@ -2730,7 +2700,7 @@ void quartischproduktsummereduziertintr (real a, real b, real c, real d, cschnit
   printtext ("\n");
   }
 
-void quartischsummenproduktreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischreduziertsummenproduktintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, a4, p, q, r, pa, qa, xl;
   real ytk, yk, l, zk, pzk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
@@ -2763,7 +2733,7 @@ void quartischsummenproduktreduziertintr (real a, real b, real c, real d, cschni
     else
     {
     l= sqrtr (pa);
-    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;             // 0, -2pi   Fehler mit sqrtrz (vq)
+    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                             // 0, -2pi   Fehler mit sqrtrz (vq)
     yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;
     }
 
@@ -2847,7 +2817,7 @@ void quartischsummenproduktreduziertintr (real a, real b, real c, real d, cschni
   printtext ("\n");
   }
 
-void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischreduziertlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, p, q, r, pq, pk, qk, a4, ak3, q8, xl;
   real l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, bed, xr1, xr2, xr3, xr4;
@@ -2949,7 +2919,7 @@ void quartischlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp
     }
   }
 
-void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischreduziertlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, p, q, r, pq, pk, qk, a4, ak3, q8, xl;
   real vxl, uk1, uk2, l, phi3, ykr1, ykr2, ykr3, ur1, ur2, ur3, yr1, yr2, bed, xr1, xr2, xr3, xr4;
@@ -3053,7 +3023,7 @@ void quartischlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp
     }
   }
 
-void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischreduziertbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real a4, p, q, r, pk, qk, xl;
   real ytk, yk, l, zk, uq, vq, u, v, bed, b1, b2, a1, a2, D12, D34, x1, x2, x3, x4;
@@ -3146,7 +3116,7 @@ void quartischbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp)
   printtext ("\n");
   }
 
-void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischreduziertdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real a4, aq, p, q, r, pq, r4, pk, qk, xl;
   ckomplexk ytk1, ytk2, ytk3, yk, zk, uq, vq, u, v, bed, D, D12, D34, b1, b2, x1, x2, x3, x4;
@@ -3200,9 +3170,9 @@ void quartischdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp)
     psp.add (x4.x);
   }
 
-//-------------------- quartisch integriert normal (quartischintr) -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------- quartisch integriert normal ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void quartischproduktsummedivintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischnormalproduktsummedivintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, p, q, r;
   real pa, qa, xl, ytk, yk, l, zk;
@@ -3231,7 +3201,7 @@ void quartischproduktsummedivintr (real a, real b, real c, real d, cschnittpunkt
   // Lösung der normalen linearen Gleichung
   xl= qa*qa - pa*pa*pa;
 
-  // reelle Lösung der kubischen Resolvente buchf
+  // reelle Lösung der kubischen Resolvente
   if (xl >= 0)
     {
     if (qa > 0)
@@ -3251,8 +3221,8 @@ void quartischproduktsummedivintr (real a, real b, real c, real d, cschnittpunkt
     else
     {
     l= sqrtr (pa);
-    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
     //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
+    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
     }
 
   // Lösungen der beiden quadratischen Gleichungen
@@ -3269,6 +3239,7 @@ void quartischproduktsummedivintr (real a, real b, real c, real d, cschnittpunkt
 //*/
 
 /*
+  // Vermeidung der Division bei der Berechung der a-Koeffizienten
   a4= a/-4;
   Da= sqrtr (a*a/16 - b/4 + zk/2);
   a1= a4 + Da;
@@ -3285,7 +3256,7 @@ void quartischproduktsummedivintr (real a, real b, real c, real d, cschnittpunkt
     }
 //*/
 
-  // Lösungen normale quartische Gleichung
+  // Lösungen der normalen quartischen Gleichung
   a1q= a1*a1;
   a2q= a2*a2;
   if (a1q >= b1)
@@ -3334,14 +3305,14 @@ void quartischproduktsummedivintr (real a, real b, real c, real d, cschnittpunkt
   printtext ("\n");
   }
 
-void quartischproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischnormalproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  //real aq, p, q, r;
+  real aq, p, q, r;
   real pa, qa, xl, ykt, yk, l, zk;
   real c1, c2, sw;
   real Da, Db, ao, bo, a1, a2, b1, b2, a1q, a2q, D12, D34, x1, x2, x3, x4;
 
-/*
+//*
   // Parameter der reduzierten quartischen Gleichung diffp
   aq= a*a/-8;
 
@@ -3354,7 +3325,7 @@ void quartischproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& 
   qa= (p*p - r)*p + q*q/2;
 //*/
 
-//*
+/*
   // Parameter der angepassten reduzierten kubischen Gleichung                       //  ungenauer, durchgehender Krizzel
   pa= (a*c*-3 + b*b + d*12)/9;
   qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/2;
@@ -3369,13 +3340,13 @@ void quartischproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& 
     if (qa > 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ykt= cbrtr (qa + sqrtr (xl));
-      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
+      yk= ykt + pa/ykt;                                               // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
       }
     else
     if (qa < 0)
       {                                                               // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
       ykt= cbrtr (qa - sqrtr (xl));                                   // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-      yk= ykt + pa/ykt;                                             // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
+      yk= ykt + pa/ykt;                                               // 1. Fehleruelle: ytk = 0 nur bei qa= pa= xl= 0  kann bei quartischmalin auftreten
       }
     else
       yk= 0;
@@ -3383,8 +3354,8 @@ void quartischproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& 
     else
     {
     l= sqrtr (pa);
-    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // durchgehende Krizzel
-    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // zerfetzte Röhren, Außenfetzen
+    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                             // zerfetzte Röhren, Außenfetzen
+    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                      // durchgehende Krizzel
     }
 
   // Lösungen der beiden quadratischen Gleichungen
@@ -3469,14 +3440,14 @@ void quartischproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& 
   printtext ("\n");
   }
 
-void quartischsummenproduktintr (real a, real b, real c, real d, cschnittpunkte& psp)
+void quartischnormalsummenproduktintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  //real aq, p, q, r;
+  real aq, p, q, r;
   real pa, qa, xl, ykt, yk, l, zk;
   real c1, c2, sw;
   real Da, Db, ao, bo, a1, a2, b1, b2, a1q, a2q, D12, D34, x1, x2, x3, x4;
 
-/*
+//*
   // Parameter der reduzierten quartischen Gleichung diffp
   aq= a*a/-8;
 
@@ -3489,7 +3460,7 @@ void quartischsummenproduktintr (real a, real b, real c, real d, cschnittpunkte&
   qa= (r - p*p)*p + q*q/-2;
 //*/
 
-//*
+/*
   // Parameter der angepassten kubischen Gleichung
   pa= (a*c*-3 + b*b + d*12)/9;
   qa= ((a*b*c + b*d*8)/-3 + a*a*d + b*b*b/real (13.5) + c*c)/-2;
@@ -3518,8 +3489,8 @@ void quartischsummenproduktintr (real a, real b, real c, real d, cschnittpunkte&
     else
     {
     l= sqrtr (pa);
-    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // zerfetzte Röhren, Außenfetzen
     yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // durchgehende Krizzel
+    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                          // zerfetzte Röhren, Außenfetzen
     }
 
   // Lösungen der beiden quadratischen Gleichungen

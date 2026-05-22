@@ -287,18 +287,18 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
-  //quartischproduktsummedivintr (B/A, C/A, D/A, E/A, psp);                       // krizzelig, Außenartefakte
-  //quartischproduktsummeintr (B/A, C/A, D/A, E/A, psp);                          // krizzelig Innanartefakte
-  //quartischsummenproduktintr (B/A, C/A, D/A, E/A, psp);                         // krizzelig Innanartefakte
+  //quartischreduziertproduktsummedivintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+  //quartischreduziertproduktsummeintr (B/A, C/A, D/A, E/A, psp);                       // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+  quartischreduziertsummenproduktintr (B/A, C/A, D/A, E/A, psp);                      // gleiches Fehlerverhalten wie quartischdiffpfintr
 
-  //quartischproduktsummedivreduziertintr (B/A, C/A, D/A, E/A, psp);              // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
-  //quartischproduktsummereduziertintr (B/A, C/A, D/A, E/A, psp);                 // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
-  quartischsummenproduktreduziertintr (B/A, C/A, D/A, E/A, psp);                // gleiches Fehlerverhalten wie quartischdiffpfintr
+  //quartischreduziertlagrangeuintr (B/A, C/A, D/A, E/A, psp);                          // gleiches Fehlerverhalten wie quartischdiffpfintr
+  //quartischreduziertlagrangecintr (B/A, C/A, D/A, E/A, psp);                          // zusätzliche Artefakte zu lagrangeuintr
+  //quartischreduziertbuchfintr (B/A, C/A, D/A, E/A, psp);                              // wie testintr außer mit Oben-untenlinie
+  //quartischreduziertdiffpintrc (B/A, C/A, D/A, E/A, psp);                             // langsam, Fehlerpixel und Pseudopixel wegen Ungenauigkeit, auch reelle Lösungen haben einen kleinen Imaginärteil
 
-  //quartischlagrangeuintr (B/A, C/A, D/A, E/A, psp);                             // gleiches Fehlerverhalten wie quartischdiffpfintr
-  //quartischlagrangecintr (B/A, C/A, D/A, E/A, psp);                             // zusätzliche Artefakte zu lagrangeuintr
-  //quartischbuchfintr (B/A, C/A, D/A, E/A, psp);                                 // wie testintr außer mit Oben-untenlinie
-  //quartischdiffpintrc (B/A, C/A, D/A, E/A, psp);                                // langsam, Fehlerpixel und Pseudopixel wegen Ungenauigkeit, auch reelle Lösungen haben einen kleinen Imaginärteil
+  //quartischnormalproduktsummedivintr (B/A, C/A, D/A, E/A, psp);                       // krizzelig, Außenartefakte
+  //quartischnormalproduktsummeintr (B/A, C/A, D/A, E/A, psp);                          // krizzelig Innanartefakte
+  //quartischnormalsummenproduktintr (B/A, C/A, D/A, E/A, psp);                         // krizzelig Innanartefakte
   }
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************
