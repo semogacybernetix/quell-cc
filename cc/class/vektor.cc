@@ -2494,8 +2494,8 @@ void quartischreduziertproduktsummedivintr (real a, real b, real c, real d, csch
   r= a*(aq*a*real (-0.09375) + a*b/16 + c/-4) + d;
 
   // Parameter der angepassten reduzierten kubischen Gleichung
-  pa= p*p/9 + r*4/3;
-  qa= p*p*p/27 + p*r*4/-3 + q*q/2;
+  pa= p*p/9 + r/real (0.75);
+  qa= p*p*p/27 + p*r/real (-0.75) + q*q/2;
 
   // Parameter der angepassten reduzierten kubischen Gleichung direkt
   //pa= (a*c*-3 + b*b + d*12)/9;
@@ -2515,11 +2515,12 @@ void quartischreduziertproduktsummedivintr (real a, real b, real c, real d, csch
     else                                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pa);                                                    // pk > 0 immer, l > 0 immer, wegen Division
-    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                               // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
-    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                          // 1. Fehleruelle yk, |qk/pk/l| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                               // durchgehende Doppellinen innen und außen
+    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                        // doppelter Ring, innen artefaktfrei
+    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                        // Ring mit Doppelpunkt, innen schwächere Doppellinien
     }
 
-  zk= yk/2 + p/6;
+  zk= (yk + p/3)/2;
 
   D= sqrtr (zk*zk - r);
 
@@ -2596,8 +2597,8 @@ void quartischreduziertproduktsummeintr (real a, real b, real c, real d, cschnit
   r= a*(aq*a*real (-0.09375) + a*b/16 + c/-4) + d;
 
   // Parameter der angepassten reduzierten kubischen Gleichung
-  pa= p*p/9 + r*4/3;
-  qa= p*p*p/27 + p*r*4/-3 + q*q/2;
+  pa= p*p/9 + r/real (0.75);
+  qa= p*p*p/27 + p*r/real (-0.75) + q*q/2;
 
   // Parameter der angepassten reduzierten kubischen Gleichung direkt
   //pa= (a*c*-3 + b*b + d*12)/9;
@@ -2617,15 +2618,16 @@ void quartischreduziertproduktsummeintr (real a, real b, real c, real d, cschnit
     else                                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pa);                                                    // pk > 0 immer, l > 0 immer, wegen Division
-    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 //  funktioniert als einziger mit sqrtz (vq)
+    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                               //  innen artefaktfrei, außen Unschärfe von der Seite
     //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
+    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
     }
 
   // Lösungen der beiden quadratischen Gleichungen (ak=-p/2 für Rückreduzierung)
-  zk= yk + p/3;
+  zk= (yk + p/3)/2;
 
-  uq= (zk - p)/4;
-  vq= zk*zk/4 - r;
+  uq= (zk - p/2)/2;
+  vq= zk*zk - r;
 
   u= sqrtrz (uq);
   v= sqrtrz (vq);
@@ -2635,8 +2637,8 @@ void quartischreduziertproduktsummeintr (real a, real b, real c, real d, cschnit
   if (absr (bed - q) < absr (bed + q))
     v= -v;
 
-  b1= zk/2 + v;
-  b2= zk/2 - v;
+  b1= zk + v;
+  b2= zk - v;
 
   // Lösungen normale quartische Gleichung
   a4= a/-4;
@@ -2712,8 +2714,8 @@ void quartischreduziertsummenproduktintr (real a, real b, real c, real d, cschni
   r= a*(aq*a*real (-0.09375) + a*b/16 + c/-4) + d;
 
   // Parameter der reduzierten kubischen Gleichung
-  pa= p*p/9 + r*4/3;
-  qa= p*p*p/-27 + p*r*4/3 + q*q/-2;
+  pa= p*p/9 + r/real (0.75);
+  qa= p*p*p/-27 + p*r/real (0.75) + q*q/-2;
 
   // Parameter der angepassten reduzierten kubischen Gleichung direkt
   //pa= (a*c*-3 + b*b + d*12)/9;
@@ -2733,16 +2735,17 @@ void quartischreduziertsummenproduktintr (real a, real b, real c, real d, cschni
     else
     {
     l= sqrtr (pa);
-    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                             // 0, -2pi   Fehler mit sqrtrz (vq)
-    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;
+    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                               // Fehler mit sqrtrz (vq)
+    yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                        // innen artefaktfrei, außen Unschärfe von der Seite
+    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                        // Fehler mit sqrtrz (vq)
     }
 
   // Lösungen der beiden quadratischen Gleichungen
-  zk= yk + p*2/3;
-  pzk= p - zk;
+  zk= yk/-4 + p/-6;
+  pzk= p/2 + zk*2;
 
-  uq= zk/-4;
-  vq= pzk*pzk/4 - r;
+  uq= zk;
+  vq= pzk*pzk - r;
 
   u= sqrtrz (uq);
   v= sqrtrz (vq);
@@ -2752,8 +2755,8 @@ void quartischreduziertsummenproduktintr (real a, real b, real c, real d, cschni
   if (absr (bed - q) < absr (bed + q))
     v= -v;
 
-  b1= pzk/2 + v;
-  b2= pzk/2 - v;
+  b1= pzk + v;
+  b2= pzk - v;
 
   // Lösungen normale quartische Gleichung
   a4= a/-4;
