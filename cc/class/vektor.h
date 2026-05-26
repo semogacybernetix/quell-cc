@@ -395,7 +395,6 @@ void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& 
 
 void quartischreduziertlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischreduziertlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp);
-void quartischreduziertbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp);
 
 // normale quartische Gleichung reell integriert (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
 void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp);
