@@ -2484,7 +2484,7 @@ void quartischnormallagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d
 
 void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq, a4, p, q, r, pa, qa, xl, ytk, l, yk;
+  real aq, a4, p, q, r, pp, pa, qa, xl, ytk, l, yk;
   real zk, uq, vq, u, v, bed, b1, b2;
   real D12, D34, o12, o34, x1, x2, x3, x4;
 
@@ -2494,11 +2494,12 @@ void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp
   q= a*(aq + b/-4) + c/2;
   r= aq*aq*-3 + aq*b + a*c/-4 + d;
 
-  // Parameter der reduzierten kubischen Gleichung buchf
-  pa= p*p + r/3;
-  qa= p*p*p - p*r + q*q/4;
+  // Parameter der angepassten reduzierten kubischen Gleichung
+  pp= p*p;
+  pa= pp + r/3;
+  qa= p*(pp - r) + q*q/4;
 
-  // Parameter der reduzierten kubischen Gleichung direkt buchf (ungenauer)
+  // Parameter der angepassten reduzierten kubischen Gleichung aus den Koeffizienten
   //pa= (a*c/-4 + b*b/12 + d)/3;
   //qa= a*b*c/-48 + b*d/-6 + aq*d + b*b*b/216 + c*c/16;
 
@@ -2566,7 +2567,7 @@ void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp
 
 void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq, a4, p, q, r, pa, qa, xl, ytk, l, yk;
+  real aq, a4, p, q, r, pp, pa, qa, xl, ytk, l, yk;
   real zk, D, u, uq, b1, b2;
   real D12, D34, o12, o34, x1, x2, x3, x4;
 
@@ -2576,11 +2577,12 @@ void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& 
   q= a*(aq + b/-4) + c/2;
   r= aq*aq*-3 + aq*b + a*c/-4 + d;
 
-  // Parameter der reduzierten kubischen Gleichung buchf
-  pa= p*p + r/3;
-  qa= p*p*p - p*r + q*q/4;
+  // Parameter der angepassten reduzierten kubischen Gleichung
+  pp= p*p;
+  pa= pp + r/3;
+  qa= p*(pp - r) + q*q/4;
 
-  // Parameter der reduzierten kubischen Gleichung direkt buchf (ungenauer)
+  // Parameter der angepassten reduzierten kubischen Gleichung aus den Koeffizienten
   //pa= (a*c/-4 + b*b/12 + d)/3;
   //qa= a*b*c/-48 + b*d/-6 + aq*d + b*b*b/216 + c*c/16;
 
