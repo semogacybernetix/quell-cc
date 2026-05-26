@@ -439,6 +439,9 @@
 2026.05.21 Do  21:09, alle quartische Routinen Konsistenz verbessert, quartischsummenproduktreduziertintr und quartischproduktsummereduziertintr optimiert, 0:30
 2026.05.22 Fr   7:35, quartischreduziertproduktsummediv Fehler korrigiert, optimiert, quartische Verfahren fehlergetestet, optimiert, 11:02, 19:14, quartischreduziertintr-(psdiv, ps, sp) optimiert, 20:23
 
+2026.05.26 Mo   0:03 (Di), durchgekuckt, 0:22, 6:36, quartisch-Routinen zusammengestaucht, Unterscheidung Summenprodukt-Produktsumme unnötig da ps + sp = pq = bq, Routinen bis auf Gleichheit angeglichen und dann die doppelte Routine
+               gelöscht, 14:56
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 lscr, cbasis3*real

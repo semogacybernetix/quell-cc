@@ -287,18 +287,15 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
-  //quartischreduziertproduktsummedivintr (B/A, C/A, D/A, E/A, psp);                    // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
-  //quartischreduziertproduktsummeintr (B/A, C/A, D/A, E/A, psp);                       // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
-  quartischreduziertsummenproduktintr (B/A, C/A, D/A, E/A, psp);                      // gleiches Fehlerverhalten wie quartischdiffpfintr
+  //quartischreduziertintr (B/A, C/A, D/A, E/A, psp);                                   // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+  //quartischreduziertdivintr (B/A, C/A, D/A, E/A, psp);                                // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
 
   //quartischreduziertlagrangeuintr (B/A, C/A, D/A, E/A, psp);                          // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischreduziertlagrangecintr (B/A, C/A, D/A, E/A, psp);                          // zusätzliche Artefakte zu lagrangeuintr
   //quartischreduziertbuchfintr (B/A, C/A, D/A, E/A, psp);                              // wie testintr außer mit Oben-untenlinie
-  //quartischreduziertdiffpintrc (B/A, C/A, D/A, E/A, psp);                             // langsam, Fehlerpixel und Pseudopixel wegen Ungenauigkeit, auch reelle Lösungen haben einen kleinen Imaginärteil
 
-  //quartischnormalproduktsummedivintr (B/A, C/A, D/A, E/A, psp);                       // krizzelig, Außenartefakte
-  //quartischnormalproduktsummeintr (B/A, C/A, D/A, E/A, psp);                          // krizzelig Innanartefakte
-  //quartischnormalsummenproduktintr (B/A, C/A, D/A, E/A, psp);                         // krizzelig Innanartefakte
+  //quartischnormalintr (B/A, C/A, D/A, E/A, psp);                                      // krizzelig Innanartefakte
+  quartischnormaldivintr (B/A, C/A, D/A, E/A, psp);                                   // krizzelig, Außenartefakte
   }
 
 // ************************************************************************ Parametrisierungen der Oberflächen ***************************************************************************************************************************

@@ -390,19 +390,16 @@ void quartischnormalsummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckompl
 void quartischnormallagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
 // reduzierte quartische Gleichung reell integriert (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
-void quartischreduziertproduktsummedivintr (real a, real b, real c, real d, cschnittpunkte& psp);
-void quartischreduziertproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& psp);
-void quartischreduziertsummenproduktintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& psp);
 
 void quartischreduziertlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischreduziertlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischreduziertbuchfintr (real a, real b, real c, real d, cschnittpunkte& psp);
-void quartischreduziertdiffpintrc (real a, real b, real c, real d, cschnittpunkte& psp);
 
 // normale quartische Gleichung reell integriert (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
-void quartischnormalproduktsummedivintr (real a, real b, real c, real d, cschnittpunkte& psp);
-void quartischnormalproduktsummeintr (real a, real b, real c, real d, cschnittpunkte& psp);
-void quartischnormalsummenproduktintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp);
 
 // --------------------- ckomplexk Operatoren ---------------------------------------------------------
 
