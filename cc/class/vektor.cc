@@ -2480,7 +2480,7 @@ void quartischnormallagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d
   }
 
 //--------------------------------------------------- reelle, integrierte Verfahren ----------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------- quartisch reduziert intr ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------- Verfahren ohne Division ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
@@ -2565,6 +2565,96 @@ void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp
     }
   }
 
+void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp)
+  {
+  real aq, p, q, r, pp, pa, qa, xl, ytk, l, yk;
+  real zk, c1, c2, sw, Da, Db, a4, a1, a2, b1, b2, a1q, a2q;
+  real D12, D34, x1, x2, x3, x4;
+
+  // Parameter der reduzierten quartischen Gleichung
+  aq= a*a/16;
+  p= b/6 - aq;
+  q= a*(aq + b/-4) + c/2;
+  r= aq*aq*-3 + aq*b + a*c/-4 + d;
+
+  // Parameter der angepassten reduzierten kubischen Gleichung
+  pp= p*p;
+  pa= pp + r/3;
+  qa= p*(pp - r) + q*q/4;
+
+  // Parameter der angepassten reduzierten kubischen Gleichung aus den Koeffizienten
+  //pa= (a*c/-4 + b*b/12 + d)/3;
+  //qa= a*b*c/-48 + b*d/-6 + aq*d + b*b*b/216 + c*c/16;
+
+  // Lösung der normalen linearen Gleichung
+  xl= qa*qa - pa*pa*pa;
+
+  // reelle Lösung der kubischen Resolvente
+  if (xl >= 0)                                                        // 2 oder 0 Schnittpunkte mit dem Torus
+    {
+    if (qa >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
+      /**/ ytk= cbrtr (qa + sqrtr (xl));
+      else ytk= cbrtr (qa - sqrtr (xl));                              // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
+    yk= ytk + pa/ytk;                                                 // ytk = 0 ausgeschlossen, da Auslöschung verhindert
+    }
+    else                                                              // 4 Schnittpunkte mit dem Torus
+    {
+    l= sqrtr (pa);                                                    // pa > 0 immer, l > 0 immer, wegen Division
+    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // 1. Fehleruelle yk, |qa/(pa*l)| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
+    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
+    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
+    }
+
+  //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung (ak=-p/2 für Rückreduzierung)
+  zk= yk + b/6;
+
+  Da= sqrtrz (aq + yk/2 - b/6);
+  Db= sqrtr (zk*zk - d);                                              // Störungen bei sqrtz
+
+  a4= a/-4;
+  a1= a4 + Da;
+  a2= a4 - Da;
+
+  b1= zk + Db;
+  b2= zk - Db;
+
+  c1= a1*b2 + a2*b1;
+  c2= a1*b1 + a2*b2;
+
+  if (absr (c2*2 + c) < absr (c1*2 + c))
+    {
+    sw= b1;
+    b1= b2;
+    b2= sw;
+    }
+
+  //----------------------------------- Die 4 Lösungen der beiden quadratischen Gleichungen
+  a1q= a1*a1;
+  a2q= a2*a2;
+  if (a1q >= b1)
+    {
+    D12= sqrtr (a1q - b1);
+    x1= a1 - D12;
+    x2= a1 + D12;
+    if (x1 > 0)
+      psp.add (x1);
+    if (x2 > 0)
+      psp.add (x2);
+    }
+  if (a2q >= b2)
+    {
+    D34= sqrtr (a2q - b2);
+    x3= a2 - D34;
+    x4= a2 + D34;
+    if (x3 > 0)
+      psp.add (x3);
+    if (x4 > 0)
+      psp.add (x4);
+    }
+  }
+
+//----------------------------------------------------------------------------- Verfahren mit Division ---------------------------------------------------------------------------------------------------------------------------------------
+
 void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, p, q, r, pp, pa, qa, xl, ytk, l, yk;
@@ -2642,133 +2732,11 @@ void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& 
     }
   }
 
-//--------------------------------------------------- quartisch integriert normal ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp)
-  {
-  real aq, p, q, r, pp, pa, qa, xl, ytk, l, yk;
-  real zk, c1, c2, sw, Da, Db, ao, a1, a2, b1, b2, a1q, a2q;
-  real D12, D34, x1, x2, x3, x4;
-
-  // Parameter der reduzierten quartischen Gleichung
-  aq= a*a/16;
-  p= b/6 - aq;
-  q= a*(aq + b/-4) + c/2;
-  r= aq*aq*-3 + aq*b + a*c/-4 + d;
-
-  // Parameter der angepassten reduzierten kubischen Gleichung
-  pp= p*p;
-  pa= pp + r/3;
-  qa= p*(pp - r) + q*q/4;
-
-  // Parameter der angepassten reduzierten kubischen Gleichung aus den Koeffizienten
-  //pa= (a*c/-4 + b*b/12 + d)/3;
-  //qa= a*b*c/-48 + b*d/-6 + aq*d + b*b*b/216 + c*c/16;
-
-  // Lösung der normalen linearen Gleichung
-  xl= qa*qa - pa*pa*pa;
-
-  // reelle Lösung der kubischen Resolvente
-  if (xl >= 0)                                                        // 2 oder 0 Schnittpunkte mit dem Torus
-    {
-    if (qa >= 0)                                                      // Fallunterscheidung notwendig, sonst zusätzliche Stern-Artefakte beim Torus
-      /**/ ytk= cbrtr (qa + sqrtr (xl));
-      else ytk= cbrtr (qa - sqrtr (xl));                              // qa ist immer ungleich 0 somit keine Auslöschung bei xl = 0
-    yk= ytk + pa/ytk;                                                 // ytk = 0 ausgeschlossen, da Auslöschung verhindert
-    }
-    else                                                              // 4 Schnittpunkte mit dem Torus
-    {
-    l= sqrtr (pa);                                                    // pa > 0 immer, l > 0 immer, wegen Division
-    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // 1. Fehleruelle yk, |qa/(pa*l)| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
-    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
-    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
-    }
-
-  //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung (ak=-p/2 für Rückreduzierung)
-  zk= yk + b/6;
-
-  Da= sqrtrz (a*a/16 + yk/2 - b/6);
-  Db= sqrtr (zk*zk - d);                                              // Störungen bei sqrtz
-
-  ao= a/-4;
-
-  a1= ao + Da;
-  a2= ao - Da;
-  b1= zk + Db;
-  b2= zk - Db;
-
-  c1= a1*b2 + a2*b1;
-  c2= a1*b1 + a2*b2;
-
-  if (absr (c2*2 + c) < absr (c1*2 + c))
-    {
-    sw= b1;
-    b1= b2;
-    b2= sw;
-    }
-
-  //----------------------------------- Die 4 Lösungen der beiden quadratischen Gleichungen
-  a1q= a1*a1;
-  a2q= a2*a2;
-  if (a1q >= b1)
-    {
-    D12= sqrtr (a1q - b1);
-    x1= a1 - D12;
-    x2= a1 + D12;
-    if (x1 > 0)
-      psp.add (x1);
-    if (x2 > 0)
-      psp.add (x2);
-    }
-  if (a2q >= b2)
-    {
-    D34= sqrtr (a2q - b2);
-    x3= a2 - D34;
-    x4= a2 + D34;
-    if (x3 > 0)
-      psp.add (x3);
-    if (x4 > 0)
-      psp.add (x4);
-    }
-
-  return;
-
-  printtext ("p: ");
-  //printreal (p);
-  printtext ("\n");
-  printtext ("q: ");
-  //printreal (q);
-  printtext ("\n");
-  printtext ("r: ");
-  //printreal (r);
-  printtext ("\n");
-  printtext ("xl:");
-  printreal (xl);
-  printtext ("\n");
-  printtext ("yk:");
-  printreal (yk);
-  printtext ("\n");
-  printtext ("zk:");
-  printreal (zk);
-  printtext ("\n");
-  printtext ("a1:");
-  printreal (a1);
-  printtext ("\n");
-  printtext ("b1:");
-  printreal (b1);
-  printtext ("\n");
-  printtext ("a2:");
-  printreal (a2);
-  printtext ("\n");
-  printtext ("b2:");
-  printreal (b2);
-  printtext ("\n");
-  }
-
 void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, p, q, r, pp, pa, qa, xl, ytk, l, yk;
   real zk, Db, b1, b2, a1, a2;
+  real a4, Da, v1, v2;
   real a1q, a2q, D12, D34, x1, x2, x3, x4;
 
   // Parameter der reduzierten quartischen Gleichung
@@ -2808,20 +2776,20 @@ void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp
   //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung (ak=-p/2 für Rückreduzierung)
   zk= yk + b/6;
 
-  Db= sqrtr (zk*zk - d);
+  Db= sqrtrz (zk*zk - d);
 
   b1= zk + Db;
   b2= zk - Db;
 
-//*
+/*
   a1= (a*b1 - c)/Db/-4;                                                // 2. Fehleruelle D = 0
   a2= (a*b2 - c)/Db/4;
 //*/
 
-/*
+//*
   // Vermeidung der Division bei der Berechung der a-Koeffizienten
   a4= a/-4;
-  Da= sqrtr (a*a/16 - b/4 + zk/2);
+  Da= sqrtr (aq - b/4 + zk/2);
   a1= a4 + Da;
   a2= a4 - Da;
 
@@ -2836,7 +2804,7 @@ void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp
     }
 //*/
 
-  // Lösungen der normalen quartischen Gleichung
+  //----------------------------------- Die 4 Lösungen der beiden quadratischen Gleichungen
   a1q= a1*a1;
   a2q= a2*a2;
   if (a1q >= b1)
@@ -2859,30 +2827,6 @@ void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp
     if (x4 > 0)
       psp.add (x4);
     }
-
-  return;
-
-  printtext ("zk:");
-  printreal (zk);
-  printtext ("\n");
-  printtext ("b:");
-  printreal (b);
-  printtext ("\n");
-  printtext ("c:");
-  printreal (c);
-  printtext ("\n");
-  printtext ("v1:");
-  //printreal (v1);
-  printtext ("\n");
-  printtext ("v2:");
-  //printreal (v2);
-  printtext ("\n");
-  printtext ("a1:");
-  printreal (a1);
-  printtext ("\n");
-  printtext ("a2:");
-  printreal (a2);
-  printtext ("\n");
   }
 
 //----------------------------------------------------------------------------- alte Verfahren ---------------------------------------------------------------------------------------------------------------------------------------------------------------------

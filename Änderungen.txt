@@ -442,7 +442,7 @@
 2026.05.25 Mo   0:03 (Di), durchgekuckt, 0:22
 2026.05.26 Di   6:36, quartisch-Routinen zusammengestaucht, Unterscheidung Summenprodukt-Produktsumme unnötig da ps + sp = pq = bq, Routinen bis auf Gleichheit angeglichen und dann die doppelte Routine
                gelöscht, 14:56, 18:47, quartischreduziertintr, divintr ausoptimiert, quartischnormalintr angepasst, linearfaktoren.cc angepasst, 21:42
-2026.05.27 Mi  11:01, alle 4 quartisch Routinen angeglichen, Köpfe gleich, 11:56
+2026.05.27 Mi  11:01, alle 4 quartisch Routinen angeglichen, Köpfe gleich, 11:56, 23:05, kleine Abgleichungen, keine Kondition, 0:12
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
