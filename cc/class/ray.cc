@@ -287,11 +287,11 @@ void cstorus::berechne (const cvektor3 &rv, cschnittpunkte& psp)
   D= (rq1*rov + oxq*rxox + oyq*ryoy + ozq*rzoz + oxoy*sroxy + oyoz*sroyz + ozox*srozx - (rxox + ryoy)*2)*4;
   E= rq1*(rq1 + ovq*2) + oxq*oxq + oyq*oyq + ozq*ozq + (oxoy*oxoy + oyoz*oyoz + ozox*ozox)*2 - (oxq + oyq)*4;
 
-  quartischreduziertintr (B/A, C/A, D/A, E/A, psp);                                   // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
+  //quartischreduziertintr (B/A, C/A, D/A, E/A, psp);                                   // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
   //quartischreduziertdivintr (B/A, C/A, D/A, E/A, psp);                                // Innenwand und Außenwand leichte Artefakte, komplett sauber außerhalb (Drehung, Entfernung)
 
   //quartischnormalintr (B/A, C/A, D/A, E/A, psp);                                      // krizzelig Innanartefakte
-  //quartischnormaldivintr (B/A, C/A, D/A, E/A, psp);                                   // krizzelig, Außenartefakte
+  quartischnormaldivintr (B/A, C/A, D/A, E/A, psp);                                   // krizzelig, Außenartefakte
 
   //quartischreduziertlagrangeuintr (B/A, C/A, D/A, E/A, psp);                          // gleiches Fehlerverhalten wie quartischdiffpfintr
   //quartischreduziertlagrangecintr (B/A, C/A, D/A, E/A, psp);                          // zusätzliche Artefakte zu lagrangeuintr
