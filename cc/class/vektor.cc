@@ -1835,8 +1835,8 @@ void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
   a2= a/-2;
   D= sqrtr (a2*a2 - b);
 
-  x1= a2 + D;
-  x2= a2 - D;
+  x1= a2 - D;            // kleinere Lösung zuerst falls im Reellem
+  x2= a2 + D;
   }
 
 //*************************************************** kubische Verfahren *********************************************************************************************************************************************************************
@@ -2178,25 +2178,25 @@ void quartischreduziertproduktsummediv (ckomplexk p, ckomplexk q, ckomplexk r, c
 
   kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
 
-  z= z1/2;
+  z= z1;
 
-  D= sqrtr (z*z - r);
+  D= sqrtr (z*z/4 - r);
   a1= q/D/2;
 
-  quadratisch (-a1, z + D, y1, y2);
-  quadratisch ( a1, z - D, y3, y4);
+  quadratisch (-a1, z/2 + D, y1, y2);           // kleinere Lösung zuerst
+  quadratisch ( a1, z/2 - D, y3, y4);
 
   //return;
 
-  printtext ("---------------------------------- quartischreduziertproduktsummediv Zwischenwerte-------------------------------------------------------\n");
+  printtext ("                                   quartisch reduziert produktsumme div Zwischenwerte\n");
   printvektor2komplex ("z          ", z, 0);
   printtext ("\n");
   printvektor2komplex ("D          ", D, 0);
   printtext ("\n");
   printvektor2komplex ("a1         ", -a1, 0);
-  printvektor2komplex ("b1         ", z + D, 0);
+  printvektor2komplex ("b1         ", z/2 + D, 0);
   printvektor2komplex ("a2         ", a1, 0);
-  printvektor2komplex ("b2         ", z - D, 0);
+  printvektor2komplex ("b2         ", z/2 - D, 0);
   }
 
 void quartischreduziertproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2205,31 +2205,31 @@ void quartischreduziertproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckom
 
   kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
 
-  z= z1/2;
+  z= z1;
 
-  u= sqrtr (z*2 - p);
-  v= sqrtr (z*z - r);
+  u= sqrtr (z - p);
+  v= sqrtr (z*z/4 - r);
 
   // Bedingung -2uv = q
   bed= u*v;
   if (absr (bed - q) < absr (bed + q))
     v= -v;
 
-  quadratisch ( u, z + v, y1, y2);
-  quadratisch (-u, z - v, y3, y4);
+  quadratisch (-u, z/2 - v, y1, y2);           // kleinere Lösung zuerst
+  quadratisch ( u, z/2 + v, y3, y4);
 
   //return;
 
-  printtext ("---------------------------------- quartischreduziertproduktsumme Zwischenwerte-------------------------------------------------------\n");
+  printtext ("                                   quartisch reduziert produktsumme Zwischenwerte\n");
   printvektor2komplex ("z          ", z, 0);
   printtext ("\n");
   printvektor2komplex ("u          ", u, 0);
   printvektor2komplex ("v          ", v, 0);
   printtext ("\n");
-  printvektor2komplex ("a1         ", u, 0);
-  printvektor2komplex ("b1         ", z + v, 0);
-  printvektor2komplex ("a2         ", -u, 0);
-  printvektor2komplex ("b2         ", z - v, 0);
+  printvektor2komplex ("a1         ", -u, 0);
+  printvektor2komplex ("b1         ", z/2 - v, 0);
+  printvektor2komplex ("a2         ",  u, 0);
+  printvektor2komplex ("b2         ", z/2 + v, 0);
   }
 
 void quartischreduziertsummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2238,32 +2238,32 @@ void quartischreduziertsummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, cko
 
   kubischeresolventesummenprodukt (p, q, r, z1, z2, z3);
 
-  z= -z1;
+  z= z1;
 
-  u= sqrtr (z);
-  pz= (p + z)/2;
-  v= sqrtr (pz*pz - r);
+  u= sqrtr (-z);
+  pz= (p - z);
+  v= sqrtr (pz*pz/4 - r);
 
   // Bedingung -2uv = q
   bed= u*v;
   if (absr (bed - q) < absr (bed + q))
     v= -v;
 
-  quadratisch ( u, pz + v, y1, y2);
-  quadratisch (-u, pz - v, y3, y4);
+  quadratisch (-u, pz/2 - v, y1, y2);           // kleinere Lösung zuerst
+  quadratisch ( u, pz/2 + v, y3, y4);
 
   //return;
 
-  printtext ("---------------------------------- quartischreduziertsummenprodukt Zwischenwerte-------------------------------------------------------\n");
+  printtext ("                                   quartisch reduziert summenprodukt Zwischenwerte\n");
   printvektor2komplex ("z          ", z, 0);
   printtext ("\n");
   printvektor2komplex ("u          ", u, 0);
   printvektor2komplex ("v          ", v, 0);
   printtext ("\n");
-  printvektor2komplex ("a1         ", u, 0);
-  printvektor2komplex ("b1         ", pz + v, 0);
-  printvektor2komplex ("a2         ", -u, 0);
-  printvektor2komplex ("b2         ", pz - v, 0);
+  printvektor2komplex ("a1         ", -u, 0);
+  printvektor2komplex ("b1         ", pz/2 - v, 0);
+  printvektor2komplex ("a2         ",  u, 0);
+  printvektor2komplex ("b2         ", pz/2 + v, 0);
   }
 
 void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3, ckomplexk& y4)
@@ -2276,10 +2276,10 @@ void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
   u2= sqrtr (z2/-4);
   u3= sqrtr (z3/-4);
 
-  y1=  u1 + u2 + u3;
-  y2=  u1 - u2 - u3;
-  y3= -u1 + u2 - u3;
-  y4= -u1 - u2 + u3;
+  y1=  u1 - u2 - u3;
+  y2= -u1 + u2 - u3;
+  y3= -u1 - u2 + u3;
+  y4=  u1 + u2 + u3;
 
   // Bedingung: -8*u1*u2*u3 = q
   bed= u1*u2*u3*-8;
@@ -2293,7 +2293,7 @@ void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
 
   //return;
 
-  printtext ("---------------------------------- quartischreduziertlagrange Zwischenwerte-------------------------------------------------------\n");
+  printtext ("                                   quartisch reduziert lagrange Zwischenwerte\n");
   printvektor2komplex ("z1         ", z1, 0);
   printvektor2komplex ("z2         ", z2, 0);
   printvektor2komplex ("z3         ", z3, 0);
@@ -2339,28 +2339,28 @@ void quartischnormalproduktsummediv (ckomplexk a, ckomplexk b, ckomplexk c, ckom
 
   kubischeresolventeproduktsumme (a, b, c, d, z1, z2, z3);
 
-  z= z1/2;
+  z= z1;
 
-  D= sqrtr (z*z - d);
-  b1= z + D;
-  b2= z - D;
-  a1= (a*b1 - c)/D/2;
-  a2= (a*b2 - c)/D/-2;
+  D= sqrtr (z*z/4 - d);
+  b1= z/2 - D;
+  b2= z/2 + D;
+  a1= (a*b1 - c)/D/-2;        // kleinere Lösung zuerst
+  a2= (a*b2 - c)/D/2;
 
   quadratisch ( a1, b1, x1, x2);
   quadratisch ( a2, b2, x3, x4);
 
   //return;
 
-  printtext ("---------------------------------- quartischproduktsummediv Zwischenwerte-------------------------------------------------------\n");
+  printtext ("                                   quartisch normal produktsumme div Zwischenwerte\n");
   printvektor2komplex ("z          ", z, 0);
   printtext ("\n");
   printvektor2komplex ("D          ", D, 0);
   printtext ("\n");
-  printvektor2komplex ("a1         ", a, 0);
-  printvektor2komplex ("b1         ", b, 0);
-  printvektor2komplex ("a2         ", -a, 0);
-  printvektor2komplex ("b2         ", z - D, 0);
+  printvektor2komplex ("a1         ", a1, 0);
+  printvektor2komplex ("b1         ", b1, 0);
+  printvektor2komplex ("a2         ", a2, 0);
+  printvektor2komplex ("b2         ", b2, 0);
   }
 
 void quartischnormalproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
@@ -2390,7 +2390,7 @@ void quartischnormalproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomple
 
   //return;
 
-  printtext ("---------------------------------- quartischproduktsumme Zwischenwerte-------------------------------------------------------\n");
+  printtext ("                                   quartisch normal produktsumme Zwischenwerte\n");
   printvektor2komplex ("z          ", z, 0);
   printtext ("\n");
   printvektor2komplex ("a1         ", a1, 0);
@@ -2424,7 +2424,7 @@ void quartischnormalsummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckompl
     quadratisch (a2, b1, x3, x4);
     }
 
-  printtext ("---------------------------------- quartischsummenprodukt Zwischenwerte-------------------------------------------------------\n");
+  printtext ("                                   quartisch normal summenprodukt Zwischenwerte\n");
   printvektor2komplex ("z          ", z, 0);
   printtext ("\n");
   printvektor2komplex ("a1         ", a1, 0);
@@ -2439,17 +2439,15 @@ void quartischnormallagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d
 
   kubischeresolventesummenprodukt (a, b, c, d, z1, z2, z3);
 
-  zen= (z1 + z2 + z3)/3;
-
-  u1= sqrtr (z1 + zen)/2;                            // noch nicht korrekt
-  u2= sqrtr (z2 + zen)/2;
-  u3= sqrtr (z3 + zen)/2;
+  u1= sqrtr (z1/4);
+  u2= sqrtr (z2/4);
+  u3= sqrtr (z3/4);
 
   a4= a/-4;
-  x1=  (u1 + u2 + u3) + a4;
-  x2=  (u1 - u2 - u3) + a4;
-  x3= (-u1 + u2 - u3) + a4;
-  x4= (-u1 - u2 + u3) + a4;
+  x1=  (u1 + u2 + u3);
+  x2=  (u1 - u2 - u3);
+  x3= (-u1 + u2 - u3);
+  x4= (-u1 - u2 + u3);
 
   // Bedingung: -8*u1*u2*u3 = c
   bed= u1*u2*u3*8;
@@ -2466,7 +2464,7 @@ void quartischnormallagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d
 
   //return;
 
-  printtext ("---------------------------------- quartischlagrange Zwischenwerte-------------------------------------------------------\n");
+  printtext ("                                   quartisch normal lagrange Zwischenwerte\n");
   printvektor2komplex ("z1         ", z1, 0);
   printvektor2komplex ("z2         ", z2, 0);
   printvektor2komplex ("z3         ", z3, 0);
