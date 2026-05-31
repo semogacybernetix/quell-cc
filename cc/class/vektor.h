@@ -14,7 +14,7 @@ typedef long double _Float80;
 //typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen      gibt es nicht auf raspi5                                   5.00              3.96
 
 // ------------------------- 32 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
+typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ typedef long double _Float80;
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
-typedef _Float80 real;        // AMD64: 80 Bit hw, ARM64: 128 Bit sw                                                                       6.90      4.34    0.53         10.84                               5.55
+//typedef _Float80 real;        // AMD64: 80 Bit hw, ARM64: 128 Bit sw                                                                       6.90      4.34    0.53         10.84                               5.55
 //typedef long double real;     // AMD64: 80 Bit hw, ARM64: 128 Bit sw
 
 // ------------------------- 80 Bit -------------------------------------------------------------------------------------------------------------
@@ -389,16 +389,15 @@ void quartischnormalproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckomple
 void quartischnormalsummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 void quartischnormallagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4);
 
-// reduzierte quartische Gleichung reell integriert (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
+// reduzierte quartische Gleichung reell integriert
 void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& psp);
+void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp);
 
+// alte Verfahren
 void quartischreduziertlagrangeuintr (real a, real b, real c, real d, cschnittpunkte& psp);
 void quartischreduziertlagrangecintr (real a, real b, real c, real d, cschnittpunkte& psp);
-
-// normale quartische Gleichung reell integriert (versagen auch bei reellen Lösungen, wenn aufgrund von Ungenauigkeiten komplexe Zwischenwerte entstehen)
-void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp);
-void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp);
 
 // --------------------- ckomplexk Operatoren ---------------------------------------------------------
 

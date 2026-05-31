@@ -2164,7 +2164,7 @@ void kubischeresolventesummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, cko
 
   ak= b*-2;
   bk= a*c + d*-4 + b*b;
-  ck= (a*d - b*c)*a + c*c;
+  ck= (b*-c + d*a)*a + c*c;
 
   kubisch (ak, bk, ck, z1, z2, z3);
   }
@@ -2478,7 +2478,6 @@ void quartischnormallagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d
   }
 
 //--------------------------------------------------- reelle, integrierte Verfahren ----------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------- Verfahren ohne Division ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
@@ -2521,9 +2520,9 @@ void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp
     }
 
   //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung (ak=-p/2 für Rückreduzierung)
-  zk= yk + p;                                                         // zk= yk + b/6 - a*a/16;
+  zk= yk + p;                                                         // zk= yk - aq + b/6
 
-  uq= yk/2 - p;                                                       // uq= (zk - p*3)/2;
+  uq= yk/2 - p;                                                       // uq= (zk - p*3)/2
   vq= zk*zk - r;
 
   u= sqrtrz (uq);
@@ -2606,15 +2605,15 @@ void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp)
   //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung (ak=-p/2 für Rückreduzierung)
   zk= yk + b/6;
 
-  Da= sqrtrz (aq + yk/2 - b/6);
-  Db= sqrtr (zk*zk - d);                                              // Störungen bei sqrtz
+  Da= sqrtrz (yk/2 + aq - b/6);                                       // Da= sqrtrz (zk/2 + aq - b/4);
+  Db= sqrtr (zk*zk - d);                                              // Fehler bei sqrtz
+
+  b1= zk + Db;
+  b2= zk - Db;
 
   a4= a/-4;
   a1= a4 + Da;
   a2= a4 - Da;
-
-  b1= zk + Db;
-  b2= zk - Db;
 
   c1= a1*b2 + a2*b1;
   c2= a1*b1 + a2*b2;
@@ -2628,7 +2627,6 @@ void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp)
 
   //----------------------------------- Die 4 Lösungen der beiden quadratischen Gleichungen
   a1q= a1*a1;
-  a2q= a2*a2;
   if (a1q >= b1)
     {
     D12= sqrtr (a1q - b1);
@@ -2639,6 +2637,7 @@ void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp)
     if (x2 > 0)
       psp.add (x2);
     }
+  a2q= a2*a2;
   if (a2q >= b2)
     {
     D34= sqrtr (a2q - b2);
@@ -2650,8 +2649,6 @@ void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp)
       psp.add (x4);
     }
   }
-
-//----------------------------------------------------------------------------- Verfahren mit Division ---------------------------------------------------------------------------------------------------------------------------------------
 
 void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
@@ -2698,11 +2695,11 @@ void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& 
 
   D= sqrtr (zk*zk - r);
 
-  u= q/D/2;
-  uq= u*u;
-
   b1= zk - D;
   b2= zk + D;
+
+  u= q/D/2;
+  uq= u*u;
 
   //----------------------------------- Die 4 Lösungen der beiden quadratischen Gleichungen
   a4= a/-4;
@@ -2733,9 +2730,8 @@ void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& 
 void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
   real aq, p, q, r, pp, pa, qa, xl, ytk, l, yk;
-  real zk, Db, b1, b2, a1, a2;
-  real a4, Da, v1, v2;
-  real a1q, a2q, D12, D34, x1, x2, x3, x4;
+  real zk, Db, a1, a2, b1, b2, a1q, a2q;
+  real D12, D34, x1, x2, x3, x4;
 
   // Parameter der reduzierten quartischen Gleichung
   aq= a*a/16;
@@ -2774,37 +2770,16 @@ void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp
   //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung (ak=-p/2 für Rückreduzierung)
   zk= yk + b/6;
 
-  Db= sqrtrz (zk*zk - d);
+  Db= sqrtr (zk*zk - d);                                              // Fehler bei sqrtz
 
   b1= zk + Db;
   b2= zk - Db;
 
-/*
-  a1= (a*b1 - c)/Db/-4;                                                // 2. Fehleruelle D = 0
+  a1= (a*b1 - c)/Db/-4;
   a2= (a*b2 - c)/Db/4;
-//*/
-
-//*
-  // Vermeidung der Division bei der Berechung der a-Koeffizienten
-  a4= a/-4;
-  Da= sqrtr (aq - b/4 + zk/2);
-  a1= a4 + Da;
-  a2= a4 - Da;
-
-  v1= a1*b2 + a2*b1;
-  v2= a1*b1 + a2*b2;
-
-  if (absr (v2*2 + c) < absr (v1*2 + c))
-    {
-    real sw= a1;
-    a1= a2;
-    a2= sw;
-    }
-//*/
 
   //----------------------------------- Die 4 Lösungen der beiden quadratischen Gleichungen
   a1q= a1*a1;
-  a2q= a2*a2;
   if (a1q >= b1)
     {
     D12= sqrtr (a1q - b1);
@@ -2815,6 +2790,7 @@ void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp
     if (x2 > 0)
       psp.add (x2);
     }
+  a2q= a2*a2;
   if (a2q >= b2)
     {
     D34= sqrtr (a2q - b2);

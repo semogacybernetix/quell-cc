@@ -445,6 +445,8 @@
 2026.05.27 Mi  11:01, alle 4 quartisch Routinen angeglichen, Köpfe gleich, 11:56, 23:05, kleine Abgleichungen, keine Kondition, 0:12
 2026.05.28 Do  10:11, komplexe Routinen auf unskalierte Produktsumme und unskaliertes Summenprodukt abgeglichen, 12:47
 
+2026.05.31 So  20:33, alle quartisch Verfahren durchgegangen, Kosmetik, 23:01
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 lscr, cbasis3*real
