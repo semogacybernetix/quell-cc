@@ -2481,7 +2481,8 @@ void quartischnormallagrange (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d
 
 void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq, p, q, r, pp, pa, qa, xl, ytk, l, yk;
+  real p, q, r, pp;
+  real aq, pa, qa, xl, ytk, l, yk;
   real zk, uq, vq, u, v, bed, b1, b2, a4;
   real D12, D34, o12, o34, x1, x2, x3, x4;
 
@@ -2564,24 +2565,25 @@ void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp
 
 void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq, p, q, r, pp, pa, qa, xl, ytk, l, yk;
+  //real p, q, r, pp;
+  real aq, pa, qa, xl, ytk, l, yk;
   real zk, c1, c2, sw, Da, Db, a4, a1, a2, b1, b2, a1q, a2q;
   real D12, D34, x1, x2, x3, x4;
 
   // Parameter der reduzierten quartischen Gleichung
   aq= a*a/16;
-  p= b/6 - aq;
-  q= a*(aq + b/-4) + c/2;
-  r= aq*aq*-3 + aq*b + a*c/-4 + d;
+  //p= b/6 - aq;
+  //q= a*(aq + b/-4) + c/2;
+  //r= aq*aq*-3 + aq*b + a*c/-4 + d;
 
   // Parameter der angepassten reduzierten kubischen Gleichung
-  pp= p*p;
-  pa= pp + r/3;
-  qa= p*(pp - r) + q*q/4;
+  //pp= p*p;
+  //pa= pp + r/3;
+  //qa= p*(pp - r) + q*q/4;
 
   // Parameter der angepassten reduzierten kubischen Gleichung aus den Koeffizienten
-  //pa= (a*c/-4 + b*b/12 + d)/3;
-  //qa= a*b*c/-48 + b*d/-6 + aq*d + b*b*b/216 + c*c/16;
+  pa= (a*c/-4 + b*b/12 + d)/3;
+  qa= a*b*c/-48 + b*d/-6 + aq*d + b*b*b/216 + c*c/16;
 
   // Lösung der normalen linearen Gleichung
   xl= qa*qa - pa*pa*pa;
@@ -2652,7 +2654,8 @@ void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp)
 
 void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq, p, q, r, pp, pa, qa, xl, ytk, l, yk;
+  real p, q, r, pp;
+  real aq, pa, qa, xl, ytk, l, yk;
   real zk, D, u, uq, b1, b2, a4;
   real D12, D34, o12, o34, x1, x2, x3, x4;
 
@@ -2685,28 +2688,28 @@ void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& 
     else                                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pa);                                                    // pa > 0 immer, l > 0 immer, wegen Division
-    //yk= cosr (acosr (qa/(pa*l))/3)*l*2;                               // starker Mittenschnitt
+    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                               // starker Mittenschnitt
     //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                        // starkes Außensprühen, Mittenring, innen artefaktfrei
-    yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                        // Ring mit Doppelpunkt, innen schwächere Doppellinien
+    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                        // Ring mit Doppelpunkt, innen schwächere Doppellinien
     }
 
   //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung (ak=-p/2 für Rückreduzierung)
   zk= yk + p;
 
-  D= sqrtr (zk*zk - r);
+  D= sqrtr (zk*zk - r);                                               // Fehler bei sqrtz
 
-  b1= zk - D;
-  b2= zk + D;
+  b1= zk + D;
+  b2= zk - D;
 
   u= q/D/2;
   uq= u*u;
 
   //----------------------------------- Die 4 Lösungen der beiden quadratischen Gleichungen
   a4= a/-4;
-  if (uq >= b1)
+  if (uq >= b1)                                                       // Multiplikation nützt nichts, Fehlersprühen bei Entfernung
     {
-    D12= sqrtr (uq - b1);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    o12= a4 - u;
+    D12= sqrtr (uq - b1);
+    o12= a4 + u;
     x1= o12 - D12;
     x2= o12 + D12;
     if (x1 > 0)
@@ -2716,8 +2719,8 @@ void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& 
     }
   if (uq >= b2)
     {
-    D34= sqrtr (uq - b2);                                             // wenn D12 nicht existiert, dann gibt es keine 2 reellen Lösungen
-    o34= a4 + u;
+    D34= sqrtr (uq - b2);
+    o34= a4 - u;
     x3= o34 - D34;
     x4= o34 + D34;
     if (x3 > 0)
@@ -2729,24 +2732,25 @@ void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& 
 
 void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp)
   {
-  real aq, p, q, r, pp, pa, qa, xl, ytk, l, yk;
-  real zk, Db, a1, a2, b1, b2, a1q, a2q;
+  //real p, q, r, pp;
+  real aq, pa, qa, xl, ytk, l, yk;
+  real zk, D, a1, a2, b1, b2, a1q, a2q;
   real D12, D34, x1, x2, x3, x4;
 
   // Parameter der reduzierten quartischen Gleichung
   aq= a*a/16;
-  p= b/6 - aq;
-  q= a*(aq + b/-4) + c/2;
-  r= aq*aq*-3 + aq*b + a*c/-4 + d;
+  //p= b/6 - aq;
+  //q= a*(aq + b/-4) + c/2;
+  //r= aq*aq*-3 + aq*b + a*c/-4 + d;
 
   // Parameter der angepassten reduzierten kubischen Gleichung
-  pp= p*p;
-  pa= pp + r/3;
-  qa= p*(pp - r) + q*q/4;
+  //pp= p*p;
+  //pa= pp + r/3;
+  //qa= p*(pp - r) + q*q/4;
 
   // Parameter der angepassten reduzierten kubischen Gleichung aus den Koeffizienten
-  //pa= (a*c/-4 + b*b/12 + d)/3;
-  //qa= a*b*c/-48 + b*d/-6 + aq*d + b*b*b/216 + c*c/16;
+  pa= (a*c/-4 + b*b/12 + d)/3;
+  qa= a*b*c/-48 + b*d/-6 + aq*d + b*b*b/216 + c*c/16;
 
   // Lösung der normalen linearen Gleichung
   xl= qa*qa - pa*pa*pa;
@@ -2770,13 +2774,13 @@ void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp
   //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung (ak=-p/2 für Rückreduzierung)
   zk= yk + b/6;
 
-  Db= sqrtr (zk*zk - d);                                              // Fehler bei sqrtz
+  D= sqrtr (zk*zk - d);                                               // Fehler bei sqrtz
 
-  b1= zk + Db;
-  b2= zk - Db;
+  b1= zk + D;
+  b2= zk - D;
 
-  a1= (a*b1 - c)/Db/-4;
-  a2= (a*b2 - c)/Db/4;
+  a1= (a*b1 - c)/D/-4;
+  a2= (a*b2 - c)/D/4;
 
   //----------------------------------- Die 4 Lösungen der beiden quadratischen Gleichungen
   a1q= a1*a1;
