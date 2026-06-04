@@ -448,6 +448,8 @@
 2026.05.31 So  20:33, alle quartisch Verfahren durchgegangen, Kosmetik, 23:01
 2026.06.02 Di  2 Uhr, Angleichung quartischer Verfahren, 3:49, 13 Uhr, kubischweg5 erzeugt, 14:13
 
+2026.06.04 Do  12:59, kubischweg5 Zwischenwerte aus den Lösungen ergänzt, 15:48
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 lscr, cbasis3*real
