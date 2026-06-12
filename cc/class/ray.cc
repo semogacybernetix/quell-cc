@@ -504,6 +504,28 @@ cvektor2 cparatorusu::berechne (const cvektor3 &pv)
   return cvektor2 (kx, ky);
   }
 
+//----------- Torus rechts links ----------------------------
+
+cvektor2 cparatorusrl::berechne (const cvektor3 &pv)
+  {
+  // Längengrad bestimmen
+  real kx= atan2r (pv.y, pv.x);                            // Längengrad bestimmen
+  if (kx < 0)                                              // Periode verschieben, atan2r von [-pi, pi] -> [0, 2pi] umrechnen
+    kx= kx + PI2;                                          // bei negativem Wert eine volle Periode addieren
+
+  //Breitengrad bestimmen
+  cvektor3 mitte= normiere (cvektor3 (pv.x, pv.y, 0));     // Projektion auf xy-Ebene, Spitze auf Kreislinie
+  cvektor3 rot= normiere (pv - mitte);
+  real b= mitte%rot;
+  real ky= atan2r (rot.z, b) + PIh;
+  if (ky > PI)                                              // Periode in den positiven Bereich verschieben
+    ky= ky - PI2;
+  if (ky > 0)                                              // Periode in den positiven Bereich verschieben
+    kx= PI2 - kx;
+
+  return cvektor2 (kx, ky);
+  }
+
 // ************************************************************************** Begrenzungsobjekte *******************************************************************************************************************************************
 
 // -------------------- keine Begrenzung ------------------------------------
@@ -691,8 +713,10 @@ cscreentextur::cscreentextur (clscreen8* pscreen, const real pkx, const real pky
 
 cvektor3 cscreentextur::getpunkt (const cvektor2 &pv)
   {
-  integer x= integer (modr (absr (pv.x*kx*ymax), xmax));
+  integer x= integer (modr (absr (pv.x*kx*ymax), xmax));               // absr notwendig für paratoruss
   integer y= integer (modr (absr (pv.y*ky*ymax), ymax));
+  //integer x= integer (modr (pv.x*kx*ymax, xmax));
+  //integer y= integer (modr (pv.y*ky*ymax, ymax));
 
   integer r, g, b;
   screen->getpixel (x, y, r, g, b);

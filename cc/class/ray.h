@@ -217,6 +217,11 @@ struct cparatoruss : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+struct cparatorusrl : clpara
+  {
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
 // ----------------------------------------------------------------------- Begrenzungsobjekte -------------------------------------------------------------------------------------------------------------------------------------------
 
 struct clbegr     // abstraktes Begrenzungsobjekt, von dem die konkreten Begrenzungsobjekte abgeleitet sind
