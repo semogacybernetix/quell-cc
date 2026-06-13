@@ -646,13 +646,9 @@ ckomplexk cbrtr (const ckomplexk pv)
 
 void cbrtr (const ckomplexk pv, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3)
   {
-  ckomplexp vpol= polar180 (pv);
-  vpol.b= cbrtr (vpol.b);
-  vpol.w= vpol.w/3;
-
-  x1= kartes (vpol);
-  x2= kartes (ckomplexp (vpol.b, vpol.w + PI2d));
-  x3= kartes (ckomplexp (vpol.b, vpol.w - PI2d));
+  x1= cbrtr (pv);
+  x2= x1*e31;
+  x3= x1*e32;
   }
 
 // -------------------------------------------------- vierte Wurzel
@@ -1841,41 +1837,31 @@ void quadratisch (ckomplexk a, ckomplexk b, ckomplexk& x1, ckomplexk& x2)
 
 //*************************************************** kubische Verfahren *********************************************************************************************************************************************************************
 
-void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk bed, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
+void uvaddition (ckomplexk z1, ckomplexk z2, ckomplexk pbed, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)
   {
-  ckomplexk u1, u2, u3, v[3];
-  integer   vindex[3];
+  ckomplexk u, v[3], bed[3];
+  integer min;
 
-  // die 3 Lösungen für u, v
-  cbrtr (z1, u1, u2, u3);
-  cbrtr (z2, v[0], v[2], v[1]);
+  u= cbrtr (z1);
+  v[0]= cbrtr (z2);
 
-  // Standardzuordnung der u's und v's (keine Verschiebung)
-  vindex[0]= 0;
-  vindex[1]= 1;
-  vindex[2]= 2;
+  v[1]= v[0]*e31;
+  v[2]= v[0]*e32;
 
-  // Die Bedingung u*v = bed muss erfüllt sein
-  // Die v-Sequenz einen Schritt rückwärts rotieren falls das u[0], v[1] Paar richtig ist
-  if ((absr (u1*v[1] - bed) < absr (u1*v[0] - bed)) && (absr (u1*v[1] - bed) < absr (u1*v[2] - bed)))
-    {
-    vindex[0]= 1;
-    vindex[1]= 2;
-    vindex[2]= 0;
-    }
-    else
-  // Die v-Sequenz um einen Schritt vorwärts rotieren falls das u[0], v[2] Paar richtig ist
-  if ((absr (u1*v[2] - bed) < absr (u1*v[0] - bed)) && (absr (u1*v[2] - bed) < absr (u1*v[1] - bed)))
-    {
-    vindex[0]= 2;
-    vindex[1]= 0;
-    vindex[2]= 1;
-    }
+  bed[0]= u*v[0];
+  bed[1]= u*v[1];
+  bed[2]= u*v[2];
 
-  // Bestimmung der Summen durch Addition der korrekt zueinander verschobenen u- und v-Sequenzen
-  y1= (u1 + v[vindex[0]]);
-  y2= (u2 + v[vindex[1]]);
-  y3= (u3 + v[vindex[2]]);
+  if (absr (bed[0] - pbed) <= absr (bed[1] - pbed))
+    /**/ min= 0;
+    else min= 1;
+
+  if (absr (bed[2] - pbed) < absr (bed[min] - pbed))
+    min= 2;
+
+  y1= u + v[min];
+  y2= u*e31 + v[(min + 2) % 3];
+  y3= u*e32 + v[(min + 1) % 3];
   }
 
 void kubischreduziertcardano (ckomplexk p, ckomplexk q, ckomplexk& y1, ckomplexk& y2, ckomplexk& y3)

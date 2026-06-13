@@ -450,6 +450,7 @@
 2026.06.04 Do  12:59, kubischweg5 Zwischenwerte aus den Lösungen ergänzt, 15:48
 
 2026.06.12 Fr  16:33, neue Texturen aufgenommen, 16:59, 22:20 cparatorusrl () erstellt um die Torusszenen zu verbessern, 0:30
+2026.06.13 Sa  15:05, cbrtr auf e31 umgestellt, uv-Addition auf e31 umgestellt, iftest überarbeitet, linearfaktoren Menüpunkte korrigiert, 20:03
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

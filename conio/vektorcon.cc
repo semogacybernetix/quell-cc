@@ -390,7 +390,7 @@ char* schreibzahl (real z)            // Zahlstring von einer Realzahl erzeugen
   return ret;
   }
 
-void printvektor2komplex (const char* pstring, ckomplexk pv, integer psw)    // psw Winkelbereich -180,180 oder 0,360
+void printvektor2komplex (const char* pstring, ckomplexk pv, integer psw)    // psw Winkelbereich 0: -180,180 oder 1: 0,360
   {
   FILE* datei= fopen ("screenoutput.txt", "ab");
 
@@ -416,13 +416,25 @@ void printvektor2komplex (const char* pstring, ckomplexk pv, integer psw)    // 
 
 void printvektor2komplexp (const char* pstring, ckomplexp pv)
   {
+  FILE* datei= fopen ("screenoutput.txt", "ab");
+
   pstring= pstring;
-  if (pv.b == 0)    // -0 in 0 umwandeln (ich könnte auch -0 bei der Abfrage schreiben, aber das suggeriert, dass er die -0 von der 0 unterscheidet, was er aber nicht macht)
+  if (pv.b == 0)    // -0 in 0 umwandeln (wenn man eine 0 abfragt, akzeptiert er auch eine -0, wenn man eine -0 zuweist, weist er eine 0 zu. Deshalb kann ich genau das Gegenteil vom dem schreiben, was ich meine)
     pv.b= -0;
-  if (pv.w == 0)    // -0 in 0 umwandeln (ich könnte auch -0 bei der Abfrage schreiben, aber das suggeriert, dass er die -0 von der 0 unterscheidet, was er aber nicht macht)
+  if (pv.w == 0)    // -0 in 0 umwandeln (ich könnte auch -0 bei der Abfrage schreiben, aber das suggeriert, dass er die -0 von der 0 unterscheidet, was er aber nicht macht. Bei der Zuweisung überschreibt er eine -0 mit 0 auch wenn man -0 zuweist)
     pv.w= -0;
 
-//  ckomplexk vkar= kartes (pv);
+  pv.w= pv.w*180/PI;
+  char* pvxstr= schreibzahl (pv.b);
+  char* pvystr= schreibzahl (pv.w);
+
+  ckomplexk vkar= kartes (pv);
+
+  char* vkarxstr= schreibzahl (vkar.x);
+  char* vkarystr= schreibzahl (vkar.y);
+
+          printf ("%s %s     %s    %s %s\n", vkarxstr, vkarystr, pstring, pvxstr, pvystr);
+  fprintf (datei, "%s %s     %s    %s %s\n", vkarxstr, vkarystr, pstring, pvxstr, pvystr);
 
 ////  printf ("%50.40Lf %50.30Lf            %s%50.40Lf %50.30Lf°\n", vkar.x, vkar.y, pstring, pv.b, pv.w*180/PI);
 //  printf ("%56.40Lf %56.40Lf       %s%56.40Lf %45.40Lf°\n", vkar.x, vkar.y, pstring, pv.b, pv.w*180/PI);
