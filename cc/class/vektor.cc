@@ -2476,7 +2476,7 @@ void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp
   aq= a*a/16;
   p= b/6 - aq;
   q= a*(aq + b/-4) + c/2;
-  r= aq*aq*-3 + aq*b + a*c/-4 + d;
+  r= aq*(aq*-3 + b) + a*c/-4 + d;
 
   // Parameter der angepassten reduzierten kubischen Gleichung
   pp= p*p;
@@ -2506,7 +2506,7 @@ void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp
     //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
     }
 
-  //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung (ak=-p/2 für Rückreduzierung)
+  //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung:  zk= Σ(y)/2
   zk= yk + p;                                                         // zk= yk - aq + b/6
 
   uq= yk/2 - p;                                                       // uq= (zk - p*3)/2
@@ -2560,7 +2560,7 @@ void quartischnormalintr (real a, real b, real c, real d, cschnittpunkte& psp)
   aq= a*a/16;
   //p= b/6 - aq;
   //q= a*(aq + b/-4) + c/2;
-  //r= aq*aq*-3 + aq*b + a*c/-4 + d;
+  //r= aq*(aq*-3 + b) + a*c/-4 + d;
 
   // Parameter der angepassten reduzierten kubischen Gleichung
   //pp= p*p;
@@ -2649,7 +2649,7 @@ void quartischreduziertdivintr (real a, real b, real c, real d, cschnittpunkte& 
   aq= a*a/16;
   p= b/6 - aq;
   q= a*(aq + b/-4) + c/2;
-  r= aq*aq*-3 + aq*b + a*c/-4 + d;
+  r= aq*(aq*-3 + b) + a*c/-4 + d;
 
   // Parameter der angepassten reduzierten kubischen Gleichung
   pp= p*p;
@@ -2727,7 +2727,7 @@ void quartischnormaldivintr (real a, real b, real c, real d, cschnittpunkte& psp
   aq= a*a/16;
   //p= b/6 - aq;
   //q= a*(aq + b/-4) + c/2;
-  //r= aq*aq*-3 + aq*b + a*c/-4 + d;
+  //r= aq*(aq*-3 + b) + a*c/-4 + d;
 
   // Parameter der angepassten reduzierten kubischen Gleichung
   //pp= p*p;

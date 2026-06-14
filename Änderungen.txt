@@ -451,6 +451,7 @@
 
 2026.06.12 Fr  16:33, neue Texturen aufgenommen, 16:59, 22:20 cparatorusrl () erstellt um die Torusszenen zu verbessern, 0:30
 2026.06.13 Sa  15:05, cbrtr auf e31 umgestellt, uv-Addition auf e31 umgestellt, iftest überarbeitet, linearfaktoren Menüpunkte korrigiert, 20:03
+2026.06.14 So   8:47, linearfaktoren return entfernt, Optimierung r (Klammern) in quartischreduziertintr, 9:21
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
