@@ -2076,25 +2076,7 @@ void quartischwegz3kurz (ckomplexk x1s, ckomplexk x2s, ckomplexk x3s, ckomplexk&
 
 void quartischzurueck (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, ckomplexk& aq, ckomplexk& bq, ckomplexk& cq, ckomplexk& dq)
   {
-  ckomplexk psx1, psx2, psx3, spx1, spx2, spx3, akz, bkz, ckz, dpx, y1, y2, y3, y4, psy1, psy2, psy3, spy1, spy2, spy3, dpy;
-
-  // Produktsumme der x-Werte
-  psx1= x1*x2 + x3*x4;
-  psx2= x1*x3 + x2*x4;
-  psx3= x1*x4 + x2*x3;
-
-  // Summenprodukt der x-Werte
-  spx1= (x1+x2)*(x3+x4);
-  spx2= (x1+x3)*(x2+x4);
-  spx3= (x1+x4)*(x2+x3);
-
-  // Koeffizienten der kubischen Resolvente Summenprodukt
-  akz= -(spx1 + spx2 + spx3);
-  bkz= spx1*spx2 + spx1*spx3 + spx2*spx3;
-  ckz= -(spx1*spx2*spx3);
-
-  // Differenzenprodukt der x-Werte
-  dpx= (x1-x2)*(x1-x3)*(x1-x4)*(x2-x3)*(x2-x4)*(x3-x4);
+  ckomplexk p, q, r, psx1, psx2, psx3, spx1, spx2, spx3, dpx, y1, y2, y3, y4, psy1, psy2, psy3, spy1, spy2, spy3, dpy;
 
   // quartische Parameter aus den quartischen Lösungen: x1, x2, x3, x4 -> aq, bq, cq, dq
   aq= -(x1 + x2 + x3 + x4);
@@ -2102,18 +2084,34 @@ void quartischzurueck (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
   cq= -(x1*x2*x3 + x1*x2*x4 + x1*x3*x4 + x2*x3*x4);
   dq= x1*x2*x3*x4;
 
+  // Parameter der reduzierten quartischen Gleichung
+  quartischreduziertk (aq, bq, cq, dq, p, q, r);
+
+  // Produktsumme Σ der x-Werte
+  psx1= x1*x2 + x3*x4;
+  psx2= x1*x3 + x2*x4;
+  psx3= x1*x4 + x2*x3;
+
+  // Summenprodukt Π der x-Werte
+  spx1= (x1+x2)*(x3+x4);
+  spx2= (x1+x3)*(x2+x4);
+  spx3= (x1+x4)*(x2+x3);
+
+  // Differenzenprodukt der x-Werte
+  dpx= (x1-x2)*(x1-x3)*(x1-x4)*(x2-x3)*(x2-x4)*(x3-x4);
+
   // reduzierte Lösungen aus den normalen Lösungen: x1, x2, x3, x4 -> y1, y2, y3, y4
   y1= x1 + aq/4;
   y2= x2 + aq/4;
   y3= x3 + aq/4;
   y4= x4 + aq/4;
 
-  // Produktsumme der y-Werte
+  // Produktsumme Σ der y-Werte
   psy1= y1*y2 + y3*y4;
   psy2= y1*y3 + y2*y4;
   psy3= y1*y4 + y2*y3;
 
-  // Summenprodukt der y-Werte
+  // Summenprodukt Π der y-Werte
   spy1= (y1+y2)*(y3+y4);
   spy2= (y1+y3)*(y2+y4);
   spy3= (y1+y4)*(y2+y3);
@@ -2121,42 +2119,43 @@ void quartischzurueck (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
   // Differenzenprodukt der y-Werte
   dpy= (y1-y2)*(y1-y3)*(y1-y4)*(y2-y3)*(y2-y4)*(y3-y4);
 
-  printtext ("----------------------------------------------------------- Parameter der normalen quartischen Gleichung --------------------------------------------------------------------\n");
+  printtext ("********************************* quartischzurueck Beginn **************************************************************************************************************************************\n");
+  printtext ("----------------------------------------------------------- Parameter der normalen quartischen Gleichung ----------------------------------------------------------\n");
   printvektor2komplex ("a          ", aq, 0);
   printvektor2komplex ("b          ", bq, 0);
   printvektor2komplex ("c          ", cq, 0);
   printvektor2komplex ("d          ", dq, 0);
   printtext ("\n");
 
-  printtext ("----------------------------------------------------------- Produktsumme der x-Werte ---------------------------------------------------------------------------\n");
+  printtext ("----------------------------------------------------------- Produktsumme Σ der x-Werte ---------------------------------------------------------------------------\n");
   printvektor2komplex ("(x1*x2)+(x3*x4)", psx1, 1);
   printvektor2komplex ("(x1*x3)+(x2*x4)", psx2, 1);
   printvektor2komplex ("(x1*x4)+(x2*x3)", psx3, 1);
   printtext ("\n");
 
-  printtext ("----------------------------------------------------------- Summenprodukt der x-Werte ---------------------------------------------------------------------------\n");
+  printtext ("----------------------------------------------------------- Summenprodukt Π der x-Werte ---------------------------------------------------------------------------\n");
   printvektor2komplex ("(x1+x2)*(x3+x4)", spx1, 1);
   printvektor2komplex ("(x1+x3)*(x2+x4)", spx2, 1);
   printvektor2komplex ("(x1+x4)*(x2+x3)", spx3, 1);
-  printtext ("\n");
-
-  printtext ("----------------------------------------------------------- Koeffizienten der Resolvente Summenprodukt --------------------------------------------------------------\n");
-  printvektor2komplex ("akz", akz, 1);
-  printvektor2komplex ("bkz", bkz, 1);
-  printvektor2komplex ("ckz", ckz, 1);
   printtext ("\n");
 
   printtext ("----------------------------------------------------------- Differenzenprodukt der x-Werte ---------------------------------------------------------------------------\n");
   printvektor2komplex ("(x1-x2)*(x1-x3)*(x1-xx)*(x2-x3)*(x2-x4)*(x3-x4)", dpx, 1);
   printtext ("\n");
 
-  printtext ("----------------------------------------------------------- Produktsumme der y-Werte ---------------------------------------------------------------------------------\n");
+  printtext ("----------------------------------------------------------- Parameter der reduzierten quartischen Gleichung ----------------------------------------------------------\n");
+  printvektor2komplex ("p          ", p, 0);
+  printvektor2komplex ("q          ", q, 0);
+  printvektor2komplex ("r          ", r, 0);
+  printtext ("\n");
+
+  printtext ("----------------------------------------------------------- Produktsumme Σ der y-Werte ---------------------------------------------------------------------------------\n");
   printvektor2komplex ("y1y2 + y3y4", psy1, 0);
   printvektor2komplex ("y1y3 + y2y4", psy2, 0);
   printvektor2komplex ("y1y4 + y2y3", psy3, 0);
   printtext ("\n");
 
-  printtext ("----------------------------------------------------------- Summenprodukt der y-Werte ----------------------------------------------------------------------------------\n");
+  printtext ("----------------------------------------------------------- Summenprodukt Π der y-Werte ----------------------------------------------------------------------------------\n");
   printvektor2komplex ("(y1+y2)(y3+y4)", spy1, 0);
   printvektor2komplex ("(y1+y3)(y2+y4)", spy2, 0);
   printvektor2komplex ("(y1+y4)(y2+y3)", spy3, 0);
@@ -2165,6 +2164,7 @@ void quartischzurueck (ckomplexk x1, ckomplexk x2, ckomplexk x3, ckomplexk x4, c
   printtext ("----------------------------------------------------------- Differenzenprodukt der y-Werte ---------------------------------------------------------------------------\n");
   printvektor2komplex ("(y1-y2)*(y1-y3)*(y1-x4)*(y2-y3)*(y2-y4)*(y3-y4)", dpy, 1);
   printtext ("\n");
+  printtext ("********************************* quartischzurueck Ende **************************************************************************************************************************************\n");
   }
 
 void quartischweg3 (real aq, real bq, real cq, real dq, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
@@ -2351,7 +2351,7 @@ void quartischparameter ()
 
   quartischreduziertproduktsumme (p, q, r, y1, y2, y3, y4);
 
-  printtext ("\n----------quartisch Lösungen Produktsumme -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("\n----------quartisch Lösungen Produktsumme Σ-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
   printvektor2komplex ("x3          ", y3 - a/4, 0);
@@ -2360,7 +2360,7 @@ void quartischparameter ()
 
   quartischreduziertsummenprodukt (p, q, r, y1, y2, y3, y4);
 
-  printtext ("\n----------quartisch Lösungen Summenprodukt -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("\n----------quartisch Lösungen Summenprodukt Π -----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
   printvektor2komplex ("x3          ", y3 - a/4, 0);
@@ -2383,6 +2383,7 @@ void quartischparameter ()
 void quartischloesungen ()
   {
   ckomplexk x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, a, b, c, d, p, q, r;
+  ckomplexk aks, bks, cks, akp, bkp, ckp, pks, qks, pkp, qkp, ys1, ys2, ys3, yp1, yp2, yp3, zs1, zs2, zs3, zp1, zp2, zp3, p1, p2, p3;
   cschnittpunkte psp;
 
   vektor2eingabek (x1);
@@ -2390,59 +2391,107 @@ void quartischloesungen ()
   vektor2eingabek (x3);
   vektor2eingabek (x4);
 
-  quartischzurueck (x1, x2, x3, x4, a, b, c, d);
-  quartischreduziertk (a, b, c, d, p, q, r);
+  quartischzurueck (x1, x2, x3, x4, a, b, c, d);          // mit Printausgabe
 
+  quartischreduziertk (a, b, c, d, p, q, r);
+  printtext ("Parameter der reduzierten quartischen Gleichung ----------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("p            ", p, 0);
   printvektor2komplex ("q            ", q, 0);
   printvektor2komplex ("r            ", r, 0);
   printtext ("\n");
 
   kubischeresolventeproduktsumme (a, b, c, d, z1, z2, z3);
-  printtext ("Resolvente Produktsumme (x) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("Resolvente Produktsumme Σ(x) ----------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("Σx1          ", z1, 0);
   printvektor2komplex ("Σx2          ", z2, 0);
   printvektor2komplex ("Σx3          ", z3, 0);
   printtext ("\n");
 
   kubischeresolventesummenprodukt (a, b, c, d, z1, z2, z3);
-  printtext ("Resolvente Summenprodukt (x) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("Resolvente Summenprodukt Π(x) ----------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("Πx1          ", z1, 0);
   printvektor2komplex ("Πx2          ", z2, 0);
   printvektor2komplex ("Πx3          ", z3, 0);
   printtext ("\n");
 
-  ckomplexk akx= -((x1+x2)*(x3+x4) + (x1+x3)*(x2+x4) + (x1+x4)*(x2+x3));
-  ckomplexk bkx= (x1+x2)*(x3+x4)*(x1+x3)*(x2+x4) + (x1+x2)*(x3+x4)*(x1+x4)*(x2+x3) + (x1+x3)*(x2+x4)*(x1+x4)*(x2+x3);
-  ckomplexk ckx= -((x1+x2)*(x1+x3)*(x1+x4)*(x2+x3)*(x2+x4)*(x3+x4));
-
-  printvektor2komplex ("akx          ", akx, 0);
-  printvektor2komplex ("bkx          ", bkx, 0);
-  printvektor2komplex ("ckx          ", ckx, 0);
-  printtext ("\n");
-
-  ckomplexk akp= b*-2;
-  ckomplexk bkp= a*c + b*b + d*-4;
-  ckomplexk ckp= c*c + a*(a*d - b*c);
-
-  printtext ("Koeffizienten der Resolvente Summenprodukt aus den Parametern --------------------------------------------\n");
-  printvektor2komplex ("akp", akp, 1);
-  printvektor2komplex ("bkp", bkp, 1);
-  printvektor2komplex ("ckp", ckp, 1);
-  printtext ("\n");
-
   kubischeresolventeproduktsumme (p, q, r, z1, z2, z3);
-  printtext ("Resolvente Produktsumme (y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("Resolvente Produktsumme Σ(y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("Σy1         ", z1, 0);
   printvektor2komplex ("Σy2         ", z2, 0);
   printvektor2komplex ("Σy3         ", z3, 0);
   printtext ("\n");
 
   kubischeresolventesummenprodukt (p, q, r, z1, z2, z3);
-  printtext ("Resolvente Summenprodukt (y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("Resolvente Summenprodukt Π(y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("Πy1         ", z1, 0);
   printvektor2komplex ("Πy2         ", z2, 0);
   printvektor2komplex ("Πy3         ", z3, 0);
+  printtext ("\n");
+
+  aks= -p;
+  bks= r*-4;
+  cks= p*r*4 - q*q;
+
+  akp= p*-2;
+  bkp= p*p + r*-4;
+  ckp= q*q;
+
+  kubischreduziertk (aks, bks, cks, pks, qks);
+  kubischreduziertk (akp, bkp, ckp, pkp, qkp);
+
+  kubischreduziertg (pks, qks, ys1, ys2, ys3);
+  kubischreduziertg (pkp, qkp, yp1, yp2, yp3);
+
+  zs1= ys1 - aks/3;
+  zs2= ys2 - aks/3;
+  zs3= ys3 - aks/3;
+
+  zp1= yp1 - akp/3;
+  zp2= yp2 - akp/3;
+  zp3= yp3 - akp/3;
+
+  p1= zs1 + zp1;
+  p2= zs2 + zp2;
+  p3= zs3 + zp3;
+
+  printtext ("Parameter der reduzierten kubischen Resolvente Σ(y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("pks         ", pks, 0);
+  printvektor2komplex ("qks         ", qks, 0);
+  printtext ("\n");
+
+  printtext ("Parameter der reduzierten kubischen Resolvente Π(y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("pkp         ", pkp, 0);
+  printvektor2komplex ("qkp         ", qkp, 0);
+  printtext ("\n");
+
+  printtext ("Lösungen der kubischen Resolvente Produktsumme Σ(y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("ys1         ", ys1, 0);
+  printvektor2komplex ("ys2         ", ys2, 0);
+  printvektor2komplex ("ys3         ", ys3, 0);
+  printtext ("\n");
+
+  printtext ("Lösungen der kubischen Resolvente Summenprodukt Π(y) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("yp1         ", yp1, 0);
+  printvektor2komplex ("yp2         ", yp2, 0);
+  printvektor2komplex ("yp3         ", yp3, 0);
+  printtext ("\n");
+
+  printtext ("Lösungen der kubischen Resolvente Produktsumme Σ(x) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("zs1         ", zs1, 0);
+  printvektor2komplex ("zs2         ", zs2, 0);
+  printvektor2komplex ("zs3         ", zs3, 0);
+  printtext ("\n");
+
+  printtext ("Lösungen der kubischen Resolvente Summenprodukt Π(x) ----------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("zp1         ", zp1, 0);
+  printvektor2komplex ("zp2         ", zp2, 0);
+  printvektor2komplex ("zp3         ", zp3, 0);
+  printtext ("\n");
+
+  printtext ("Summe der Resolventen -----------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("p1         ", p1, 0);
+  printvektor2komplex ("p2         ", p2, 0);
+  printvektor2komplex ("p3         ", p3, 0);
   printtext ("\n");
 
   printtext ("****************************************************************** komplex reduziert *******************************************************************************************************************************\n");
@@ -2456,7 +2505,7 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertproduktsumme (p, q, r, y1, y2, y3, y4);
-  printtext ("-------------------------------- quartischreduziertproduktsumme Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischreduziertproduktsumme Σ Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
   printvektor2komplex ("x3          ", y3 - a/4, 0);
@@ -2464,7 +2513,7 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischreduziertsummenprodukt (p, q, r, y1, y2, y3, y4);
-  printtext ("-------------------------------- quartischreduziertsummenprodukt Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartischreduziertsummenprodukt Π Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", y1 - a/4, 0);
   printvektor2komplex ("x2          ", y2 - a/4, 0);
   printvektor2komplex ("x3          ", y3 - a/4, 0);
@@ -2482,7 +2531,7 @@ void quartischloesungen ()
   printtext ("****************************************************************** komplex normal *******************************************************************************************************************************\n");
 
   quartischnormalproduktsummediv (a, b, c, d, x1, x2, x3, x4);
-  printtext ("-------------------------------- quartisch normal produktsumme div Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartisch normal produktsumme Σ div Lösungen ----------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
   printvektor2komplex ("x2          ", x2, 0);
   printvektor2komplex ("x3          ", x3, 0);
@@ -2490,7 +2539,7 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischnormalproduktsumme (a, b, c, d, x1, x2, x3, x4);
-  printtext ("-------------------------------- quartisch normal produktsumme Lösungen ----------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartisch normal produktsumme Σ Lösungen ----------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
   printvektor2komplex ("x2          ", x2, 0);
   printvektor2komplex ("x3          ", x3, 0);
@@ -2498,7 +2547,7 @@ void quartischloesungen ()
   printtext ("\n");
 
   quartischnormalsummenprodukt (a, b, c, d, x1, x2, x3, x4);
-  printtext ("-------------------------------- quartisch normal summenprodukt Lösungen ----------------------------------------------------------------------------------------------------------------------\n");
+  printtext ("-------------------------------- quartisch normal summenprodukt Π Lösungen ----------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
   printvektor2komplex ("x2          ", x2, 0);
   printvektor2komplex ("x3          ", x3, 0);
@@ -2507,6 +2556,14 @@ void quartischloesungen ()
 
   quartischnormallagrange (a, b, c, d, x1, x2, x3, x4);
   printtext ("-------------------------------- quartisch normal lagrange Lösungen ----------------------------------------------------------------------------------------------------------------------\n");
+  printvektor2komplex ("x1          ", x1, 0);
+  printvektor2komplex ("x2          ", x2, 0);
+  printvektor2komplex ("x3          ", x3, 0);
+  printvektor2komplex ("x4          ", x4, 0);
+  printtext ("\n");
+
+  quartisch (a, b, c, d, x1, x2, x3, x4);
+  printtext ("-------------------------------- quartisch normal --------------------------------------------------------------------------------------------------------------------------------------------\n");
   printvektor2komplex ("x1          ", x1, 0);
   printvektor2komplex ("x2          ", x2, 0);
   printvektor2komplex ("x3          ", x3, 0);
@@ -2930,6 +2987,10 @@ utf-8 Codierung
   ¼        1/4
   ½        1/2
   ¾        3/4
+
+  ΣΠ
+  Σ        Summenzeichen
+  Π        Produktzeichen
 
   ℝ        R reelle Zahlen        8477
   ℂ        C komplexe Zahlen

@@ -2117,7 +2117,7 @@ void kubischeresolventeproduktsumme (ckomplexk p, ckomplexk q, ckomplexk r, ckom
 
   ak= -p;
   bk= r*-4;
-  ck= r*p*4 - q*q;
+  ck= p*r*4 - q*q;
 
   kubisch (ak, bk, ck, z1, z2, z3);
   }
@@ -2127,7 +2127,7 @@ void kubischeresolventesummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, cko
   ckomplexk ak, bk, ck;
 
   ak= p*-2;
-  bk= r*-4 + p*p;
+  bk= p*p + r*-4;
   ck= q*q;
 
   kubisch (ak, bk, ck, z1, z2, z3);
@@ -2139,7 +2139,7 @@ void kubischeresolventeproduktsumme (ckomplexk a, ckomplexk b, ckomplexk c, ckom
 
   ak= -b;
   bk= a*c + d*-4;
-  ck= (b*4 - a*a)*d - c*c;
+  ck= d*(b*4 - a*a) - c*c;
 
   kubisch (ak, bk, ck, z1, z2, z3);
   }
@@ -2149,8 +2149,8 @@ void kubischeresolventesummenprodukt (ckomplexk a, ckomplexk b, ckomplexk c, cko
   ckomplexk ak, bk, ck;
 
   ak= b*-2;
-  bk= a*c + d*-4 + b*b;
-  ck= (b*-c + d*a)*a + c*c;
+  bk= b*b + a*c + d*-4;
+  ck= a*(b*-c + d*a) + c*c;
 
   kubisch (ak, bk, ck, z1, z2, z3);
   }
@@ -2224,7 +2224,7 @@ void quartischreduziertsummenprodukt (ckomplexk p, ckomplexk q, ckomplexk r, cko
 
   kubischeresolventesummenprodukt (p, q, r, z1, z2, z3);
 
-  z= z1;
+  z= z2;
 
   u= sqrtr (-z);
   pz= (p - z);
@@ -2294,9 +2294,12 @@ void quartischreduziertlagrange (ckomplexk p, ckomplexk q, ckomplexk r, ckomplex
 
 void quartischreduziertk (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& p, ckomplexk& q, ckomplexk& r)
   {
-  p= a*a*3/-8 + b;
-  q= a*(a*a - b*4)/8 + c;
-  r= a*((a*b - c*4)*16 - a*a*a*3)/256 + d;
+  ckomplexk aq;
+
+  aq= a*a/16;
+  p= b - aq*6;
+  q= a*(aq*2 + b/-2) + c;
+  r= aq*(aq*-3 + b) + a*c/-4 + d;
   }
 
 void quartisch (ckomplexk a, ckomplexk b, ckomplexk c, ckomplexk d, ckomplexk& x1, ckomplexk& x2, ckomplexk& x3, ckomplexk& x4)
@@ -2474,14 +2477,14 @@ void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp
 
   // Parameter der reduzierten quartischen Gleichung
   aq= a*a/16;
-  p= b/6 - aq;
-  q= a*(aq + b/-4) + c/2;
+  p= b/6 - aq;                                         // p/6
+  q= a*(aq + b/-4) + c/2;                              // q/2
   r= aq*(aq*-3 + b) + a*c/-4 + d;
 
   // Parameter der angepassten reduzierten kubischen Gleichung
   pp= p*p;
   pa= pp + r/3;
-  qa= p*(pp - r) + q*q/4;
+  qa= p*(pp - r) + q*q/4;                              // -qa um für die Resolvente Summenprodukt die negativen Lösungen zu bekommen, ungünstig weil der sqrtz-Zweig sich dann auf + PI2d verschiebt
 
   // Parameter der angepassten reduzierten kubischen Gleichung aus den Koeffizienten
   //pa= (a*c/-4 + b*b/12 + d)/3;
@@ -2501,15 +2504,23 @@ void quartischreduziertintr (real a, real b, real c, real d, cschnittpunkte& psp
     else                                                              // 4 Schnittpunkte mit dem Torus
     {
     l= sqrtr (pa);                                                    // pa > 0 immer, l > 0 immer, wegen Division
-    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // 1. Fehleruelle yk, |qa/(pa*l)| > 1 sehr selten  +-1.00000012F,  behoben in acos Funktion
-    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
-    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                      // funktioniert nicht mit sqrtz (vq)
+    yk= cosr (acosr (qa/(pa*l))/3)*l*2;                                 // sqrtz (vq) funktioniert bei Σ(y), nicht bei Π(y)
+    //yk= cosr (acosr (qa/(pa*l))/3 + PI2d)*l*2;                      // sqrtz (vq) funktioniert bei Π(y), nicht bei Σ(y)
+    //yk= cosr (acosr (qa/(pa*l))/3 - PI2d)*l*2;                      // sqrtz (vq) funktioniert nicht bei Σ(y), nicht bei Π(y)
     }
 
-  //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung:  zk= Σ(y)/2
-  zk= yk + p;                                                         // zk= yk - aq + b/6
+  //----------------------------------- Ermittlung der Koeffizienten der beiden quadratischen Gleichungen aus der Lösung der reduzierten kubischen Gleichung:  zk= Σ(y)/2 oder zk= Π(y)/-2
+  // Produktsumme
+  zk= yk + p;                                                         // zk = Σ(y)/2
+  uq= yk/2 - p;
+  //uq= (zk - p*3)/2;
 
-  uq= yk/2 - p;                                                       // uq= (zk - p*3)/2
+  // Summenprodukt
+  //zk= yk + p*-2;                                                      // zk = Π(y)/-2
+  //uq= zk/2;                                                           // berechnet man uq und zk direkt aus yk erhält man die gleichen Werte wie für die Produktsumme
+  //zk= zk + p*3;
+
+  // Bestimmung der quadratischen Koeffizienten
   vq= zk*zk - r;
 
   u= sqrtrz (uq);
