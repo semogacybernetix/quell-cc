@@ -1116,7 +1116,7 @@ void kubischweg4 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
 
 void kubischweg5 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   {
-  ckomplexk ak, bk, ck, ak3, pa, qa, xl, zu, zv, u1, u2, u3, v1, v2, v3, yy1, yy2, yy3, xx1, xx2, xx3;
+  ckomplexk ak, bk, ck, pa, qa, xl, zu, zv, u1, u2, u3, v1, v2, v3, yy1, yy2, yy3, xx1, xx2, xx3;
   ckomplexk dipx, ofx, dx1, dx2, ux1, ux2, ux3, vx1, vx2, vx3;
 
   //--------------------- die Zwischenwerte aus den Parametern -------------------------------------------------------------------------------------------------------
@@ -1125,7 +1125,6 @@ void kubischweg5 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   ak= -(x1 + x2 + x3);
   bk= x1*x2 + x2*x3 + x3*x1;
   ck= -(x1*x2*x3);
-  ak3= ak/-3;
 
   // Parameter der reduzierten kubischen Gleichung
   pa= ak*ak/9 + bk/-3;
@@ -1157,9 +1156,9 @@ void kubischweg5 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
     }
 
   // die Lösungen der normalen kubischen Gleichung aus den Lösungen der reduzierten kubischen Gleichung
-  xx1= yy1 + ak3;
-  xx2= yy2 + ak3;
-  xx3= yy3 + ak3;
+  xx1= yy1 - ak/3;
+  xx2= yy2 - ak/3;
+  xx3= yy3 - ak/3;
 
   //--------------------- die Zwischenwerte aus den Lösungen -------------------------------------------------------------------------------------------------------
 
@@ -1168,61 +1167,82 @@ void kubischweg5 (ckomplexk x1, ckomplexk x2, ckomplexk& x3)
   ofx= (x1*2 - x2 - x3)*(x2*2 - x1 - x3)*(x3*2 - x1 - x2);
 
   // quadratische Lösungen aus kubischen Lösungen: px1, px2, px3 -> dx1k, dx2k
-  dx1= ofx/54 - dipx/sqrtr (ckomplexk (-108));
-  dx2= ofx/54 + dipx/sqrtr (ckomplexk (-108));
+  dx1= ofx/54 - dipx/(6*i3);
+  dx2= ofx/54 + dipx/(6*i3);
 
   // die 3 Lösungen für u aus den Lösungen der normalen kubischen Gleichung
-  ux1= (x1     + x2*e32 + x3*e31)/3;
-  ux2= (x1*e31 + x2     + x3*e32)/3;
-  ux3= (x1*e32 + x2*e31 + x3    )/3;
+  //ux1= (x1     + x2*e32 + x3*e31)/3;
+  //ux2= (x1*e31 + x2     + x3*e32)/3;
+  //ux3= (x1*e32 + x2*e31 + x3    )/3;
+  ux1= x1/3 - ((x2 + x3) - (x3 - x2)*i3)/6;
+  ux2= x2/3 - ((x1 + x3) - (x1 - x3)*i3)/6;
+  ux3= x3/3 - ((x1 + x2) - (x2 - x1)*i3)/6;
 
   // die 3 Lösungen für v aus den Lösungen der normalen kubischen Gleichung
-  vx1= (x1     + x2*e31 + x3*e32)/3;
-  vx2= (x1*e32 + x2     + x3*e31)/3;
-  vx3= (x1*e31 + x2*e32 + x3    )/3;
+  //vx1= (x1     + x2*e31 + x3*e32)/3;
+  //vx2= (x1*e32 + x2     + x3*e31)/3;
+  //vx3= (x1*e31 + x2*e32 + x3    )/3;
+  vx1= x1/3 - ((x2 + x3) - (x2 - x3)*i3)/6;
+  vx2= x2/3 - ((x1 + x3) - (x3 - x1)*i3)/6;
+  vx3= x3/3 - ((x1 + x2) - (x1 - x2)*i3)/6;
 
 //------------------------ Variablenausgabe ------------------------------------------------------------------------------------------------------------------------
 
-  printvektor2komplex ("ak           ", ak, 1);
-  printvektor2komplex ("bk           ", bk, 1);
-  printvektor2komplex ("ck           ", ck, 1);
+  printvektor2komplex ("a               ", ak, 1);
+  printvektor2komplex ("b               ", bk, 1);
+  printvektor2komplex ("c               ", ck, 1);
   printtext ("\n");
-  printvektor2komplex ("pa           ", pa, 1);
-  printvektor2komplex ("qa           ", qa, 1);
+  printvektor2komplex ("pa = a²/9 - b/3 ", pa, 1);
+  printvektor2komplex ("qa = -a³/27 + ab/6 - c/2", qa, 1);
   printtext ("\n");
-  printvektor2komplex ("xl = qa² - pa³", xl, 1);
+  printvektor2komplex ("xl = qa² - pa³  ", xl, 1);
   printtext ("\n");
-  printvektor2komplex ("zu = qa - √xl", zu, 1);
-  printvektor2komplex ("zv = qa + √xl", zv, 1);
+  printvektor2komplex ("zu = qa - √xl   ", zu, 1);
+  printvektor2komplex ("zv = qa + √xl   ", zv, 1);
   printtext ("\n");
-  printvektor2komplex ("u1 = 3√zu    ", u1, 1);
-  printvektor2komplex ("u2 = 3√zu    ", u2, 1);
-  printvektor2komplex ("u3 = 3√zu    ", u3, 1);
+  printvektor2komplex ("u1 = 3√zu       ", u1, 1);
+  printvektor2komplex ("u2 = 3√zu       ", u2, 1);
+  printvektor2komplex ("u3 = 3√zu       ", u3, 1);
   printtext ("\n");
-  printvektor2komplex ("v1 = 3√zv    ", v1, 1);
-  printvektor2komplex ("v2 = 3√zv    ", v2, 1);
-  printvektor2komplex ("v3 = 3√zv    ", v3, 1);
+  printvektor2komplex ("v1 = 3√zv       ", v1, 1);
+  printvektor2komplex ("v2 = 3√zv       ", v2, 1);
+  printvektor2komplex ("v3 = 3√zv       ", v3, 1);
   printtext ("\n");
-  printvektor2komplex ("yy1 = u + pa/u", yy1, 1);
-  printvektor2komplex ("yy2 = u + pa/u", yy2, 1);
-  printvektor2komplex ("yy3 = u + pa/u", yy3, 1);
+  printvektor2komplex ("yy1 = u1 + pa/u1", yy1, 1);
+  printvektor2komplex ("yy2 = u2 + pa/u2", yy2, 1);
+  printvektor2komplex ("yy3 = u3 + pa/u3", yy3, 1);
   printtext ("\n");
-  printvektor2komplex ("xx1 = yy1 + a3", xx1, 1);
-  printvektor2komplex ("xx2 = yy1 + a3", xx2, 1);
-  printvektor2komplex ("xx3 = yy1 + a3", xx3, 1);
+  printvektor2komplex ("xx1 = yy1 - a/3 ", xx1, 1);
+  printvektor2komplex ("xx2 = yy2 - a/3 ", xx2, 1);
+  printvektor2komplex ("xx3 = yy3 - a/3 ", xx3, 1);
   printtext ("---------------------------------------------------------------------------------------------------------------------\n");
-  printvektor2komplex ("xl  = ((x1-x2)*(x1-x3)*(x2-x3)√/-108)²", dipx*dipx/-108, 1);
+  printvektor2komplex ("a = -(x1 + x2 + x3)   ", ak, 1);
+  printvektor2komplex ("b = x1x2 + x2x3 + x3x1", bk, 1);
+  printvektor2komplex ("c = -x1x2x3           ", ck, 1);
   printtext ("\n");
-  printvektor2komplex ("zu  = (2x1-x2-x3)*(2x2-x1-x3)*(2x3-x1-x2)/54 - (x1-x2)*(x1-x3)*(x2-x3)/√-108", dx1, 0);
-  printvektor2komplex ("zv  = (2x1-x2-x3)*(2x2-x1-x3)*(2x3-x1-x2)/54 + (x1-x2)*(x1-x3)*(x2-x3)/√-108", dx2, 0);
+  printvektor2komplex ("pa = ", pa, 1);
+  printvektor2komplex ("qa = ", qa, 1);
   printtext ("\n");
-  printvektor2komplex ("u1  = (x1    + x2*φ² + x3*φ )/3", ux1, 1);
-  printvektor2komplex ("u2  = (x1*φ  + x2    + x3*φ²)/3", ux2, 1);
-  printvektor2komplex ("u3  = (x1*φ² + x2*φ  + x3   )/3", ux3, 1);
+  printvektor2komplex ("xl  = ((x1-x2)*(x1-x3)*(x2-x3))²/-108", dipx*dipx/-108, 1);
   printtext ("\n");
-  printvektor2komplex ("v1  = (x1    + x2*φ  + x3*φ²)/3", vx1, 1);
-  printvektor2komplex ("v2  = (x1*φ² + x2    + x3*φ )/3", vx2, 1);
-  printvektor2komplex ("v3  = (x1*φ  + x2*φ² + x3   )/3", vx3, 1);
+  printvektor2komplex ("zu  = (2x1-x2-x3)*(2x2-x1-x3)*(2x3-x1-x2)/54 - (x1-x2)*(x1-x3)*(x2-x3)/6/√-3", dx1, 0);
+  printvektor2komplex ("zv  = (2x1-x2-x3)*(2x2-x1-x3)*(2x3-x1-x2)/54 + (x1-x2)*(x1-x3)*(x2-x3)/6/√-3", dx2, 0);
+  printtext ("\n");
+  printvektor2komplex ("u1  = x1/3 - ((x2 + x3) - (x3 - x2)*√-3)/6", ux1, 1);
+  printvektor2komplex ("u2  = x2/3 - ((x1 + x3) - (x1 - x3)*√-3)/6", ux2, 1);
+  printvektor2komplex ("u3  = x3/3 - ((x1 + x2) - (x2 - x1)*√-3)/6", ux3, 1);
+  printtext ("\n");
+  printvektor2komplex ("v1  = x1/3 - ((x2 + x3) - (x2 - x3)*√-3)/6", vx1, 1);
+  printvektor2komplex ("v2  = x2/3 - ((x1 + x3) - (x3 - x1)*√-3)/6", vx2, 1);
+  printvektor2komplex ("v3  = x3/3 - ((x1 + x2) - (x1 - x2)*√-3)/6", vx3, 1);
+  printtext ("\n");
+  printvektor2komplex ("yy1 = x1 + a/3", x1 + ak/3, 1);
+  printvektor2komplex ("yy2 = x2 + a/3", x2 + ak/3, 1);
+  printvektor2komplex ("yy3 = x3 + a/3", x3 + ak/3, 1);
+  printtext ("\n");
+  printvektor2komplex ("xx1 = x1", x1, 1);
+  printvektor2komplex ("xx2 = x2", x2, 1);
+  printvektor2komplex ("xx3 = x3", x3, 1);
   printtext ("\n");
   }
 

@@ -458,6 +458,8 @@
                direkt aus den reduzierten Lösungen der kubischen Resolvente berechnet werden. Eine Rücktransformation in die Lösungen der normalen Form der kubischen Resolvente ist überflüssig und damit entfällt die Unterscheidung
                zwischen der kubischen Resolvente Produktsumme und der kubischen Resolvente Summenprodukt. 23:38
 
+2026.06.19 Fr  11:19, linearfaktoren kubischweg5 erweitert, auf √-3 umgestellt, xray mallorca3 Szene default, 12:48
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 lscr, cbasis3*real

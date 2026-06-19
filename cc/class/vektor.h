@@ -14,11 +14,11 @@ typedef long double _Float80;
 //typedef _Float16 real;        //                //   11 Bit:  3.31 Stellen      gibt es nicht auf raspi5                                   5.00              3.96
 
 // ------------------------- 32 Bit -------------------------------------------------------------------------------------------------------------
-typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
+//typedef _Float32 real;        // hw             //   24 Bit:  7.22 Stellen  6/8 Stellen (verlässlich/unterscheidbar)                       5.88      5.88    0.36          0.55                               7.14
 //typedef float real;           // hw             //   1.45 mal schneller als __float80                                                      5.88      5.88    0.36          0.55
 
 // ------------------------- 64 Bit -------------------------------------------------------------------------------------------------------------
-//typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
+typedef _Float64 real;        // hw             //   53 Bit: 15.95 Stellen 15/16 Stellen (verlässlich/unterscheidbar)                      7.69      5.88    0.61          0.42       28.04              6.66 8.33     20.06
 //typedef double real;          // hw             //   1.2 mal langsamer als __float80                                                       5.88      5.88    0.61          0.42
 
 // ------------------------- 80/128 Bit ---------------------------------------------------------------------------------------------------------
@@ -159,6 +159,7 @@ const real trib (real ((1 + cbrtl (19 + sqrtl (297)) + cbrtl (19 - sqrtl (297)))
 
 // kartesischkomplexe Konstanten
 const ckomplexk ik (0, 1);
+const ckomplexk i3 (0, real (sqrtl (3)));
 const ckomplexk e31 (real (-0.5),  real (sqrtl (0.75)));
 const ckomplexk e32 (real (-0.5), -real (sqrtl (0.75)));
 
