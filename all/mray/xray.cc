@@ -373,7 +373,7 @@ void addtorus (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.25)), new cparatorusrl, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), real (8/PI), real (2/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusrl, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Bergsee.jpg"), real (8/PI), real (1/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusrl, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Meer.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
-  //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusrl, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Meer.jpg"), real (8/PI), real (1/PI)), kstobj, klobj);
+  ///ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusrl, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Meer.jpg"), real (8/PI), real (1/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusrl, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Palmen.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusrl, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (16/PI), real (2/PI)), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cstorus (real (0.125)), new cparatorusrl, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Texturen/Steinstrand.jpg"), real (8/PI), real (1/PI)), kstobj, klobj);
@@ -392,7 +392,7 @@ void addtorus (cwelt& pwelt)
   pwelt.setzelage (klauge);
 
   // Hintergrundfarbe setzen
-  //pwelt.himmelfarbe= cvektor3 (30, 75, 90);
+  pwelt.himmelfarbe= cvektor3 (30, 75, 90);
   }
 
 void addtorusoktaeder (cwelt& pwelt)
@@ -453,6 +453,7 @@ void fliege ()
   //adderdemond (*welt);
   //addebzyl (*welt);
   addtorus (*welt);
+  //addtorusoktaeder (*welt);
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cxscreen ("xray", 800, 450), 800);                     // cxscreen: Fehlerpixel mit xraythread
 
