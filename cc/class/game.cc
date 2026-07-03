@@ -422,7 +422,7 @@ void cflugsimu::fliegek ()              // mit Körperdrehungen
   {
   cvektor3 flugw (0, 0, 0);
   cvektor4 drehaw;
-  real nwinkel;
+  //real nwinkel;
   //tms zeit;
   //real ticksps= real (sysconf (_SC_CLK_TCK));
   //clock_t ticks= times (&zeit);
@@ -437,13 +437,12 @@ void cflugsimu::fliegek ()              // mit Körperdrehungen
       screen->flush ();
       //cout << "Zeit: " << (times (&zeit) - ticks)/ticksps << endl;
       flugw= eulerwinkelfrommatrix (welt->augbasis);
-      nwinkel= 180/PI*acosr (cosr (flugw.x)*cosr(flugw.y));
+      //nwinkel= 180/PI*acosr (cosr (flugw.x)*cosr(flugw.y));
       flugw= 180/PI*flugw;
       drehaw= winkelachsefrommatrix (welt->augbasis);
       drehaw.r*= 180/PI;
 //      printf ("\r%15.9Lf %12.9Lf %12.9Lf W:%15.9Lf %12.9Lf %12.9Lf %12.9Lf w:%15.9Lf",
 //              flugw.x, flugw.y, flugw.z, drehaw.r, drehaw.i, drehaw.j, drehaw.ij, nwinkel);
-      nwinkel+= 0;
       fflush (stdout);
       //ticks= times (&zeit);
       }

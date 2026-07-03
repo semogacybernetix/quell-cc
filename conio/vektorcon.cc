@@ -198,27 +198,26 @@ void eingabe ()
 
 void realeingabe (_Float32& pr)
   {
-  integer scanret;
   float pf;
-  scanret= scanf ("%f", &pf);
-  scanret+= 0;
+
+  integer scanret= scanf ("%f", &pf);
+  scanret= scanret + 0;  // scanret benutzen, damit Compiler nicht meckert, scanret+= 0 zählt nicht als Benutzung
   pr= _Float32 (pf);
   }
 
 void realeingabe (_Float64& pr)
   {
-  integer scanret;
   double pf;
-  scanret= scanf ("%lf", &pf);
-  scanret+= 0;
+
+  integer scanret= scanf ("%lf", &pf);
+  scanret= scanret + 0;  // scanret benutzen, damit Compiler nicht meckert, scanret+= 0 zählt nicht als Benutzung
   pr= _Float64 (pf);
   }
 
 void realeingabe (_Float80& pr)
   {
-  integer scanret;
-  scanret= scanf ("%Lf", &pr);
-  scanret+= 0;
+  integer scanret= scanf ("%Lf", &pr);
+  scanret= scanret + 0;  // scanret benutzen, damit Compiler nicht meckert, scanret+= 0 zählt nicht als Benutzung
   }
 
 //------------------------------------------------------------------------ real Ausgabe ---------------------------------------------------------------------------------------------------

@@ -819,12 +819,12 @@ void zeigeebenen ()
 //-------------------------------------- Entscheidungseingabe ------------------------------------------------
 integer entscheidungseingabe ()
   {
-  integer scanret;
   integer ent;
+
   printf ("\n");
   printf ("[1] 2 Drehspiegelungen [2] 3 Drehspiegelungen [3] 3 Ebenenwinkel  [4] 3 Dreieckswinkel [5] 3 Ebenen anzeigen\n");
-  scanret= scanf ("%lld", &ent);
-  scanret++;                              //scanret benutzen damit Compiler nicht meckert
+  integer scanret= scanf ("%lld", &ent);
+  scanret= scanret + 0;                  //scanret benutzen damit Compiler nicht meckert
   return ent;
   }
 

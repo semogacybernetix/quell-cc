@@ -2144,7 +2144,7 @@ void sqrttest ()
 
 integer entscheidungseingabe ()
   {
-  integer scanret, ent;
+  integer ent;
 
   printtext ("\n");
   printtext (" [1] quadratisch  K   [2] kubisch  K     [3] quartisch  K\n");
@@ -2153,8 +2153,8 @@ integer entscheidungseingabe ()
   printtext (" [91] sqrttest        [92] quintisch K\n");
   printtext ("\n");
 
-  scanret= scanf ("%lld", &ent);
-  scanret++;  // scanret benutzen
+  integer scanret= scanf ("%lld", &ent);
+  scanret= scanret + 0;  // scanret benutzen
   printtext ("\n");
   return ent;
   }

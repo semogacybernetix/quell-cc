@@ -14,6 +14,7 @@ cbmpdatei::cbmpdatei (const char* pname)
     printf ("\n");
     }
   signed long ret= fread (head, 0x36, 1, datei);
+  ret= ret + 0;  // ret+= 0 zählt nicht als Benutzung der Variablen, deshalb muss ich ret= ret + 0 schreiben um die Variable zu benutzen
   xanz= ((signed long) (head[0x13]) << 8) | (signed long) (head[0x12]);
   yanz= ((signed long) (head[0x17]) << 8) | (signed long) (head[0x16]);
   zeile= 3*xanz + (xanz & 3);
@@ -21,12 +22,12 @@ cbmpdatei::cbmpdatei (const char* pname)
   vbild= new unsigned char[bsize];
   ret= fread (vbild, bsize, 1, datei);
   fclose (datei);
-  ret*= 1;  // damit der doofe Compiler nicht meckert, dass ich die Variable nicht benutzen würde
-  // erst meckert er mich an, dass ich einen Rückgabewert ignoriere, den ich nicht brauche (Vorwurf: Sie ignorieren, dass in Neuseeland jemand einen Pups
-  // gelassen hat)
-  // dann meckert er mich an, dass ich den nicht ignorierten Rückgabewert nicht verwende, obwohl ich keine Verwendung für ihn habe
-  // dann kann ich dem Compiler ja auch vorwerfen, dass er ignoriert, dass ich heute Geburtstag habe
-  // Fazit: es ist Schwachsinn, jemandem vorzuwerfen etwas zu ignorieren, wenn er dafür keine Verwendung hat (Vorwurf: Sie ignorieren, dass in China ein Sack Reis umgefallen ist)
+  // damit der doofe Compiler nicht meckert, dass ich die Variable nicht benutzen würde
+  // erst meckert er mich an, dass ich einen Rückgabewert ignoriere, den ich nicht brauche (Vorwurf: Sie ignorieren, dass in Neuseeland jemand einen Pups gelassen hat)
+  // wenn ich denn Rückgabewert nicht ignoriere meckert er mich an, dass ich den nicht ignorierten Rückgabewert nicht verwende, obwohl ich gar keine Verwendung für ihn habe
+  // dann kann ich dem Compiler ja auch vorwerfen, dass er ignoriert, dass heute die Sonne scheint
+  // Fazit: es ist Schwachsinn, jemandem vorzuwerfen etwas zu ignorieren, wenn er dafür keine Verwendung hat (Vorwurf: Sie ignorieren, dass in China ein Sack Reis umgefallen ist, wenn sie das aber nicht ignorieren,
+  // werfe ich ihnen vor, dass sie diese nutzlose Information für nichts verwenden (genau deswegen habe ich ignoriert, dass ich China ein Sack Reis umfällt, weil ich für diese Information keine Verwendung habe)
   }
 
 cbmpdatei::cbmpdatei (const char* pname, integer px, integer py)

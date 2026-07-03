@@ -146,9 +146,8 @@ void cxscreen::putpixel (integer px, integer py, integer pr, integer pg, integer
 
 void cxscreen::getpixel (integer px, integer py, integer &pr, integer &pg, integer &pb)
   {
-  px+= 0;
-  py+= 0;
-  pr= pg= pb= 0;
+  px= py= px;  // noch nicht implementiert, Variablen benutzen, damit der Compiler nicht meckert
+  pr= pg= pb;
   }
 
 void cxscreen::flush ()
@@ -302,7 +301,7 @@ cxmemoryscreen::cxmemoryscreen (const char* pname, integer px, integer py)
     bdepth++;
     bluemask >>= 1;
     }
-//  cout << " r: " << rshift << " g: " << gshift << " b: " << bshift << " ftiefe: " << ftiefe << endl;
+  //cout << " r: " << rshift << " g: " << gshift << " b: " << bshift << " ftiefe: " << ftiefe << endl;
   cout << "Bits per rgb: " << myvisual->bits_per_rgb << endl;
   switch (ftiefe)
     {
@@ -393,9 +392,9 @@ void cxmemoryscreen::putpixelx (integer px, integer py, integer pr, integer pg, 
 
 void cxmemoryscreen::getpixel (integer px, integer py, integer &pr, integer &pg, integer &pb)
   {
-  px+= 0;
-  py+= 0;
-  pr= pg= pb= 0;
+  pr = bildspeicher[py*xanz + px] >> rshift;
+  pg = bildspeicher[py*xanz + px] >> gshift;
+  pb = bildspeicher[py*xanz + px] >> bshift;
   }
 
 void cxmemoryscreen::flush ()
@@ -639,15 +638,16 @@ void cximagescreen::putpixel (integer px, integer py, integer pr, integer pg, in
   {
   integer pos= 4*(px + (ypix1 - py)*xanz);
   bild[pos]= char (pb);
-  bild[pos+1]= (signed char) (pg);
-  bild[pos+2]= (signed char) (pr);
+  bild[pos+1]= char (pg);
+  bild[pos+2]= char (pr);
   }
 
 void cximagescreen::getpixel (integer px, integer py, integer &pr, integer &pg, integer &pb)
   {
-  px+= 0;
-  py+= 0;
-  pr= pg= pb= 0;
+  integer pos= 4*(px + (ypix1 - py)*xanz);
+  pb= bild[pos];
+  pg= bild[pos+1];
+  pr= bild[pos+2];
   }
 
 void cximagescreen::flush ()
