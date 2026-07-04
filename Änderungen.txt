@@ -463,25 +463,18 @@
 2026.06.22 Mo  06:49, kubische Wege gelöscht, 7:01
 
 2026.07.03 Fr  13:45, Warnungen unter gcc 16.1.1 in xray, symmetriegruppen, linearfaktoren, quaternionentest, komplextest beseitigt, 14:59
+2026.07.04 Sa  14:30, neue Karten Pol, Mercator runtergeladen, Karten systematisiert, Karten in xray eingebunden, getestet, 17:04
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-lscr, cbasis3*real
-buchfintr Skalierunsfaktor bei a1,a2,b1,b2 klären, Mauszeiger mit Pixeldaten, symflip reparieren
-diffpuintrc ohne quant
+Symmetriegruppen (Symflip Spiel) reparieren, Programm Erddrehung mit Maus und Reset mit Anzeige Drehachse Drehwinkel, Visualisierung Ringkörper mit Rotation der Ringe
+neue Flächenformeln implementieren, Torus Kugelkonvergenz, 6-Kreuz, Lemniskatenebene, ebenezyl, Cassini
 
-Zeitauflösung auf mehr als 1/100 s erhöhen
-framerate sauber implementieren
-xray framebuffer, keyboardbuffer
+Zeitauflösung mit mehr als 1/100 s
+neues Threadverfahren mit dauerhaft laufenden Threads implementieren
+apfel mit thread
 
-quaternionentest Überlauffehler, auf andere floats als float80 flexibilisieren
-symflip Drehungen fehlerhaft: reparieren
-neues Threadverfahren entwickeln
-apfel thread
 Platform neu machen statt linux amd64, arm64, riscv64
-Benchmarks für xscreen Geschwindigkeit, fbscreen, float Geschwindigkeit
-
-Szenen Kreiskörper mit Torussen erstellen (Oktaeder, Kuboktaeder, Ikosidodekaeder, andere archimedische Körper)
-andere Flächen, Cassini, Lemniskate implementieren
+xray framebuffer, keyboardbuffer
 Clifford Torus stereografische Projektion 4D -> 3D implementieren
 4D-Raytracer entwickeln
