@@ -321,6 +321,89 @@ cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
+//----------- Projektion Kugel auf die Ebene als Plattkarte -------------------
+
+cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel)
+  {
+  parakugel= pkugel;
+  }
+
+cvektor2 cparaebene_platt_kugel::berechne (const cvektor3 &pv)
+  {
+  cvektor3 kv;
+  cvektor2 ret;
+
+  // Ebenenvektor (pv.z = 0) mit Plattkartenprojektion in Kugelvektor umrechnen
+  kv.z= sinr (pv.y);
+  kv.x= cosr (pv.x)*cosr (pv.y);
+  kv.y= sinr (pv.x)*cosr (pv.y);
+
+  // Kugelvektor mit Projektion aus pkugel in Ebenenvektor umrechnen
+  ret= parakugel->berechne (kv);
+
+  return ret;
+  }
+
+//----------- Projektion Kugel auf die Ebene als Mercatorkarte -------------------
+
+cparaebene_mercator_kugel::cparaebene_mercator_kugel (clpara* pkugel)
+  {
+  parakugel= pkugel;
+  }
+
+cvektor2 cparaebene_mercator_kugel::berechne (const cvektor3 &pv)
+  {
+  cvektor3 kv;
+  cvektor2 ret;
+  real w;
+
+  // Ebenenvektor (pv.z = 0) mit Mercatorprojektion in Kugelvektor umrechnen
+  kv.z= tanhr (pv.y);
+
+  w= cosr (asinr (kv.z));                                 // kein Zahn
+  //w= 1/coshr (pv.y);                                      // Doppelzahn
+
+  //w= expr (pv.y);                                         // Doppelzahn
+  //w= 2/(w + 1/w);
+
+  //w= sinr (acosr (kv.z));                                 // Nahzahn oben
+  //w= sqrtr (1 - kv.z*kv.z);                               // Doppelnahzahn
+
+  kv.x= cosr (pv.x)*w;
+  kv.y= sinr (pv.x)*w;
+
+  // Kugelvektor mit Projektion aus pkugel in Ebenenvektor umrechnen
+  ret= parakugel->berechne (kv);
+
+  return ret;
+  }
+
+//----------- Projektion Kugel auf die Ebene als gnomonische Projektion -------------------
+
+cparaebene_gnom_kugel::cparaebene_gnom_kugel (clpara* pkugel)
+  {
+  parakugel= pkugel;
+  }
+
+cvektor2 cparaebene_gnom_kugel::berechne (const cvektor3 &pv)
+  {
+  cvektor3 kv;
+  cvektor2 ret;
+  real t;
+
+  t= sqrtr (1 + pv.x*pv.x + pv.y*pv.y);
+
+  kv.z= 1/t;
+
+  kv.x= pv.x*kv.z;
+  kv.y= pv.y*kv.z;
+
+  // Kugelvektor mit Projektion aus pkugel in Ebenenvektor umrechnen
+  ret= parakugel->berechne (kv);
+
+  return ret;
+  }
+
 //---------------------------------------------------------------------- Zylinder ---------------------------------------------------------------------------------------------------------------------------------
 
 //----------- Zylinder winkeltreu-----------------------
@@ -988,7 +1071,8 @@ ckoerperliste::ckoerperliste () : anz (0) {}
 
 void ckoerperliste::add (ckoerper* pkoerper)
   {
-  koerper[anz++]= pkoerper;
+  koerper[anz]= pkoerper;
+  anz++;
   }
 
 void ckoerperliste::setzeauge (const cvektor3 &paugpos, const cbasis3 &paugbasis)

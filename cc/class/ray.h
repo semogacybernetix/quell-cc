@@ -121,6 +121,30 @@ struct cparaebenepolw : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+struct cparaebene_platt_kugel : clpara                      // Kugel als Plattkarte auf die Ebene projezieren
+  {
+  clpara* parakugel;
+
+  cparaebene_platt_kugel (clpara* pkugel);
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+struct cparaebene_mercator_kugel : clpara                   // Kugel als Mercatorkarte auf die Ebene projezieren
+  {
+  clpara* parakugel;
+
+  cparaebene_mercator_kugel (clpara* pkugel);
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+struct cparaebene_gnom_kugel : clpara                       // Kugel als gnomonische Projektion auf die Ebene projezieren
+  {
+  clpara* parakugel;
+
+  cparaebene_gnom_kugel (clpara* pkugel);
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
 //------------------------- Zylinder -----------------------------------------------------------------------------------------------------------------
 struct cparazylinderw : clpara
   {
@@ -434,7 +458,7 @@ struct cwelt : public cltextur
   cvektor3 getpunkt (const cvektor2 &pv);
   void addkoerper (ckoerper* pkoerper);
 
-  void setzeposition (const cvektor3 &pv);
+  void setzeposition (const cvektor3 &pv);    // Position des Auges setzen
   void verschiebeauge (const cvektor3 &pv);
 
   void setzelage (const cbasis3 &pb);

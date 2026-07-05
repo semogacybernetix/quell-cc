@@ -464,6 +464,7 @@
 
 2026.07.03 Fr  13:45, Warnungen unter gcc 16.1.1 in xray, symmetriegruppen, linearfaktoren, quaternionentest, komplextest beseitigt, 14:59
 2026.07.04 Sa  14:30, neue Karten Pol, Mercator runtergeladen, Karten systematisiert, Karten in xray eingebunden, getestet, 17:04
+2026.07.05 So  07:40, Karten weiter umbenannt, neue Ebenenparametrisierungen aus Kugel (Plattkarte, Mercatorkarte, gnomonische Projektion) geschaffen damit Projektionen der Kugel auf die Ebene möglich, 12:56
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
