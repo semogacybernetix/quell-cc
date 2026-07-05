@@ -36,14 +36,15 @@ void addebene (cwelt& pwelt)
 
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel2), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mercator_kugel (new cparakugel2), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_gnom_kugel (new cparakugel2), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_gnom_kugel (new cparakugel2), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_stereo_kugel (new cparakugel2), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
 
   // Augposition setzen
-  pwelt.setzeposition (cvektor3 (0, 0, 10));
-  pwelt.setzelage (cbasis3 (cvektor3 (1,0,0), cvektor3 (0,0,1), cvektor3 (0,-1,0)));
+  pwelt.setzeposition (cvektor3 (0, 0, -10));
+  pwelt.setzelage (cbasis3 (cvektor3 (0,-1,0), cvektor3 (0,0,1), cvektor3 (1,0,0)));
   }
 
 void addkoord (cwelt& pwelt)

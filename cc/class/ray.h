@@ -145,6 +145,14 @@ struct cparaebene_gnom_kugel : clpara                       // Kugel als gnomoni
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+struct cparaebene_stereo_kugel : clpara                     // Kugel als stereografische Projektion auf die Ebene projezieren
+  {
+  clpara* parakugel;
+
+  cparaebene_stereo_kugel (clpara* pkugel);
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
 //------------------------- Zylinder -----------------------------------------------------------------------------------------------------------------
 struct cparazylinderw : clpara
   {

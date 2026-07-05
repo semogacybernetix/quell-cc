@@ -388,20 +388,33 @@ cparaebene_gnom_kugel::cparaebene_gnom_kugel (clpara* pkugel)
 cvektor2 cparaebene_gnom_kugel::berechne (const cvektor3 &pv)
   {
   cvektor3 kv;
-  cvektor2 ret;
-  real t;
 
-  t= sqrtr (1 + pv.x*pv.x + pv.y*pv.y);
-
-  kv.z= 1/t;
-
+  kv.z= 1/sqrtr (1 + pv.x*pv.x + pv.y*pv.y);
   kv.x= pv.x*kv.z;
   kv.y= pv.y*kv.z;
 
-  // Kugelvektor mit Projektion aus pkugel in Ebenenvektor umrechnen
-  ret= parakugel->berechne (kv);
+  return parakugel->berechne (kv);
+  }
 
-  return ret;
+//----------- Projektion Kugel auf die Ebene als stereografische Projektion -------------------
+
+cparaebene_stereo_kugel::cparaebene_stereo_kugel (clpara* pkugel)
+  {
+  parakugel= pkugel;
+  }
+
+cvektor2 cparaebene_stereo_kugel::berechne (const cvektor3 &pv)
+  {
+  cvektor3 kv;
+  real s;
+
+  s= (pv.x*pv.x + pv.y*pv.y)/4 + 1;
+
+  kv.z= 2/s - 1;
+  kv.x= pv.x/s;
+  kv.y= pv.y/s;
+
+  return parakugel->berechne (kv);
   }
 
 //---------------------------------------------------------------------- Zylinder ---------------------------------------------------------------------------------------------------------------------------------
