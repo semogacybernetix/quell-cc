@@ -389,7 +389,7 @@ cvektor2 cparaebene_gnom_kugel::berechne (const cvektor3 &pv)
   {
   cvektor3 kv;
 
-  kv.z= 1/sqrtr (1 + pv.x*pv.x + pv.y*pv.y);
+  kv.z= 1/sqrtr (pv.x*pv.x + pv.y*pv.y + 1);
   kv.x= pv.x*kv.z;
   kv.y= pv.y*kv.z;
 
