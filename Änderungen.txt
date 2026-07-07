@@ -467,6 +467,7 @@
 2026.07.05 So  07:40, Karten weiter umbenannt, neue Ebenenparametrisierungen aus Kugel (Plattkarte, Mercatorkarte, gnomonische Projektion) geschaffen damit Projektionen der Kugel auf die Ebene möglich, 12:56,
                20:00, stereografische Projektion hinzugefügt, 21:47
 2026.07.06 Mo  05:50, schiefe Plattkarte gedreht, schiefe Projektionen hinzugefügt, 07:14
+2026.07.07 Di  20:52, Projektionen umgenannt, Namen auf Konsistenz gebracht, Formeln konforme Ebenen-, Kegelabbildung korrigiert, Karten runtergeladen, konsistent umbenannt, 23:46
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

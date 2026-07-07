@@ -318,7 +318,8 @@ cvektor2 cparaebenepol::berechne (const cvektor3 &pv)
 
 cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
+  //return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
+  return cvektor2 (atan2r (pv.y, pv.x), logr (pv.x*pv.x + pv.y*pv.y)/2);
   }
 
 //----------- Projektion Kugel auf die Ebene als Plattkarte -------------------
@@ -430,62 +431,62 @@ cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
 
 //----------- Kugel zylinder mittenabstandstreu (Plattkarte) ---------------------------
 
-cvektor2 cparakugel::berechne (const cvektor3 &pv)                                                         // Krizzelkreis in den Polen bei der Plattkarte und 2Pol-mittenabstandstreu-Karte
+cvektor2 cparakugel_platt_z::berechne (const cvektor3 &pv)                                                         // Krizzelkreis in den Polen bei der Plattkarte und 2Pol-mittenabstandstreu-Karte
   {
   return cvektor2 (atan2r (pv.y, pv.x), asinr (pv.z));
   }
 
-cvektor2 cparakugel2::berechne (const cvektor3 &pv)                                                        // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet, keine Krizzelkreise mehr
+cvektor2 cparakugel_platt_xyz::berechne (const cvektor3 &pv)                                                        // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet, keine Krizzelkreise mehr
   {
   return cvektor2 (atan2r (pv.y, pv.x), atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
 //----------- Kugel zylinder winkeltreu (Mercatorkarte) --------------------------------
 
-cvektor2 cparakugelw::berechne (const cvektor3 &pv)
+cvektor2 cparakugel_mercator_z::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
   }
 
-cvektor2 cparakugelw2::berechne (const cvektor3 &pv)                                                       // genauere und langsamere Berechnung Polstellen verbessert, da nicht mehr nur von z abhängig
+cvektor2 cparakugel_mercator_xyz::berechne (const cvektor3 &pv)                                                       // genauere und langsamere Berechnung Polstellen verbessert, da nicht mehr nur von z abhängig
   {
   return cvektor2 (atan2r (pv.y, pv.x), asinhr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
 
 //----------- Kugel polar geradentreu (gnomonisch) -------------------------------------
 
-cvektor2 cparakugelg::berechne (const cvektor3 &pv)
+cvektor2 cparakugel_gnom::berechne (const cvektor3 &pv)
   {
   return cvektor2 (pv.x/pv.z, pv.y/pv.z);
   }
 
 //----------- Kugel polar winkeltreu (stereografisch) ------------------------------------
 
-cvektor2 cparakugels::berechne (const cvektor3 &pv)
+cvektor2 cparakugel_stereo_z::berechne (const cvektor3 &pv)
   {
-  real k= pv.z + 1;                                                // Spitzenkrizzel, zittriges ranzoomen
+  real k= pv.z + 1;                                                   // Spitzenkrizzel, zittriges ranzoomen
   return cvektor2 (pv.x/k, pv.y/k);
   }
 
-cvektor2 cparakugels2::berechne (const cvektor3 &pv)               // fast keine Verbesserung, scharfe Treppen statt Krizzel
+cvektor2 cparakugel_stereo_xyz::berechne (const cvektor3 &pv)         // fast keine Verbesserung, scharfe Treppen statt Krizzel
   {
-  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Quadratkrizzel, aalglattes ranzoomen
+  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                         // Quadratkrizzel, aalglattes ranzoomen
   real v= sqrtr (t*t + 1);
   real k= (t + v)/v;
-  //real k= t/v + 1;                                               // instabiler, krizzliger
+  //real k= t/v + 1;                                                  // instabiler, krizzliger
 
   return cvektor2 (pv.x/k, pv.y/k);
   }
 
 //----------- Kugel polar flächentreu -----------------------------------
 
-cvektor2 cparakugelf::berechne (const cvektor3 &pv)
+cvektor2 cparakugel_lamb_z::berechne (const cvektor3 &pv)
   {
   real k= sqrtr (pv.z + 1);                                        // ungenau, fluktuierender Gegenpol
   return cvektor2 (pv.x/k, pv.y/k);
   }
 
-cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
+cvektor2 cparakugel_lamb_xyz::berechne (const cvektor3 &pv)
   {
   real z= sinr (atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));       // Bogenmethode, sauberer schwarzer Kreis im Gegenpol, stabiler Gegenpol
   real k= sqrtr (z + 1);
@@ -510,14 +511,14 @@ cvektor2 cparakugelf2::berechne (const cvektor3 &pv)
 
 //----------- Kugel polar mittenabstandstreu ----------------------------
 
-cvektor2 cparakugelm::berechne (const cvektor3 &pv)                // Krizzelkreis im Nullpunkt
+cvektor2 cparakugel_mitten_z::berechne (const cvektor3 &pv)                // Krizzelkreis im Nullpunkt
   {
   real k= acosr (pv.z)/sqrtr (1 - pv.z*pv.z);                      // fluktuierender Pol,Gegenpol
   //real k= acosr (pv.z)/cosr (asinr (pv.z));                      // fluktuierender Pol,Gegenpol, gleichschnell
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
-cvektor2 cparakugelm2::berechne (const cvektor3 &pv)               // hohe Genauigkeit, kein Krizzelkreis mehr
+cvektor2 cparakugel_mitten_xyz::berechne (const cvektor3 &pv)               // hohe Genauigkeit, kein Krizzelkreis mehr
   {
   real b= sqrtr (pv.x*pv.x + pv.y*pv.y);
   real k= (PIh - atanr (pv.z/b))/b;
@@ -546,7 +547,7 @@ cvektor2 cparahyperz::berechne (const cvektor3 &pv)
 
 cvektor2 cparakegelw::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), logr (absr (pv.z)));
+  return cvektor2 (atan2r (pv.y, pv.x), logr (absr (pv.z))*wu2);
   }
 
 //---------------------------------------------------------------------- Rotationsparaboloid ------------------------------------------------------

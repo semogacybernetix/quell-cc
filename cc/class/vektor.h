@@ -145,8 +145,8 @@ struct coktonion : public cvektor8
 // reelle Konstanten
 //const real quantr= real (powl (0.1, sizeof (real)));                                  // Ähnlichkeitseinheit abhängig von der Genauigkeit des real Typs
 const real quantg= real (1e-8);                                                       // Ähnlichkeitseinheit absolut
-const real k2d= real (_Float80 (2)/3);                                                // 2/3;
-const real wu675 (real (sqrtl (6.75)));
+const real k2d= real (_Float80 (2)/3);                                                // 2/3
+const real wu2 (real (sqrtl (2)));                                                    // √2
 
 const real PI (real (M_PIl));                                                         // die Konstante pi vom Typ real
 const real PIh (real (M_PIl/2));                                                      // pi/2

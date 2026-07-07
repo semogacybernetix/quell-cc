@@ -160,57 +160,57 @@ struct cparazylinderw : clpara
   };
 
 //------------------------- Kugel --------------------------------------------------------------------------------------------------------------------
-struct cparakugel : clpara
+struct cparakugel_platt_z : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel2 : clpara
+struct cparakugel_platt_xyz : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugelw : clpara
+struct cparakugel_mercator_z : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugelw2 : clpara
+struct cparakugel_mercator_xyz : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugelg : clpara
+struct cparakugel_gnom : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugels : clpara
+struct cparakugel_stereo_z : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugels2 : clpara
+struct cparakugel_stereo_xyz : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugelf : clpara
+struct cparakugel_lamb_z : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugelf2 : clpara
+struct cparakugel_lamb_xyz : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugelm : clpara
+struct cparakugel_mitten_z : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugelm2 : clpara
+struct cparakugel_mitten_xyz : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
