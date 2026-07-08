@@ -105,23 +105,24 @@ struct clpara                                                     // abstraktes 
   virtual cvektor2 berechne (const cvektor3 &pv)= 0;
   };
 
-//------------------------- Ebene --------------------------------------------------------------------------------------------------------------------
-struct cparaebenew : clpara
+//------------------------- 3D-Ebenenfläche -> (u,v)-Parametrisierung --------------------------------------------------------------------------------------------------------------------
+struct cparaebenew : clpara                                 // Ebene winkeltreu parametrisieren (triviale Parametrisierung)
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparaebenepol : clpara
+struct cparaebenepol : clpara                               // Ebene in Polarkoordinaten parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparaebenepolw : clpara
+struct cparaebenepolw : clpara                              // Ebene in Polarkoordinaten winkeltreu parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparaebene_platt_kugel : clpara                      // Kugel als Plattkarte auf die Ebene projezieren
+//------------------------- 3D-Ebenenfläche (pv.z = 0) als Kartenprojektion -> 3D-Kugelfläche -> (u,v)-Parametrisierung entsprechend der übergebenen Kugelparametrisierung (Kartenprojektion)
+struct cparaebene_platt_kugel : clpara                      // 3D-Plattkarte -> 3D-Kugel parametrisieren
   {
   clpara* parakugel;
 
@@ -129,7 +130,7 @@ struct cparaebene_platt_kugel : clpara                      // Kugel als Plattka
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparaebene_mercator_kugel : clpara                   // Kugel als Mercatorkarte auf die Ebene projezieren
+struct cparaebene_mercator_kugel : clpara                   // 3D-Ebene als Mercatorkarte in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
   {
   clpara* parakugel;
 
@@ -137,7 +138,7 @@ struct cparaebene_mercator_kugel : clpara                   // Kugel als Mercato
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparaebene_gnom_kugel : clpara                       // Kugel als gnomonische Projektion auf die Ebene projezieren
+struct cparaebene_gnom_kugel : clpara                       // 3D-Ebene als gnomonische Projektion in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
   {
   clpara* parakugel;
 
@@ -145,7 +146,7 @@ struct cparaebene_gnom_kugel : clpara                       // Kugel als gnomoni
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparaebene_stereo_kugel : clpara                     // Kugel als stereografische Projektion auf die Ebene projezieren
+struct cparaebene_stereo_kugel : clpara                     // 3D-Ebene als stereografische Projektion in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
   {
   clpara* parakugel;
 
@@ -153,64 +154,77 @@ struct cparaebene_stereo_kugel : clpara                     // Kugel als stereog
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-//------------------------- Zylinder -----------------------------------------------------------------------------------------------------------------
+struct cparaebene_mitten_kugel : clpara                     // 3D-Ebene als mittenabstandstreue Projektion in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
+  {
+  clpara* parakugel;
+
+  cparaebene_mitten_kugel (clpara* pkugel);
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+//------------------------- 3D-Zylinderfläche -> (u,v)-Parametrisierung -----------------------------------------------------------------------------------------------------------------
 struct cparazylinderw : clpara
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-//------------------------- Kugel --------------------------------------------------------------------------------------------------------------------
-struct cparakugel_platt_z : clpara
+//------------------------- 3D-Kugelfläche -> (u,v)-Parametrisierung -----------------------------------------------------------------------------------------------------------------
+struct cparakugel_platt_z : clpara                          // Kugel über pv.z in Plattkarte (u,v)-parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_platt_xyz : clpara
+struct cparakugel_platt_xyz : clpara                        // Kugel über pv.x, pv.y, pv.z in Plattkarte (u,v)-parametrisieren (numerisch stabiler)
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_mercator_z : clpara
+struct cparakugel_mercator_z : clpara                       // Kugel über pv.z in Mercatorkarte (u,v)-parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_mercator_xyz : clpara
+struct cparakugel_mercator_xyz : clpara                     // Kugel über pv.x, pv.y, pv.z in Mercatorkarte (u,v)-parametrisieren (numerisch stabiler)
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_gnom : clpara
+struct cparakugel_zylortho_z : clpara                       // Kugel über pv.z in flächentreue Zylinderkarte (u,v)-parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_stereo_z : clpara
+struct cparakugel_gnom : clpara                             // Kugel über pv.z in gnomonische Azimutalprojektion (u,v)-parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_stereo_xyz : clpara
+struct cparakugel_stereo_z : clpara                         // Kugel über pv.z in stereografische Azimutalprojektion (u,v)-parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_lamb_z : clpara
+struct cparakugel_stereo_xyz : clpara                       // Kugel über pv.x, pv.y, pv.z in stereografische Azimutalprojektion (u,v)-parametrisieren (numerisch stabiler)
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_lamb_xyz : clpara
+struct cparakugel_lamb_z : clpara                           // Kugel über pv.z in flächentreue Azimutalprojektion (u,v)-parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_mitten_z : clpara
+struct cparakugel_lamb_xyz : clpara                         // Kugel über pv.x, pv.y, pv.z in flächentreue Azimutalprojektion (u,v)-parametrisieren (numerisch stabiler)
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_mitten_xyz : clpara
+struct cparakugel_mitten_z : clpara                         // Kugel über pv.z in mittenabstandstreue Azimutalprojektion (u,v)-parametrisieren
+  {
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+struct cparakugel_mitten_xyz : clpara                       // Kugel über pv.x, pv.y, pv.z in mittenabstandstreue Azimutalprojektion (u,v)-parametrisieren (numerisch stabiler)
   {
   cvektor2 berechne (const cvektor3 &pv);
   };

@@ -341,7 +341,7 @@ void visualisierekantenmodell (cbasis3liste& pbliste, cbasis3 pspiegelbasis)
   real kzoom= 100;
 
   // Bewegungskugel hinzufügen
-  ckoerper* bewkugel= new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, 0, real (0.1)*kzoom);
+  ckoerper* bewkugel= new ckoerper (new cskugel, new cparakugel_mercator_z, new cbegrkeine, textur1, 0, real (0.1)*kzoom);
   bewkugel->koerperpos= kzoom*cluster.eliste->v[0];            // Bewegungskugel liegt auf einer Ecke
   //bewkugel->koerperpos= kzoom*absr (kurzkante)*cluster.kliste->v[0];      // Bewegungskugel liegt auf einer Kante
   //bewkugel->koerperpos= kzoom/sqrtl (3)*cluster.fliste->v[0];            // Bewegungskugel liegt auf einer Fläche
@@ -534,7 +534,7 @@ void visualisierefundamentalbereiche (cbasis3liste& pbliste, cbasis3 pspiegelbas
   pspiegelbasis= pspiegelbasis*cbasis3 (-1);
 
   // Mittenkugel hinzufügen
-  welt.addkoerper (new ckoerper (new cskugel, new cparakugelw, new cbegrkeine, textur1, 0, real (1.2)*kzoom));
+  welt.addkoerper (new ckoerper (new cskugel, new cparakugel_mercator_z, new cbegrkeine, textur1, 0, real (1.2)*kzoom));
 
   // Flugsimulator starten
   cflugsimu flugsimu (&welt, new cxkeyboard, new cxscreen ("Drehgruppe", 600, 600), 600);

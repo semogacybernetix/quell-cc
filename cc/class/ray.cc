@@ -322,6 +322,8 @@ cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), logr (pv.x*pv.x + pv.y*pv.y)/2);
   }
 
+//------------------------------------------------------------------------ Projektionen --------------------------------------------------------------------------------------------------------------------------------------------------
+
 //----------- Projektion Kugel auf die Ebene als Plattkarte -------------------
 
 cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel)
@@ -418,6 +420,33 @@ cvektor2 cparaebene_stereo_kugel::berechne (const cvektor3 &pv)
   return parakugel->berechne (kv);
   }
 
+//----------- Projektion Kugel auf die Ebene als mittenabstandstreue Projektion -------------------
+
+cparaebene_mitten_kugel::cparaebene_mitten_kugel (clpara* pkugel)
+  {
+  parakugel= pkugel;
+  }
+
+cvektor2 cparaebene_mitten_kugel::berechne (const cvektor3 &pv)
+  {
+  cvektor3 kv;
+  real r, s;
+
+  r= sqrtr ((pv.x*pv.x + pv.y*pv.y));
+  kv.x= pv.x/r;
+  kv.y= pv.y/r;
+
+  if (r > PI)
+    r= PI;
+
+  s= sinr (r);
+  kv.x= kv.x*s;
+  kv.y= kv.y*s;
+  kv.z= cosr (r);
+
+  return parakugel->berechne (kv);
+  }
+
 //---------------------------------------------------------------------- Zylinder ---------------------------------------------------------------------------------------------------------------------------------
 
 //----------- Zylinder winkeltreu-----------------------
@@ -431,12 +460,12 @@ cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
 
 //----------- Kugel zylinder mittenabstandstreu (Plattkarte) ---------------------------
 
-cvektor2 cparakugel_platt_z::berechne (const cvektor3 &pv)                                                         // Krizzelkreis in den Polen bei der Plattkarte und 2Pol-mittenabstandstreu-Karte
+cvektor2 cparakugel_platt_z::berechne (const cvektor3 &pv)                                          // Krizzelkreis in den Polen bei der Plattkarte und 2Pol-mittenabstandstreu-Karte
   {
   return cvektor2 (atan2r (pv.y, pv.x), asinr (pv.z));
   }
 
-cvektor2 cparakugel_platt_xyz::berechne (const cvektor3 &pv)                                                        // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet, keine Krizzelkreise mehr
+cvektor2 cparakugel_platt_xyz::berechne (const cvektor3 &pv)                                        // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet, keine Krizzelkreise mehr
   {
   return cvektor2 (atan2r (pv.y, pv.x), atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));
   }
@@ -448,9 +477,16 @@ cvektor2 cparakugel_mercator_z::berechne (const cvektor3 &pv)
   return cvektor2 (atan2r (pv.y, pv.x), atanhr (pv.z));
   }
 
-cvektor2 cparakugel_mercator_xyz::berechne (const cvektor3 &pv)                                                       // genauere und langsamere Berechnung Polstellen verbessert, da nicht mehr nur von z abhängig
+cvektor2 cparakugel_mercator_xyz::berechne (const cvektor3 &pv)                                     // genauere und langsamere Berechnung Polstellen verbessert, da nicht mehr nur von z abhängig
   {
   return cvektor2 (atan2r (pv.y, pv.x), asinhr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));
+  }
+
+//----------- Kugel zylinder flächentreu (orthographische Zylinderprojektion) --------------------------------
+
+cvektor2 cparakugel_zylortho_z::berechne (const cvektor3 &pv)
+  {
+  return cvektor2 (atan2r (pv.y, pv.x), pv.z);
   }
 
 //----------- Kugel polar geradentreu (gnomonisch) -------------------------------------
@@ -482,25 +518,25 @@ cvektor2 cparakugel_stereo_xyz::berechne (const cvektor3 &pv)         // fast ke
 
 cvektor2 cparakugel_lamb_z::berechne (const cvektor3 &pv)
   {
-  real k= sqrtr (pv.z + 1);                                        // ungenau, fluktuierender Gegenpol
+  real k= sqrtr (pv.z + 1);                                           // ungenau, fluktuierender Gegenpol
   return cvektor2 (pv.x/k, pv.y/k);
   }
 
 cvektor2 cparakugel_lamb_xyz::berechne (const cvektor3 &pv)
   {
-  real z= sinr (atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));       // Bogenmethode, sauberer schwarzer Kreis im Gegenpol, stabiler Gegenpol
+  real z= sinr (atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));          // Bogenmethode, sauberer schwarzer Kreis im Gegenpol, stabiler Gegenpol
   real k= sqrtr (z + 1);
 
 /*
-  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                      // Krizzelkreis
+  real t= pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y);                         // Krizzelkreis
   real v= sqrtr (t*t + 1);
   real k= sqrtr ((t + v)/v);
-  //real k= sqrtr (t/v + 1);                                       // ungenauer, inkonsistenterer Gegenpol
+  //real k= sqrtr (t/v + 1);                                          // ungenauer, inkonsistenterer Gegenpol
 //*/
 
 /*
   real z;
-  if (pv.z >= 0)                                                   // xy-Radiusmethode, schwarzes Quadrat im Gegenpol, Äquatornaht, Äquatorfluktuationen
+  if (pv.z >= 0)                                                      // xy-Radiusmethode, schwarzes Quadrat im Gegenpol, Äquatornaht, Äquatorfluktuationen
          z=  sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
     else z= -sqrtr (1 - pv.x*pv.x - pv.y*pv.y);
   real k= sqrtr (z + 1);
@@ -511,14 +547,14 @@ cvektor2 cparakugel_lamb_xyz::berechne (const cvektor3 &pv)
 
 //----------- Kugel polar mittenabstandstreu ----------------------------
 
-cvektor2 cparakugel_mitten_z::berechne (const cvektor3 &pv)                // Krizzelkreis im Nullpunkt
+cvektor2 cparakugel_mitten_z::berechne (const cvektor3 &pv)           // Krizzelkreis im Nullpunkt
   {
-  real k= acosr (pv.z)/sqrtr (1 - pv.z*pv.z);                      // fluktuierender Pol,Gegenpol
-  //real k= acosr (pv.z)/cosr (asinr (pv.z));                      // fluktuierender Pol,Gegenpol, gleichschnell
+  real k= acosr (pv.z)/sqrtr (1 - pv.z*pv.z);                         // fluktuierender Pol,Gegenpol
+  //real k= acosr (pv.z)/cosr (asinr (pv.z));                         // fluktuierender Pol,Gegenpol, gleichschnell
   return cvektor2 (pv.x*k, pv.y*k);
   }
 
-cvektor2 cparakugel_mitten_xyz::berechne (const cvektor3 &pv)               // hohe Genauigkeit, kein Krizzelkreis mehr
+cvektor2 cparakugel_mitten_xyz::berechne (const cvektor3 &pv)         // hohe Genauigkeit, kein Krizzelkreis mehr
   {
   real b= sqrtr (pv.x*pv.x + pv.y*pv.y);
   real k= (PIh - atanr (pv.z/b))/b;

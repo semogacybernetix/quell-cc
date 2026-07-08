@@ -1058,7 +1058,7 @@ ckomplexp polartan180 (const ckomplexk pv)                        // Winkelrück
 
 // ------------------------------------------------- Operatoren für Kugelkoordinaten -----------------------------------------------------
 
-// Winkel zwischen zwei 3-dimensionalen Einheitsvektoren in Kugelkoordinaten
+// Zentriwinkel bzw. Entfernung auf der Einheitskugel zwischen zwei 3-dimensionalen Einheitsvektoren in Kugelkoordinaten
 real operator | (const ckugelk &pv1, const ckugelk &pv2)
   {
   return acosr (sinr (pv1.y)*sinr (pv2.y) + cosr (pv1.y)*cosr (pv2.y)*cosr (pv1.x - pv2.x));
@@ -1317,7 +1317,7 @@ real det (const cbasis3 &pb)
   return (pb.x^pb.y)%pb.z;
   }
 
-cbasis3 normiere (const cbasis3 &pb)
+cbasis3 normiere (const cbasis3 &pb)                                  // normiert immer auf ungespiegelte Basis
   {
   const cvektor3 x (normiere (pb.x));
   const cvektor3 y (normiere (pb.z^x));
@@ -1375,7 +1375,7 @@ cbasis3 getrotz (const real &pf)
   return cbasis3 (cvektor3 (c, s, 0), cvektor3 (-s, c, 0), cvektor3 (0, 0, 1));
   }
 
-// Spiegelungsmatrix direkt berechnen
+// Spiegelungsmatrix aus Spiegelungsvektor direkt berechnen
 cbasis3 getspiegbasis (const cvektor3 &pv)
   {
   if (absr (pv) <= quantg)                                         // Nullvektor als Spiegelachse ist Punktspiegelung also Inversionsmatrix zurückgeben
@@ -1422,7 +1422,8 @@ cbasis3 operator ~ (const cbasis3 &pb)
 // Matrixaddition
 cbasis3 operator - (const cbasis3  &pb)
   {
-  return -1*pb;
+  return 0 - pb;
+  //return -1*pb;
   }
 
 cbasis3 operator + (const cbasis3 &pb1, const cbasis3 &pb2)
@@ -1735,9 +1736,9 @@ cbasis3  matrixfromwinkelachse (const cvektor4 pq)
   return matrixfromquaternion (quaternionfromwinkelachse (pq));
   }
 
-cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)              // Funktioniert bei 0° und 180° Drehungen
+cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)                            // Funktioniert bei 0° und 180° Drehungen
   {
-  cvektor4 qwa (qwafrommatrix (pdreh));                           // Mehrdeutigkeit der Achse bei 180° Drehungen
+  cvektor4 qwa (qwafrommatrix (pdreh));                                         // Mehrdeutigkeit der Achse bei 180° Drehungen
   if (qwa.r >= 1 - quantg)      // Drehung ist 0° Drehung
     return qwa;                // 1 zurückgeben
   cvektor3 achse (cvektor3 (qwa.i, qwa.j, qwa.ij));
@@ -1745,18 +1746,18 @@ cvektor4 quaternionfrommatrix (const cbasis3 &pdreh)              // Funktionier
   return cvektor4 (qwa.r, k*achse);
   }
 
-cvektor4 quaternionfrommatrix2 (const cbasis3 &pdreh)             // Kreuzproduktversion: versagt bei 180° Drehungen
+cvektor4 quaternionfrommatrix2 (const cbasis3 &pdreh)                           // Kreuzproduktversion: versagt bei 180° Drehungen
   {
   real qr= sqrtr (1 + pdreh.x.x + pdreh.y.y + pdreh.z.z);
-  if (qr <= quantg)                                               // 180° Drehung
-    return cvektor4 (0, 1, 0, 0);                                 // Bullshit zurückgeben
+  if (qr <= quantg)                                                             // 180° Drehung
+    return cvektor4 (0, 1, 0, 0);                                               // Bullshit zurückgeben
   real qi= (pdreh.y.z - pdreh.z.y)/qr;
   real qj= (pdreh.z.x - pdreh.x.z)/qr;
   real qij=(pdreh.x.y - pdreh.y.x)/qr;
   return cvektor4 (qr, qi, qj, qij)/2;
   }
 
-cbasis3 matrixfromquaternion (const cvektor4 pq)                  // Es kommen nur 2-fache Produkte vor, da mat (q) = mat (-q)
+cbasis3 matrixfromquaternion (const cvektor4 pq)                                // Es kommen nur 2-fache Produkte vor, da mat (q) = mat (-q)
   {
   real x, y, z;
   x= 1 - 2*(pq.j*pq.j + pq.ij*pq.ij);
