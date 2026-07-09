@@ -470,9 +470,11 @@
 2026.07.07 Di  20:52, Projektionen umgenannt, Namen auf Konsistenz gebracht, Formeln konforme Ebenen-, Kegelabbildung korrigiert, Karten runtergeladen, konsistent umbenannt, 23:46
 2026.08.08 Mi  05:52, Kommentare Projektionen konsistent gemacht, flächentreue Zylinderkarte implementiert, 07:47, mittenabstandstreue Ebenenprojektion erstellt, 08:26, linearfaktoren angepasst, 08:34
 
+2026.07.09 Do  22:27, Projektionen in xray.cc ausprobiert, 23:31
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Flugsimulator mit gespiegelter Augbasis implementieren
+zwischenständige Projektionen implementieren, Flugsimulator mit gespiegelter Augbasis implementieren (Normierung ändern)
 Symmetriegruppen (Symflip Spiel) reparieren, Programm Erddrehung mit Maus und Reset mit Anzeige Drehachse Drehwinkel, Visualisierung Ringkörper mit Rotation der Ringe
 neue Flächenformeln implementieren, Torus Kugelkonvergenz, 6-Kreuz, Lemniskatenebene, ebenezyl, Cassini
 

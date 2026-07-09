@@ -311,7 +311,7 @@ cvektor2 cparaebenew::berechne (const cvektor3 &pv)
 
 cvektor2 cparaebenepol::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), sqrtr (pv.x*pv.x + pv.y*pv.y));
+  return cvektor2 (PI + atan2r (pv.y, pv.x), sqrtr (pv.x*pv.x + pv.y*pv.y));
   }
 
 //----------- Ebene polar winkeltreu -------------------
@@ -319,7 +319,7 @@ cvektor2 cparaebenepol::berechne (const cvektor3 &pv)
 cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   {
   //return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
-  return cvektor2 (atan2r (pv.y, pv.x), logr (pv.x*pv.x + pv.y*pv.y)/2);
+  return cvektor2 (PI + atan2r (pv.y, pv.x), logr (pv.x*pv.x + pv.y*pv.y)/2);
   }
 
 //------------------------------------------------------------------------ Projektionen --------------------------------------------------------------------------------------------------------------------------------------------------
@@ -453,7 +453,7 @@ cvektor2 cparaebene_mitten_kugel::berechne (const cvektor3 &pv)
 
 cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), pv.z);
+  return cvektor2 (PI + atan2r (pv.y, pv.x), pv.z);
   }
 
 //---------------------------------------------------------------------- Kugel ------------------------------------------------------------------------------------------------------------------------------------
@@ -567,14 +567,14 @@ cvektor2 cparakugel_mitten_xyz::berechne (const cvektor3 &pv)         // hohe Ge
 
 cvektor2 cparahypere::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), asinhr (pv.z));
+  return cvektor2 (PI + atan2r (pv.y, pv.x), asinhr (pv.z));
   }
 
 //----------- Hyperboloid nicht normal -----------------------
 
 cvektor2 cparahyperz::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), acoshr (absr (pv.z)));
+  return cvektor2 (PI + atan2r (pv.y, pv.x), acoshr (absr (pv.z)));
   }
 
 //---------------------------------------------------------------------- Kegel --------------------------------------------------------------------
@@ -583,7 +583,7 @@ cvektor2 cparahyperz::berechne (const cvektor3 &pv)
 
 cvektor2 cparakegelw::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), logr (absr (pv.z))*wu2);
+  return cvektor2 (PI + atan2r (pv.y, pv.x), logr (absr (pv.z))*wu2);
   }
 
 //---------------------------------------------------------------------- Rotationsparaboloid ------------------------------------------------------
@@ -592,7 +592,7 @@ cvektor2 cparakegelw::berechne (const cvektor3 &pv)
 
 cvektor2 cpararpara::berechne (const cvektor3 &pv)
   {
-  return cvektor2 (atan2r (pv.y, pv.x), sqrtr (pv.z));
+  return cvektor2 (PI + atan2r (pv.y, pv.x), sqrtr (pv.z));
   }
 
 //---------------------------------------------------------------------- Torus --------------------------------------------------------------------

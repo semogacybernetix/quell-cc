@@ -32,28 +32,33 @@ void addebene (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cshpara, new cparaebenepol, new cbegrkeine, textur1, kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new cshpara, new cparaebenepol, begkreis1, textur1, kst1, kl1);
 
+  // Bilder
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebenew, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 2/PI, 2/PI), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebenepolw, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 20/PI, 20/PI), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebenepolw, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 5/PI, 5/PI), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new cshyper (0), new cparakegelw, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 5/PI, 5/PI), kst1, kl1);
 
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_mercator_xyz, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/6732 Mercator-blz Straßennetz.jpg"), real (0.3183), 0), kst1, kl1);
+  // Projektionen
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_mercator_z, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/6732 Mercator-blz Straßennetz.jpg"), real (0.3183), 0), kst1, kl1);
 
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mercator_kugel (new cparakugel_platt_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_platt_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_gnom_kugel (new cparakugel_platt_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_stereo_kugel (new cparakugel_platt_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mitten_kugel (new cparakugel_platt_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mitten_kugel (new cparakugel_platt_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
 
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mercator_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_gnom_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_stereo_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mercator_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_gnom_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_stereo_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mitten_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
 
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mercator_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 0M kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 0M kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_gnom_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 0M kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_stereo_kugel (new cparakugel_mercator_xyz), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 0M kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mercator_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 0M kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 0M kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_gnom_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 0M kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_stereo_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 0M kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mitten_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 0M kontrast.jpg"), real (0.3183), 0), kst1, kl1);
 
   // Körper addieren
   pwelt.addkoerper (koerper1);
@@ -135,7 +140,7 @@ void addkatzenturm (cwelt& pwelt)
 
   // Körper addieren
   pwelt.addkoerper (new ckoerper (new csebene, new cparaebenew, ell1, textur1, kst1, kl1));
-  pwelt.addkoerper (new ckoerper (new cskugel, new cparakugel_mercator_z, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/katze.jpg"), 10, 10), kst2, kl2));
+  pwelt.addkoerper (new ckoerper (new cskugel, new cparakugel_mercator_z, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 10, 10), kst2, kl2));
   pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, ell1, textur2, kst1, kl1));
 
   pwelt.verschiebeauge (cvektor3 (0, 500, -10000));
@@ -162,9 +167,8 @@ void addzylinder (cwelt& pwelt)
 
   // Körper addieren
   //pwelt.addkoerper (new ckoerper (new csebene, new cparawebene, ell1, textur1, kst1, kl1));
-  pwelt.addkoerper (new ckoerper (new cskugel, new cparakugel_mercator_xyz, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/katze.jpg"), 10, 10), kst2, kl1));
-  //pwelt.addkoerper (new ckoerper (new cszylinder, new cparawzylinder, ell1, textur2, kst1, kl1));
-  //pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new (cbegrkeine), textur2, kst1, kl1));
+  //pwelt.addkoerper (new ckoerper (new cskugel, new cparakugel_mercator_xyz, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 10, 10), kst2, kl1));
+  pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new (cbegrkeine), new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 2/PI, 2/PI), kst2, kl1));
 
   pwelt.verschiebeauge (cvektor3 (0, 500, -1000));
   }
@@ -222,7 +226,7 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_platt_xyz, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kstobj, klobj);
 
   // Zylinderkarten flächentreu
-  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_zylortho_z, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten lamb/3999 lamb kontrast.jpg"), real (0.3183), 0), kstobj, klobj);
+  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_zylortho_z, new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten lamb/3999 lamb kontrast.jpg"), real (0.3183), 0), kstobj, klobj);
 
   // Polkarten gnomonisch
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_gnom, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten gnom/0400 gnom hellblau.jpg"), real (0.3183), 0), kstobj, klobj);
@@ -253,7 +257,7 @@ void addkugel (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_stereo_z, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/4000 stereo 00.jpg"), real (0.3183), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_stereo_z, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/4000 stereo Berlin kontrast.jpg"), real (0.6366), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_stereo_z, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/4000 stereo Nordpol.jpg"), real (0.6366), 0), kstobj, klobj);
-  //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_stereo_z, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/5000 stereo Nordpol kontrast.jpg"), real (0.255), 0), kstobj, klobj);
+  ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_stereo_z, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/5000 stereo 90 00 kontrast.jpg"), real (0.255), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_stereo_z, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/5000 stereo Nordpol physisch.jpg"), real (0.255), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_stereo_z, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/5000 stereo Nordpol weltraum.jpg"), real (0.255), 0), kstobj, klobj);
   //ckoerper* koerper1= new ckoerper (new cskugel, new cparakugel_stereo_xyz, new cbegrkeine, new cscreentexturp (new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/9999 stereo Südpol Riemann.jpg"), real (0.0509), 0), kstobj, klobj);
