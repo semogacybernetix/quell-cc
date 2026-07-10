@@ -326,9 +326,15 @@ cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
 
 //----------- Projektion Kugel auf die Ebene als Plattkarte -------------------
 
-cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel)
+cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel, real pl, real pb)
   {
   parakugel= pkugel;
+  setzeaz (pl/180*PI, pb/180*PI);
+  }
+
+void cparaebene_platt_kugel::setzeaz (real pl, real pb)
+  {
+  az= getrotz (pl)*getrotx (pb);
   }
 
 cvektor2 cparaebene_platt_kugel::berechne (const cvektor3 &pv)
@@ -342,7 +348,7 @@ cvektor2 cparaebene_platt_kugel::berechne (const cvektor3 &pv)
   kv.y= sinr (pv.x)*cosr (pv.y);
 
   // Kugelvektor mit Projektion aus pkugel in Ebenenvektor umrechnen
-  ret= parakugel->berechne (kv);
+  ret= parakugel->berechne (az*kv);
 
   return ret;
   }
@@ -1245,6 +1251,12 @@ void cwelt::dreheaugey (const real pwinkel)
 void cwelt::dreheaugez (const real pwinkel)
   {
   augbasis= normiere (augbasis*getrotz(pwinkel));
+  koerperliste.setzeauge (augpos, augbasis);
+  }
+
+void cwelt::spiegeleaugex ()
+  {
+  augbasis.x = -augbasis.x;
   koerperliste.setzeauge (augpos, augbasis);
   }
 

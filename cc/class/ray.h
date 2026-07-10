@@ -125,14 +125,17 @@ struct cparaebenepolw : clpara                              // Ebene in Polarkoo
 struct cparaebene_platt_kugel : clpara                      // 3D-Plattkarte -> 3D-Kugel parametrisieren
   {
   clpara* parakugel;
+  cbasis3 az;
 
-  cparaebene_platt_kugel (clpara* pkugel);
+  cparaebene_platt_kugel (clpara* pkugel, real pl, real pb);
+  void setzeaz (real l, real b);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
 struct cparaebene_mercator_kugel : clpara                   // 3D-Ebene als Mercatorkarte in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
   {
   clpara* parakugel;
+  cbasis3 az;
 
   cparaebene_mercator_kugel (clpara* pkugel);
   cvektor2 berechne (const cvektor3 &pv);
@@ -141,6 +144,7 @@ struct cparaebene_mercator_kugel : clpara                   // 3D-Ebene als Merc
 struct cparaebene_gnom_kugel : clpara                       // 3D-Ebene als gnomonische Projektion in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
   {
   clpara* parakugel;
+  cbasis3 az;
 
   cparaebene_gnom_kugel (clpara* pkugel);
   cvektor2 berechne (const cvektor3 &pv);
@@ -149,6 +153,7 @@ struct cparaebene_gnom_kugel : clpara                       // 3D-Ebene als gnom
 struct cparaebene_stereo_kugel : clpara                     // 3D-Ebene als stereografische Projektion in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
   {
   clpara* parakugel;
+  cbasis3 az;
 
   cparaebene_stereo_kugel (clpara* pkugel);
   cvektor2 berechne (const cvektor3 &pv);
@@ -157,6 +162,7 @@ struct cparaebene_stereo_kugel : clpara                     // 3D-Ebene als ster
 struct cparaebene_mitten_kugel : clpara                     // 3D-Ebene als mittenabstandstreue Projektion in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
   {
   clpara* parakugel;
+  cbasis3 az;
 
   cparaebene_mitten_kugel (clpara* pkugel);
   cvektor2 berechne (const cvektor3 &pv);
@@ -488,6 +494,7 @@ struct cwelt : public cltextur
   void dreheaugex (const real pwinkel);
   void dreheaugey (const real pwinkel);
   void dreheaugez (const real pwinkel);
+  void spiegeleaugex ();
   void dreheaugeachse (const real pwinkel);
   void dreheaugenorm (const real pwinkel);   // pwinkel ?
   void dreheaugeein (const real pwinkel);    // auf Einheitsposition setzen

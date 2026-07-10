@@ -1321,7 +1321,9 @@ cbasis3 normiere (const cbasis3 &pb)                                  // normier
   {
   const cvektor3 x (normiere (pb.x));
   const cvektor3 y (normiere (pb.z^x));
-  return cbasis3 (x, y, normiere (x^y));
+  if (det (pb) > 0)
+    /**/ return cbasis3 (x, y, normiere (x^y));
+    else return cbasis3 (x, -y, normiere (x^y));
   }
 
 cbasis3 normiere2 (const cbasis3 &pb)
@@ -1339,7 +1341,7 @@ cbasis3 transp (const cbasis3 &pb)
                   cvektor3 (pb.x.z, pb.y.z, pb.z.z));
   }
 
-cvektor3 geteigen (const cbasis3 &pb)                             // Eigenvektor von einer homogenen Basis berechnen (det = 0)
+cvektor3 geteigen (const cbasis3 &pb)                                 // Eigenvektor von einer homogenen Basis berechnen (det = 0)
   {
   const cbasis3 orthobasis (transp (cbasis3 (pb.y^pb.z, pb.z^pb.x, pb.x^pb.y)));
   const real sx (orthobasis.x%orthobasis.x);
@@ -1356,22 +1358,22 @@ cvektor3 geteigen (const cbasis3 &pb)                             // Eigenvektor
 
 cbasis3 getrotx (const real &pf)
   {
-  const real s (sinr(pf));
-  const real c (cosr(pf));
+  const real s (sinr (pf));
+  const real c (cosr (pf));
   return cbasis3 (cvektor3 (1, 0, 0), cvektor3 (0, c, s), cvektor3 (0, -s, c));
   }
 
 cbasis3 getroty (const real &pf)
   {
-  const real s (sinr(pf));
-  const real c (cosr(pf));
+  const real s (sinr (pf));
+  const real c (cosr (pf));
   return cbasis3 (cvektor3 (c, 0, -s), cvektor3 (0, 1, 0), cvektor3 (s, 0, c));
   }
 
 cbasis3 getrotz (const real &pf)
   {
-  const real s (sinr(pf));
-  const real c (cosr(pf));
+  const real s (sinr (pf));
+  const real c (cosr (pf));
   return cbasis3 (cvektor3 (c, s, 0), cvektor3 (-s, c, 0), cvektor3 (0, 0, 1));
   }
 

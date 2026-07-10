@@ -472,9 +472,10 @@
 
 2026.07.09 Do  22:27, Projektionen in xray.cc ausprobiert, 23:31
 
+2026.07.10 Fr  22:20, Spiegelung an der x-Achse in flugsimu implementiert, zwischenständiger Entwurf Plattkarte implementiert, 0:24
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-zwischenständige Projektionen implementieren, Flugsimulator mit gespiegelter Augbasis implementieren (Normierung ändern)
 Symmetriegruppen (Symflip Spiel) reparieren, Programm Erddrehung mit Maus und Reset mit Anzeige Drehachse Drehwinkel, Visualisierung Ringkörper mit Rotation der Ringe
 neue Flächenformeln implementieren, Torus Kugelkonvergenz, 6-Kreuz, Lemniskatenebene, ebenezyl, Cassini
 

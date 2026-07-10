@@ -180,6 +180,7 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
   printtext ("\n");
 
   integer koerper= 0;
+  integer rep= 1;
   keyboard->putkey (19, 5, 1);
     do
     {
@@ -292,6 +293,21 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
         welt->dreheaugez (-drehstep);
         welt->augdrehaw=winkelachsefrommatrix (welt->augbasis);
         }
+
+      // Spiegelung an der x-Achse
+      if (keyboard->getkey (7, 2))
+        {
+        if (rep == 1)
+          continue;
+        welt->spiegeleaugex ();
+        welt->augdrehaw=winkelachsefrommatrix (welt->augbasis);
+        rep= 1;
+        continue;
+        }
+
+      rep= 0;
+
+      // weitere Funktionen
       if (keyboard->getkey (7, 1)) welt->dreheaugenorm (drehstep);
       if (keyboard->getkey (8, 1)) welt->dreheaugeein (drehstep);
       if (keyboard->getkey (9, 1)) welt->dreheaugeachse (-drehstep);

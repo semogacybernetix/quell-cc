@@ -101,5 +101,6 @@ void cxkeyboard::flush ()
   // alle Tasten
   key[19][5]= key[1][2] | key[1][3] | key[2][2] | key[2][3] | key[3][2] | key[3][3] | key [4][2] | key [4][3]    // Bewegungen + Bewegungsschrittweite
             | key[8][2] | key[8][3] | key[9][2] | key[9][3] | key[10][2] | key[10][3] | key[11][2] | key[11][3]  // Drehungen + Drehschrittweite
+            | key[7][2]                                                                                          // Spiegelung an der X-Achse
             | key[7][1] | key[8][1] | key[9][1] | key[10][1] | key[9][1];                                        // Zahlenreihe
   }
