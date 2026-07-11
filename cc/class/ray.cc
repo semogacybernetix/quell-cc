@@ -324,6 +324,11 @@ cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
 
 //------------------------------------------------------------------------ Projektionen --------------------------------------------------------------------------------------------------------------------------------------------------
 
+void clprojektion::setzeaz (real pl, real pb)
+  {
+  az= getrotz (pl)*getrotx (pb);
+  }
+
 //----------- Projektion Kugel auf die Ebene als Plattkarte -------------------
 
 cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel, real pl, real pb)
@@ -355,9 +360,15 @@ cvektor2 cparaebene_platt_kugel::berechne (const cvektor3 &pv)
 
 //----------- Projektion Kugel auf die Ebene als Mercatorkarte -------------------
 
-cparaebene_mercator_kugel::cparaebene_mercator_kugel (clpara* pkugel)
+cparaebene_mercator_kugel::cparaebene_mercator_kugel (clpara* pkugel, real pl, real pb)
   {
   parakugel= pkugel;
+  setzeaz (pl/180*PI, pb/180*PI);
+  }
+
+void cparaebene_mercator_kugel::setzeaz (real pl, real pb)
+  {
+  az= getrotz (pl)*getrotx (pb);
   }
 
 cvektor2 cparaebene_mercator_kugel::berechne (const cvektor3 &pv)
@@ -382,16 +393,22 @@ cvektor2 cparaebene_mercator_kugel::berechne (const cvektor3 &pv)
   kv.y= sinr (pv.x)*w;
 
   // Kugelvektor mit Projektion aus pkugel in Ebenenvektor umrechnen
-  ret= parakugel->berechne (kv);
+  ret= parakugel->berechne (az*kv);
 
   return ret;
   }
 
 //----------- Projektion Kugel auf die Ebene als gnomonische Projektion -------------------
 
-cparaebene_gnom_kugel::cparaebene_gnom_kugel (clpara* pkugel)
+cparaebene_gnom_kugel::cparaebene_gnom_kugel (clpara* pkugel, real pl, real pb)
   {
   parakugel= pkugel;
+  setzeaz (pl/180*PI, pb/180*PI);
+  }
+
+void cparaebene_gnom_kugel::setzeaz (real pl, real pb)
+  {
+  az= getrotz (pl)*getrotx (pb);
   }
 
 cvektor2 cparaebene_gnom_kugel::berechne (const cvektor3 &pv)
@@ -402,14 +419,20 @@ cvektor2 cparaebene_gnom_kugel::berechne (const cvektor3 &pv)
   kv.x= pv.x*kv.z;
   kv.y= pv.y*kv.z;
 
-  return parakugel->berechne (kv);
+  return parakugel->berechne (az*kv);
   }
 
 //----------- Projektion Kugel auf die Ebene als stereografische Projektion -------------------
 
-cparaebene_stereo_kugel::cparaebene_stereo_kugel (clpara* pkugel)
+cparaebene_stereo_kugel::cparaebene_stereo_kugel (clpara* pkugel, real pl, real pb)
   {
   parakugel= pkugel;
+  setzeaz (pl/180*PI, pb/180*PI);
+  }
+
+void cparaebene_stereo_kugel::setzeaz (real pl, real pb)
+  {
+  az= getrotz (pl)*getrotx (pb);
   }
 
 cvektor2 cparaebene_stereo_kugel::berechne (const cvektor3 &pv)
@@ -423,14 +446,20 @@ cvektor2 cparaebene_stereo_kugel::berechne (const cvektor3 &pv)
   kv.x= pv.x/s;
   kv.y= pv.y/s;
 
-  return parakugel->berechne (kv);
+  return parakugel->berechne (az*kv);
   }
 
 //----------- Projektion Kugel auf die Ebene als mittenabstandstreue Projektion -------------------
 
-cparaebene_mitten_kugel::cparaebene_mitten_kugel (clpara* pkugel)
+cparaebene_mitten_kugel::cparaebene_mitten_kugel (clpara* pkugel, real pl, real pb)
   {
   parakugel= pkugel;
+  setzeaz (pl/180*PI, pb/180*PI);
+  }
+
+void cparaebene_mitten_kugel::setzeaz (real pl, real pb)
+  {
+  az= getrotz (pl)*getrotx (pb);
   }
 
 cvektor2 cparaebene_mitten_kugel::berechne (const cvektor3 &pv)
@@ -450,7 +479,7 @@ cvektor2 cparaebene_mitten_kugel::berechne (const cvektor3 &pv)
   kv.y= kv.y*s;
   kv.z= cosr (r);
 
-  return parakugel->berechne (kv);
+  return parakugel->berechne (az*kv);
   }
 
 //---------------------------------------------------------------------- Zylinder ---------------------------------------------------------------------------------------------------------------------------------

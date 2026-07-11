@@ -121,6 +121,15 @@ struct cparaebenepolw : clpara                              // Ebene in Polarkoo
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+//------------------------- Projektionen -----------------------------------------------------------------------------------------------------------------------------------------------
+struct clprojektion : clpara
+  {
+  clpara* parakugel;
+  cbasis3 az;
+
+  void setzeaz (real l, real b);
+  };
+
 //------------------------- 3D-Ebenenfläche (pv.z = 0) als Kartenprojektion -> 3D-Kugelfläche -> (u,v)-Parametrisierung entsprechend der übergebenen Kugelparametrisierung (Kartenprojektion)
 struct cparaebene_platt_kugel : clpara                      // 3D-Plattkarte -> 3D-Kugel parametrisieren
   {
@@ -137,7 +146,8 @@ struct cparaebene_mercator_kugel : clpara                   // 3D-Ebene als Merc
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_mercator_kugel (clpara* pkugel);
+  cparaebene_mercator_kugel (clpara* pkugel, real pl, real pb);
+  void setzeaz (real l, real b);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -146,7 +156,8 @@ struct cparaebene_gnom_kugel : clpara                       // 3D-Ebene als gnom
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_gnom_kugel (clpara* pkugel);
+  cparaebene_gnom_kugel (clpara* pkugel, real pl, real pb);
+  void setzeaz (real l, real b);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -155,7 +166,8 @@ struct cparaebene_stereo_kugel : clpara                     // 3D-Ebene als ster
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_stereo_kugel (clpara* pkugel);
+  cparaebene_stereo_kugel (clpara* pkugel, real pl, real pb);
+  void setzeaz (real l, real b);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -164,7 +176,8 @@ struct cparaebene_mitten_kugel : clpara                     // 3D-Ebene als mitt
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_mitten_kugel (clpara* pkugel);
+  cparaebene_mitten_kugel (clpara* pkugel, real pl, real pb);
+  void setzeaz (real l, real b);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
