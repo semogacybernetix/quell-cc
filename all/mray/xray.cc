@@ -19,7 +19,8 @@ void addebene (cwelt& pwelt)
   //cschachfeldf* textur1= new cschachfeldf (cvektor3 (255,127,0), cvektor3 (0,255,255), 1, 1);
 
   // Begrenzungen
-  //cbegrkreis* begkreis1= new cbegrkreis (-10, 10, -4, 4);
+  //cbegrkreis* begr1= new cbegrkreis (-1, 1, -1, 1);
+  //cbegrrechteck* begr1= new cbegrrechteck (-1, 1, -1, 1);
 
   // Körper
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebenew, new cbegrkeine, textur1, kst1, kl1);
@@ -42,11 +43,12 @@ void addebene (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator kontrast.jpg"), real (0.3183), 0), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_z), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/6732 Mercator-blz Straßennetz.jpg"), real (0.3183), 0), kst1, kl1);
 
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mercator_kugel (new cparakugel_platt_xyz, 90, 45), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_platt_xyz, 90, 45), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_gnom_kugel (new cparakugel_platt_xyz, 90, 45), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_stereo_kugel (new cparakugel_platt_xyz, 90, 45), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
-  ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mitten_kugel (new cparakugel_platt_xyz, 0, 180), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  // Projektionen aus Plattkartenkugel
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mercator_kugel (new cparakugel_platt_xyz, real (13.5), real (52.5)), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_platt_xyz, real (13.5), real (52.5)), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_gnom_kugel (new cparakugel_platt_xyz, real (13.5), real (52.5)), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_stereo_kugel (new cparakugel_platt_xyz, real (13.5), real (52.5)), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
+  //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mitten_kugel (new cparakugel_platt_xyz, real (13.5), real (52.5)), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), kst1, kl1);
 
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_mercator_kugel (new cparakugel_mercator_z, 90, 45), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
   //ckoerper* koerper1= new ckoerper (new csebene, new cparaebene_platt_kugel (new cparakugel_mercator_z, 90, 45), new cbegrkeine, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator Japan kontrast.jpg"), real (0.3183), 0), kst1, kl1);
@@ -64,8 +66,8 @@ void addebene (cwelt& pwelt)
   pwelt.addkoerper (koerper1);
 
   // Augposition setzen
-  pwelt.setzeposition (cvektor3 (0, 0, -10));
-  pwelt.setzelage (cbasis3 (cvektor3 (0,-1,0), cvektor3 (0,0,1), cvektor3 (1,0,0)));
+  pwelt.setzeposition (cvektor3 (0, 0, -100));
+  pwelt.setzelage (cbasis3 (cvektor3 (1,0,0), cvektor3 (0,1,0), cvektor3 (0,0,1)));
   }
 
 void addkoord (cwelt& pwelt)

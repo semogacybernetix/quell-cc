@@ -1059,7 +1059,7 @@ ckomplexp polartan180 (const ckomplexk pv)                        // Winkelrück
 // ------------------------------------------------- Operatoren für Kugelkoordinaten -----------------------------------------------------
 
 // Zentriwinkel bzw. Entfernung auf der Einheitskugel zwischen zwei 3-dimensionalen Einheitsvektoren in Kugelkoordinaten
-real operator | (const ckugelk &pv1, const ckugelk &pv2)
+real operator | (const cvektor2 &pv1, const cvektor2 &pv2)
   {
   return acosr (sinr (pv1.y)*sinr (pv2.y) + cosr (pv1.y)*cosr (pv2.y)*cosr (pv1.x - pv2.x));
   }
@@ -1733,7 +1733,7 @@ cvektor4 winkelachsefrommatrix (const cbasis3 &pdreh)             // Bei Drehspi
   return cvektor4 (2*acosr (qwa.r), achse.x, achse.y, achse.z);
   }
 
-cbasis3  matrixfromwinkelachse (const cvektor4 pq)
+cbasis3 matrixfromwinkelachse (const cvektor4 pq)
   {
   return matrixfromquaternion (quaternionfromwinkelachse (pq));
   }

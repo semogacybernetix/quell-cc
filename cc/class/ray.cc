@@ -318,7 +318,6 @@ cvektor2 cparaebenepol::berechne (const cvektor3 &pv)
 
 cvektor2 cparaebenepolw::berechne (const cvektor3 &pv)
   {
-  //return cvektor2 (atan2r (pv.y, pv.x), logr (sqrtr (pv.x*pv.x + pv.y*pv.y)));
   return cvektor2 (PI + atan2r (pv.y, pv.x), logr (pv.x*pv.x + pv.y*pv.y)/2);
   }
 
@@ -339,7 +338,16 @@ cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel, real pl, real pb
 
 void cparaebene_platt_kugel::setzeaz (real pl, real pb)
   {
-  az= getrotz (pl)*getrotx (pb);
+  cvektor3 achse;
+  cbasis3  rot;
+
+  achse.x= cosr (pl)*cosr (pb);
+  achse.y= sinr (pl)*cosr (pb);
+  achse.z= sinr (pb);
+
+  rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
+
+  az= einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot;
   }
 
 cvektor2 cparaebene_platt_kugel::berechne (const cvektor3 &pv)
@@ -408,7 +416,16 @@ cparaebene_gnom_kugel::cparaebene_gnom_kugel (clpara* pkugel, real pl, real pb)
 
 void cparaebene_gnom_kugel::setzeaz (real pl, real pb)
   {
-  az= getrotz (pl)*getrotx (pb);
+  cvektor3 achse;
+  cbasis3  rot;
+
+  achse.x= cosr (pl)*cosr (pb);
+  achse.y= sinr (pl)*cosr (pb);
+  achse.z= sinr (pb);
+
+  rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
+
+  az= einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot;
   }
 
 cvektor2 cparaebene_gnom_kugel::berechne (const cvektor3 &pv)
@@ -432,7 +449,16 @@ cparaebene_stereo_kugel::cparaebene_stereo_kugel (clpara* pkugel, real pl, real 
 
 void cparaebene_stereo_kugel::setzeaz (real pl, real pb)
   {
-  az= getrotz (pl)*getrotx (pb);
+  cvektor3 achse;
+  cbasis3  rot;
+
+  achse.x= cosr (pl)*cosr (pb);
+  achse.y= sinr (pl)*cosr (pb);
+  achse.z= sinr (pb);
+
+  rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
+
+  az= einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot;
   }
 
 cvektor2 cparaebene_stereo_kugel::berechne (const cvektor3 &pv)
@@ -459,7 +485,16 @@ cparaebene_mitten_kugel::cparaebene_mitten_kugel (clpara* pkugel, real pl, real 
 
 void cparaebene_mitten_kugel::setzeaz (real pl, real pb)
   {
-  az= getrotz (pl)*getrotx (pb);
+  cvektor3 achse;
+  cbasis3  rot;
+
+  achse.x= cosr (pl)*cosr (pb);
+  achse.y= sinr (pl)*cosr (pb);
+  achse.z= sinr (pb);
+
+  rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
+
+  az= einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot;
   }
 
 cvektor2 cparaebene_mitten_kugel::berechne (const cvektor3 &pv)
@@ -468,15 +503,10 @@ cvektor2 cparaebene_mitten_kugel::berechne (const cvektor3 &pv)
   real r, s;
 
   r= sqrtr ((pv.x*pv.x + pv.y*pv.y));
-  kv.x= pv.x/r;
-  kv.y= pv.y/r;
-
-  if (r > PI)
-    r= PI;
-
   s= sinr (r);
-  kv.x= kv.x*s;
-  kv.y= kv.y*s;
+
+  kv.x= pv.x/r*s;
+  kv.y= pv.y/r*s;
   kv.z= cosr (r);
 
   return parakugel->berechne (az*kv);

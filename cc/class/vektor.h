@@ -57,14 +57,6 @@ struct ckomplexp
   ckomplexp (const real &pb, const real &pw);
   };
 
-struct ckugelk
-  {
-  real x, y;
-
-  ckugelk ();
-  ckugelk (const real &px, const real &py);
-  };
-
 struct cbasis2
   {
   cvektor2 x, y;
@@ -472,7 +464,7 @@ ckomplexk kartes    (const ckomplexp pv);
 
 // --------------------- Operatoren für Kugelkoordinaten ------------------------------------------------------
 
-real     operator | (const ckugelk &pv1, const ckugelk &pv2);                   // Winkel zwischen zwei dreidimensionalen Einheitsvektoren in Kugelkoordinaten
+real     operator | (const cvektor2 &pv1, const cvektor2 &pv2);                 // Winkel zwischen zwei dreidimensionalen Einheitsvektoren in Kugelkoordinaten
 
 //---------- cvektor2, cbasis2 --------------------------------------------------------------------------------
 

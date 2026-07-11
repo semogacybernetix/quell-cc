@@ -100,7 +100,7 @@ struct cstorus : public clschnitt
 
 //------------------------- Parametrisierungsobjekte -------------------------------------------------------------------------------------------------
 
-struct clpara                                                     // abstraktes Parametrisierungsobjekt, von dem die konkreten Parametrisierungsobjekte abgeleitet sind
+struct clpara                                               // abstraktes Parametrisierungsobjekt, von dem die konkreten Parametrisierungsobjekte abgeleitet sind
   {
   virtual cvektor2 berechne (const cvektor3 &pv)= 0;
   };
@@ -122,7 +122,7 @@ struct cparaebenepolw : clpara                              // Ebene in Polarkoo
   };
 
 //------------------------- Projektionen -----------------------------------------------------------------------------------------------------------------------------------------------
-struct clprojektion : clpara
+struct clprojektion : clpara                                // abstrakte Projektion: fehlerhaft, zur Laufzeit sehr langsam
   {
   clpara* parakugel;
   cbasis3 az;
