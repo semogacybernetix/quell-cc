@@ -136,8 +136,8 @@ struct cparaebene_platt_kugel : clpara                      // 3D-Plattkarte -> 
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_platt_kugel (clpara* pkugel, real pl, real pb);
-  void setzeaz (real l, real b);
+  cparaebene_platt_kugel (clpara* pkugel, real pl, real pb, real pr);
+  void setzeaz (real pl, real pb, real pr);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -146,8 +146,8 @@ struct cparaebene_mercator_kugel : clpara                   // 3D-Ebene als Merc
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_mercator_kugel (clpara* pkugel, real pl, real pb);
-  void setzeaz (real l, real b);
+  cparaebene_mercator_kugel (clpara* pkugel, real pl, real pb, real pr);
+  void setzeaz (real pl, real pb, real pr);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -157,7 +157,7 @@ struct cparaebene_gnom_kugel : clpara                       // 3D-Ebene als gnom
   cbasis3 az;
 
   cparaebene_gnom_kugel (clpara* pkugel, real pl, real pb);
-  void setzeaz (real l, real b);
+  void setzeaz (real pl, real pb);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -167,7 +167,7 @@ struct cparaebene_stereo_kugel : clpara                     // 3D-Ebene als ster
   cbasis3 az;
 
   cparaebene_stereo_kugel (clpara* pkugel, real pl, real pb);
-  void setzeaz (real l, real b);
+  void setzeaz (real pl, real pb);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -177,7 +177,7 @@ struct cparaebene_mitten_kugel : clpara                     // 3D-Ebene als mitt
   cbasis3 az;
 
   cparaebene_mitten_kugel (clpara* pkugel, real pl, real pb);
-  void setzeaz (real l, real b);
+  void setzeaz (real pl, real pb);
   cvektor2 berechne (const cvektor3 &pv);
   };
 

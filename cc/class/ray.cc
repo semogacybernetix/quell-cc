@@ -330,13 +330,13 @@ void clprojektion::setzeaz (real pl, real pb)
 
 //----------- Projektion Kugel auf die Ebene als Plattkarte -------------------
 
-cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel, real pl, real pb)
+cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel, real pl, real pb, real pr)
   {
   parakugel= pkugel;
-  setzeaz (pl/180*PI, pb/180*PI);
+  setzeaz (pl/180*PI, pb/180*PI, pr/180*PI);
   }
 
-void cparaebene_platt_kugel::setzeaz (real pl, real pb)
+void cparaebene_platt_kugel::setzeaz (real pl, real pb, real pr)
   {
   cvektor3 achse;
   cbasis3  rot;
@@ -345,9 +345,9 @@ void cparaebene_platt_kugel::setzeaz (real pl, real pb)
   achse.y= sinr (pl)*cosr (pb);
   achse.z= sinr (pb);
 
-  rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
+  rot= matrixfromwinkelachse (cquaternion (pr, achse.x, achse.y, achse.z));
 
-  az= einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot;
+  az= normiere (getroty (-pb)/getrotz (-pl)/rot);
   }
 
 cvektor2 cparaebene_platt_kugel::berechne (const cvektor3 &pv)
@@ -368,15 +368,24 @@ cvektor2 cparaebene_platt_kugel::berechne (const cvektor3 &pv)
 
 //----------- Projektion Kugel auf die Ebene als Mercatorkarte -------------------
 
-cparaebene_mercator_kugel::cparaebene_mercator_kugel (clpara* pkugel, real pl, real pb)
+cparaebene_mercator_kugel::cparaebene_mercator_kugel (clpara* pkugel, real pl, real pb, real pr)
   {
   parakugel= pkugel;
-  setzeaz (pl/180*PI, pb/180*PI);
+  setzeaz (pl/180*PI, pb/180*PI, pr/180*PI);
   }
 
-void cparaebene_mercator_kugel::setzeaz (real pl, real pb)
+void cparaebene_mercator_kugel::setzeaz (real pl, real pb, real pr)
   {
-  az= getrotz (pl)*getrotx (pb);
+  cvektor3 achse;
+  cbasis3  rot;
+
+  achse.x= cosr (pl)*cosr (pb);
+  achse.y= sinr (pl)*cosr (pb);
+  achse.z= sinr (pb);
+
+  rot= matrixfromwinkelachse (cquaternion (pr, achse.x, achse.y, achse.z));
+
+  az= normiere (getroty (-pb)/getrotz (-pl)/rot);
   }
 
 cvektor2 cparaebene_mercator_kugel::berechne (const cvektor3 &pv)
@@ -425,7 +434,7 @@ void cparaebene_gnom_kugel::setzeaz (real pl, real pb)
 
   rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
 
-  az= einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot;
+  az= normiere (einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot);
   }
 
 cvektor2 cparaebene_gnom_kugel::berechne (const cvektor3 &pv)
@@ -458,7 +467,7 @@ void cparaebene_stereo_kugel::setzeaz (real pl, real pb)
 
   rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
 
-  az= einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot;
+  az= normiere (einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot);
   }
 
 cvektor2 cparaebene_stereo_kugel::berechne (const cvektor3 &pv)
@@ -494,7 +503,7 @@ void cparaebene_mitten_kugel::setzeaz (real pl, real pb)
 
   rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
 
-  az= einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot;
+  az= normiere (einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot);
   }
 
 cvektor2 cparaebene_mitten_kugel::berechne (const cvektor3 &pv)
