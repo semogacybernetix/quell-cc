@@ -476,9 +476,11 @@
 2026.07.11 Sa  05:14, virtuelle Projektion total langsam und Kartenmodifizierung, alle Projektionen auf zwischenständig umgestellt, 05:54, 8:21, zwischenständige Azimutalprojektionen komplett, 10:32
 2026.07.12 So  09:14, zwischenständige Zylinderprojektionen, 10:30, Karten ausprobiert, umbenannt, 11:30
 
+2026.07.13 Mo  12:35, stereografische und lambert Karten auf Konsistenz gebracht, restliche Mercatorkarten hinzugefügt, 15:42
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-zwischenständige Projektionen in Echtzeit ändern
+zwischenständige Projektionen in Echtzeit ändern mit Mausnavigation
 Symmetriegruppen (Symflip Spiel) reparieren, Programm Erddrehung mit Maus und Reset mit Anzeige Drehachse Drehwinkel, Visualisierung Ringkörper mit Rotation der Ringe
 neue Flächenformeln implementieren, Torus Kugelkonvergenz, 6-Kreuz, Lemniskatenebene, ebenezyl, Cassini
 
