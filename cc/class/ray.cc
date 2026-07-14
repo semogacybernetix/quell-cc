@@ -353,17 +353,16 @@ void cparaebene_platt_kugel::setzeaz (real pl, real pb, real pr)
 cvektor2 cparaebene_platt_kugel::berechne (const cvektor3 &pv)
   {
   cvektor3 kv;
-  cvektor2 ret;
+  real r;
 
   // Ebenenvektor (pv.z = 0) mit Plattkartenprojektion in Kugelvektor umrechnen
   kv.z= sinr (pv.y);
-  kv.x= cosr (pv.x)*cosr (pv.y);
-  kv.y= sinr (pv.x)*cosr (pv.y);
 
-  // Kugelvektor mit Projektion aus pkugel in Ebenenvektor umrechnen
-  ret= parakugel->berechne (az*kv);
+  r= cosr (pv.y);
+  kv.x= cosr (pv.x)*r;
+  kv.y= sinr (pv.x)*r;
 
-  return ret;
+  return parakugel->berechne (az*kv);
   }
 
 //----------- Projektion Kugel auf die Ebene als Mercatorkarte -------------------
@@ -391,7 +390,6 @@ void cparaebene_mercator_kugel::setzeaz (real pl, real pb, real pr)
 cvektor2 cparaebene_mercator_kugel::berechne (const cvektor3 &pv)
   {
   cvektor3 kv;
-  cvektor2 ret;
   real w;
 
   // Ebenenvektor (pv.z = 0) mit Mercatorprojektion in Kugelvektor umrechnen
@@ -409,10 +407,44 @@ cvektor2 cparaebene_mercator_kugel::berechne (const cvektor3 &pv)
   kv.x= cosr (pv.x)*w;
   kv.y= sinr (pv.x)*w;
 
-  // Kugelvektor mit Projektion aus pkugel in Ebenenvektor umrechnen
-  ret= parakugel->berechne (az*kv);
+  return parakugel->berechne (az*kv);
+  }
 
-  return ret;
+//----------- Projektion Kugel auf die Ebene als flächentreue Zylinderkarte -------------------
+
+cparaebene_zylortho_kugel::cparaebene_zylortho_kugel (clpara* pkugel, real pl, real pb, real pr)
+  {
+  parakugel= pkugel;
+  setzeaz (pl/180*PI, pb/180*PI, pr/180*PI);
+  }
+
+void cparaebene_zylortho_kugel::setzeaz (real pl, real pb, real pr)
+  {
+  cvektor3 achse;
+  cbasis3  rot;
+
+  achse.x= cosr (pl)*cosr (pb);
+  achse.y= sinr (pl)*cosr (pb);
+  achse.z= sinr (pb);
+
+  rot= matrixfromwinkelachse (cquaternion (pr, achse.x, achse.y, achse.z));
+
+  az= normiere (getroty (-pb)/getrotz (-pl)/rot);
+  }
+
+cvektor2 cparaebene_zylortho_kugel::berechne (const cvektor3 &pv)
+  {
+  cvektor3 kv;
+  real r;
+
+  // Ebenenvektor (pv.z = 0) in Kugelvektor umrechnen
+  kv.z= pv.y;
+
+  r= cosr (asinr (pv.y));
+  kv.x= cosr (pv.x)*r;
+  kv.y= sinr (pv.x)*r;
+
+  return parakugel->berechne (az*kv);
   }
 
 //----------- Projektion Kugel auf die Ebene als gnomonische Projektion -------------------
@@ -473,13 +505,13 @@ void cparaebene_stereo_kugel::setzeaz (real pl, real pb)
 cvektor2 cparaebene_stereo_kugel::berechne (const cvektor3 &pv)
   {
   cvektor3 kv;
-  real s;
+  real r;
 
-  s= (pv.x*pv.x + pv.y*pv.y)/4 + 1;
+  r= (pv.x*pv.x + pv.y*pv.y)/4 + 1;
 
-  kv.z= 2/s - 1;
-  kv.x= pv.x/s;
-  kv.y= pv.y/s;
+  kv.z= 2/r - 1;
+  kv.x= pv.x/r;
+  kv.y= pv.y/r;
 
   return parakugel->berechne (az*kv);
   }
@@ -509,14 +541,51 @@ void cparaebene_mitten_kugel::setzeaz (real pl, real pb)
 cvektor2 cparaebene_mitten_kugel::berechne (const cvektor3 &pv)
   {
   cvektor3 kv;
-  real r, s;
+  real r;
 
   r= sqrtr ((pv.x*pv.x + pv.y*pv.y));
-  s= sinr (r);
-
-  kv.x= pv.x/r*s;
-  kv.y= pv.y/r*s;
   kv.z= cosr (r);
+
+  r= sinr (r)/r;
+  kv.x= pv.x*r;
+  kv.y= pv.y*r;
+
+  return parakugel->berechne (az*kv);
+  }
+
+//----------- Projektion Kugel auf die Ebene als flächentreue Projektion -------------------
+
+cparaebene_lamb_kugel::cparaebene_lamb_kugel (clpara* pkugel, real pl, real pb)
+  {
+  parakugel= pkugel;
+  setzeaz (pl/180*PI, pb/180*PI);
+  }
+
+void cparaebene_lamb_kugel::setzeaz (real pl, real pb)
+  {
+  cvektor3 achse;
+  cbasis3  rot;
+
+  achse.x= cosr (pl)*cosr (pb);
+  achse.y= sinr (pl)*cosr (pb);
+  achse.z= sinr (pb);
+
+  rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
+
+  az= normiere (einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot);
+  }
+
+cvektor2 cparaebene_lamb_kugel::berechne (const cvektor3 &pv)
+  {
+  cvektor3 kv;
+  real r;
+
+  r= pv.x*pv.x + pv.y*pv.y;
+  kv.z= 1 - r;
+
+  r= sqrtr (2 - r);
+  kv.x= pv.x*r;
+  kv.y= pv.y*r;
 
   return parakugel->berechne (az*kv);
   }

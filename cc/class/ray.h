@@ -151,6 +151,16 @@ struct cparaebene_mercator_kugel : clpara                   // 3D-Ebene als Merc
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+struct cparaebene_zylortho_kugel : clpara                   // 3D-Ebene als flächentreue Zylinderkarte in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
+  {
+  clpara* parakugel;
+  cbasis3 az;
+
+  cparaebene_zylortho_kugel (clpara* pkugel, real pl, real pb, real pr);
+  void setzeaz (real pl, real pb, real pr);
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
 struct cparaebene_gnom_kugel : clpara                       // 3D-Ebene als gnomonische Projektion in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
   {
   clpara* parakugel;
@@ -177,6 +187,16 @@ struct cparaebene_mitten_kugel : clpara                     // 3D-Ebene als mitt
   cbasis3 az;
 
   cparaebene_mitten_kugel (clpara* pkugel, real pl, real pb);
+  void setzeaz (real pl, real pb);
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+struct cparaebene_lamb_kugel : clpara                     // 3D-Ebene als flächentreue Projektion in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
+  {
+  clpara* parakugel;
+  cbasis3 az;
+
+  cparaebene_lamb_kugel (clpara* pkugel, real pl, real pb);
   void setzeaz (real pl, real pb);
   cvektor2 berechne (const cvektor3 &pv);
   };

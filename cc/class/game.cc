@@ -295,7 +295,7 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
         }
 
       // Spiegelung an der x-Achse
-      if (keyboard->getkey (7, 2))
+      if (keyboard->getkey (12, 2))
         {
         if (rep == 1)
           continue;
