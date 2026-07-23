@@ -479,13 +479,14 @@
 2026.07.13 Mo  12:35, stereografische und lambert Karten auf Konsistenz gebracht, restliche Mercatorkarten hinzugefügt, 15:42
 2026.07.14 Di  15:16, mittenabstandstreue Polkarten, gnomonische Polkarten, Plattkarten auf Konsistenz gebracht, cparaebene_zylortho_z, cparaebene_lamb hinzugefügt, x-Achsenspiegelung auf Taste + gelegt, 19:33
 
+2026.07.23 Do  12:31, xray.cc Szenen neu zusammengestellt, Kugel und Projektionen zusammengelegt, Kartenladen überprüft, 16:41
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-zwischenständige Projektionen in Echtzeit ändern
+zwischenständige Projektionen in Echtzeit ändern, hohe Zeitauflösung
 Symmetriegruppen (Symflip Spiel) reparieren, Programm Erddrehung mit Maus und Reset mit Anzeige Drehachse Drehwinkel, Visualisierung Ringkörper mit Rotation der Ringe
 neue Flächenformeln implementieren, Torus Kugelkonvergenz, 6-Kreuz, Lemniskatenebene, ebenezyl, Cassini
 
-Zeitauflösung mit mehr als 1/100 s
 neues Threadverfahren mit dauerhaft laufenden Threads implementieren
 apfel mit thread
 

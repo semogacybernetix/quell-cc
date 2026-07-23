@@ -627,7 +627,7 @@ cvektor2 cparakugel_mercator_xyz::berechne (const cvektor3 &pv)                 
 
 //----------- Kugel zylinder flächentreu (orthographische Zylinderprojektion) --------------------------------
 
-cvektor2 cparakugel_zylortho_z::berechne (const cvektor3 &pv)
+cvektor2 cparakugel_zylortho::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), pv.z);
   }

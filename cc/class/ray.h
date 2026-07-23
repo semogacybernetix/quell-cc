@@ -228,7 +228,7 @@ struct cparakugel_mercator_xyz : clpara                     // Kugel über pv.x,
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_zylortho_z : clpara                       // Kugel über pv.z in flächentreue Zylinderkarte (u,v)-parametrisieren
+struct cparakugel_zylortho : clpara                         // Kugel über pv.z in flächentreue Zylinderkarte (u,v)-parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
