@@ -166,15 +166,20 @@ void addzylinder (cwelt& pwelt)
 void adderdkarte (cwelt& pwelt)
   {
 
+//************************************************************ Kugel *******************************************************************************
 /*
-  // Kugelparametrisierung für die jpg-Datei
+  // ---------------------------------------------------------------- Kugelparametrisierung der Texturen (Karten) ---------------------------------
   //clpara* para1= new cparakugel_platt_z;
   //clpara* para1= new cparakugel_mercator_z;
+  //clpara* para1= new cparakugel_zlamb;
 
-  // für 2 Karten
-  //clpara* para1= new cparakugel_mitten_xyz;
-  clpara* para1= new cparakugel_platt_xyz;
+  //clpara* para1= new cparakugel_gnom_z;
+  //clpara* para1= new cparakugel_stereo_z;
+  clpara* para1= new cparakugel_stereo_z (51, 7);
+  //clpara* para1= new cparakugel_mitten_z;
+  //clpara* para1= new cparakugel_lamb_z;
 
+  // ---------------------------------------------------------------- Körpereigenschaften --------------------------------------------------------
   // Begrenzung
   clbegr* begr1= new cbegrkeine;
   //clbegr* begr1= new cbegrrechteck (0, 1, 0, 1);    // für (6732 Mercator-blz Straßennetz.jpg)
@@ -187,30 +192,34 @@ void adderdkarte (cwelt& pwelt)
   clschnitt* schnitt1= new cskugel;
 //*/
 
+//************************************************************ Ebenenprojektionen *****************************************************************
 //*
-  // Kugelparametrisierung für die jpg-Datei
+  // ---------------------------------------------------------------- Kugelparametrisierung der Texturen (Karten) ---------------------------------
   clpara* parakugel= new cparakugel_platt_xyz;
   //clpara* parakugel= new cparakugel_mercator_z;
-  //clpara* parakugel= new cparakugel_zylortho;
+  //clpara* parakugel= new cparakugel_zlamb;
   //clpara* parakugel= new cparakugel_gnom;
-  //clpara* parakugel= new cparakugel_lamb_xyz;
-  //clpara* parakugel= new cparakugel_stereo_z;
+  //clpara* parakugel= new cparakugel_stereo_z (51, 7);
   //clpara* parakugel= new cparakugel_mitten_xyz;
+  //clpara* parakugel= new cparakugel_lamb_xyz;
 
+  // ---------------------------------------------------------------- Projektionen in die Ebene ---------------------------------------------------
   // Polarprojektionen zwischenständig
-  //clpara* para1= new cparaebene_gnom_kugel (parakugel, real (13.50), real (52.50));
-  //clpara* para1= new cparaebene_stereo_kugel (parakugel, real (13.50), real (52.50));
-  //clpara* para1= new cparaebene_mitten_kugel (parakugel, real (13.50), real (52.50));
-  //clpara* para1= new cparaebene_lamb_kugel (parakugel, real (13.50), real (52.50));
+  //clpara* para1= new cparaebene_gnom_kugel (parakugel, real (52.5), real (13.5));
+  //clpara* para1= new cparaebene_stereo_kugel (parakugel, 52.5, 13.5);
+  //clpara* para1= new cparaebene_mitten_kugel (parakugel, real (52.5), real (13.5));
+  //clpara* para1= new cparaebene_lamb_kugel (parakugel, real (52.5), real (13.5));
 
   // Zylinderprojektionen zwischenständig
-  //clpara* para1= new cparaebene_platt_kugel (parakugel, real (13.50), real (52.50), real (0));
-  //clpara* para1= new cparaebene_mercator_kugel (parakugel, real (13.50), real (52.50), real (0));
+  //clpara* para1= new cparaebene_platt_kugel (parakugel, real (52.5), real (13.5), real (0));
+  //clpara* para1= new cparaebene_mercator_kugel (parakugel, real (52.5), real (13.5), real (0));
+  //clpara* para1= new cparaebene_zlamb_kugel (parakugel, real (52.5), real (13.5), real (0));
 
   // Zylinderprojektionen normal
-  clpara* para1= new cparaebene_platt_kugel (parakugel, 0, 0, 0);
-  //clpara* para1= new cparaebene_mercator_kugel (parakugel, 0, 0, 0);
+  //clpara* para1= new cparaebene_platt_kugel (parakugel, 0, 0, 0);
+  clpara* para1= new cparaebene_mercator_kugel (parakugel, 0, 0, 0);
 
+  // ---------------------------------------------------------------- Körpereigenschaften --------------------------------------------------------
   // Begrenzung
   clbegr* begr1= new cbegrkeine;
   //clbegr* begr1= new cbegrrechteck (0, 1, 0, 1);    // für (6732 Mercator-blz Straßennetz.jpg)
@@ -223,6 +232,7 @@ void adderdkarte (cwelt& pwelt)
   clschnitt* schnitt1= new csebene;
 //*/
 
+  // ---------------------------------------------------------------- Texturen (Karten) ----------------------------------------------------------
   // Plattkarten
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/0400 platt hellblau.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/0648 platt Mondkarte.jpg"), real (0.3183), 0), st1, lag1);
@@ -231,7 +241,7 @@ void adderdkarte (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/1466 platt 35 045 politisch.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/2044 platt-z hellblau.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/2048 platt-v dunkelblau.jpg"), real (0.3183), 0), st1, lag1);
-  //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), st1, lag1);
+  ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), st1, lag1);
 
   // Mercatorkarten
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/0262 Mercator-blza physisch.jpg"), real (0.3183), 0), st1, lag1);
@@ -250,7 +260,7 @@ void adderdkarte (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/6732 Mercator-blz Straßennetz.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/7682 Mercator-blz politisch.jpg"), real (0.3183), 0), st1, lag1);
 
-  // ZylLambkarten
+  // Zylinderkarten flächentreu (zlamb)
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten lamb/3999 lamb kontrast.jpg"), real (0.3183), 0), st1, lag1);
 
   // Polkarten gnomonisch
@@ -303,7 +313,7 @@ void adderdkarte (cwelt& pwelt)
 
   // Polkarten mittenabstandstreu 2 Karten (mitten_xyz, platt_xyz)
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentextur2pm (new cjpegdatei ("/root/quell-cc/media/Polkarten mitten/4096 mitten 90 000 dunkelblau.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten mitten/4096 mitten-90 000 dunkelblau.jpg"), real (0.3183), 0), st1, lag1);
-  ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentextur2zm (new cjpegdatei ("/root/quell-cc/media/Polkarten mitten/4096 mitten 90 000 dunkelblau.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten mitten/4096 mitten-90 000 dunkelblau.jpg"), real (0.3183), 0), st1, lag1);
+  //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentextur2zm (new cjpegdatei ("/root/quell-cc/media/Polkarten mitten/4096 mitten 90 000 dunkelblau.jpg"), real (0.3183), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten mitten/4096 mitten-90 000 dunkelblau.jpg"), real (0.3183), 0), st1, lag1);
 
   // Polkarten stereografisch 2 Karten
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentextur2zs (new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/0339 stereo 00 000 0.2690 rot.jpg"), real (0.269), 0, new cjpegdatei ("/root/quell-cc/media/Polkarten stereo/0339 stereo 00 180 0.2690 rot.jpg"), real (0.269), 0), st1, lag1);

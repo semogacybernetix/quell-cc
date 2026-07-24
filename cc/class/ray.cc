@@ -330,13 +330,13 @@ void clprojektion::setzeaz (real pl, real pb)
 
 //----------- Projektion Kugel auf die Ebene als Plattkarte -------------------
 
-cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel, real pl, real pb, real pr)
+cparaebene_platt_kugel::cparaebene_platt_kugel (clpara* pkugel, real pb, real pl, real pr)
   {
   parakugel= pkugel;
-  setzeaz (pl/180*PI, pb/180*PI, pr/180*PI);
+  setzeaz (pb/180*PI, pl/180*PI, pr/180*PI);
   }
 
-void cparaebene_platt_kugel::setzeaz (real pl, real pb, real pr)
+void cparaebene_platt_kugel::setzeaz (real pb, real pl, real pr)
   {
   cvektor3 achse;
   cbasis3  rot;
@@ -346,7 +346,6 @@ void cparaebene_platt_kugel::setzeaz (real pl, real pb, real pr)
   achse.z= sinr (pb);
 
   rot= matrixfromwinkelachse (cquaternion (pr, achse.x, achse.y, achse.z));
-
   az= normiere (getroty (-pb)/getrotz (-pl)/rot);
   }
 
@@ -367,13 +366,13 @@ cvektor2 cparaebene_platt_kugel::berechne (const cvektor3 &pv)
 
 //----------- Projektion Kugel auf die Ebene als Mercatorkarte -------------------
 
-cparaebene_mercator_kugel::cparaebene_mercator_kugel (clpara* pkugel, real pl, real pb, real pr)
+cparaebene_mercator_kugel::cparaebene_mercator_kugel (clpara* pkugel, real pb, real pl, real pr)
   {
   parakugel= pkugel;
-  setzeaz (pl/180*PI, pb/180*PI, pr/180*PI);
+  setzeaz (pb/180*PI, pl/180*PI, pr/180*PI);
   }
 
-void cparaebene_mercator_kugel::setzeaz (real pl, real pb, real pr)
+void cparaebene_mercator_kugel::setzeaz (real pb, real pl, real pr)
   {
   cvektor3 achse;
   cbasis3  rot;
@@ -383,7 +382,6 @@ void cparaebene_mercator_kugel::setzeaz (real pl, real pb, real pr)
   achse.z= sinr (pb);
 
   rot= matrixfromwinkelachse (cquaternion (pr, achse.x, achse.y, achse.z));
-
   az= normiere (getroty (-pb)/getrotz (-pl)/rot);
   }
 
@@ -412,13 +410,13 @@ cvektor2 cparaebene_mercator_kugel::berechne (const cvektor3 &pv)
 
 //----------- Projektion Kugel auf die Ebene als flächentreue Zylinderkarte -------------------
 
-cparaebene_zylortho_kugel::cparaebene_zylortho_kugel (clpara* pkugel, real pl, real pb, real pr)
+cparaebene_zlamb_kugel::cparaebene_zlamb_kugel (clpara* pkugel, real pb, real pl, real pr)
   {
   parakugel= pkugel;
-  setzeaz (pl/180*PI, pb/180*PI, pr/180*PI);
+  setzeaz (pb/180*PI, pl/180*PI, pr/180*PI);
   }
 
-void cparaebene_zylortho_kugel::setzeaz (real pl, real pb, real pr)
+void cparaebene_zlamb_kugel::setzeaz (real pb, real pl, real pr)
   {
   cvektor3 achse;
   cbasis3  rot;
@@ -428,11 +426,10 @@ void cparaebene_zylortho_kugel::setzeaz (real pl, real pb, real pr)
   achse.z= sinr (pb);
 
   rot= matrixfromwinkelachse (cquaternion (pr, achse.x, achse.y, achse.z));
-
   az= normiere (getroty (-pb)/getrotz (-pl)/rot);
   }
 
-cvektor2 cparaebene_zylortho_kugel::berechne (const cvektor3 &pv)
+cvektor2 cparaebene_zlamb_kugel::berechne (const cvektor3 &pv)
   {
   cvektor3 kv;
   real r;
@@ -449,13 +446,13 @@ cvektor2 cparaebene_zylortho_kugel::berechne (const cvektor3 &pv)
 
 //----------- Projektion Kugel auf die Ebene als gnomonische Projektion -------------------
 
-cparaebene_gnom_kugel::cparaebene_gnom_kugel (clpara* pkugel, real pl, real pb)
+cparaebene_gnom_kugel::cparaebene_gnom_kugel (clpara* pkugel, real pb, real pl)
   {
   parakugel= pkugel;
-  setzeaz (pl/180*PI, pb/180*PI);
+  setzeaz (pb/180*PI, pl/180*PI);
   }
 
-void cparaebene_gnom_kugel::setzeaz (real pl, real pb)
+void cparaebene_gnom_kugel::setzeaz (real pb, real pl)
   {
   cvektor3 achse;
   cbasis3  rot;
@@ -465,7 +462,6 @@ void cparaebene_gnom_kugel::setzeaz (real pl, real pb)
   achse.z= sinr (pb);
 
   rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
-
   az= normiere (einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot);
   }
 
@@ -482,13 +478,13 @@ cvektor2 cparaebene_gnom_kugel::berechne (const cvektor3 &pv)
 
 //----------- Projektion Kugel auf die Ebene als stereografische Projektion -------------------
 
-cparaebene_stereo_kugel::cparaebene_stereo_kugel (clpara* pkugel, real pl, real pb)
+cparaebene_stereo_kugel::cparaebene_stereo_kugel (clpara* pkugel, real pb, real pl)
   {
   parakugel= pkugel;
-  setzeaz (pl/180*PI, pb/180*PI);
+  setzeaz (pb/180*PI, pl/180*PI);
   }
 
-void cparaebene_stereo_kugel::setzeaz (real pl, real pb)
+void cparaebene_stereo_kugel::setzeaz (real pb, real pl)
   {
   cvektor3 achse;
   cbasis3  rot;
@@ -498,7 +494,6 @@ void cparaebene_stereo_kugel::setzeaz (real pl, real pb)
   achse.z= sinr (pb);
 
   rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
-
   az= normiere (einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot);
   }
 
@@ -518,13 +513,13 @@ cvektor2 cparaebene_stereo_kugel::berechne (const cvektor3 &pv)
 
 //----------- Projektion Kugel auf die Ebene als mittenabstandstreue Projektion -------------------
 
-cparaebene_mitten_kugel::cparaebene_mitten_kugel (clpara* pkugel, real pl, real pb)
+cparaebene_mitten_kugel::cparaebene_mitten_kugel (clpara* pkugel, real pb, real pl)
   {
   parakugel= pkugel;
-  setzeaz (pl/180*PI, pb/180*PI);
+  setzeaz (pb/180*PI, pl/180*PI);
   }
 
-void cparaebene_mitten_kugel::setzeaz (real pl, real pb)
+void cparaebene_mitten_kugel::setzeaz (real pb, real pl)
   {
   cvektor3 achse;
   cbasis3  rot;
@@ -534,7 +529,6 @@ void cparaebene_mitten_kugel::setzeaz (real pl, real pb)
   achse.z= sinr (pb);
 
   rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
-
   az= normiere (einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot);
   }
 
@@ -555,13 +549,13 @@ cvektor2 cparaebene_mitten_kugel::berechne (const cvektor3 &pv)
 
 //----------- Projektion Kugel auf die Ebene als flächentreue Projektion -------------------
 
-cparaebene_lamb_kugel::cparaebene_lamb_kugel (clpara* pkugel, real pl, real pb)
+cparaebene_lamb_kugel::cparaebene_lamb_kugel (clpara* pkugel, real pb, real pl)
   {
   parakugel= pkugel;
-  setzeaz (pl/180*PI, pb/180*PI);
+  setzeaz (pb/180*PI, pl/180*PI);
   }
 
-void cparaebene_lamb_kugel::setzeaz (real pl, real pb)
+void cparaebene_lamb_kugel::setzeaz (real pb, real pl)
   {
   cvektor3 achse;
   cbasis3  rot;
@@ -571,7 +565,6 @@ void cparaebene_lamb_kugel::setzeaz (real pl, real pb)
   achse.z= sinr (pb);
 
   rot= matrixfromwinkelachse (cquaternion (PI, achse.x, achse.y, achse.z));
-
   az= normiere (einsb3/getrotx (PIh - pb)/getrotz (PIh - pl)/rot);
   }
 
@@ -627,7 +620,7 @@ cvektor2 cparakugel_mercator_xyz::berechne (const cvektor3 &pv)                 
 
 //----------- Kugel zylinder flächentreu (orthographische Zylinderprojektion) --------------------------------
 
-cvektor2 cparakugel_zylortho::berechne (const cvektor3 &pv)
+cvektor2 cparakugel_zlamb::berechne (const cvektor3 &pv)
   {
   return cvektor2 (atan2r (pv.y, pv.x), pv.z);
   }
@@ -641,10 +634,22 @@ cvektor2 cparakugel_gnom::berechne (const cvektor3 &pv)
 
 //----------- Kugel polar winkeltreu (stereografisch) ------------------------------------
 
+
+cparakugel_stereo_z::cparakugel_stereo_z (real pb, real pl)
+  {
+  setzeaz (pb/180*PI, pl/180*PI);
+  }
+
+void cparakugel_stereo_z::setzeaz (real pb, real pl)
+  {
+  az= normiere (getroty (pb - PIh)*getrotz (-pl));
+  }
+
 cvektor2 cparakugel_stereo_z::berechne (const cvektor3 &pv)
   {
-  real k= pv.z + 1;                                                   // Spitzenkrizzel, zittriges ranzoomen
-  return cvektor2 (pv.x/k, pv.y/k);
+  cvektor3 pr= az*pv;
+  real k= pr.z + 1;                                                   // Spitzenkrizzel, zittriges ranzoomen
+  return cvektor2 (pr.x/k, pr.y/k);
   }
 
 cvektor2 cparakugel_stereo_xyz::berechne (const cvektor3 &pv)         // fast keine Verbesserung, scharfe Treppen statt Krizzel
@@ -794,6 +799,7 @@ cvektor2 cparatorusrl::berechne (const cvektor3 &pv)
   cvektor3 rot= normiere (pv - mitte);
   real b= mitte%rot;
   real ky= atan2r (rot.z, b) + PIh;
+
   if (ky > PI)                                              // Periode in den positiven Bereich verschieben
     ky= ky - PI2;
   if (ky > 0)                                              // Periode in den positiven Bereich verschieben
@@ -874,7 +880,8 @@ integer cbegrellipse::sichtbar (const cvektor2 &pv)
   real yh= pv.y/hb;
   if (xh*xh + yh*yh > 1)
     return 0;
-  return 1;
+    else
+    return 1;
   }
 
 //*********************************************************************** Texturen ********************************************************************************************************************************************

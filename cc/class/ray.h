@@ -127,7 +127,7 @@ struct clprojektion : clpara                                // abstrakte Projekt
   clpara* parakugel;
   cbasis3 az;
 
-  void setzeaz (real l, real b);
+  void setzeaz (real b, real l);
   };
 
 //------------------------- 3D-Ebenenfläche (pv.z = 0) als Kartenprojektion -> 3D-Kugelfläche -> (u,v)-Parametrisierung entsprechend der übergebenen Kugelparametrisierung (Kartenprojektion)
@@ -136,8 +136,8 @@ struct cparaebene_platt_kugel : clpara                      // 3D-Plattkarte -> 
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_platt_kugel (clpara* pkugel, real pl, real pb, real pr);
-  void setzeaz (real pl, real pb, real pr);
+  cparaebene_platt_kugel (clpara* pkugel, real pb, real pl, real pr);
+  void setzeaz (real pb, real pl, real pr);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -146,18 +146,18 @@ struct cparaebene_mercator_kugel : clpara                   // 3D-Ebene als Merc
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_mercator_kugel (clpara* pkugel, real pl, real pb, real pr);
-  void setzeaz (real pl, real pb, real pr);
+  cparaebene_mercator_kugel (clpara* pkugel, real pb, real pl, real pr);
+  void setzeaz (real pb, real pl, real pr);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparaebene_zylortho_kugel : clpara                   // 3D-Ebene als flächentreue Zylinderkarte in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
+struct cparaebene_zlamb_kugel : clpara                   // 3D-Ebene als flächentreue Zylinderkarte in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
   {
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_zylortho_kugel (clpara* pkugel, real pl, real pb, real pr);
-  void setzeaz (real pl, real pb, real pr);
+  cparaebene_zlamb_kugel (clpara* pkugel, real pb, real pl, real pr);
+  void setzeaz (real pb, real pl, real pr);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -166,8 +166,8 @@ struct cparaebene_gnom_kugel : clpara                       // 3D-Ebene als gnom
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_gnom_kugel (clpara* pkugel, real pl, real pb);
-  void setzeaz (real pl, real pb);
+  cparaebene_gnom_kugel (clpara* pkugel, real pb, real pl);
+  void setzeaz (real pb, real pl);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -176,8 +176,8 @@ struct cparaebene_stereo_kugel : clpara                     // 3D-Ebene als ster
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_stereo_kugel (clpara* pkugel, real pl, real pb);
-  void setzeaz (real pl, real pb);
+  cparaebene_stereo_kugel (clpara* pkugel, real pb, real pl);
+  void setzeaz (real pb, real pl);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -186,8 +186,8 @@ struct cparaebene_mitten_kugel : clpara                     // 3D-Ebene als mitt
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_mitten_kugel (clpara* pkugel, real pl, real pb);
-  void setzeaz (real pl, real pb);
+  cparaebene_mitten_kugel (clpara* pkugel, real pb, real pl);
+  void setzeaz (real pb, real pl);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -196,8 +196,8 @@ struct cparaebene_lamb_kugel : clpara                     // 3D-Ebene als fläch
   clpara* parakugel;
   cbasis3 az;
 
-  cparaebene_lamb_kugel (clpara* pkugel, real pl, real pb);
-  void setzeaz (real pl, real pb);
+  cparaebene_lamb_kugel (clpara* pkugel, real pb, real pl);
+  void setzeaz (real pb, real pl);
   cvektor2 berechne (const cvektor3 &pv);
   };
 
@@ -228,7 +228,7 @@ struct cparakugel_mercator_xyz : clpara                     // Kugel über pv.x,
   cvektor2 berechne (const cvektor3 &pv);
   };
 
-struct cparakugel_zylortho : clpara                         // Kugel über pv.z in flächentreue Zylinderkarte (u,v)-parametrisieren
+struct cparakugel_zlamb : clpara                            // Kugel über pv.z in flächentreue Zylinderkarte (u,v)-parametrisieren
   {
   cvektor2 berechne (const cvektor3 &pv);
   };
@@ -240,6 +240,10 @@ struct cparakugel_gnom : clpara                             // Kugel über pv.z 
 
 struct cparakugel_stereo_z : clpara                         // Kugel über pv.z in stereografische Azimutalprojektion (u,v)-parametrisieren
   {
+  cbasis3 az;
+
+  cparakugel_stereo_z (real pb, real pl);
+  void setzeaz (real pb, real pl);
   cvektor2 berechne (const cvektor3 &pv);
   };
 

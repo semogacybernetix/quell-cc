@@ -480,6 +480,7 @@
 2026.07.14 Di  15:16, mittenabstandstreue Polkarten, gnomonische Polkarten, Plattkarten auf Konsistenz gebracht, cparaebene_zylortho_z, cparaebene_lamb hinzugefügt, x-Achsenspiegelung auf Taste + gelegt, 19:33
 
 2026.07.23 Do  12:31, xray.cc Szenen neu zusammengestellt, Kugel und Projektionen zusammengelegt, Kartenladen überprüft, 16:41
+2026.07.24 Fr  20:58, xray.cc Szenen verbessert, Karten umbeziffern: Kugelprojektionen zwischenständig gemacht, 23:44
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
