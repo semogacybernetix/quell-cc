@@ -601,9 +601,20 @@ cvektor2 cparakugel_platt_z::berechne (const cvektor3 &pv)                      
   return cvektor2 (atan2r (pv.y, pv.x), asinr (pv.z));
   }
 
+cparakugel_platt_xyz::cparakugel_platt_xyz (real pb, real pl)
+  {
+  setzeaz (pb/180*PI, pl/180*PI);
+  }
+
+void cparakugel_platt_xyz::setzeaz (real pb, real pl)
+  {
+  az= normiere (getrotz (-pl)*getroty (pb));
+  }
+
 cvektor2 cparakugel_platt_xyz::berechne (const cvektor3 &pv)                                        // genauere und langsamere Berechnung die Ungenauigkeiten an den Polstellen vermeidet, keine Krizzelkreise mehr
   {
-  return cvektor2 (atan2r (pv.y, pv.x), atanr (pv.z/sqrtr (pv.x*pv.x + pv.y*pv.y)));
+  cvektor3 pr= az*pv;
+  return cvektor2 (atan2r (pr.y, pr.x), atanr (pr.z/sqrtr (pr.x*pr.x + pr.y*pr.y)));
   }
 
 //----------- Kugel zylinder winkeltreu (Mercatorkarte) --------------------------------

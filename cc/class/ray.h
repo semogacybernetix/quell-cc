@@ -215,6 +215,10 @@ struct cparakugel_platt_z : clpara                          // Kugel über pv.z 
 
 struct cparakugel_platt_xyz : clpara                        // Kugel über pv.x, pv.y, pv.z in Plattkarte (u,v)-parametrisieren (numerisch stabiler)
   {
+  cbasis3 az;
+
+  cparakugel_platt_xyz (real pb, real pl);
+  void setzeaz (real pb, real pl);
   cvektor2 berechne (const cvektor3 &pv);
   };
 

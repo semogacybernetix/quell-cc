@@ -481,6 +481,7 @@
 
 2026.07.23 Do  12:31, xray.cc Szenen neu zusammengestellt, Kugel und Projektionen zusammengelegt, Kartenladen überprüft, 16:41
 2026.07.24 Fr  20:58, xray.cc Szenen verbessert, Karten umbeziffern: Kugelprojektionen zwischenständig gemacht, 23:44
+2026.07.25 Sa  08:45, Entzerrung stereografischer Karten überprüft, zwischenständige Plattkarten implementiert, 10:48
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
