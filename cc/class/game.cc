@@ -897,7 +897,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
   // Bewegungskugel
   real kzoom= 100;
   cschachfeld* textur1= new cschachfeld (cvektor3 (0,255,0), cvektor3 (255,0,0), PI/6, PI/6);
-  ckoerper* beskugel= new ckoerper (new cskugel, new cparakugel_mercator_z, new cbegrkeine, textur1, vnull3, real (0.1)*kzoom*einsb3);
+  ckoerper* beskugel= new ckoerper (new cskugel, new cparakugel_mercator_z (0, 0), new cbegrkeine, textur1, vnull3, real (0.1)*kzoom*einsb3);
 
   integer renderanz;
   tms zeit;
@@ -999,7 +999,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
           if (besuchsliste.elposition (bewkugelpos) < 0)
             {
             // Besuchskugel erzeugen
-            beskugel= new ckoerper (new cskugel, new cparakugel_mercator_z, new cbegrkeine, textur1, bewkugel->startpos, real (0.08)*kzoom*einsb3);
+            beskugel= new ckoerper (new cskugel, new cparakugel_mercator_z (0, 0), new cbegrkeine, textur1, bewkugel->startpos, real (0.08)*kzoom*einsb3);
             beskugel->startpos= bewkugelpos;
             beskugel->stoppos= spiegbasis1*bewkugelpos;
             beskugel->startzeit= framestart;
@@ -1024,7 +1024,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
           if (besuchsliste.elposition (bewkugelpos) < 0)
             {
             // Besuchskugel erzeugen
-            beskugel= new ckoerper (new cskugel, new cparakugel_mercator_z, new cbegrkeine, textur1, bewkugel->startpos, real (0.08)*kzoom*einsb3);
+            beskugel= new ckoerper (new cskugel, new cparakugel_mercator_z (0, 0), new cbegrkeine, textur1, bewkugel->startpos, real (0.08)*kzoom*einsb3);
             beskugel->startpos= bewkugelpos;
             beskugel->stoppos= spiegbasis2*bewkugelpos;
             beskugel->startzeit= framestart;
@@ -1049,7 +1049,7 @@ void cflugsimu::fliegespieltakt (cbasis3& spiegelebenen, ckoerper* bewkugel)
           if (besuchsliste.elposition (bewkugelpos) < 0)
             {
             // Besuchskugel erzeugen
-            beskugel= new ckoerper (new cskugel, new cparakugel_mercator_z, new cbegrkeine, textur1, bewkugel->startpos, real (0.08)*kzoom*einsb3);
+            beskugel= new ckoerper (new cskugel, new cparakugel_mercator_z (0, 0), new cbegrkeine, textur1, bewkugel->startpos, real (0.08)*kzoom*einsb3);
             beskugel->startpos= bewkugelpos;
             beskugel->stoppos= spiegbasis3*bewkugelpos;
             beskugel->startzeit= framestart;
