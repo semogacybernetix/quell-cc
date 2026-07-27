@@ -27,6 +27,7 @@ struct cflugsimu
   integer      pixelanz;           // Anzahl der Pixel des screens
   integer      pixelpos;           // momentane Pixelposition beim Rendern
   integer      ftks;               // minimale Framedauer[ticks]
+  integer      ftms;               // minimale Framedauer[ms]
 
   real         tickms;             // Dauer eines Ticks in Millisekunden
   real         framems;            // Anzeigedauer eines Frames in Millisekunden

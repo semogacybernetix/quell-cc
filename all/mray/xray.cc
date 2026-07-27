@@ -550,7 +550,7 @@ void fliege ()
   //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1920, 960), 1920);
   //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1920, 1080), 1920);
 
-  flugsimu.setframerate (50);
+  flugsimu.setframerate (60);
   flugsimu.threadanz= 20;
   flugsimu.bewstep= real (2);
   flugsimu.drehstep= real (0.0125);

@@ -6,8 +6,10 @@
 #include <unistd.h>                        // usleep
 #include <sys/times.h>                     // tms, times
 #include <thread>
+#include <chrono>                          // highres clock
 
 using namespace std;                       // cout
+using namespace std::chrono;               // high_resolution_clock::now ()
 
 tms flugsimuzeit;
 
@@ -98,14 +100,15 @@ void cflugsimu::setframerate (real pfrate)          // (Dauer eines Frames in Mi
   tickms= 1000/real (sysconf (_SC_CLK_TCK));
   framems= pfrate;
   frametks= framems/tickms;
-  framedauer= 100/pfrate;
+  framedauer= 1000/pfrate;
   ftks= 100/integer (pfrate);
+  ftms= 1000/integer (pfrate);
 
   printtext ("framerate:  ");
-  printreal (pfrate);
-  printtext (" fps  frameduration:  ");
-  printreal (framedauer);
-  printtext (" ticks\n\n");
+  printinteger (integer (pfrate));
+  printtext (" fps  framedauer:  ");
+  printinteger (integer (framedauer));
+  printtext (" ms\n\n");
   }
 
 void cflugsimu::welttoscreenl ()                                  // linearer Pixeldurchgang
@@ -173,7 +176,8 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
 
   tms zeit;
   real ticksps= real (sysconf (_SC_CLK_TCK));
-  clock_t framestart= times (&zeit);
+  //clock_t framestart= times (&zeit);
+  auto framestarth= high_resolution_clock::now ();
   clock_t keystart= times (&zeit);
   printtext ("ticks/sek: ");
   printreal (ticksps);
@@ -186,27 +190,50 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
     {
     if (keyboard->getkey (19, 5))
       {
-      framestart= times (&zeit);
+      //framestart= times (&zeit);
+      framestarth= high_resolution_clock::now ();
       rektiefe= threadanz;
 //      printf ("vor arbeit %ld\n", rektiefe);
       threadrekursiv (0);
       //welttoscreenz ();
       screen->flush ();
 
-      while (times (&zeit) - framestart < ftks)
+      //while (times (&zeit) - framestart < ftks)
+      //  usleep (10);
+
+      while (high_resolution_clock::now () - framestarth < milliseconds (ftms))
         usleep (10);
-      integer frameticks= (times (&zeit) - framestart);
+
+
+      //integer frameticks= (times (&zeit) - framestart);
+      duration frameticksh= duration_cast<milliseconds> (high_resolution_clock::now () - framestarth);
+
 //      cout << "framedauer: " << framedauer << "  fps: " << 1/framedauer << endl;
 //      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
 
 //*
-      printinteger (frameticks);
-      printtext (" tks    ");
+      cout << frameticksh.count () << " ms   ";
+      //printinteger (frameticks);
+      //printtext (" tks    ");
+
+/*
       if ((framedauer > 0) && (frameticks != 0))
         printinteger (100/frameticks);
       else
         printtext ("---");
-      printtext (" fps\n");
+*/
+
+      if (frameticksh != milliseconds (0))
+        //printinteger (100/frameticks);
+        {
+        integer frametickshi= integer (frameticksh.count ());
+        cout << 1000/frametickshi;
+        }
+      else
+        printtext ("---");
+
+      printtext (" fps  ");
+      printtext ("\n");
 //*/
 /*
       flugw= eulerwinkelfrommatrix (welt->augbasis);
