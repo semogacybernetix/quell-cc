@@ -102,12 +102,14 @@ void cflugsimu::setframerate (real pfrate)          // (Dauer eines Frames in Mi
   frametks= framems/tickms;
   framedauer= 1000/pfrate;
   ftks= 100/integer (pfrate);
-  ftms= 1000/integer (pfrate);
+  //ftms= integer (0.5 + 1000/pfrate);
+  ftµs= integer (1000000/pfrate) - 10;
 
   printtext ("framerate:  ");
   printinteger (integer (pfrate));
   printtext (" fps  framedauer:  ");
-  printinteger (integer (framedauer));
+  //printinteger (ftms);
+  printinteger (ftµs);
   printtext (" ms\n\n");
   }
 
@@ -175,13 +177,10 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
   cbasis3 achsbasis;
 
   tms zeit;
-  real ticksps= real (sysconf (_SC_CLK_TCK));
+  //real ticksps= real (sysconf (_SC_CLK_TCK));
   //clock_t framestart= times (&zeit);
   auto framestarth= high_resolution_clock::now ();
   clock_t keystart= times (&zeit);
-  printtext ("ticks/sek: ");
-  printreal (ticksps);
-  printtext ("\n");
 
   integer koerper= 0;
   integer rep= 1;
@@ -201,18 +200,18 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       //while (times (&zeit) - framestart < ftks)
       //  usleep (10);
 
-      while (high_resolution_clock::now () - framestarth < milliseconds (ftms))
+      while (high_resolution_clock::now () - framestarth < microseconds (ftµs))
         usleep (10);
 
 
       //integer frameticks= (times (&zeit) - framestart);
-      duration frameticksh= duration_cast<milliseconds> (high_resolution_clock::now () - framestarth);
+      duration frameticksh= duration_cast<microseconds> (high_resolution_clock::now () - framestarth);
 
 //      cout << "framedauer: " << framedauer << "  fps: " << 1/framedauer << endl;
 //      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
 
 //*
-      cout << frameticksh.count () << " ms   ";
+      cout << frameticksh.count () << " µs   ";
       //printinteger (frameticks);
       //printtext (" tks    ");
 
@@ -223,11 +222,11 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
         printtext ("---");
 */
 
-      if (frameticksh != milliseconds (0))
+      if (frameticksh != microseconds (0))
         //printinteger (100/frameticks);
         {
         integer frametickshi= integer (frameticksh.count ());
-        cout << 1000/frametickshi;
+        cout << 1000000./double (frametickshi);
         }
       else
         printtext ("---");

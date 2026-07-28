@@ -483,11 +483,11 @@
 2026.07.24 Fr  20:58, xray.cc Szenen verbessert, Karten umbeziffern: Kugelprojektionen zwischenständig gemacht, 23:44
 2026.07.25 Sa  08:45, Entzerrung stereografischer Karten überprüft, zwischenständige Plattkarten implementiert, 10:48
 2026.07.26 So  16:25, zwischenständige Kugelprojektionen azimutal und zylindrisch ergänzt, 17:56
-2026.07.27 Mo  20:59, hochauflösende Zeit (<chrono>) in flugsimu.fliegethread implementiert, 0:07
+2026.07.27 Mo  20:59, hochauflösende Zeit (<chrono>) in flugsimu.fliegethread implementiert, 0:07, 2:36, Zeitauflösung flugsimu auf Mikrosekunden verfeinert, 3:50
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-zwischenständige Projektionen in Echtzeit ändern
+zwischenständige Projektionen in Echtzeit ändern, Antialiasing
 Symmetriegruppen (Symflip Spiel) reparieren, Programm Erddrehung mit Maus und Reset mit Anzeige Drehachse Drehwinkel, Visualisierung Ringkörper mit Rotation der Ringe
 neue Flächenformeln implementieren, Torus Kugelkonvergenz, 6-Kreuz, Lemniskatenebene, ebenezyl, Cassini
 
