@@ -592,6 +592,88 @@ cvektor2 cparazylinderw::berechne (const cvektor3 &pv)
   return cvektor2 (PI + atan2r (pv.y, pv.x), pv.z);
   }
 
+//----------- Projektion Kugel auf den Zylinder als Mercatorkarte -------------------
+
+cparazylinder_mercator_kugel::cparazylinder_mercator_kugel (clpara* pkugel, real pb, real pl, real pr)
+  {
+  parakugel= pkugel;
+  setzeaz (pb/180*PI, pl/180*PI, pr/180*PI);
+  }
+
+void cparazylinder_mercator_kugel::setzeaz (real pb, real pl, real pr)
+  {
+  cvektor3 achse;
+  cbasis3  rot;
+
+  achse.x= cosr (pl)*cosr (pb);
+  achse.y= sinr (pl)*cosr (pb);
+  achse.z= sinr (pb);
+
+  rot= matrixfromwinkelachse (cquaternion (pr, achse.x, achse.y, achse.z));
+  az= normiere (getroty (-pb)/getrotz (-pl)/rot);
+  }
+
+cvektor2 cparazylinder_mercator_kugel::berechne (const cvektor3 &pv)
+  {
+  cvektor3 kv;
+  real w;
+
+  // Zylindervektor mit Mercatorprojektion in Kugelvektor umrechnen
+  kv.z= tanhr (pv.z);
+
+  w= cosr (asinr (kv.z));                                 // kein Zahn
+  //w= 1/coshr (pv.z);                                      // Doppelzahn
+
+  //w= expr (pv.z);                                         // Doppelzahn
+  //w= 2/(w + 1/w);
+
+  //w= sinr (acosr (kv.z));                                 // Nahzahn oben
+  //w= sqrtr (1 - kv.z*kv.z);                               // Doppelnahzahn
+
+  kv.x= pv.x*w;
+  kv.y= pv.y*w;
+
+  return parakugel->berechne (az*kv);
+  }
+
+//----------- Projektion Kugel auf den Zylinder als Zentralprojektion -------------------
+
+cparazylinder_gnom_kugel::cparazylinder_gnom_kugel (clpara* pkugel, real pb, real pl, real pr)
+  {
+  parakugel= pkugel;
+  setzeaz (pb/180*PI, pl/180*PI, pr/180*PI);
+  }
+
+void cparazylinder_gnom_kugel::setzeaz (real pb, real pl, real pr)
+  {
+  cvektor3 achse;
+  cbasis3  rot;
+
+  achse.x= cosr (pl)*cosr (pb);
+  achse.y= sinr (pl)*cosr (pb);
+  achse.z= sinr (pb);
+
+  rot= matrixfromwinkelachse (cquaternion (pr, achse.x, achse.y, achse.z));
+  az= normiere (getroty (-pb)/getrotz (-pl)/rot);
+  }
+
+cvektor2 cparazylinder_gnom_kugel::berechne (const cvektor3 &pv)
+  {
+  cvektor3 kv;
+  real w;
+
+  // Zylindervektor mit Mercatorprojektion in Kugelvektor umrechnen
+  kv.z= sinr (atanr (pv.z));
+
+  w= cosr (asinr (kv.z));                                 // kein Zahn
+  //w= sqrtr (1 - kv.z*kv.z);                               // Doppelnahzahn
+
+  kv.x= -pv.y*w;
+  kv.y=  pv.x*w;
+
+  return parakugel->berechne (az*kv);
+  }
+
 //---------------------------------------------------------------------- Kugel ------------------------------------------------------------------------------------------------------------------------------------
 
 //----------- Kugel zylinder mittenabstandstreu (Plattkarte) ---------------------------

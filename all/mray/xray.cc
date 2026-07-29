@@ -140,12 +140,13 @@ void addzylinder (cwelt& pwelt)
   {
   // Körperstandpunkte
   cvektor3 kst1 (0,0,0);
-  cvektor3 kst2 (0,1300,0);
+  //cvektor3 kst1 (0,1300,0);
 
   // Körperlagen
+  cbasis3 kl1 (cvektor3 (0,-100,0), cvektor3 (100,0,0), cvektor3 (0,0,100));
   //cbasis3 kl1 (cvektor3 (100,0,0), cvektor3 (0,0,100), cvektor3 (0,100,0));
-  cbasis3 kl1 (cvektor3 (20,0,0), cvektor3 (0,0,20), cvektor3 (0,20,0));
-  //cbasis3 kl2 (cvektor3 (320,0,0), cvektor3 (0,0,320), cvektor3 (0,320,0));
+  //cbasis3 kl1 (cvektor3 (20,0,0), cvektor3 (0,0,20), cvektor3 (0,20,0));
+  //cbasis3 kl1 (cvektor3 (320,0,0), cvektor3 (0,0,320), cvektor3 (0,320,0));
 
   // Begrenzungen
   //cbegrrechteck* ell1= new cbegrrechteck (-100, 100, -10, 10);
@@ -157,27 +158,28 @@ void addzylinder (cwelt& pwelt)
 
   // Körper addieren
   //pwelt.addkoerper (new ckoerper (new csebene, new cparawebene, ell1, textur1, kst1, kl1));
-  //pwelt.addkoerper (new ckoerper (new cskugel, new cparakugel_mercator_xyz, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 10, 10), kst2, kl1));
-  pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new (cbegrkeine), new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 2/PI, 2/PI), kst2, kl1));
+  //pwelt.addkoerper (new ckoerper (new cskugel, new cparakugel_mercator_xyz, new cbegrkeine, new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 10, 10), kst1, kl1));
+  //pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new (cbegrkeine), new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Bilder/catchick600.jpg"), 2/PI, 2/PI), kst1, kl1));
+  pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new (cbegrkeine), new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), 1/PI, 1/PI), kst1, kl1));
 
-  pwelt.verschiebeauge (cvektor3 (0, 500, -1000));
+  pwelt.verschiebeauge (cvektor3 (0, 0, 0));
   }
 
 void adderdkarte (cwelt& pwelt)
   {
 
 //************************************************************ Kugel *******************************************************************************
-//*
+/*
   // ---------------------------------------------------------------- Kugelparametrisierung der Texturen (Karten) ---------------------------------
-  //clpara* para1= new cparakugel_platt_z;
-  clpara* para1= new cparakugel_mercator_z (0, 0);
-  //clpara* para1= new cparakugel_zlamb;
+  clpara* para1= new cparakugel_platt_xyz (0, 0);
+  //clpara* para1= new cparakugel_mercator_z (0, 0);
+  //clpara* para1= new cparakugel_zlamb (0, 0);
 
-  //clpara* para1= new cparakugel_gnom_z;
-  //clpara* para1= new cparakugel_stereo_z;
+  //clpara* para1= new cparakugel_gnom (0, 0);
+  //clpara* para1= new cparakugel_stereo_z (0, 0);
   //clpara* para1= new cparakugel_stereo_z (51, 7);
-  //clpara* para1= new cparakugel_mitten_z;
-  //clpara* para1= new cparakugel_lamb_z;
+  //clpara* para1= new cparakugel_mitten_xyz (0, 0);
+  //clpara* para1= new cparakugel_lamb_xyz (0, 0);
 
   // ---------------------------------------------------------------- Körpereigenschaften --------------------------------------------------------
   // Begrenzung
@@ -193,11 +195,11 @@ void adderdkarte (cwelt& pwelt)
 //*/
 
 //************************************************************ Ebenenprojektionen *****************************************************************
-/*
+//*
   // ---------------------------------------------------------------- Kugelparametrisierung der Texturen (Karten) ---------------------------------
   //clpara* parakugel= new cparakugel_platt_xyz (49.8, 39.7);  // platt 36 045 politisch
-  //clpara* parakugel= new cparakugel_platt_xyz (0, 0);
-  clpara* parakugel= new cparakugel_mercator_z (45, 0);
+  clpara* parakugel= new cparakugel_platt_xyz (0, 0);
+  //clpara* parakugel= new cparakugel_mercator_z (45, 0);
   //clpara* parakugel= new cparakugel_zlamb (52.5, 13.5);
 
   //clpara* parakugel= new cparakugel_gnom (0, 0);
@@ -218,7 +220,9 @@ void adderdkarte (cwelt& pwelt)
   //clpara* para1= new cparaebene_zlamb_kugel (parakugel, real (52.5), real (13.5), real (0));
 
   // Zylinderprojektionen normal
-  clpara* para1= new cparaebene_platt_kugel (parakugel, 0, 0, 0);
+  //clpara* para1= new cparaebene_platt_kugel (parakugel, 0, 0, 0);
+  //clpara* para1= new cparazylinder_mercator_kugel (parakugel, 0, 0, 0);
+  clpara* para1= new cparazylinder_gnom_kugel (parakugel, 0, 0, 0);
   //clpara* para1= new cparaebene_mercator_kugel (parakugel, 0, 0, 0);
 
   // ---------------------------------------------------------------- Körpereigenschaften --------------------------------------------------------
@@ -228,10 +232,12 @@ void adderdkarte (cwelt& pwelt)
 
   // Kartenprojektion Standort, Lage
   cvektor3 st1 (0,0,0);
-  cvektor3 stauge (0,0,-500);
+  //cvektor3 stauge (0,0,-500);
+  cvektor3 stauge (0,0,0);
   cbasis3 lag1 (cvektor3 (100,0,0), cvektor3 (0,100,0), cvektor3 (0,0,100));
   cbasis3 lagauge (cvektor3 (1,0,0), cvektor3 (0,1,0), cvektor3 (0,0,1));
-  clschnitt* schnitt1= new csebene;
+  //clschnitt* schnitt1= new csebene;
+  clschnitt* schnitt1= new cszylinder;
 //*/
 
   // ---------------------------------------------------------------- Texturen (Karten) ----------------------------------------------------------
@@ -243,7 +249,7 @@ void adderdkarte (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/1466 platt 36 045 politisch.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/2044 platt-z hellblau.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/2048 platt-v dunkelblau.jpg"), real (0.3183), 0), st1, lag1);
-  //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), st1, lag1);
+  ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), real (0.3183), 0), st1, lag1);
 
   // Mercatorkarten
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/0262 Mercator-blza physisch.jpg"), real (0.3183), 0), st1, lag1);
@@ -256,7 +262,7 @@ void adderdkarte (cwelt& pwelt)
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/2054 Mercator-blza physisch hellblau.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/2400 Mercator-blza physisch dunkelblau.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/2768 Mercator-bl85 braun.jpg"), real (0.3183), 0), st1, lag1);
-  ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/3821 Mercator-blz politisch.jpg"), real (0.3183), 0), st1, lag1);
+  //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/3821 Mercator-blz politisch.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator 45 135 kontrast.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/4000 Mercator kontrast.jpg"), real (0.3183), 0), st1, lag1);
   //ckoerper* koerper1= new ckoerper (schnitt1, para1, begr1, new cscreentexturz (new cjpegdatei ("/root/quell-cc/media/Zylkarten Mercator/6732 Mercator-blz Straßennetz.jpg"), real (0.3183), 0), st1, lag1);
@@ -525,8 +531,8 @@ void fliege ()
   //addmulti (*welt);
   //addkoord (*welt);
   //addebenen90 (*welt);
-  //addzylinder (*welt);
-  adderdkarte (*welt);
+  addzylinder (*welt);
+  //adderdkarte (*welt);
   //adderdemond (*welt);
   //addebzyl (*welt);
   //addtorus (*welt);

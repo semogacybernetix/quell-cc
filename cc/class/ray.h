@@ -207,6 +207,26 @@ struct cparazylinderw : clpara
   cvektor2 berechne (const cvektor3 &pv);
   };
 
+struct cparazylinder_mercator_kugel : clpara                   // 3D-Zylinder als Mercatorkarte in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
+  {
+  clpara* parakugel;
+  cbasis3 az;
+
+  cparazylinder_mercator_kugel (clpara* pkugel, real pb, real pl, real pr);
+  void setzeaz (real pb, real pl, real pr);
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
+struct cparazylinder_gnom_kugel : clpara                   // 3D-Zylinder als Mercatorkarte in 3D-Kugel umrechnen und diese dann entsprechend der übergebenen Kugelparametrisierung (u,v)-parametrisieren
+  {
+  clpara* parakugel;
+  cbasis3 az;
+
+  cparazylinder_gnom_kugel (clpara* pkugel, real pb, real pl, real pr);
+  void setzeaz (real pb, real pl, real pr);
+  cvektor2 berechne (const cvektor3 &pv);
+  };
+
 //------------------------- 3D-Kugelfläche -> (u,v)-Parametrisierung -----------------------------------------------------------------------------------------------------------------
 struct cparakugel_platt_z : clpara                          // Kugel über pv.z in Plattkarte (u,v)-parametrisieren
   {
