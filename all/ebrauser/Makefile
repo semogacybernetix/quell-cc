@@ -35,13 +35,14 @@ $(opfad)xegenerator.o: xegenerator.cc
 
 xebrauser:
 	make -C ../../cc/class/ $(opfad)vektor.o
+	make -C ../../conio/ $(opfad)vektorcon.o
 	make -C ../../cc/keyboard $(opfad)vkbd.o
 	make -C ../../xwindow/keyboard $(opfad)xkbd.o
 	make -C ../../cc/screen $(opfad)libscr.a
 	make -C ../../xwindow/screen $(opfad)xscr.o
 	make $(ppfad)xebrauser
 
-$(ppfad)xebrauser: $(opfad)xebrauser.o $(opfad)vektor.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)libscr.a $(opfad)xscr.o
+$(ppfad)xebrauser: $(opfad)xebrauser.o $(opfad)vektor.o $(opfad)vektorcon.o $(opfad)vkbd.o $(opfad)xkbd.o $(opfad)libscr.a $(opfad)xscr.o
 	$(comp) $+ $(lopts) -o $@
 
 $(opfad)xebrauser.o: xebrauser.cc

@@ -487,9 +487,11 @@
 
 2026.07.29 Mi  23:29, Projektion Kugel auf Zylinder (mercator, gnomonisch) implementiert, 1:08
 
+2026.07.31 Fr  13:44, xebrauser, xegenerator Fehler behoben, getestet, 15:51
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-zwischenständige Projektionen in Echtzeit ändern, Antialiasing
+Fehler zwischenständige zylindrische Karten beheben, zwischenständige Projektionen in Echtzeit ändern, Antialiasing
 Symmetriegruppen (Symflip Spiel) reparieren, Programm Erddrehung mit Maus und Reset mit Anzeige Drehachse Drehwinkel, Visualisierung Ringkörper mit Rotation der Ringe
 neue Flächenformeln implementieren, Torus Kugelkonvergenz, 6-Kreuz, Lemniskatenebene, ebenezyl, Cassini
 

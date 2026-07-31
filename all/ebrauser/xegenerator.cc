@@ -468,8 +468,7 @@ signed long setendpos ()
         bewanz++;
         }
       if ((standort[1] == 64) && (standort[2] != 64) && (amzug == 1))      // Gewinnstellung für schwarz wenn weißer König geschlagen ist, schwarzer König existiert und weiß am Zug ist (reguläres Spiel mit 2 Königen)
-//      if ((standort[1] == 64) && (standort[2] != 64) && (standort[3] == 64) && (standort[4] == 64) && (amzug == 1))
-          // Gewinnstellung für schwarz, wenn schwarzer König existiert alle anderen Figuren (weiß) geschlagen sind und weiß am Zug ist (schwarzer König gegen 3 weiße Figuren)
+//      if ((standort[1] == 64) && (standort[2] != 64) && (standort[3] == 64) && (standort[4] == 64) && (amzug == 1)) // Gewinnstellung für schwarz, wenn schwarzer König existiert alle anderen Figuren (weiß) geschlagen sind und weiß am Zug ist (schwarzer König gegen 3,2 weiße Figuren)
         {
         endspiel[poslauf]= -bewmax;
         bewanz++;
@@ -941,6 +940,7 @@ int main ()
   long double ticksprosek=  (long double) (sysconf (_SC_CLK_TCK));
   char dateiname[256];
 
+// ------------- setendpos () anpassen --------------------
 // --------------------- reguläres Spiel (1 gegen 1)
   steiner.initfiguren (3, -3, 24, -16);  // Dame gegen Turm                            35/18
 //  steiner.initfiguren (3, -3, 24, -8);   // Dame gegen Läufer
@@ -966,19 +966,19 @@ int main ()
 //  steiner.initfiguren (3, -3,  8,  4);   // König gegen Läufer Springer             33
 
 // ---------------------- 3 Figuren gegen König
-//  steiner.initfiguren (4, -3, 4, 16);  // Springer, Springer, Turm gegen König       15
-//  steiner.initfiguren (8, -3, 8, 16);  // Läufer, Läufer, Turm gegen König           21 nur gleichfarbige Läufer
-//  steiner.initfiguren (4, -3, 8, 16);  // Springer, Läufer, Turm gegen König         15
+//  steiner.initfiguren (4, -3, 4, 16);  // Springer, Springer, Turm                   15
+//  steiner.initfiguren (8, -3, 8, 16);  // Läufer, Läufer, Turm                       21 nur gleichfarbige Läufer
+//  steiner.initfiguren (4, -3, 8, 16);  // Springer, Läufer, Turm                     15
 
-//  steiner.initfiguren (4, -3, 4, 8);  // Springer, Springer, Läufer gegen König      29 + Remis
-//  steiner.initfiguren (4, -3, 8, 8);  // Springer, Läufer, Läufer gegen König         1 + Remis
-//  steiner.initfiguren (4, -3, 4, 4);  // 3 Springer  gegen König                     17 + Remis
-//  steiner.initfiguren (8, -3, 8, 8);  // 3 Läufer  gegen König                        1 + Remis
-//  steiner.initfiguren (16, -3, 16, 16);  // 2 Türme gegen König                       8
+//  steiner.initfiguren (4, -3, 4, 8);  // Springer, Springer, Läufer                  29 + Remis
+//  steiner.initfiguren (4, -3, 8, 8);  // Springer, Läufer, Läufer                     1 + Remis
+//  steiner.initfiguren (4, -3, 4, 4);  // 3 Springer                                  17 + Remis
+//  steiner.initfiguren (8, -3, 8, 8);  // 3 Läufer                                     1 + Remis
+//  steiner.initfiguren (16, -3, 16, 16);  // 2 Türme                                     8  (3.Turm wird am Anfang geschlagen)
 
-  sprintf (dateiname, "/root/Endspiel/dame-turm.end");
+  sprintf (dateiname, "/root/Endspiel/DT.end");
 
-  steiner.setthreadanz (4);                  // +++++++++++++++++++++++++++++++++ Anzahl der parallel laufenden Threads definieren +++++++++++++++++++++++++++++++++++++++++++++++++++
+  steiner.setthreadanz (20);                  // +++++++++++++++++++++++++++++++++ Anzahl der parallel laufenden Threads definieren +++++++++++++++++++++++++++++++++++++++++++++++++++
 
   printf ("analysiere...\n");
   startzeit= times (&zeit);  // Startzeit speichern
