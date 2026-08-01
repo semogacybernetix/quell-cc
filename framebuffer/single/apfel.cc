@@ -6,8 +6,317 @@
 #include <cstdlib>          // random
 #include <sys/times.h>      // times (NULL)
 #include <unistd.h>         // sysconf, _SC_CLK_TCK
+#include <thread>
 
 using namespace std;
+
+//--------------------------------- Apfelklasse Deklaration -------------------------------------------------
+struct capfel
+  {
+  clscreen8* screen;
+
+  integer  threadanz;              // Anzahl der Threads (von außen setzbar)
+
+  integer xanz= screen->xanz;
+  integer yanz= screen->yanz;
+  ckomplexk bildmitte;
+  real pixelgr;
+  integer iterationen;
+  integer fanz;                 // Anzahl Palettenfarben
+  unsigned char* farbe;
+
+  capfel (clscreen8* pscreen);
+  ~capfel ();
+
+  void spektrum256 (unsigned char*& pfarbe, integer& panz);
+  void berechnethreadblock (integer pthreadnr);                              // segmentierter linearer Pixeldurchgang
+  void berechnethreadkamm (integer pthreadnr);                               // verzahnter Pixeldurchgang
+  void berechne ();
+  };
+
+//--------------------------------- Thread -------------------------------------------------
+
+signed long rektiefe;         // globale Variable für threadrekursiv (lässt sich nicht lokal definieren, weil sie threadübergreifend sein muss und nicht pro Instanz)
+capfel* apfelthread;          // Zeiger auf das erzeugte Objekt um global zugreifbar zu sein
+
+void arbeit (signed long pthreadnr)
+  {
+  apfelthread->berechnethreadkamm (pthreadnr);
+  }
+
+void* threadrekursiv (void*)
+  {
+  signed long lokaltiefe= rektiefe;   // rektiefe kopieren, da sie jederzeit von einer anderen Instanz von threadrekursiv geändert werden kann
+
+                                      // Für den Fall, dass threadrekursiv von außen mit weniger als einem Thread aufgerufen wird
+  if (lokaltiefe < 1)
+    return 0;
+
+  pthread_t threadid;                 // id des erzeugten Threads
+  signed long threadreturnwert;       // Rückgabe ob Threaderzeugung funktioniert hat
+
+  if (lokaltiefe > 1)                 // neuen Aufruf von threadrekursiv erzeugen falls Tiefe mindestens 2 ist
+    {
+    rektiefe--;
+    threadreturnwert= pthread_create (&threadid, NULL, threadrekursiv, NULL);
+    if (threadreturnwert != 0)
+      {
+      //printf ("threadrekursiv-%ld:----Aufruf threadrekursiv mit Tiefe  %3ld fehlgeschlagen\n", lokaltiefe, lokaltiefe - 1);
+      }
+    }
+
+  arbeit (lokaltiefe);               // Arbeitsfunktion aufrufen
+
+  if (lokaltiefe > 1)                // auf Beendigung von neuem Aufruf warten
+    pthread_join (threadid, NULL);
+
+  return 0;
+  }
+
+//--------------------------------- Thread-Ende -------------------------------------------------------------------------------------
+
+//--------------------------------- Apfelklasse Definition -------------------------------------------------
+
+capfel::capfel (clscreen8* plscreen)
+  : screen (plscreen)
+  {
+  threadanz= 1;
+  apfelthread= this;
+  };
+
+capfel::~capfel ()
+  {
+  }
+
+void capfel::spektrum256 (unsigned char*& pfarbe, integer& panz)
+  {
+  panz= 256;
+  pfarbe= new unsigned char[panz*3];
+  for (integer flauf= 0; flauf < 43; flauf++)
+    {
+    // rot -> gelb
+    pfarbe[flauf*3]= 252;
+    pfarbe[flauf*3 + 1]= flauf*6;
+    pfarbe[flauf*3 + 2]= 0;
+    }
+  for (integer flauf= 43; flauf < 85; flauf++)
+    {
+    // gelb -> grün
+    pfarbe[flauf*3]= 246 - (flauf - 43)*6;
+    pfarbe[flauf*3 + 1]= 246;
+    pfarbe[flauf*3 + 2]= 0;
+    }
+  for (integer flauf= 85; flauf < 127; flauf++)
+    {
+    // grün -> blaugrün
+    pfarbe[flauf*3]= 0;
+    pfarbe[flauf*3 + 1]= 246;
+    pfarbe[flauf*3 + 2]= (flauf - 85)*6;
+    }
+  for (integer flauf= 127; flauf < 170; flauf++)
+    {
+    // blaugrün -> blau
+    pfarbe[flauf*3]= 0;
+    pfarbe[flauf*3 + 1]= 252 - (flauf - 127)*6;
+    pfarbe[flauf*3 + 2]= 252;
+    }
+  for (integer flauf= 170; flauf < 213; flauf++)
+    {
+    // blau -> violett
+    pfarbe[flauf*3]= (flauf - 170)*6;
+    pfarbe[flauf*3 + 1]= 0;
+    pfarbe[flauf*3 + 2]= 252;
+    }
+  for (integer flauf= 213; flauf < 256; flauf++)
+    {
+    // violett -> rot
+    pfarbe[flauf*3]= 252;
+    pfarbe[flauf*3 + 1]= 0;
+    pfarbe[flauf*3 + 2]= 252 - (flauf - 213)*6;
+    }
+  }
+
+void capfel::berechnethreadblock (integer pthreadnr)                              // segmentierter linearer Pixeldurchgang
+  {
+//  printf ("Threadnr    %lld\n", pthreadnr);
+
+  // Apfelmännchenberechnung beginnen
+  ckomplexk bilddiag= pixelgr/2 * ckomplexk (xanz - 1, yanz - 1);
+  ckomplexk bildecke= bildmitte - bilddiag;
+  ckomplexk poslauf;
+  integer nanz= screen->xanz*screen->yanz;
+  integer panz= nanz/threadanz;
+  integer ug= (pthreadnr - 1)*panz;
+  integer og= ug + panz;
+  integer xpp, ypp;
+  cvektor3 fb;
+
+  for (integer n= ug; n < og; n++)
+    {
+    //xpp= pixels[n].x;
+    //ypp= pixels[n].y;
+    xpp= n % screen->xanz;
+    ypp= n/screen->xanz;
+
+    poslauf.x= bildecke.x + pixelgr*xpp;
+    poslauf.y= bildecke.y + pixelgr*ypp;
+    ckomplexk zlauf= poslauf;
+    integer zanz= 0;
+    while (zanz < iterationen)
+      {
+      if (zlauf%zlauf >= 4)
+        {
+        screen->putpixel (xpp, ypp, farbe[(zanz%fanz)*3], farbe[(zanz%fanz)*3 + 1], farbe[(zanz%fanz)*3 + 2]);
+        break;
+        }
+        else
+        {
+        screen->putpixel (xpp, ypp, 0, 0, 0);
+        }
+      //zlauf= (zlauf^2.1) + poslauf;
+      zlauf= zlauf*zlauf + poslauf;
+      zanz++;
+      }
+    }
+  //printf ("putpixel   thread: %lld  xpp: %lld  ypp: %lld\n", pthreadnr, xpp, ypp);
+  }
+
+void capfel::berechnethreadkamm (integer pthreadnr)                              // segmentierter linearer Pixeldurchgang
+  {
+//  printf ("Threadnr    %lld\n", pthreadnr);
+
+  // Apfelmännchenberechnung beginnen
+  ckomplexk bilddiag= pixelgr/2 * ckomplexk (xanz - 1, yanz - 1);
+  ckomplexk bildecke= bildmitte - bilddiag;
+  ckomplexk poslauf;
+  integer nanz= screen->xanz*screen->yanz;
+  integer xpp, ypp;
+  cvektor3 fb;
+
+  for (integer n= pthreadnr-1; n < nanz; n+= threadanz)
+    {
+    //xpp= pixels[n].x;
+    //ypp= pixels[n].y;
+    xpp= n % screen->xanz;
+    ypp= n/screen->xanz;
+
+    poslauf.x= bildecke.x + pixelgr*xpp;
+    poslauf.y= bildecke.y + pixelgr*ypp;
+    ckomplexk zlauf= poslauf;
+    integer zanz= 0;
+    while (zanz < iterationen)
+      {
+      if (zlauf%zlauf >= 4)
+        {
+        screen->putpixel (xpp, ypp, farbe[(zanz%fanz)*3], farbe[(zanz%fanz)*3 + 1], farbe[(zanz%fanz)*3 + 2]);
+        break;
+        }
+        else
+        {
+        screen->putpixel (xpp, ypp, 0, 0, 0);
+        }
+      //zlauf= (zlauf^2.1) + poslauf;
+      zlauf= zlauf*zlauf + poslauf;
+      zanz++;
+      }
+    }
+  //printf ("putpixel   thread: %lld  xpp: %lld  ypp: %lld\n", pthreadnr, xpp, ypp);
+  }
+
+void capfel::berechne ()
+  {
+//*
+  // prachtvolles Apfelmännchen
+  printtext ("prachtvolles Apfelmännchen\n");
+  bildmitte= ckomplexk (real (-1.26840686), real (0.124791718));
+  pixelgr= real (0.00000003)/real (yanz);
+//  spektrum (farbe, fanz, 5);
+  spektrum256 (farbe, fanz);
+  iterationen= 4096;
+//*/
+
+  // Genauigkeit von Realzahlen ausgeben
+  printtext ("Realsize:                              ");
+  printinteger (sizeof (real));
+  printtext ("\n");
+
+  // Genauigkeit der Stoppuhr ausgeben
+  signed long ticksps= sysconf (_SC_CLK_TCK);
+  printtext ("Genauigkeit der Stopuhr:             ");
+  printinteger (ticksps);
+  printtext ("  Ticks pro Sekunde\n");
+
+//  printtext ("Stoppuhr Start\n");
+  // Stoppuhr starten
+  clock_t startticks;
+  startticks= times (NULL);
+
+//---------------------threadige Apfelmännchenberechnung --------------------------------
+  rektiefe= threadanz;
+  //printf ("vor arbeit %ld\n", rektiefe);
+  threadrekursiv (0);
+
+/*
+  // Apfelmännchenberechnung beginnen
+  ckomplexk bilddiag= pixelgr/2 * ckomplexk (xanz - 1, yanz - 1);
+  ckomplexk bildecke= bildmitte - bilddiag;
+  ckomplexk poslauf;
+//  palettetest (farbe, fanz);
+//  exit (0);
+  for (integer ylauf= 0; ylauf < yanz; ylauf++)
+    for (integer xlauf= 0; xlauf < xanz; xlauf++)
+      {
+      poslauf.x= bildecke.x + pixelgr*xlauf;
+      poslauf.y= bildecke.y + pixelgr*ylauf;
+      ckomplexk zlauf= poslauf;
+      integer zanz= 0;
+      while (zanz < iterationen)
+        {
+        if (zlauf%zlauf >= 4)
+          {
+          screen->putpixel (xlauf, ylauf, farbe[(zanz%fanz)*3], farbe[(zanz%fanz)*3 + 1], farbe[(zanz%fanz)*3 + 2]);
+          break;
+          }
+          else
+          {
+          screen->putpixel (xlauf, ylauf, 0, 0, 0);
+          }
+        //zlauf= (zlauf^2.1) + poslauf;
+        zlauf= zlauf*zlauf + poslauf;
+        zanz++;
+        }
+      }
+*/
+
+  // Stoppuhr stoppen
+  clock_t stopticks;
+  stopticks= times (NULL);
+
+  // Stopzeit ausgeben
+  clock_t apfelticks= stopticks - startticks;
+  real apfelzeit= real (apfelticks)/ticksps;
+  real bogomips= 10000/apfelzeit;
+  printinteger (startticks);
+  printtext ("  ");
+  printinteger (stopticks);
+  printtext ("              ");
+  printinteger (apfelticks);
+  printtext ("  Ticks\n");
+  printtext ("Berechnungszeit:            ");
+  printreal (apfelzeit);
+  printtext ("  Sekunden\n");
+  printtext ("Rechenleistung:            ");
+  printreal (bogomips);
+  printtext ("  Bogomips\n");
+  printtext ("\n");
+
+  // Bild abspeichern
+  //cbmpdatei apfeldatei ("/root/apfel2.bmp", 1920, 1080);
+  //cfbscreen apfeldatei ("", 0, 0);
+  //apfelscr.putscreen (apfeldatei);
+  }
+
+//----------------------------------------- Apfelfunktionen --------------------------------------------------
 
 void zufallsfarben (unsigned char*& pfarbe, integer& panz)
   {
@@ -150,7 +459,7 @@ void palettetest (unsigned char* pfarbe, integer panz)
     }
   }
 
-void apfel ()
+void apfelf ()
   {
   // Apfelmännchen Variablen anlegen
   //cmemscreen8 apfelscr ("apfel.bmp", 1920, 1080);
@@ -299,7 +608,14 @@ void apfel ()
 
 int main()
   {
-  apfel ();
+  //apfelf ();
+  //return 0;
+  //cmemscreen8 apfelscr ("apfel.bmp", 1920, 1080);
+  //cbmpdatei apfelscr ("apfel.bmp", 1920, 1080);
+  //cxscreen apfelscr ("apfel.bmp", 1024, 512);
+  //capfel apfel (new cfbscreen ("apfel.bmp", 1920, 1080));
+  capfel apfel (new cfbscreen ("apfel.bmp", 1920, 1080));
+  apfel.threadanz= 4;
+  apfel.berechne ();
   return 0;
   }
-

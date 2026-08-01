@@ -16,11 +16,12 @@ tms flugsimuzeit;
 //--------------------------------- Thread -------------------------------------------------
 
 signed long rektiefe;         // globale Variable für threadrekursiv (lässt sich nicht lokal definieren, weil sie threadübergreifend sein muss und nicht pro Instanz)
-cflugsimu* flugsimuthread;
+cflugsimu* flugsimuthread;    // Zeiger auf das erzeugte Objekt um global zugreifbar zu sein
 
 void arbeit (signed long pthreadnr)
   {
-  flugsimuthread->welttoscreenthread (pthreadnr);
+  //flugsimuthread->welttoscreenthread_block (pthreadnr);
+  flugsimuthread->welttoscreenthread_kamm (pthreadnr);
   }
 
 void* threadrekursiv (void*)
@@ -144,7 +145,7 @@ void cflugsimu::welttoscreenz ()                                  // zufallsreih
     }
   }
 
-void cflugsimu::welttoscreenthread (integer pthreadnr)            // segmentierter linearer Pixeldurchgang
+void cflugsimu::welttoscreenthread_block (integer pthreadnr)            // segmentierter linearer Pixeldurchgang
   {
 //  printf ("Threadnr    %lld\n", pthreadnr);
   integer nanz= screen->xanz*screen->yanz;
@@ -154,6 +155,27 @@ void cflugsimu::welttoscreenthread (integer pthreadnr)            // segmentiert
   integer xpp, ypp;
   cvektor3 fb;
   for (integer n= ug; n < og; n++)
+    {
+    //xpp= pixels[n].x;
+    //ypp= pixels[n].y;
+    xpp= n % screen->xanz;
+    ypp= n/screen->xanz;
+    fb= welt->getpunkt (cvektor2 (real (xpp) + xoff, real (ypp) + yoff));
+    integer r= integer (fb.x);
+    integer g= integer (fb.y);
+    integer b= integer (fb.z);
+  //  printf ("putpixel   thread: %lld  xpp: %lld  ypp: %lld\n", pthreadnr, xpp, ypp);
+    screen->putpixel (xpp, ypp, r, g, b);
+    }
+  }
+
+void cflugsimu::welttoscreenthread_kamm (integer pthreadnr)            // verzahnter Pixeldurchgang
+  {
+//  printf ("Threadnr    %lld\n", pthreadnr);
+  integer nanz= screen->xanz*screen->yanz;
+  integer xpp, ypp;
+  cvektor3 fb;
+  for (integer n= pthreadnr-1; n < nanz; n+= threadanz)
     {
     //xpp= pixels[n].x;
     //ypp= pixels[n].y;
