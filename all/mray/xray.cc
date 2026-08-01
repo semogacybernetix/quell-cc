@@ -3,6 +3,10 @@
 #include "../../xwindow/keyboard/xkbd.h"
 #include "../../framebuffer/keyboard/nckbd.h"
 
+#include <thread>                      // hardware_concurrency ()
+
+using namespace std;
+
 void addmulti (cwelt& pwelt)
   {
   // Körperstandpunkte
@@ -557,7 +561,7 @@ void fliege ()
   //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 1920, 1080), 1920);
 
   flugsimu.setframerate (60);
-  flugsimu.threadanz= 4;
+  flugsimu.threadanz= thread::hardware_concurrency ();
   flugsimu.bewstep= real (2);
   flugsimu.drehstep= real (0.0125);
 

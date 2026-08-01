@@ -21,7 +21,7 @@ cxscreen::cxscreen (const char* pname, integer px, integer py)
   yanz= py;
   mydisplay= XOpenDisplay ("");
   integer ftiefe= XDefaultDepth (mydisplay, 0);
-  cout << "Pixeltiefe: " << ftiefe << endl;
+  cout << "\nPixeltiefe: " << ftiefe << endl;
   Visual* myvisual= XDefaultVisual (mydisplay, 0);
   integer redmask= myvisual->red_mask;
   rshift= 0;
@@ -63,7 +63,7 @@ cxscreen::cxscreen (const char* pname, integer px, integer py)
     bluemask >>= 1;
     }
 //  cout << " r: " << rshift << " g: " << gshift << " b: " << bshift << " ftiefe: " << ftiefe << endl;
-  cout << "Bits per rgb: " << myvisual->bits_per_rgb << endl;
+  cout << "Bits pro Farbkanal: " << myvisual->bits_per_rgb << endl;
   switch (ftiefe)
     {
     case 4:
@@ -260,7 +260,7 @@ cxmemoryscreen::cxmemoryscreen (const char* pname, integer px, integer py)
   yanz= py;
   mydisplay= XOpenDisplay ("");
   integer ftiefe= XDefaultDepth (mydisplay, 0);
-  cout << "Pixeltiefe: " << ftiefe << endl;
+  cout << "\nPixeltiefe: " << ftiefe << endl;
   Visual* myvisual= XDefaultVisual (mydisplay, 0);
   integer redmask= myvisual->red_mask;
   rshift= 0;
@@ -302,7 +302,7 @@ cxmemoryscreen::cxmemoryscreen (const char* pname, integer px, integer py)
     bluemask >>= 1;
     }
   //cout << " r: " << rshift << " g: " << gshift << " b: " << bshift << " ftiefe: " << ftiefe << endl;
-  cout << "Bits per rgb: " << myvisual->bits_per_rgb << endl;
+  cout << "Bits pro Farbkanal: " << myvisual->bits_per_rgb << endl;
   switch (ftiefe)
     {
     case 4:
@@ -510,9 +510,9 @@ cximagescreen::cximagescreen (const char* pname, integer px, integer py)
   ypix1= (py - 1);
   xanz= px;
   yanz= py;
-  mydisplay= XOpenDisplay ("");
+  mydisplay= XOpenDisplay (NULL);
   integer ftiefe= XDefaultDepth (mydisplay, 0);
-  cout << "Pixeltiefe: " << ftiefe << endl;
+  cout << "\nPixeltiefe: " << ftiefe << endl;
   Visual* myvisual= XDefaultVisual (mydisplay, 0);
   integer redmask= myvisual->red_mask;
   rshift= 0;
@@ -554,7 +554,7 @@ cximagescreen::cximagescreen (const char* pname, integer px, integer py)
     bluemask >>= 1;
     }
 //  cout << " r: " << rshift << " g: " << gshift << " b: " << bshift << " ftiefe: " << ftiefe << endl;
-  cout << "Bits per rgb: " << myvisual->bits_per_rgb << endl;
+  cout << "Bits pro Farbkanal: " << myvisual->bits_per_rgb << endl;
   switch (ftiefe)
     {
     case 4:

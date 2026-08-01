@@ -5,11 +5,10 @@
 #include <iostream>                        // cout, printf, scanf
 #include <unistd.h>                        // usleep
 #include <sys/times.h>                     // tms, times
-#include <thread>
 #include <chrono>                          // highres clock
 
 using namespace std;                       // cout
-using namespace std::chrono;               // high_resolution_clock::now ()
+using namespace chrono;                    // high_resolution_clock::now ()
 
 tms flugsimuzeit;
 
@@ -106,12 +105,13 @@ void cflugsimu::setframerate (real pfrate)          // (Dauer eines Frames in Mi
   //ftms= integer (0.5 + 1000/pfrate);
   ftµs= integer (1000000/pfrate) - 10;
 
-  printtext ("framerate:  ");
+  printtext ("\n");
+  printtext ("max Framerate:  ");
   printinteger (integer (pfrate));
-  printtext (" fps  framedauer:  ");
+  printtext (" fps  Framedauer:  ");
   //printinteger (ftms);
-  printinteger (ftµs);
-  printtext (" ms\n\n");
+  printinteger (ftµs/1000);
+  printtext (" ms\n");
   }
 
 void cflugsimu::welttoscreenl ()                                  // linearer Pixeldurchgang
@@ -197,8 +197,12 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
   cvektor3 flugw (0, 0, 0);
   cvektor4 drehaw;
   cbasis3 achsbasis;
-
   tms zeit;
+
+  printtext ("\n");
+  printtext ("Threads: ");
+  printinteger (threadanz);
+  printtext ("\n\n");
   //real ticksps= real (sysconf (_SC_CLK_TCK));
   //clock_t framestart= times (&zeit);
   auto framestarth= high_resolution_clock::now ();
@@ -233,7 +237,7 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
 //      printf ("Zeit: %5.2Lf  fps: %5.2Lf\n", framedauer, 1/framedauer);
 
 //*
-      cout << frameticksh.count () << " µs   ";
+      cout << fixed << setprecision (2) << real (frameticksh.count ())/1000 << " ms   ";
       //printinteger (frameticks);
       //printtext (" tks    ");
 
@@ -248,7 +252,7 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
         //printinteger (100/frameticks);
         {
         integer frametickshi= integer (frameticksh.count ());
-        cout << 1000000./double (frametickshi);
+        cout << fixed << setprecision (2) << 1000000/real (frametickshi);
         }
       else
         printtext ("---");
