@@ -101,7 +101,8 @@ void cpsdatei::flush ()
     }
 
   //fprintf (datei, "%Lf %Lf translate\n", transx, transy);
-  transx+= 0; transy+= 0;
+  transx= transx + 1;  //Variable benutzen
+  transy= transy + 1;  //Variable benutzen
   //fprintf (datei, "%Lf %Lf scale\n", scalex, scaley);
   fprintf (datei, "/DeviceCMYK setcolorspace\n");
   fprintf (datei, "\n");

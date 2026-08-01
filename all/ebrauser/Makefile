@@ -20,7 +20,7 @@ comp=g++
 #copts=-std=$(CCSTANDARD) -Wall -Wextra -Wconversion -pedantic-errors -O2
 # noch zu viele Conversion Warnungen bei xegenerator und xebrauser
 copts=-std=$(CCSTANDARD) -Wall -Wextra -pedantic-errors -O2
-lopts=-L$(opfad) -lquadmath -lscr -lpthread -ljpeg -lX11
+lopts=-L$(opfad) -lscr -lpthread -ljpeg -lX11
 
 # -------------------------- Ziele ------------------------------------------
 

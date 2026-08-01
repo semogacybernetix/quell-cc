@@ -798,7 +798,7 @@ void pass ()
   void ladeendspiel (const char* pname)
     {
     signed long fret= 0;
-    fret+= 0;                 // Variable benutzen
+    fret= fret + 1;                        // Variable benutzen
     FILE* datei= fopen (pname, "rb");
     signed char header[64];
     fret= fread (header, 64, 1, datei);

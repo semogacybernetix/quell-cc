@@ -3,6 +3,7 @@
 #include "../../conio/vektorcon.h"         // printtext, printreal
 
 #include <iostream>                        // cout, printf, scanf
+#include <iomanip>                         // setprecision unter gcc 16.1.1
 #include <unistd.h>                        // usleep
 #include <sys/times.h>                     // tms, times
 #include <chrono>                          // highres clock
