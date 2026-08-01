@@ -373,7 +373,7 @@ void capfel::berechne ()
   iterationen= 2048;
 //*/
 
-//*
+/*
   // prachtvolles Apfelmännchen
   printtext ("prachtvolles Apfelmännchen\n");
   bildmitte= ckomplexk (real (-1.26840686), real (0.124791718));
@@ -381,6 +381,16 @@ void capfel::berechne ()
 //  spektrum (farbe, fanz, 5);
   spektrum256 (farbe, fanz);
   iterationen= 4096;
+//*/
+
+//*
+  // Benchmark, CPU-Auslastung
+  printtext ("Benchmark\n");
+  bildmitte= ckomplexk (real (0.2787531301468137), real (-0.0105268499341));
+  pixelgr= 1e-16;
+//  spektrum (farbe, fanz, 5);
+  spektrum256 (farbe, fanz);
+  iterationen= 1000000;
 //*/
 
   // Genauigkeit von Realzahlen ausgeben

@@ -167,6 +167,7 @@ void addzylinder (cwelt& pwelt)
   pwelt.addkoerper (new ckoerper (new cszylinder, new cparazylinderw, new (cbegrkeine), new cscreentextur (new cjpegdatei ("/root/quell-cc/media/Zylkarten platt/4000 platt kontrast.jpg"), 1/PI, 1/PI), kst1, kl1));
 
   pwelt.verschiebeauge (cvektor3 (0, 0, 0));
+  pwelt.himmelfarbe= cvektor3 (30,35,90);
   }
 
 void adderdkarte (cwelt& pwelt)
@@ -214,7 +215,7 @@ void adderdkarte (cwelt& pwelt)
   // ---------------------------------------------------------------- Projektionen in die Ebene ---------------------------------------------------
   // Polarprojektionen zwischenständig
   //clpara* para1= new cparaebene_gnom_kugel (parakugel, real (52.5), real (13.5));
-  //clpara* para1= new cparaebene_stereo_kugel (parakugel, 52.5, 13.5);
+  clpara* para1= new cparaebene_stereo_kugel (parakugel, -52.5, 13.5-180);
   //clpara* para1= new cparaebene_mitten_kugel (parakugel, real (52.5), real (13.5));
   //clpara* para1= new cparaebene_lamb_kugel (parakugel, real (52.5), real (13.5));
 
@@ -226,7 +227,7 @@ void adderdkarte (cwelt& pwelt)
   // Zylinderprojektionen normal
   //clpara* para1= new cparaebene_platt_kugel (parakugel, 0, 0, 0);
   //clpara* para1= new cparazylinder_mercator_kugel (parakugel, 0, 0, 0);
-  clpara* para1= new cparazylinder_gnom_kugel (parakugel, 0, 0, 0);
+  //clpara* para1= new cparazylinder_gnom_kugel (parakugel, 0, 0, 0);
   //clpara* para1= new cparaebene_mercator_kugel (parakugel, 0, 0, 0);
 
   // ---------------------------------------------------------------- Körpereigenschaften --------------------------------------------------------
@@ -236,12 +237,12 @@ void adderdkarte (cwelt& pwelt)
 
   // Kartenprojektion Standort, Lage
   cvektor3 st1 (0,0,0);
-  //cvektor3 stauge (0,0,-500);
-  cvektor3 stauge (0,0,0);
+  cvektor3 stauge (0,0,-100);
+  //cvektor3 stauge (0,0,0);
   cbasis3 lag1 (cvektor3 (100,0,0), cvektor3 (0,100,0), cvektor3 (0,0,100));
   cbasis3 lagauge (cvektor3 (1,0,0), cvektor3 (0,1,0), cvektor3 (0,0,1));
-  //clschnitt* schnitt1= new csebene;
-  clschnitt* schnitt1= new cszylinder;
+  clschnitt* schnitt1= new csebene;
+  //clschnitt* schnitt1= new cszylinder;
 //*/
 
   // ---------------------------------------------------------------- Texturen (Karten) ----------------------------------------------------------
@@ -535,8 +536,8 @@ void fliege ()
   //addmulti (*welt);
   //addkoord (*welt);
   //addebenen90 (*welt);
-  addzylinder (*welt);
-  //adderdkarte (*welt);
+  //addzylinder (*welt);
+  adderdkarte (*welt);
   //adderdemond (*welt);
   //addebzyl (*welt);
   //addtorus (*welt);
@@ -551,8 +552,8 @@ void fliege ()
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1280, 768), 1280);               // Fehler unterer Rand
 
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 320, 200), 320);
-  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 900, 600), 900);
-  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1350, 1000), 1350);
+  //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 900, 600), 900);
+  cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1350, 1000), 1350);
   //cflugsimu flugsimu (welt, new cxkeyboard, new cximagescreen ("xray", 1920, 1080), 1920);
 
   //cflugsimu flugsimu (welt, new cnckeyboard, new cfbscreen ("xray", 512, 256), 512);
