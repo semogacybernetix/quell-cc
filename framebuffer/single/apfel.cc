@@ -8,21 +8,25 @@
 #include <unistd.h>         // sysconf, _SC_CLK_TCK
 #include <iostream>         // cout
 #include <thread>           // hardware_concurrency ()
+#include <mutex>            // mutex
 
 using namespace std;
 
 //--------------------------------- Apfelklasse Deklaration -------------------------------------------------
 struct capfel
   {
-  clscreen8* screen;
+  clscreen8*        screen;
 
-  integer  threadanz;              // Anzahl der Threads (von außen setzbar)
+  integer           threadanz;              // Anzahl der Threads (von außen setzbar)
 
-  integer xanz= screen->xanz;
-  integer yanz= screen->yanz;
-  ckomplexk bildmitte;
-  real pixelgr;
-  integer iterationen;
+  integer           xanz= screen->xanz;
+  integer           yanz= screen->yanz;
+  ckomplexk         bildmitte;
+  real              pixelgr;
+  integer           iterationen;
+  integer           akpixel;
+  mutex             mutexpixel;
+
   integer fanz;                 // Anzahl Palettenfarben
   unsigned char* farbe;
 
@@ -38,6 +42,7 @@ struct capfel
 
   void berechnethreadblock (integer pthreadnr);                              // segmentierter linearer Pixeldurchgang
   void berechnethreadkamm (integer pthreadnr);                               // verzahnter Pixeldurchgang
+  void berechnethreadmutex (integer pthreadnr);                              // mit Mutex
   void berechne ();
   };
 
@@ -48,7 +53,9 @@ capfel* apfelthread;          // Zeiger auf das erzeugte Objekt um global zugrei
 
 void arbeit (signed long pthreadnr)
   {
-  apfelthread->berechnethreadkamm (pthreadnr);
+  //apfelthread->berechnethreadblock (pthreadnr);
+  //apfelthread->berechnethreadkamm (pthreadnr);
+  apfelthread->berechnethreadmutex (pthreadnr);
   }
 
 void* threadrekursiv (void*)
@@ -323,6 +330,52 @@ void capfel::berechnethreadkamm (integer pthreadnr)                             
   //printf ("putpixel   thread: %lld  xpp: %lld  ypp: %lld\n", pthreadnr, xpp, ypp);
   }
 
+void capfel::berechnethreadmutex (integer pthreadnr)                              // mit Mutex
+  {
+  //printf ("Threadnr    %lld\n", pthreadnr);
+  pthreadnr= pthreadnr + 1;                                                       // pthreadnr benutzen
+  ckomplexk bilddiag= pixelgr/2 * ckomplexk (xanz - 1, yanz - 1);
+  ckomplexk bildecke= bildmitte - bilddiag;
+  ckomplexk poslauf;
+  integer nanz= screen->xanz*screen->yanz;
+  integer xpp, ypp;
+  cvektor3 fb;
+  integer lauf;
+
+  while (akpixel < nanz)
+    {
+    unique_lock<mutex> m1 (mutexpixel);
+    lauf= akpixel;
+    akpixel++;
+    m1.unlock ();
+    //xpp= pixels[lauf].x;
+    //ypp= pixels[lauf].y;
+    xpp= lauf % screen->xanz;
+    ypp= lauf/screen->xanz;
+
+    poslauf.x= bildecke.x + pixelgr*xpp;
+    poslauf.y= bildecke.y + pixelgr*ypp;
+    ckomplexk zlauf= poslauf;
+    integer zanz= 0;
+    while (zanz < iterationen)
+      {
+      if (zlauf%zlauf >= 4)
+        {
+        screen->putpixel (xpp, ypp, farbe[(zanz%fanz)*3], farbe[(zanz%fanz)*3 + 1], farbe[(zanz%fanz)*3 + 2]);
+        break;
+        }
+        else
+        {
+        screen->putpixel (xpp, ypp, 0, 0, 0);
+        }
+      //zlauf= (zlauf^2.1) + poslauf;
+      zlauf= zlauf*zlauf + poslauf;
+      zanz++;
+      }
+    }
+  //printf ("putpixel   thread: %lld  xpp: %lld  ypp: %lld\n", pthreadnr, xpp, ypp);
+  }
+
 void capfel::berechne ()
   {
 /*
@@ -410,6 +463,7 @@ void capfel::berechne ()
   startticks= times (NULL);
 
 // threadige Apfelmännchenberechnung
+  akpixel= 0;                               // aktuellen Pixel auf 0 setzen
   rektiefe= threadanz;
   //printf ("vor arbeit %ld\n", rektiefe);
   threadrekursiv (0);
@@ -447,7 +501,8 @@ int main()
   capfel apfel (new cfbscreen ("apfel.bmp", 1920, 1080));
 
   apfel.threadanz= thread::hardware_concurrency ();
-  cout << "\nThreads: " << apfel.threadanz << endl;
+  //apfel.threadanz= 3;
+  cout << "\nThreads:                               " << apfel.threadanz << endl;
   apfel.berechne ();
   return 0;
   }

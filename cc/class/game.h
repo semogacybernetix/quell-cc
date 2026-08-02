@@ -5,6 +5,10 @@
 #include "../screen/vscr.h"
 #include "../keyboard/vkbd.h"
 
+#include <mutex>
+
+using namespace std;
+
 struct cflugsimu
   {
   cflugsimu (cwelt* pwelt, clkeyboard* plkeyboard, clscreen8* plscreen, real pabstand);
@@ -15,6 +19,7 @@ struct cflugsimu
   void welttoscreentakt (integer exitzeit, integer& renderanz);
   void welttoscreenthread_block (integer pthreadnr);
   void welttoscreenthread_kamm (integer pthreadnr);
+  void welttoscreenthread_mutex (integer pthreadnr);
   void fliege ();
   void fliegek ();                 // mit Körperdrehungen
   void fliegetakt ();              // noch nicht implementiert
@@ -25,6 +30,8 @@ struct cflugsimu
   integer  threadanz;              // Anzahl der Threads (von außen setzbar)
 
   private:
+  mutex        mutexpixel;         // Mutex für die Pixelschleife
+  integer      akpixel;            // aktueller Pixel in der Pixelschleife
   integer      pixelanz;           // Anzahl der Pixel des screens
   integer      pixelpos;           // momentane Pixelposition beim Rendern
   integer      ftks;               // minimale Framedauer[ticks]

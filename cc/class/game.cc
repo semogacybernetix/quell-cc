@@ -6,9 +6,7 @@
 #include <iomanip>                         // setprecision unter gcc 16.1.1
 #include <unistd.h>                        // usleep
 #include <sys/times.h>                     // tms, times
-#include <chrono>                          // highres clock
 
-using namespace std;                       // cout
 using namespace chrono;                    // high_resolution_clock::now ()
 
 tms flugsimuzeit;
@@ -20,8 +18,9 @@ cflugsimu* flugsimuthread;    // Zeiger auf das erzeugte Objekt um global zugrei
 
 void arbeit (signed long pthreadnr)
   {
-  //flugsimuthread->welttoscreenthread_block (pthreadnr);
-  flugsimuthread->welttoscreenthread_kamm (pthreadnr);
+  flugsimuthread->welttoscreenthread_block (pthreadnr);
+  //flugsimuthread->welttoscreenthread_kamm (pthreadnr);
+  //flugsimuthread->welttoscreenthread_mutex (pthreadnr);
   }
 
 void* threadrekursiv (void*)
@@ -155,6 +154,7 @@ void cflugsimu::welttoscreenthread_block (integer pthreadnr)            // segme
   integer og= ug + panz;
   integer xpp, ypp;
   cvektor3 fb;
+
   for (integer n= ug; n < og; n++)
     {
     //xpp= pixels[n].x;
@@ -176,6 +176,7 @@ void cflugsimu::welttoscreenthread_kamm (integer pthreadnr)            // verzah
   integer nanz= screen->xanz*screen->yanz;
   integer xpp, ypp;
   cvektor3 fb;
+
   for (integer n= pthreadnr-1; n < nanz; n+= threadanz)
     {
     //xpp= pixels[n].x;
@@ -191,7 +192,33 @@ void cflugsimu::welttoscreenthread_kamm (integer pthreadnr)            // verzah
     }
   }
 
-// Tastenbelegung
+void cflugsimu::welttoscreenthread_mutex (integer pthreadnr)            // linearer Pixeldurchgang mit mutex
+  {
+//  printf ("Threadnr    %lld\n", pthreadnr);
+  pthreadnr= pthreadnr + 1;                                             // pthreadnr benutzen
+  integer nanz= screen->xanz*screen->yanz;
+  integer xpp, ypp;
+  cvektor3 fb;
+  integer lauf;
+
+  while (akpixel < nanz)
+    {
+    unique_lock<mutex> m1 (mutexpixel);
+    lauf= akpixel;
+    akpixel++;
+    m1.unlock ();
+    //xpp= pixels[lauf].x;
+    //ypp= pixels[lauf].y;
+    xpp= lauf % screen->xanz;
+    ypp= lauf/screen->xanz;
+    fb= welt->getpunkt (cvektor2 (real (xpp) + xoff, real (ypp) + yoff));
+    integer r= integer (fb.x);
+    integer g= integer (fb.y);
+    integer b= integer (fb.z);
+  //  printf ("putpixel   thread: %lld  xpp: %lld  ypp: %lld\n", pthreadnr, xpp, ypp);
+    screen->putpixel (xpp, ypp, r, g, b);
+    }
+  }
 
 void cflugsimu::fliegethread ()                     // Multithreadfliegen
   {
@@ -220,6 +247,7 @@ void cflugsimu::fliegethread ()                     // Multithreadfliegen
       framestarth= high_resolution_clock::now ();
       rektiefe= threadanz;
 //      printf ("vor arbeit %ld\n", rektiefe);
+      akpixel= 0;                                   // aktuellen Pixel setzen
       threadrekursiv (0);
       //welttoscreenz ();
       screen->flush ();
